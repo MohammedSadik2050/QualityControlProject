@@ -5,12 +5,13 @@ import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AppAuthService } from '@shared/auth/app-auth.service';
 
 @Component({
-  templateUrl: './login.component.html',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
   animations: [accountModuleAnimation()]
 })
 export class LoginComponent extends AppComponentBase implements OnInit {
   submitting = false;
-    rtl = "ltr";
+    rtl = "rtl";
   constructor(
     injector: Injector,
     public authService: AppAuthService,

@@ -13,6 +13,7 @@ import { AppComponentBase } from '@shared/app-component-base';
     encapsulation: ViewEncapsulation.None
 })
 export class AccountComponent extends AppComponentBase implements OnInit {
+    rtl: string;
     constructor(injector: Injector, private renderer: Renderer2) {
         super(injector);
     }
@@ -24,5 +25,10 @@ export class AccountComponent extends AppComponentBase implements OnInit {
 
     ngOnInit(): void {
         this.renderer.addClass(document.body, 'login-page');
+        var lang = abp.utils.getCookieValue('Abp.Localization.CultureName');
+        console.log('lang', lang);
+        if (lang !== 'en') {
+            this.rtl = 'rtl';
+        }
     }
 }

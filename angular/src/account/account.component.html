@@ -1,24 +1,22 @@
 <!--<div class="login-box">-->
     <account-header></account-header>
-    <div class="card">
+    <div class="card" style="width:900px !important" >
         <div *ngIf="showTenantChange()" class="card-header">
             <tenant-change></tenant-change>
         </div>
         <div class="card-body login-card-body">
-            <div class="login_wrapper">
+            <div class="">
                 <div class="animate form login_form">
                     <div class="container">
-                        <div class="">
-                            <div class="block-left">
+                        <div class="row">
+                            
+                            <div class="block-left col-6">
                                 <router-outlet></router-outlet>
                             </div>
-                            <div class="block-right">
-                                <div class="login-logo-wrapper">
+                            <div class="block-right col-6">
+                                <div class="login-logo-wrapper" style="float:right">
                                     <img src="/assets/img/img.jpg" alt="App User" class="logo-img-login">
-                                    <h2>
-                                        <i class="fa fa-chrome"></i>
-                                        <span>Quality Control</span>
-                                    </h2>
+
                                 </div>
                             </div>
                         </div>
@@ -26,9 +24,9 @@
                 </div>
             </div>
         </div>
-        <div class="card-footer">
-            <account-languages></account-languages>
-        </div>
+        <!--<div class="card-footer">-->
+            <!--<account-languages></account-languages>-->
+        <!--</div>-->
     </div>
     <account-footer></account-footer>
 <!--</div>-->

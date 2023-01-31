@@ -67,3 +67,51 @@ table.table {
 table-card-footer * {
   font-size: 14px;
 }
+
+.content-wrapper {
+    margin-right: 295px !important;
+    text-align: right;
+    float: right;
+    width: 86%;
+    margin-left: 3px !important;
+}
+body
+:not(.layout-fixed) .main-sidebar .sidebar {
+    overflow-y: auto;
+    text-align: right;
+}
+
+body:not(.layout-fixed) .main-sidebar {
+    height: inherit;
+    min-height: 100%;
+    position: absolute;
+    width: 301px;
+    top: 0;
+}
+body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
+    transition: margin-right .3s ease-in-out;
+    margin-right: 250px;
+}
+.sidebar-mini.sidebar-collapse .main-sidebar.sidebar-focused, .sidebar-mini.sidebar-collapse .main-sidebar:hover {
+    width:293px;
+}
+.sidebar-mini.sidebar-collapse .content-wrapper
+, .sidebar-mini.sidebar-collapse .main-footer, .sidebar-mini.sidebar-collapse .main-header {
+    margin-right: 3.6rem !important;
+    width:100%;
+}
+
+.sidebar-mini.sidebar-collapse .main-sidebar
+, .sidebar-mini.sidebar-collapse .main-sidebar::before {
+    margin-left: 0;
+    width: 1.6rem;
+    display: none;
+}
+.sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .main-footer, .sidebar-mini.sidebar-collapse .main-header {
+    margin-right: 0.6rem !important;
+    width: 100%;
+}
+.ml-auto {
+    margin-right: 50% !important;
+}
+
