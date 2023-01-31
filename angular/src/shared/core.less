@@ -90,7 +90,7 @@ body:not(.layout-fixed) .main-sidebar {
 }
 body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
     transition: margin-right .3s ease-in-out;
-    margin-right: 250px;
+    margin-right: 246px;
 }
 .sidebar-mini.sidebar-collapse .main-sidebar.sidebar-focused, .sidebar-mini.sidebar-collapse .main-sidebar:hover {
     width:293px;
@@ -115,3 +115,31 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
     margin-right: 50% !important;
 }
 
+.text-right {
+    text-align: left !important;
+    margin-right: -83px;
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+    direction: ltr;
+    margin-right: -59px;
+}
+
+
+
+.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+    direction: ltr;
+}
+.card-footer:last-child {
+    border-radius: 0 0 calc(.25rem - 0) calc(.25rem - 0);
+    direction: ltr;
+}

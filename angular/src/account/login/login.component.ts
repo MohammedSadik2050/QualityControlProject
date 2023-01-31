@@ -21,11 +21,11 @@ export class LoginComponent extends AppComponentBase implements OnInit {
   }
     ngOnInit(): void {
        
-        var lang = abp.utils.getCookieValue('Abp.Localization.CultureName');
-        console.log('lang',lang);
-        if (lang !=='en') {
-            this.rtl = 'rtl';
-        }
+        //var lang = abp.utils.getCookieValue('Abp.Localization.CultureName');
+        //console.log('lang',lang);
+        //if (lang !=='en') {
+        //    this.rtl = 'rtl';
+        //}
     }
 
   get multiTenancySideIsTeanant(): boolean {

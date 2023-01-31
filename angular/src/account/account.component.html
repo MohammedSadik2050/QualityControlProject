@@ -1,6 +1,6 @@
 <!--<div class="login-box">-->
     <account-header></account-header>
-    <div class="card" style="width:900px !important" >
+    <div class="card" style="width: 900px !important; border-radius: 21px; " >
         <div *ngIf="showTenantChange()" class="card-header">
             <tenant-change></tenant-change>
         </div>
@@ -10,11 +10,11 @@
                     <div class="container">
                         <div class="row">
                             
-                            <div class="block-left col-6">
+                            <div class="block-left col-6 mt-5">
                                 <router-outlet></router-outlet>
                             </div>
                             <div class="block-right col-6">
-                                <div class="login-logo-wrapper" style="float:right">
+                                <div class="login-logo-wrapper" style="float:left">
                                     <img src="/assets/img/img.jpg" alt="App User" class="logo-img-login">
 
                                 </div>
@@ -28,5 +28,5 @@
             <!--<account-languages></account-languages>-->
         <!--</div>-->
     </div>
-    <account-footer></account-footer>
+    <!--<account-footer></account-footer>-->
 <!--</div>-->

@@ -23,7 +23,7 @@
 		<text name="LoginFailed" value="Login failed!" />
 		<text name="NameSurname" value="Name surname" />
 		<text name="UserName" value="User name" />
-		<text name="Name" value="Name" />
+		<text name="Name" value="الاسم" />
 		<text name="Surname" value="Surname" />
 		<text name="EmailAddress" value="Email address" />
 		<text name="Tenants" value="Tenants" />
@@ -31,8 +31,8 @@
 		<text name="CreateNewTenant" value="Create new tenant" />
 		<text name="AdminEmailAddress" value="Admin email address" />
 		<text name="AdminPassword" value="Admin password" />
-		<text name="Save" value="Save" />
-		<text name="Cancel" value="Cancel" />
+		<text name="Save" value="حفظ" />
+		<text name="Cancel" value="الغاء" />
 		<text name="TenantName_Regex_Description" value="Tenant name must be at least 2 chars, starts with a letter and continue with letter, number, dash or underscore." />
 		<text name="DefaultPasswordIs" value="Default password is {0}" />
 		<text name="CanBeEmptyToLoginAsHost" value="Can be empty to login as host." />
@@ -61,7 +61,7 @@
 		<text name="SuccessfullyRegistered">Successfully registered</text>
 		<text name="WaitingForEmailActivation">Your email address should be activated</text>
 		<text name="Roles">الصلاحيات</text>
-		<text name="DisplayName"> الاسم</text>
+		<text name="DisplayName"> الاسم المعروض</text>
 		<text name="Edit">تعديل</text>
 		<text name="Delete">حذف</text>
 		<text name="CreateNewRole">إضافة صلاحية</text>
@@ -81,10 +81,11 @@
 		<text name="ClearOthers">Clear others</text>
 		<text name="LabelOptions">Label options</text>
 		<text name="Permissions">الصلاحيات</text>
-		<text name="RoleDescription">Role description</text>
+		<text name="RoleDescription">وصف الصلاحيه</text>
 		<text name="Refresh">Refresh</text>
 		<text name="Create">إنشاء</text>
-		<text name="UserDetails">User details</text>
+		<text name="UserDetails">التفاصيل</text>
+		<text name="Details">التفاصيل</text>
 		<text name="UserRoles">User roles</text>
 		<text name="ConfirmPassword">Confirm password</text>
 		<text name="Version">Version</text>

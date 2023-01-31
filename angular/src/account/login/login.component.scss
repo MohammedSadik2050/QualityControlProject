@@ -3,3 +3,21 @@
     margin-bottom: 1rem;
     width: 600px !important;
 }
+
+.login-card-body-input-group .input-group .input-group-text, .register-card-body .input-group .input-group-text {
+    background-color: transparent;
+    border-bottom-left-radius: 0.25rem !important;
+    border-right: 0 !important;
+    border-top-left-radius: 0.25rem !important;
+    color: #777;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+    direction: ltr;
+}
