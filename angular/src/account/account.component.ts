@@ -1,26 +1,28 @@
 import {
-  Component,
-  OnInit,
-  ViewEncapsulation,
-  Injector,
-  Renderer2
+    Component,
+    OnInit,
+    ViewEncapsulation,
+    Injector,
+    Renderer2
 } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
-  templateUrl: './account.component.html',
-  encapsulation: ViewEncapsulation.None
+    templateUrl: './account.component.html',
+    styleUrls: ['./account.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class AccountComponent extends AppComponentBase implements OnInit {
-  constructor(injector: Injector, private renderer: Renderer2) {
-    super(injector);
-  }
+    constructor(injector: Injector, private renderer: Renderer2) {
+        super(injector);
+    }
 
-  showTenantChange(): boolean {
-    return abp.multiTenancy.isEnabled;
-  }
+    showTenantChange(): boolean {
+        abp.multiTenancy.isEnabled = false;
+        return abp.multiTenancy.isEnabled;
+    }
 
-  ngOnInit(): void {
-    this.renderer.addClass(document.body, 'login-page');
-  }
+    ngOnInit(): void {
+        this.renderer.addClass(document.body, 'login-page');
+    }
 }

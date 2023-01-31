@@ -1,15 +1,34 @@
-﻿<div class="login-box">
-  <account-header></account-header>
-  <div class="card">
-    <div *ngIf="showTenantChange()" class="card-header">
-      <tenant-change></tenant-change>
+<!--<div class="login-box">-->
+    <account-header></account-header>
+    <div class="card">
+        <div *ngIf="showTenantChange()" class="card-header">
+            <tenant-change></tenant-change>
+        </div>
+        <div class="card-body login-card-body">
+            <div class="login_wrapper">
+                <div class="animate form login_form">
+                    <div class="container">
+                        <div class="">
+                            <div class="block-left">
+                                <router-outlet></router-outlet>
+                            </div>
+                            <div class="block-right">
+                                <div class="login-logo-wrapper">
+                                    <img src="/assets/img/img.jpg" alt="App User" class="logo-img-login">
+                                    <h2>
+                                        <i class="fa fa-chrome"></i>
+                                        <span>Quality Control</span>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <account-languages></account-languages>
+        </div>
     </div>
-    <div class="card-body login-card-body">
-      <router-outlet></router-outlet>
-    </div>
-    <div class="card-footer">
-      <account-languages></account-languages>
-    </div>
-  </div>
-  <account-footer></account-footer>
-</div>
+    <account-footer></account-footer>
+<!--</div>-->
