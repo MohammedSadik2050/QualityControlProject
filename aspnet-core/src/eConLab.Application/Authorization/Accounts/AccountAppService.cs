@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Abp.Configuration;
 using Abp.Zero.Configuration;
 using eConLab.Authorization.Accounts.Dto;
+using eConLab.Authorization.Roles;
 using eConLab.Authorization.Users;
 
 namespace eConLab.Authorization.Accounts
@@ -51,6 +52,28 @@ namespace eConLab.Authorization.Accounts
             return new RegisterOutput
             {
                 CanLogin = user.IsActive && (user.IsEmailConfirmed || !isEmailConfirmationRequiredForLogin)
+            };
+        }
+
+        public async Task<RegisterResult> RegisterUserByRole(RegisterInput input,string roleName="")
+        {
+            var user = await _userRegistrationManager.RegisterAsync(
+                input.Name,
+                input.Surname,
+                input.EmailAddress,
+                input.UserName,
+                input.Password,
+                true // Assumed email address is always confirmed. Change this if you want to implement email confirmation.
+                ,
+                roleName
+                
+            );
+
+            var isEmailConfirmationRequiredForLogin = await SettingManager.GetSettingValueAsync<bool>(AbpZeroSettingNames.UserManagement.IsEmailConfirmationRequiredForLogin);
+
+            return new RegisterResult
+            {
+               UserId=user.Id
             };
         }
     }

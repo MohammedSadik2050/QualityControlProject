@@ -9,5 +9,6 @@ namespace eConLab.Authorization.Accounts
         Task<IsTenantAvailableOutput> IsTenantAvailable(IsTenantAvailableInput input);
 
         Task<RegisterOutput> Register(RegisterInput input);
+        Task<RegisterResult> RegisterUserByRole(RegisterInput input,string roleName="");
     }
 }
