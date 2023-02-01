@@ -11,6 +11,7 @@ using Abp.Runtime.Session;
 using Abp.UI;
 using eConLab.Authorization.Roles;
 using eConLab.MultiTenancy;
+using System.Linq.Dynamic.Core;
 
 namespace eConLab.Authorization.Users
 {
@@ -37,7 +38,7 @@ namespace eConLab.Authorization.Users
             AbpSession = NullAbpSession.Instance;
         }
 
-        public async Task<User> RegisterAsync(string name, string surname, string emailAddress, string userName, string plainPassword, bool isEmailConfirmed)
+        public async Task<User> RegisterAsync(string name, string surname, string emailAddress, string userName, string plainPassword, bool isEmailConfirmed,string roleName="")
         {
             CheckForTenant();
 
@@ -56,11 +57,21 @@ namespace eConLab.Authorization.Users
             };
 
             user.SetNormalizedNames();
-           
-            foreach (var defaultRole in await _roleManager.Roles.Where(r => r.IsDefault).ToListAsync())
+
+            if (!string.IsNullOrEmpty(roleName))
             {
-                user.Roles.Add(new UserRole(tenant.Id, user.Id, defaultRole.Id));
+
+               var defaultRole = await _roleManager.Roles.Where(r => r.Name == roleName).FirstOrDefaultAsync();
+               user.Roles.Add(new UserRole(tenant.Id, user.Id, defaultRole.Id));
             }
+            else
+            {
+                foreach (var defaultRole in await _roleManager.Roles.Where(r => r.IsDefault).ToListAsync())
+                {
+                    user.Roles.Add(new UserRole(tenant.Id, user.Id, defaultRole.Id));
+                }
+            }
+           
 
             await _userManager.InitializeOptionsAsync(tenant.Id);
 

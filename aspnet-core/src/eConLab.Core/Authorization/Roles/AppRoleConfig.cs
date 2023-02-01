@@ -24,6 +24,13 @@ namespace eConLab.Authorization.Roles
                     MultiTenancySides.Tenant
                 )
             );
+
+            roleManagementConfig.StaticRoles.Add(
+               new StaticRoleDefinition(
+                   StaticRoleNames.Tenants.Contractor,
+                   MultiTenancySides.Tenant
+               )
+           );
         }
     }
 }
