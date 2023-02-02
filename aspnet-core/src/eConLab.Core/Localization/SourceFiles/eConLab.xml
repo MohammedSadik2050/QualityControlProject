@@ -116,6 +116,10 @@
     <text name="Clear">Clear</text>
     <text name="ResetPasswordStepOneInfo">1. Enter your administrator password</text>
     <text name="ResetPasswordStepTwoInfo">2. Copy this random password so you can send it to the user</text>
-    <text name="UsersActivation">Users activation</text>
+	  <text name="UsersActivation">Users activation</text>
+	  <text name="COMMERCIALNAME">Commertial Name</text>
+	  <text name="CommericalRegisterationNumber">Commerical Registeration Number</text>
+	  <text name="ِAddress">Address</text>
+	  <text name="ِContactName">Contract Name</text>
   </texts>
 </localizationDictionary>

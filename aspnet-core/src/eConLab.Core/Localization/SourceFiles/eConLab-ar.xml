@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="ar">
 	<texts>
+		<text name="COMMERCIALNAME">الاسم التجاري</text>
+		<text name="CommericalRegisterationNumber">رقم السجل التجاري</text>
+		<text name="ِAddress">العنوان</text>
+		<text name="ِContactName">اسم العقد</text>
 		<text name="HomePage" value="الصفحة الرئيسية" />
 		<text name="About" value="نبذه عنا" />
 		<text name="WelcomeMessage" value="مرحبا" />
@@ -22,7 +26,7 @@
 		<text name="LogIn" value="تسجيل الدخول" />
 		<text name="LoginFailed" value="Login failed!" />
 		<text name="NameSurname" value="Name surname" />
-		<text name="UserName" value="User name" />
+		<text name="UserName" value="اسم المستخدم" />
 		<text name="Name" value="الاسم" />
 		<text name="Surname" value="Surname" />
 		<text name="EmailAddress" value="Email address" />
@@ -118,5 +122,6 @@
 		<text name="ResetPasswordStepOneInfo">1. Enter your administrator password</text>
 		<text name="ResetPasswordStepTwoInfo">2. Copy this random password so you can send it to the user</text>
 		<text name="UsersActivation">Users activation</text>
+		
 	</texts>
 </localizationDictionary>
