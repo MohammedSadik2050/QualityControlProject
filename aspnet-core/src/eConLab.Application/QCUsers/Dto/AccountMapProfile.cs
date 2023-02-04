@@ -8,17 +8,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using eConLab.Authorization.Accounts.Dto.Contractor;
+using eConLab.Account;
 
-namespace eConLab.Authorization.Accounts.Dto
+namespace eConLab.QCUsers.Dto
 {
-    
+
     public class AccountMapProfile : Profile
     {
         public AccountMapProfile()
         {
-           
-            CreateMap<ContractorDto, eConLab.Account.Contractor>().ReverseMap();
+
+            CreateMap<QCUserDto, QCUser>().ReverseMap();
         }
     }
 }

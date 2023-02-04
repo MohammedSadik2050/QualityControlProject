@@ -10,7 +10,9 @@ namespace eConLab.EntityFrameworkCore
     public class eConLabDbContext : AbpZeroDbContext<Tenant, Role, User, eConLabDbContext>
     {
         /* Define a DbSet for each entity of the application */
-        public DbSet<Contractor> Contractors { get; set; }
+        public DbSet<QCUser> QCUsers { get; set; }
+        public DbSet<AgencyType> AgencyTypes { get; set; }
+        public DbSet<Agency> Agencies { get; set; }
         public eConLabDbContext(DbContextOptions<eConLabDbContext> options)
             : base(options)
         {
