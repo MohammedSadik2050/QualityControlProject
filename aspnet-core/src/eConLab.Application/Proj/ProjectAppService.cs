@@ -48,7 +48,7 @@ namespace eConLab.Proj
             _projectItemRepo = projectItemRepo;
         }
 
-        [AbpAuthorize(PermissionNames.Pages_Manage_Project)]
+       // [AbpAuthorize(PermissionNames.Pages_Manage_Project)]
         public async Task<ProjectDto> CreateOrUpdate(ProjectDto input)
         {
             
@@ -139,14 +139,5 @@ namespace eConLab.Proj
         
             return lstItems.ToList().Count;
         }
-
-
-        public async Task<List<ProjectDto>> GetAllProjectList()
-        {
-            var query = _projectRepo.GetAll().ToList();
-            return _mapper.Map<List<ProjectDto>>(query);
-        }
-
-        
     }
 }
