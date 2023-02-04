@@ -5,6 +5,7 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from '../../../shared/paged-listing-component-base';
 import { Contractor, ContractorDto, ContractorServiceProxy, UserServiceProxy } from '../../../shared/service-proxies/service-proxies'; 
 import { ContractorUserComponent } from '../contractor-create/contractor-user/contractor-user.component';
+import { ContractorEditComponent } from '../contractor-edit/contractor-edit.component';
 
 //@Component({
 //    selector: 'app-contractors-list',
@@ -111,15 +112,15 @@ export class ContractorsListComponent extends PagedListingComponentBase<Contract
                 }
             );
         } else {
-            //createOrEditUserDialog = this._modalService.show(
-            //    EditUserDialogComponent,
-            //    {
-            //        class: 'modal-lg',
-            //        initialState: {
-            //            id: id,
-            //        },
-            //    }
-            //);
+            createOrEditUserDialog = this._modalService.show(
+                ContractorEditComponent,
+                {
+                    class: 'modal-lg',
+                    initialState: {
+                        id: id,
+                    },
+                }
+            );
         }
 
         createOrEditUserDialog.content.onSave.subscribe(() => {

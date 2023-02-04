@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 
 namespace eConLab.Authorization.Accounts
 {
-    public interface  IContractorAppService: IApplicationService
+    public interface IContractorAppService : IApplicationService
     {
         Task<ContractorDto> Create(CreateContractorDto input);
         Task<PagedResultDto<ContractorDto>> GetAllContractors(ContractorPagedAndSortedResultRequestDto input);
+        Task<ContractorDto> GetById(long id);
     }
 }
