@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="ar">
 	<texts>
+		<text name="UserType">نوع المستخدم</text>
+		<text name="Fax">الفاكس</text>
+		<text name="WorkPlace">مكان العمل</text>
 		<text name="PhoneNumber">رقم الهاتف</text>
+		<text name="NationalityName">الجنسيه</text>
+		<text name="StaffNumber">المسلسل الوظيفي</text>
+		<text name="NationalId">الرقم القومل/اقامه</text>
 		<text name="CreateNewAgency">اضافه جهه جديده</text>
 		<text name="WorkNumber">رقم العمل</text>
 		<text name="Agencies">الجهات</text>
@@ -62,6 +68,7 @@
 		<text name="RegisterFormUserNameInvalidMessage">Please don't enter an email address for username.</text>
 		<text name="DatabaseConnectionString" value="Database connection string" />
 		<text name="Users" value="مدراء النظام" />
+		<text name="AppUsers" value="المستخدمين" />
 		<text name="IsActive" value="التفعيل" />
 		<text name="FullName" value="الاسم كاملا" />
 		<text name="CreateNewUser" value="Create new user" />
