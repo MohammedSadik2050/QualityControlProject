@@ -8,7 +8,7 @@
 
         <tabset>
             <tab [heading]="'Details' | localize" class="pt-3 px-2">
-                <div class="form-group row required">
+                <!--<div class="form-group row required">
                     <label class="col-md-3 col-form-label" for="COMMERCIALNAME">
                         {{ "COMMERCIALNAME" | localize }}
                     </label>
@@ -19,14 +19,14 @@
                                id="commericalName"
                                required
                                maxlength="32"
-                               [(ngModel)]="contractor.commericalName"
+                               [(ngModel)]="qcUser.commericalName"
                                #commericalNameModel="ngModel"
                                #commericalNameE1 />
                         <abp-validation-summary [control]="commericalNameModel"
                                                 [controlEl]="commericalNameE1"></abp-validation-summary>
                     </div>
-                </div>
-                <div class="form-group row required">
+                </div>-->
+                <!--<div class="form-group row required">
                     <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
                         {{ "CommericalRegisterationNumber" | localize }}
                     </label>
@@ -37,13 +37,13 @@
                                id="commericalRegisterationNumber"
                                required
                                maxlength="32"
-                               [(ngModel)]="contractor.commericalRegisterationNumber"
+                               [(ngModel)]="qcUser.commericalRegisterationNumber"
                                #commericalRegisterationNumberModel="ngModel"
                                #commericalRegisterationNumberE1 />
                         <abp-validation-summary [control]="commericalRegisterationNumberModel"
                                                 [controlEl]="commericalRegisterationNumberE1"></abp-validation-summary>
                     </div>
-                </div>
+                </div>-->
                 <div class="form-group row required">
                     <label class="col-md-3 col-form-label" for="ADDRESS">
                         {{ "ADDRESS" | localize }}
@@ -55,7 +55,7 @@
                                id="Address"
                                required
                                maxlength="32"
-                               [(ngModel)]="contractor.address"
+                               [(ngModel)]="qcUser.address"
                                #addressModel="ngModel"
                                #address />
                         <abp-validation-summary [control]="addressModel"
@@ -64,20 +64,20 @@
                 </div>
                 <div class="form-group row required">
                     <label class="col-md-3 col-form-label" for="CONTRACTNAME">
-                        {{ "Contract_Name" | localize }}
+                        {{ "Name" | localize }}
                     </label>
                     <div class="col-md-9">
                         <input type="text"
                                class="form-control"
-                               name="ContactName"
-                               id="ContactName"
+                               name="Name"
+                               id="Name"
                                required
                                maxlength="32"
-                               [(ngModel)]="contractor.contactName"
-                               #contactNameModel="ngModel"
-                               #contactName />
-                        <abp-validation-summary [control]="contactNameModel"
-                                                [controlEl]="contactName"></abp-validation-summary>
+                               [(ngModel)]="qcUser.name"
+                               #qcNameModel="ngModel"
+                               #qcName />
+                        <abp-validation-summary [control]="qcNameModel"
+                                                [controlEl]="qcName"></abp-validation-summary>
                     </div>
                 </div>
             </tab>

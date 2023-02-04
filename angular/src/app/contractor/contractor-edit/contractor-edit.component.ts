@@ -4,7 +4,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { AppComponentBase } from '../../../shared/app-component-base';
 import { AppAuthService } from '../../../shared/auth/app-auth.service';
 import { AbpValidationError } from '../../../shared/components/validation/abp-validation.api';
-import { ContractorDto, ContractorServiceProxy, CreateContractorDto, RegisterInput, UserDto, UserServiceProxy } from '../../../shared/service-proxies/service-proxies';
+import { QCUserDto, QCUserServiceProxy, QCUserCreateDto, CreateUserDto, RegisterInput, RoleServiceProxy, UserServiceProxy, UserDto } from './../../../shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'app-contractor-edit',
@@ -14,7 +14,7 @@ import { ContractorDto, ContractorServiceProxy, CreateContractorDto, RegisterInp
 export class ContractorEditComponent extends AppComponentBase
     implements OnInit {
     saving = false;
-    contractor = new ContractorDto();
+    qcUser = new QCUserDto(); 
     currentUser = new UserDto();
     checkedRolesMap: { [key: string]: boolean } = {};
     id: number;
@@ -23,7 +23,7 @@ export class ContractorEditComponent extends AppComponentBase
 
     constructor(
         injector: Injector,
-        public _contractorServiceProxy: ContractorServiceProxy,
+        public _qcUserServiceProxy: QCUserServiceProxy,
         public _userServiceProxy: UserServiceProxy,
         public bsModalRef: BsModalRef
     ) {
@@ -43,10 +43,10 @@ export class ContractorEditComponent extends AppComponentBase
         },
     ];
     ngOnInit(): void {
-        this._contractorServiceProxy.getById(this.id).subscribe((result) => {
-            this.contractor = result;
+        this._qcUserServiceProxy.getById(this.id).subscribe((result) => {
+            this.qcUser = result;
 
-            this._userServiceProxy.get(this.contractor.userId).subscribe((result2) => {
+            this._userServiceProxy.get(this.qcUser.userId).subscribe((result2) => {
                 this.currentUser = result2;
             });
         });

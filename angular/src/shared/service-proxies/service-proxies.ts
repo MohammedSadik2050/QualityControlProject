@@ -266,7 +266,7 @@ export class ConfigurationServiceProxy {
 }
 
 @Injectable()
-export class ContractorServiceProxy {
+export class QCUserServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -280,8 +280,8 @@ export class ContractorServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    create(body: CreateContractorDto | undefined) : Observable<ContractorDto> {
-        let url_ = this.baseUrl + "/api/services/app/Contractor/Create";
+    createOrUpdate(body: QCUserCreateDto | undefined) : Observable<QCUserDto> {
+        let url_ = this.baseUrl + "/api/services/app/QCUser/CreateOrUpdate";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -297,20 +297,20 @@ export class ContractorServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreate(response_);
+            return this.processCreateOrUpdate(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCreate(<any>response_);
+                    return this.processCreateOrUpdate(<any>response_);
                 } catch (e) {
-                    return <Observable<ContractorDto>><any>_observableThrow(e);
+                    return <Observable<QCUserDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ContractorDto>><any>_observableThrow(response_);
+                return <Observable<QCUserDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processCreate(response: HttpResponseBase): Observable<ContractorDto> {
+    protected processCreateOrUpdate(response: HttpResponseBase): Observable<QCUserDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -321,7 +321,7 @@ export class ContractorServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ContractorDto.fromJS(resultData200);
+            result200 = QCUserDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -329,116 +329,15 @@ export class ContractorServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ContractorDto>(<any>null);
-    }
-
-    /**
-     * @param contractorInfo_CommericalName (optional) 
-     * @param contractorInfo_CommericalRegisterationNumber (optional) 
-     * @param contractorInfo_Address (optional) 
-     * @param contractorInfo_ContactName (optional) 
-     * @param contractorInfo_UserId (optional) 
-     * @param registerInput_CaptchaResponse (optional) 
-     * @return Success
-     */
-    getAll(contractorInfo_CommericalName: string | undefined, contractorInfo_CommericalRegisterationNumber: string | undefined, contractorInfo_Address: string | undefined, contractorInfo_ContactName: string | undefined, contractorInfo_UserId: number | undefined, registerInput_Name: string, registerInput_Surname: string, registerInput_UserName: string, registerInput_EmailAddress: string, registerInput_Password: string, registerInput_CaptchaResponse: string | undefined) : Observable<ContractorDto> {
-        let url_ = this.baseUrl + "/api/services/app/Contractor/GetAll?";
-        if (contractorInfo_CommericalName === null)
-            throw new Error("The parameter 'contractorInfo_CommericalName' cannot be null.");
-        else if (contractorInfo_CommericalName !== undefined)
-            url_ += "ContractorInfo.CommericalName=" + encodeURIComponent("" + contractorInfo_CommericalName) + "&";
-        if (contractorInfo_CommericalRegisterationNumber === null)
-            throw new Error("The parameter 'contractorInfo_CommericalRegisterationNumber' cannot be null.");
-        else if (contractorInfo_CommericalRegisterationNumber !== undefined)
-            url_ += "ContractorInfo.CommericalRegisterationNumber=" + encodeURIComponent("" + contractorInfo_CommericalRegisterationNumber) + "&";
-        if (contractorInfo_Address === null)
-            throw new Error("The parameter 'contractorInfo_Address' cannot be null.");
-        else if (contractorInfo_Address !== undefined)
-            url_ += "ContractorInfo.Address=" + encodeURIComponent("" + contractorInfo_Address) + "&";
-        if (contractorInfo_ContactName === null)
-            throw new Error("The parameter 'contractorInfo_ContactName' cannot be null.");
-        else if (contractorInfo_ContactName !== undefined)
-            url_ += "ContractorInfo.ContactName=" + encodeURIComponent("" + contractorInfo_ContactName) + "&";
-        if (contractorInfo_UserId === null)
-            throw new Error("The parameter 'contractorInfo_UserId' cannot be null.");
-        else if (contractorInfo_UserId !== undefined)
-            url_ += "ContractorInfo.UserId=" + encodeURIComponent("" + contractorInfo_UserId) + "&";
-        if (registerInput_Name === undefined || registerInput_Name === null)
-            throw new Error("The parameter 'registerInput_Name' must be defined and cannot be null.");
-        else
-            url_ += "RegisterInput.Name=" + encodeURIComponent("" + registerInput_Name) + "&";
-        if (registerInput_Surname === undefined || registerInput_Surname === null)
-            throw new Error("The parameter 'registerInput_Surname' must be defined and cannot be null.");
-        else
-            url_ += "RegisterInput.Surname=" + encodeURIComponent("" + registerInput_Surname) + "&";
-        if (registerInput_UserName === undefined || registerInput_UserName === null)
-            throw new Error("The parameter 'registerInput_UserName' must be defined and cannot be null.");
-        else
-            url_ += "RegisterInput.UserName=" + encodeURIComponent("" + registerInput_UserName) + "&";
-        if (registerInput_EmailAddress === undefined || registerInput_EmailAddress === null)
-            throw new Error("The parameter 'registerInput_EmailAddress' must be defined and cannot be null.");
-        else
-            url_ += "RegisterInput.EmailAddress=" + encodeURIComponent("" + registerInput_EmailAddress) + "&";
-        if (registerInput_Password === undefined || registerInput_Password === null)
-            throw new Error("The parameter 'registerInput_Password' must be defined and cannot be null.");
-        else
-            url_ += "RegisterInput.Password=" + encodeURIComponent("" + registerInput_Password) + "&";
-        if (registerInput_CaptchaResponse === null)
-            throw new Error("The parameter 'registerInput_CaptchaResponse' cannot be null.");
-        else if (registerInput_CaptchaResponse !== undefined)
-            url_ += "RegisterInput.CaptchaResponse=" + encodeURIComponent("" + registerInput_CaptchaResponse) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(<any>response_);
-                } catch (e) {
-                    return <Observable<ContractorDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<ContractorDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<ContractorDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ContractorDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<ContractorDto>(<any>null);
+        return _observableOf<QCUserDto>(<any>null);
     }
 
     /**
      * @param id (optional) 
      * @return Success
      */
-    getById(id: number | undefined) : Observable<ContractorDto> {
-        let url_ = this.baseUrl + "/api/services/app/Contractor/GetById?";
+    getById(id: number | undefined) : Observable<QCUserDto> {
+        let url_ = this.baseUrl + "/api/services/app/QCUser/GetById?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -460,14 +359,14 @@ export class ContractorServiceProxy {
                 try {
                     return this.processGetById(<any>response_);
                 } catch (e) {
-                    return <Observable<ContractorDto>><any>_observableThrow(e);
+                    return <Observable<QCUserDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ContractorDto>><any>_observableThrow(response_);
+                return <Observable<QCUserDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetById(response: HttpResponseBase): Observable<ContractorDto> {
+    protected processGetById(response: HttpResponseBase): Observable<QCUserDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -478,7 +377,7 @@ export class ContractorServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ContractorDto.fromJS(resultData200);
+            result200 = QCUserDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -486,7 +385,7 @@ export class ContractorServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ContractorDto>(<any>null);
+        return _observableOf<QCUserDto>(<any>null);
     }
 
     /**
@@ -496,8 +395,8 @@ export class ContractorServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllContractors(id: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<ContractorDtoPagedResultDto> {
-        let url_ = this.baseUrl + "/api/services/app/Contractor/GetAllContractors?";
+    getAll(id: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<QCUserDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/QCUser/GetAll?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -525,20 +424,20 @@ export class ContractorServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllContractors(response_);
+            return this.processGetAll(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAllContractors(<any>response_);
+                    return this.processGetAll(<any>response_);
                 } catch (e) {
-                    return <Observable<ContractorDtoPagedResultDto>><any>_observableThrow(e);
+                    return <Observable<QCUserDtoPagedResultDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ContractorDtoPagedResultDto>><any>_observableThrow(response_);
+                return <Observable<QCUserDtoPagedResultDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAllContractors(response: HttpResponseBase): Observable<ContractorDtoPagedResultDto> {
+    protected processGetAll(response: HttpResponseBase): Observable<QCUserDtoPagedResultDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -549,7 +448,7 @@ export class ContractorServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ContractorDtoPagedResultDto.fromJS(resultData200);
+            result200 = QCUserDtoPagedResultDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -557,146 +456,7 @@ export class ContractorServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ContractorDtoPagedResultDto>(<any>null);
-    }
-
-    /**
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @param id (optional) 
-     * @param name (optional) 
-     * @return Success
-     */
-    getList(skipCount: number | undefined, maxResultCount: number | undefined, id: number | undefined, name: string | undefined) : Observable<Contractor[]> {
-        let url_ = this.baseUrl + "/api/services/app/Contractor/GetList?";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "skipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "maxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        if (name === null)
-            throw new Error("The parameter 'name' cannot be null.");
-        else if (name !== undefined)
-            url_ += "Name=" + encodeURIComponent("" + name) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetList(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetList(<any>response_);
-                } catch (e) {
-                    return <Observable<Contractor[]>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<Contractor[]>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetList(response: HttpResponseBase): Observable<Contractor[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200.push(Contractor.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<Contractor[]>(<any>null);
-    }
-
-    /**
-     * @param id (optional) 
-     * @param name (optional) 
-     * @return Success
-     */
-    getTotalCount(id: number | undefined, name: string | undefined) : Observable<number> {
-        let url_ = this.baseUrl + "/api/services/app/Contractor/GetTotalCount?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        if (name === null)
-            throw new Error("The parameter 'name' cannot be null.");
-        else if (name !== undefined)
-            url_ += "Name=" + encodeURIComponent("" + name) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTotalCount(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTotalCount(<any>response_);
-                } catch (e) {
-                    return <Observable<number>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<number>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetTotalCount(response: HttpResponseBase): Observable<number> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 !== undefined ? resultData200 : <any>null;
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<number>(<any>null);
+        return _observableOf<QCUserDtoPagedResultDto>(<any>null);
     }
 }
 
@@ -2633,258 +2393,6 @@ export interface IChangeUserLanguageDto {
     languageName: string;
 }
 
-export class Contractor implements IContractor {
-    id: number;
-    readonly domainEvents: IEventData[] | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    commericalName: string | undefined;
-    commericalRegisterationNumber: string | undefined;
-    address: string | undefined;
-    contactName: string | undefined;
-    userId: number;
-
-    constructor(data?: IContractor) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            if (Array.isArray(_data["domainEvents"])) {
-                (<any>this).domainEvents = [] as any;
-                for (let item of _data["domainEvents"])
-                    (<any>this).domainEvents.push(IEventData.fromJS(item));
-            }
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = _data["creatorUserId"];
-            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = _data["lastModifierUserId"];
-            this.commericalName = _data["commericalName"];
-            this.commericalRegisterationNumber = _data["commericalRegisterationNumber"];
-            this.address = _data["address"];
-            this.contactName = _data["contactName"];
-            this.userId = _data["userId"];
-        }
-    }
-
-    static fromJS(data: any): Contractor {
-        data = typeof data === 'object' ? data : {};
-        let result = new Contractor();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        if (Array.isArray(this.domainEvents)) {
-            data["domainEvents"] = [];
-            for (let item of this.domainEvents)
-                data["domainEvents"].push(item.toJSON());
-        }
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["commericalName"] = this.commericalName;
-        data["commericalRegisterationNumber"] = this.commericalRegisterationNumber;
-        data["address"] = this.address;
-        data["contactName"] = this.contactName;
-        data["userId"] = this.userId;
-        return data; 
-    }
-
-    clone(): Contractor {
-        const json = this.toJSON();
-        let result = new Contractor();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IContractor {
-    id: number;
-    domainEvents: IEventData[] | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    commericalName: string | undefined;
-    commericalRegisterationNumber: string | undefined;
-    address: string | undefined;
-    contactName: string | undefined;
-    userId: number;
-}
-
-export class ContractorDto implements IContractorDto {
-    commericalName: string | undefined;
-    commericalRegisterationNumber: string | undefined;
-    address: string | undefined;
-    contactName: string | undefined;
-    userId: number;
-
-    constructor(data?: IContractorDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.commericalName = _data["commericalName"];
-            this.commericalRegisterationNumber = _data["commericalRegisterationNumber"];
-            this.address = _data["address"];
-            this.contactName = _data["contactName"];
-            this.userId = _data["userId"];
-        }
-    }
-
-    static fromJS(data: any): ContractorDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ContractorDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["commericalName"] = this.commericalName;
-        data["commericalRegisterationNumber"] = this.commericalRegisterationNumber;
-        data["address"] = this.address;
-        data["contactName"] = this.contactName;
-        data["userId"] = this.userId;
-        return data; 
-    }
-
-    clone(): ContractorDto {
-        const json = this.toJSON();
-        let result = new ContractorDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IContractorDto {
-    commericalName: string | undefined;
-    commericalRegisterationNumber: string | undefined;
-    address: string | undefined;
-    contactName: string | undefined;
-    userId: number;
-}
-
-export class ContractorDtoPagedResultDto implements IContractorDtoPagedResultDto {
-    items: ContractorDto[] | undefined;
-    totalCount: number;
-
-    constructor(data?: IContractorDtoPagedResultDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items.push(ContractorDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): ContractorDtoPagedResultDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ContractorDtoPagedResultDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data; 
-    }
-
-    clone(): ContractorDtoPagedResultDto {
-        const json = this.toJSON();
-        let result = new ContractorDtoPagedResultDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IContractorDtoPagedResultDto {
-    items: ContractorDto[] | undefined;
-    totalCount: number;
-}
-
-export class CreateContractorDto implements ICreateContractorDto {
-    contractorInfo: ContractorDto;
-    registerInput: RegisterInput;
-
-    constructor(data?: ICreateContractorDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.contractorInfo = _data["contractorInfo"] ? ContractorDto.fromJS(_data["contractorInfo"]) : <any>undefined;
-            this.registerInput = _data["registerInput"] ? RegisterInput.fromJS(_data["registerInput"]) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): CreateContractorDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateContractorDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["contractorInfo"] = this.contractorInfo ? this.contractorInfo.toJSON() : <any>undefined;
-        data["registerInput"] = this.registerInput ? this.registerInput.toJSON() : <any>undefined;
-        return data; 
-    }
-
-    clone(): CreateContractorDto {
-        const json = this.toJSON();
-        let result = new CreateContractorDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ICreateContractorDto {
-    contractorInfo: ContractorDto;
-    registerInput: RegisterInput;
-}
-
 export class CreateRoleDto implements ICreateRoleDto {
     name: string;
     displayName: string;
@@ -3408,53 +2916,6 @@ export interface IGetRoleForEditOutput {
     grantedPermissionNames: string[] | undefined;
 }
 
-export class IEventData implements IIEventData {
-    eventTime: moment.Moment;
-    eventSource: any | undefined;
-
-    constructor(data?: IIEventData) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.eventTime = _data["eventTime"] ? moment(_data["eventTime"].toString()) : <any>undefined;
-            this.eventSource = _data["eventSource"];
-        }
-    }
-
-    static fromJS(data: any): IEventData {
-        data = typeof data === 'object' ? data : {};
-        let result = new IEventData();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["eventTime"] = this.eventTime ? this.eventTime.toISOString() : <any>undefined;
-        data["eventSource"] = this.eventSource;
-        return data; 
-    }
-
-    clone(): IEventData {
-        const json = this.toJSON();
-        let result = new IEventData();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IIEventData {
-    eventTime: moment.Moment;
-    eventSource: any | undefined;
-}
-
 export class Int64EntityDto implements IInt64EntityDto {
     id: number;
 
@@ -3692,6 +3153,203 @@ export class PermissionDtoListResultDto implements IPermissionDtoListResultDto {
 
 export interface IPermissionDtoListResultDto {
     items: PermissionDto[] | undefined;
+}
+
+export class QCUserCreateDto implements IQCUserCreateDto {
+    id: number;
+    qcUserInput: QCUserDto;
+    registerInput: RegisterInput;
+
+    constructor(data?: IQCUserCreateDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.qcUserInput = _data["qcUserInput"] ? QCUserDto.fromJS(_data["qcUserInput"]) : <any>undefined;
+            this.registerInput = _data["registerInput"] ? RegisterInput.fromJS(_data["registerInput"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): QCUserCreateDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new QCUserCreateDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["qcUserInput"] = this.qcUserInput ? this.qcUserInput.toJSON() : <any>undefined;
+        data["registerInput"] = this.registerInput ? this.registerInput.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): QCUserCreateDto {
+        const json = this.toJSON();
+        let result = new QCUserCreateDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IQCUserCreateDto {
+    id: number;
+    qcUserInput: QCUserDto;
+    registerInput: RegisterInput;
+}
+
+export class QCUserDto implements IQCUserDto {
+    id: number;
+    userType: UserTypes;
+    name: string | undefined;
+    nationalId: string | undefined;
+    nationalityName: string | undefined;
+    staffNumber: string | undefined;
+    agencyId: number;
+    phoneNumber: string | undefined;
+    mobilePhoneNumber: string | undefined;
+    workPlace: string | undefined;
+    address: string | undefined;
+    fax: string | undefined;
+    userId: number;
+
+    constructor(data?: IQCUserDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.userType = _data["userType"];
+            this.name = _data["name"];
+            this.nationalId = _data["nationalId"];
+            this.nationalityName = _data["nationalityName"];
+            this.staffNumber = _data["staffNumber"];
+            this.agencyId = _data["agencyId"];
+            this.phoneNumber = _data["phoneNumber"];
+            this.mobilePhoneNumber = _data["mobilePhoneNumber"];
+            this.workPlace = _data["workPlace"];
+            this.address = _data["address"];
+            this.fax = _data["fax"];
+            this.userId = _data["userId"];
+        }
+    }
+
+    static fromJS(data: any): QCUserDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new QCUserDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["userType"] = this.userType;
+        data["name"] = this.name;
+        data["nationalId"] = this.nationalId;
+        data["nationalityName"] = this.nationalityName;
+        data["staffNumber"] = this.staffNumber;
+        data["agencyId"] = this.agencyId;
+        data["phoneNumber"] = this.phoneNumber;
+        data["mobilePhoneNumber"] = this.mobilePhoneNumber;
+        data["workPlace"] = this.workPlace;
+        data["address"] = this.address;
+        data["fax"] = this.fax;
+        data["userId"] = this.userId;
+        return data; 
+    }
+
+    clone(): QCUserDto {
+        const json = this.toJSON();
+        let result = new QCUserDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IQCUserDto {
+    id: number;
+    userType: UserTypes;
+    name: string | undefined;
+    nationalId: string | undefined;
+    nationalityName: string | undefined;
+    staffNumber: string | undefined;
+    agencyId: number;
+    phoneNumber: string | undefined;
+    mobilePhoneNumber: string | undefined;
+    workPlace: string | undefined;
+    address: string | undefined;
+    fax: string | undefined;
+    userId: number;
+}
+
+export class QCUserDtoPagedResultDto implements IQCUserDtoPagedResultDto {
+    items: QCUserDto[] | undefined;
+    totalCount: number;
+
+    constructor(data?: IQCUserDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(QCUserDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): QCUserDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new QCUserDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data; 
+    }
+
+    clone(): QCUserDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new QCUserDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IQCUserDtoPagedResultDto {
+    items: QCUserDto[] | undefined;
+    totalCount: number;
 }
 
 export class RegisterInput implements IRegisterInput {
@@ -4610,6 +4268,17 @@ export interface IUserLoginInfoDto {
     surname: string | undefined;
     userName: string | undefined;
     emailAddress: string | undefined;
+}
+
+export enum UserTypes {
+    _1 = 1,
+    _2 = 2,
+    _3 = 3,
+    _4 = 4,
+    _5 = 5,
+    _6 = 6,
+    _7 = 7,
+    _8 = 8,
 }
 
 export class ApiException extends Error {
