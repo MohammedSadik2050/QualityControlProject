@@ -52,16 +52,24 @@ namespace eConLab.QCUsers
             {
                 //update
                 //just we need to update email and user Type 
+               
                 var currentUser = await UserManager.FindByIdAsync(input.QCUserInput.UserId.ToString());
+
+               
+                var qcUser=await _qcUsersRepo.FirstOrDefaultAsync(d=>d.UserId== input.QCUserInput.UserId);
+                qcUser = _mapper.Map<QCUser>(input.QCUserInput); 
                 if (currentUser != null)
                 {
                     currentUser.EmailAddress = input.RegisterInput.EmailAddress;
-                    //if (!currentUser.Roles.Any(x=>x.))
-                    //{
+                    if (qcUser.UserTypes != input.QCUserInput.UserTypes)
+                    {
+                        await UserManager.RemoveFromRoleAsync(currentUser, GetRoleNameByUserType(qcUser.UserTypes));
 
-                    //}
+                        await UserManager.AddToRoleAsync(currentUser, GetRoleNameByUserType(input.QCUserInput.UserTypes));
+                    }
                     await _accountAppService.UserManager.UpdateAsync(currentUser);
                 }
+                await CurrentUnitOfWork.SaveChangesAsync();
 
 
             }
