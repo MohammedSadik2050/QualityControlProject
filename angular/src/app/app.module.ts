@@ -41,6 +41,9 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { ContractorUserComponent } from './contractor/contractor-create/contractor-user/contractor-user.component';
 import { ContractorsListComponent } from './contractor/contractos-list/contractos-list.component';
 import { ContractorEditComponent } from './contractor/contractor-edit/contractor-edit.component';
+import { AgenyComponent } from './ageny/ageny.component';
+import { AgencyCreateComponent } from './ageny/agency-create/agency-create.component';
+import { AgencyEditComponent } from './ageny/agency-edit/agency-edit.component';
 
 @NgModule({
     declarations: [
@@ -73,7 +76,10 @@ import { ContractorEditComponent } from './contractor/contractor-edit/contractor
         SidebarMenuComponent,
         ContractorUserComponent,
         ContractorsListComponent,
-        ContractorEditComponent
+        ContractorEditComponent,
+        AgenyComponent,
+        AgencyCreateComponent,
+        AgencyEditComponent
     ],
     imports: [
         CommonModule,
@@ -104,7 +110,9 @@ import { ContractorEditComponent } from './contractor/contractor-edit/contractor
         ResetPasswordDialogComponent,
         ContractorUserComponent,
         ContractorsListComponent,
-        ContractorEditComponent
+        ContractorEditComponent,
+        AgencyCreateComponent,
+        AgencyEditComponent
     ],
 })
 export class AppModule { }

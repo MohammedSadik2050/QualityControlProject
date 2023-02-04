@@ -17,7 +17,9 @@ namespace eConLab.Agencies.Dto
 
             CreateMap<Agency, AgencyDto>().ReverseMap();
             CreateMap<CreateUpdateAgencyDto, Agency>().ReverseMap();
+            CreateMap<CreateUpdateAgencyDto, AgencyDto>().ReverseMap();
             CreateMap<AgencyTypeDto, AgencyType>().ReverseMap();
+            CreateMap<AgencyPaginatedDto, QCUserPagedAndSortedResultRequestDto>().ReverseMap();
         }
     }
 }

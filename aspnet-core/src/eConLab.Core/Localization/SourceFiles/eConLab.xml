@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
 	<texts>
+		<text name="MobilePhoneNumber">Mobile Number</text>
+		<text name="Agencies">Agencies</text>
+		<text name="AgencyType">Agency Type</text>
+		<text name="WorkNumber">Work Number</text>
+		<text name="Agency">Agencies</text> 
+		<text name="PhoneNumber">Phone Number</text>
+		<text name="Description">Description</text>
+		<text name="ResponsiblePerson">Responsible Person</text>
 		<text name="CreateNewContractor">Create New Contractor</text>
 		<text name="EditContractor">Edit Contractor</text>
 		<text name="Contractor">Contractor</text>

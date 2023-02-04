@@ -1,7 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="ar">
 	<texts>
+		<text name="PhoneNumber">رقم الهاتف</text>
+		<text name="WorkNumber">رقم العمل</text>
+		<text name="Agencies">الجهات</text>
+		<text name="">الجهات</text>
+		<text name="AgencyType">نوع الجهه</text>
+		<text name="Agency">الجهات</text>
+		<text name="MobilePhoneNumber">رقم الجوال</text>
 		<text name="COMMERCIALNAME">الاسم التجاري</text>
+		<text name="Description">الوصف</text>
+		<text name="ResponsiblePerson">المسئول</text>
 		<text name="CreateNewContractor">انشاء مقاول جديد</text>
 		<text name="EditContractor">تعديل المقاول</text>
 		<text name="Contractor">المقاول</text>

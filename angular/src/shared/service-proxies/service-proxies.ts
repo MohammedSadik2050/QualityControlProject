@@ -202,6 +202,317 @@ export class AccountServiceProxy {
 }
 
 @Injectable()
+export class AgencyServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrUpdate(body: CreateUpdateAgencyDto | undefined) : Observable<AgencyDto> {
+        let url_ = this.baseUrl + "/api/services/app/Agency/CreateOrUpdate";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<AgencyDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AgencyDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateOrUpdate(response: HttpResponseBase): Observable<AgencyDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AgencyDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AgencyDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    get(id: number | undefined) : Observable<AgencyDto> {
+        let url_ = this.baseUrl + "/api/services/app/Agency/Get?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<AgencyDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AgencyDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<AgencyDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AgencyDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AgencyDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(id: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<AgencyDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Agency/GetAll?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<AgencyDtoPagedResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AgencyDtoPagedResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<AgencyDtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AgencyDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AgencyDtoPagedResultDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllAgenciesList() : Observable<AgencyDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Agency/GetAllAgenciesList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllAgenciesList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllAgenciesList(<any>response_);
+                } catch (e) {
+                    return <Observable<AgencyDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AgencyDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllAgenciesList(response: HttpResponseBase): Observable<AgencyDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(AgencyDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AgencyDto[]>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllAgencyTypeList() : Observable<AgencyTypeDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Agency/GetAllAgencyTypeList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllAgencyTypeList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllAgencyTypeList(<any>response_);
+                } catch (e) {
+                    return <Observable<AgencyTypeDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AgencyTypeDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllAgencyTypeList(response: HttpResponseBase): Observable<AgencyTypeDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(AgencyTypeDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AgencyTypeDto[]>(<any>null);
+    }
+}
+
+@Injectable()
 export class ConfigurationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -2091,6 +2402,203 @@ export class UserServiceProxy {
     }
 }
 
+export class AgencyDto implements IAgencyDto {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    name: string | undefined;
+    description: string | undefined;
+    agencyTypeId: number;
+    responsiblePerson: string | undefined;
+    phoneNumber: string | undefined;
+    mobilePhoneNumber: string | undefined;
+    workNumber: string | undefined;
+    address: string | undefined;
+
+    constructor(data?: IAgencyDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.agencyTypeId = _data["agencyTypeId"];
+            this.responsiblePerson = _data["responsiblePerson"];
+            this.phoneNumber = _data["phoneNumber"];
+            this.mobilePhoneNumber = _data["mobilePhoneNumber"];
+            this.workNumber = _data["workNumber"];
+            this.address = _data["address"];
+        }
+    }
+
+    static fromJS(data: any): AgencyDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AgencyDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["agencyTypeId"] = this.agencyTypeId;
+        data["responsiblePerson"] = this.responsiblePerson;
+        data["phoneNumber"] = this.phoneNumber;
+        data["mobilePhoneNumber"] = this.mobilePhoneNumber;
+        data["workNumber"] = this.workNumber;
+        data["address"] = this.address;
+        return data; 
+    }
+
+    clone(): AgencyDto {
+        const json = this.toJSON();
+        let result = new AgencyDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAgencyDto {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    name: string | undefined;
+    description: string | undefined;
+    agencyTypeId: number;
+    responsiblePerson: string | undefined;
+    phoneNumber: string | undefined;
+    mobilePhoneNumber: string | undefined;
+    workNumber: string | undefined;
+    address: string | undefined;
+}
+
+export class AgencyDtoPagedResultDto implements IAgencyDtoPagedResultDto {
+    items: AgencyDto[] | undefined;
+    totalCount: number;
+
+    constructor(data?: IAgencyDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(AgencyDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): AgencyDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AgencyDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data; 
+    }
+
+    clone(): AgencyDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new AgencyDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAgencyDtoPagedResultDto {
+    items: AgencyDto[] | undefined;
+    totalCount: number;
+}
+
+export class AgencyTypeDto implements IAgencyTypeDto {
+    id: number;
+    name: string | undefined;
+    description: string | undefined;
+
+    constructor(data?: IAgencyTypeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+        }
+    }
+
+    static fromJS(data: any): AgencyTypeDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AgencyTypeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        return data; 
+    }
+
+    clone(): AgencyTypeDto {
+        const json = this.toJSON();
+        let result = new AgencyTypeDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAgencyTypeDto {
+    id: number;
+    name: string | undefined;
+    description: string | undefined;
+}
+
 export class ApplicationInfoDto implements IApplicationInfoDto {
     version: string | undefined;
     releaseDate: moment.Moment;
@@ -2517,6 +3025,97 @@ export interface ICreateTenantDto {
     adminEmailAddress: string;
     connectionString: string | undefined;
     isActive: boolean;
+}
+
+export class CreateUpdateAgencyDto implements ICreateUpdateAgencyDto {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    name: string | undefined;
+    description: string | undefined;
+    agencyTypeId: number;
+    responsiblePerson: string | undefined;
+    phoneNumber: string | undefined;
+    mobilePhoneNumber: string | undefined;
+    workNumber: string | undefined;
+    address: string | undefined;
+
+    constructor(data?: ICreateUpdateAgencyDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.agencyTypeId = _data["agencyTypeId"];
+            this.responsiblePerson = _data["responsiblePerson"];
+            this.phoneNumber = _data["phoneNumber"];
+            this.mobilePhoneNumber = _data["mobilePhoneNumber"];
+            this.workNumber = _data["workNumber"];
+            this.address = _data["address"];
+        }
+    }
+
+    static fromJS(data: any): CreateUpdateAgencyDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateUpdateAgencyDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["agencyTypeId"] = this.agencyTypeId;
+        data["responsiblePerson"] = this.responsiblePerson;
+        data["phoneNumber"] = this.phoneNumber;
+        data["mobilePhoneNumber"] = this.mobilePhoneNumber;
+        data["workNumber"] = this.workNumber;
+        data["address"] = this.address;
+        return data; 
+    }
+
+    clone(): CreateUpdateAgencyDto {
+        const json = this.toJSON();
+        let result = new CreateUpdateAgencyDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateUpdateAgencyDto {
+    id: number;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    name: string | undefined;
+    description: string | undefined;
+    agencyTypeId: number;
+    responsiblePerson: string | undefined;
+    phoneNumber: string | undefined;
+    mobilePhoneNumber: string | undefined;
+    workNumber: string | undefined;
+    address: string | undefined;
 }
 
 export class CreateUserDto implements ICreateUserDto {
