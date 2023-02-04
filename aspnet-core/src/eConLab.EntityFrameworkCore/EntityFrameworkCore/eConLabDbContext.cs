@@ -4,6 +4,7 @@ using eConLab.Authorization.Roles;
 using eConLab.Authorization.Users;
 using eConLab.MultiTenancy;
 using eConLab.Account;
+using eConLab.ProjectModels;
 
 namespace eConLab.EntityFrameworkCore
 {
@@ -13,6 +14,8 @@ namespace eConLab.EntityFrameworkCore
         public DbSet<QCUser> QCUsers { get; set; }
         public DbSet<AgencyType> AgencyTypes { get; set; }
         public DbSet<Agency> Agencies { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectItem> ProjectItems { get; set; }
         public eConLabDbContext(DbContextOptions<eConLabDbContext> options)
             : base(options)
         {

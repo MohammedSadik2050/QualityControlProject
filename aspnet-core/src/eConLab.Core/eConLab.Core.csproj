@@ -15,14 +15,17 @@
     <EmbeddedResource Include="Localization\SourceFiles\*.xml" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Projects\**" />
+    <EmbeddedResource Remove="Projects\**" />
+    <None Remove="Projects\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Localization\SourceFiles\eConLab-ar.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Abp.AutoMapper" Version="6.5.0" />
     <PackageReference Include="Abp.ZeroCore.EntityFrameworkCore" Version="6.5.0" />
     <PackageReference Include="Castle.Windsor.MsDependencyInjection" Version="3.4.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Projects\" />
+    <PackageReference Include="System.Spatial" Version="5.8.5" />
   </ItemGroup>
 </Project>
