@@ -15,6 +15,9 @@ using eConLab.Proj.Dto;
 using Microsoft.EntityFrameworkCore;
 using Abp.Collections.Extensions;
 using eConLab.Authorization.Roles;
+using Microsoft.AspNetCore.Authorization;
+using Abp.Authorization;
+using eConLab.Authorization;
 
 namespace eConLab.Proj
 {
@@ -45,6 +48,7 @@ namespace eConLab.Proj
             _projectItemRepo = projectItemRepo;
         }
 
+        [AbpAuthorize(PermissionNames.Pages_Manage_Project)]
         public async Task<ProjectDto> CreateOrUpdate(ProjectDto input)
         {
             if (input.Id == default(int))
