@@ -9,12 +9,12 @@ namespace eConLab.Account
     public  enum UserTypes
     {
        Contractor=1,
-       Consultant,
-       ConsultingEngineer,
-       SupervisingEngineer,
-       LabProjectManager,
-       SupervisingQuality,
-       SupervisingProjects,
-       AmanaStaff
+       Consultant=2,
+       ConsultingEngineer=3,
+       SupervisingEngineer=4,
+       LabProjectManager=5,
+       SupervisingQuality=6,
+       SupervisingProjects= 7,
+       AmanaStaff = 8
     }
 }
