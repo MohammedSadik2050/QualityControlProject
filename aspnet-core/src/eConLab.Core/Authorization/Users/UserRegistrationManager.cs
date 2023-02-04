@@ -83,6 +83,7 @@ namespace eConLab.Authorization.Users
 
         private void CheckForTenant()
         {
+           
             if (!AbpSession.TenantId.HasValue)
             {
                 throw new InvalidOperationException("Can not register host users!");

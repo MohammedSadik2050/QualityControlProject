@@ -2,9 +2,13 @@
 <localizationDictionary culture="ar">
 	<texts>
 		<text name="COMMERCIALNAME">الاسم التجاري</text>
-		<text name="CommericalRegisterationNumber">رقم السجل التجاري</text>
-		<text name="ِAddress">العنوان</text>
-		<text name="ِContactName">اسم العقد</text>
+		<text name="CreateNewContractor">انشاء مقاول جديد</text>
+		<text name="EditContractor">تعديل المقاول</text>
+		<text name="Contractor">المقاول</text>
+		<text name="Contractors">المقاولين</text>
+		<text name="Contract_Name">اسم العقد</text>
+		<text name="ADDRESS">العنوان</text>
+		<text name="CommericalRegisterationNumber">رقم السجل التجاري</text> 
 		<text name="HomePage" value="الصفحة الرئيسية" />
 		<text name="About" value="نبذه عنا" />
 		<text name="WelcomeMessage" value="مرحبا" />
@@ -19,17 +23,17 @@
 		<text name="PleaseEnterLoginInformation" value="Please enter login information" />
 		<text name="TenancyName" value="Tenancy name" />
 		<text name="UserNameOrEmail" value="User name or email" />
-		<text name="Password" value="Password" />
-		<text name="ResetPassword" value="Reset Password" />
-		<text name="UpdatePassword" value="Update Password" />
+		<text name="Password" value="كلمه المرور" />
+		<text name="ResetPassword" value="استعاده كلمه المرور" />
+		<text name="UpdatePassword" value="تحديث كلمه المرور" />
 		<text name="RememberMe" value="Remember me" />
 		<text name="LogIn" value="تسجيل الدخول" />
 		<text name="LoginFailed" value="Login failed!" />
 		<text name="NameSurname" value="Name surname" />
 		<text name="UserName" value="اسم المستخدم" />
 		<text name="Name" value="الاسم" />
-		<text name="Surname" value="Surname" />
-		<text name="EmailAddress" value="Email address" />
+		<text name="Surname" value="لقب" />
+		<text name="EmailAddress" value="البريد الالكتروني" />
 		<text name="Tenants" value="Tenants" />
 		<text name="SavedSuccessfully" value="Saved successfully" />
 		<text name="CreateNewTenant" value="Create new tenant" />
@@ -49,11 +53,11 @@
 		<text name="RegisterFormUserNameInvalidMessage">Please don't enter an email address for username.</text>
 		<text name="DatabaseConnectionString" value="Database connection string" />
 		<text name="Users" value="المستخدمين" />
-		<text name="IsActive" value="Is active" />
-		<text name="FullName" value="Full name" />
+		<text name="IsActive" value="التفعيل" />
+		<text name="FullName" value="الاسم كاملا" />
 		<text name="CreateNewUser" value="Create new user" />
-		<text name="Yes" value="Yes" />
-		<text name="No" value="No" />
+		<text name="Yes" value="نعم" />
+		<text name="No" value="لا" />
 		<text name="Optional" value="Optional" />
 		<text name="LeaveEmptyToSwitchToHost">Leave empty to switch to the host</text>
 		<text name="CurrentTenant">Current tenant</text>
@@ -88,8 +92,8 @@
 		<text name="RoleDescription">وصف الصلاحيه</text>
 		<text name="Refresh">Refresh</text>
 		<text name="Create">إنشاء</text>
-		<text name="UserDetails">التفاصيل</text>
-		<text name="Details">التفاصيل</text>
+		<text name="UserDetails">بيانات المستخدم</text>
+		<text name="Details">البيانات الرئيسيه</text>
 		<text name="UserRoles">User roles</text>
 		<text name="ConfirmPassword">Confirm password</text>
 		<text name="Version">Version</text>
@@ -105,18 +109,18 @@
 		<text name="NewPassword">New Password</text>
 		<text name="ConfirmNewPassword">Confirm New Password</text>
 		<text name="PasswordsDoNotMatch">Passwords do not match</text>
-		<text name="PasswordsMustBeAtLeast8CharactersContainLowercaseUppercaseNumber">Passwords must be at least 8 characters, contain a lowercase, uppercase, and number</text>
+		<text name="PasswordsMustBeAtLeast8CharactersContainLowercaseUppercaseNumber">يجب أن تتكون كلمات المرور من 8 أحرف على الأقل ، وأن تحتوي على أحرف صغيرة وأحرف كبيرة ورقم</text>
 		<text name="UserDeleteWarningMessage">User {0} will be deleted.</text>
 		<text name="RoleDeleteWarningMessage">Role {0} will be deleted and unassigned from all assigned users.</text>
 		<text name="TenantDeleteWarningMessage">Tenant {0} will be deleted.</text>
-		<text name="SearchWithThreeDot">Search...</text>
+		<text name="SearchWithThreeDot">البحث...</text>
 		<text name="PleaseEnterAtLeastNCharacter">Please enter at least {0} characters</text>
 		<text name="PleaseEnterNoMoreThanNCharacter">Please enter no more than {0} characters</text>
 		<text name="InvalidEmailAddress">Invalid email address</text>
 		<text name="InvalidPattern">Invalid</text>
 		<text name="PairsDoNotMatch">Do not match</text>
-		<text name="All">All</text>
-		<text name="TotalRecordsCount">Total: {0}</text>
+		<text name="All">الكل</text>
+		<text name="TotalRecordsCount">{0}: المجموع</text>
 		<text name="Search">بحث</text>
 		<text name="Clear">مسح</text>
 		<text name="ResetPasswordStepOneInfo">1. Enter your administrator password</text>

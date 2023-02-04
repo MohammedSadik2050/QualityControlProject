@@ -62,6 +62,21 @@ namespace eConLab.Authorization.Accounts
 
         }
 
+        public async Task<ContractorDto> GetById(long id)
+        {
+            var contractor =await _contractorRepo.FirstOrDefaultAsync(x => x.UserId == id);
+            try
+            {
+                var obj = _mapper.Map<ContractorDto>(contractor);
+                return obj;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+          return new ContractorDto();
+        }
         //public async Task<ListResultDto<ContractorDto>> GetAllContractors()
         //{
         //    var contractorLst =await _contractorRepo.GetAllListAsync();

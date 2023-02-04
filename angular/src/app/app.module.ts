@@ -40,6 +40,7 @@ import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { ContractorUserComponent } from './contractor/contractor-create/contractor-user/contractor-user.component';
 import { ContractorsListComponent } from './contractor/contractos-list/contractos-list.component';
+import { ContractorEditComponent } from './contractor/contractor-edit/contractor-edit.component';
 
 @NgModule({
     declarations: [
@@ -71,7 +72,8 @@ import { ContractorsListComponent } from './contractor/contractos-list/contracto
         SidebarUserPanelComponent,
         SidebarMenuComponent,
         ContractorUserComponent,
-        ContractorsListComponent
+        ContractorsListComponent,
+        ContractorEditComponent
     ],
     imports: [
         CommonModule,
@@ -101,7 +103,8 @@ import { ContractorsListComponent } from './contractor/contractos-list/contracto
         EditUserDialogComponent,
         ResetPasswordDialogComponent,
         ContractorUserComponent,
-        ContractorsListComponent
+        ContractorsListComponent,
+        ContractorEditComponent
     ],
 })
 export class AppModule { }
