@@ -12,9 +12,17 @@ import { ContractorEditComponent } from '../contractor-edit/contractor-edit.comp
 //    templateUrl: './contractos-list.component.html',
 //    styleUrls: ['./contractos-list.component.css']
 //})
+
 class PagedUsersRequestDto extends PagedRequestDto {
     keyword: string;
     isActive: boolean | null;
+}
+
+class UserTypes {
+    name: string;
+    arabicName: string;
+    id: number | null;
+
 }
 @Component({
     templateUrl: './contractos-list.component.html',
@@ -23,6 +31,7 @@ class PagedUsersRequestDto extends PagedRequestDto {
 export class ContractorsListComponent extends PagedListingComponentBase<QCUserDto> {
     users: QCUserDto[] = [];
     keyword = '';
+    userTypes: UserTypes[] = []; 
     isActive: boolean | null;
     advancedFiltersVisible = false;
 
@@ -51,8 +60,15 @@ export class ContractorsListComponent extends PagedListingComponentBase<QCUserDt
         this.isActive = undefined;
         this.getDataPage(1);
     }
-
+    typValue(id) {
+        if (id>0) {
+            var res = this.userTypes.find(s => s.id == id);
+            return res.arabicName;
+        }
+        return null;
+    }
     protected list(
+
         request: PagedUsersRequestDto,
         pageNumber: number,
         finishedCallback: Function
@@ -70,6 +86,7 @@ export class ContractorsListComponent extends PagedListingComponentBase<QCUserDt
             .pipe(
                 finalize(() => {
                     finishedCallback();
+                    this.addUserTypes();
                 })
             )
             .subscribe((result: PagedResultDto) => {
@@ -126,5 +143,58 @@ export class ContractorsListComponent extends PagedListingComponentBase<QCUserDt
         createOrEditUserDialog.content.onSave.subscribe(() => {
             this.refresh();
         });
+
+     
+    }
+
+    addUserTypes() {
+        var userType = new UserTypes();
+        userType.id = 1;
+        userType.name = "Contractor";
+        userType.arabicName = "مقاول";
+        this.userTypes.push(userType);
+
+        userType = new UserTypes();
+        userType.id = 2;
+        userType.name = "Consultant";
+        userType.arabicName = "مستشار";
+        this.userTypes.push(userType);
+
+        userType = new UserTypes();
+        userType.id = 3;
+        userType.name = "ConsultingEngineer";
+        userType.arabicName = "مستشار هندسي";
+        this.userTypes.push(userType);
+
+        userType = new UserTypes();
+        userType.id = 4;
+        userType.name = "SupervisingEngineer";
+        userType.arabicName = "مهندس مشرف";
+        this.userTypes.push(userType);
+
+        userType = new UserTypes();
+        userType.id = 5;
+        userType.name = "LabProjectManager";
+        userType.arabicName = "مدير المشروع";
+        this.userTypes.push(userType);
+
+        userType = new UserTypes();
+        userType.id = 6;
+        userType.name = "SupervisingQuality";
+        userType.arabicName = "مشرف الجوده";
+        this.userTypes.push(userType);
+
+        userType = new UserTypes();
+        userType.id = 7;
+        userType.name = "SupervisingProjects";
+        userType.arabicName = "وكيل الجودة والامتثال";
+        this.userTypes.push(userType);
+
+        userType = new UserTypes();
+        userType.id = 8;
+        userType.name = "AmanaStaff";
+        userType.arabicName = "موظف الامانة";
+        this.userTypes.push(userType);
+
     }
 }

@@ -13,7 +13,7 @@ namespace eConLab.QCUsers.Dto
 {
     public class QCUserDto:EntityDto<long>
     {
-        public UserTypes UserType { get; set; }
+        public UserTypes UserTypes { get; set; }
         public string Name { get; set; }
         public string NationalId { get; set; }
         public string NationalityName { get; set; }

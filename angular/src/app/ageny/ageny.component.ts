@@ -5,6 +5,7 @@ import { appModuleAnimation } from '../../shared/animations/routerTransition';
 import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from '../../shared/paged-listing-component-base';
 import { AgencyDto, AgencyDtoPagedResultDto, AgencyServiceProxy, UserServiceProxy } from '../../shared/service-proxies/service-proxies';
 import { AgencyCreateComponent } from './agency-create/agency-create.component';
+import { AgencyEditComponent } from './agency-edit/agency-edit.component';
 
 class PagedAgencyRequestDto extends PagedRequestDto {
     keyword: string;
@@ -105,7 +106,7 @@ export class AgenyComponent extends PagedListingComponentBase<AgencyDto> {
             );
         } else {
             //createOrEditUserDialog = this._modalService.show(
-            //    ContractorEditComponent,
+            //    AgencyEditComponent,
             //    {
             //        class: 'modal-lg',
             //        initialState: {

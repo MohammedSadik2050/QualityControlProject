@@ -22,6 +22,7 @@ namespace eConLab.QCUsers
     public class QCUserAppService : eConLabAppServiceBase, IQCUserAppService
     {
         private readonly IRepository<QCUser, long> _qcUsersRepo;
+
         private readonly AccountAppService _accountAppService;
         private readonly IMapper _mapper;
 
@@ -36,7 +37,7 @@ namespace eConLab.QCUsers
         {
             if (input.Id == default(int))
             {
-                var resultCreateUser = await _accountAppService.RegisterUserByRole(input.RegisterInput,GetRoleNameByUserType(input.QCUserInput.UserType));
+                var resultCreateUser = await _accountAppService.RegisterUserByRole(input.RegisterInput, GetRoleNameByUserType(input.QCUserInput.UserTypes));
                 if (resultCreateUser != null)
                 {
                     var obj = _mapper.Map<QCUser>(input.QCUserInput);
@@ -49,8 +50,18 @@ namespace eConLab.QCUsers
             else
             {
                 //update
-                //just we need to update email and user Type
-             
+                //just we need to update email and user Type 
+                var currentUser = await UserManager.FindByIdAsync(input.QCUserInput.UserId.ToString());
+                if (currentUser != null)
+                {
+                    currentUser.EmailAddress = input.RegisterInput.EmailAddress;
+                    //if (!currentUser.Roles.Any(x=>x.))
+                    //{
+
+                    //}
+                    await _accountAppService.UserManager.UpdateAsync(currentUser);
+                }
+
 
             }
             throw new UserFriendlyException("Invalide Data please try again");
@@ -90,11 +101,11 @@ namespace eConLab.QCUsers
                 default:
                     break;
             }
-           
-           return roleName;
+
+            return roleName;
         }
 
-       
+
 
         public async Task<QCUserDto> GetById(long id)
         {
@@ -111,7 +122,7 @@ namespace eConLab.QCUsers
             }
             return new QCUserDto();
         }
-       
+
 
         public async Task<PagedResultDto<QCUserDto>> GetAll(QCUserPagedAndSortedResultRequestDto input)
         {
