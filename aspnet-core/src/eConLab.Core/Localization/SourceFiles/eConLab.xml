@@ -2,6 +2,7 @@
 <localizationDictionary culture="en">
 	<texts>
 		<text name="MobilePhoneNumber">Mobile Number</text>
+		<text name="CreateNewAgency">Create New Agency</text>
 		<text name="Agencies">Agencies</text>
 		<text name="AgencyType">Agency Type</text>
 		<text name="WorkNumber">Work Number</text>

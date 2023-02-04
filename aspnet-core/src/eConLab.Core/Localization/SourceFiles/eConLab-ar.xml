@@ -2,9 +2,9 @@
 <localizationDictionary culture="ar">
 	<texts>
 		<text name="PhoneNumber">رقم الهاتف</text>
+		<text name="CreateNewAgency">انشاء جهه جديده</text>
 		<text name="WorkNumber">رقم العمل</text>
 		<text name="Agencies">الجهات</text>
-		<text name="">الجهات</text>
 		<text name="AgencyType">نوع الجهه</text>
 		<text name="Agency">الجهات</text>
 		<text name="MobilePhoneNumber">رقم الجوال</text>
@@ -91,7 +91,7 @@
 		<text name="EditUser">Edit user</text>
 		<text name="TenantIdIsNotActive{0}">TenantId {0} is not active</text>
 		<text name="UnknownTenantId{0}">Unknown tenantId {0}</text>
-		<text name="ThisFieldIsRequired">This field is required</text>
+		<text name="ThisFieldIsRequired">هذا الحقل مطلوب</text>
 		<text name="PleaseWait">Please wait...</text>
 		<text name="Administration">Administration</text>
 		<text name="ClearAll">Clear all</text>
