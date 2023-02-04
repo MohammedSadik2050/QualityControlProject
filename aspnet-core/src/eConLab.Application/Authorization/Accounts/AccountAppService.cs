@@ -57,6 +57,9 @@ namespace eConLab.Authorization.Accounts
 
         public async Task<RegisterResult> RegisterUserByRole(RegisterInput input,string roleName="")
         {
+
+            
+
             var user = await _userRegistrationManager.RegisterAsync(
                 input.Name,
                 input.Surname,

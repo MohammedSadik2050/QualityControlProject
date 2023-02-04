@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eConLab.Authorization.Accounts.Dto.Contractor
+namespace eConLab.QCUsers.Dto
 {
-    public class ContractorPagedAndSortedResultRequestDto : PagedAndSortedResultRequestDto
+    public class QCUserPagedAndSortedResultRequestDto : PagedAndSortedResultRequestDto
     {
         public long Id { get; set; }
     }
-    public class ContractorFilter
+    public class QCUserFilter
     {
         public long Id { get; set; }
         public string Name { get; set; }

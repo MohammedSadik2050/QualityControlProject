@@ -62,7 +62,16 @@ namespace eConLab.Authorization.Users
             {
 
                var defaultRole = await _roleManager.Roles.Where(r => r.Name == roleName).FirstOrDefaultAsync();
-               user.Roles.Add(new UserRole(tenant.Id, user.Id, defaultRole.Id));
+                if(defaultRole is null)
+                {
+                    //add new role 
+                    //
+                }
+                else
+                {
+                    user.Roles.Add(new UserRole(tenant.Id, user.Id, defaultRole.Id));
+                }
+              
             }
             else
             {
