@@ -104,6 +104,12 @@ namespace eConLab.Agencies
         }
 
 
+        public async Task<List<AgencyDto>> GetAllAgenciesList()
+        {
+            var query = _agencyRepository.GetAll().ToList();
+            return _mapper.Map<List<AgencyDto>>(query);
+        }
+
         public async Task<List<AgencyTypeDto>> GetAllAgencyTypeList()
         {
             var query = _agencyTypeRepo.GetAll().ToList();
