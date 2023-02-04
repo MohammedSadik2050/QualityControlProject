@@ -13,7 +13,6 @@ namespace eConLab.Proj.Dto
     }
     public class ProjectFilter
     {
-        public bool IscurrentUser { get; set; } = false;
         public long Id { get; set; }
         public string Name { get; set; }
     }

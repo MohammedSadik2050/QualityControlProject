@@ -94,13 +94,11 @@ namespace eConLab.Proj
             var lstItems = _projectRepo.GetAll()
                                           .Skip(skipCount)
                                           .Take(maxResultCount);
-                                          
-            if (filter.IscurrentUser)
-            {
+            
                
                 //check user Role 
                 var userRoles =(await UserManager.GetRolesAsync(await GetCurrentUserAsync())).ToList();
-                if (userRoles.Count > 0)
+                if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin) == false)
                 {
                     if (userRoles.Contains(StaticRoleNames.Tenants.Consultant))
                         lstItems.Where(d => d.ConsultantId == AbpSession.UserId);
@@ -117,7 +115,7 @@ namespace eConLab.Proj
                     if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingEngineer))
                         lstItems.Where(d => d.SupervisingEngineerId == AbpSession.UserId);
                 }
-            }
+            
 
             return lstItems.ToList();
         }
@@ -126,29 +124,27 @@ namespace eConLab.Proj
         {
 
             var lstItems = _projectRepo.GetAll();
-            if (filter.IscurrentUser)
+
+            //check user Role 
+            var userRoles = (await UserManager.GetRolesAsync(await GetCurrentUserAsync())).ToList();
+            if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin)==false)
             {
+                if (userRoles.Contains(StaticRoleNames.Tenants.Consultant))
+                    lstItems.Where(d => d.ConsultantId == AbpSession.UserId);
 
-                //check user Role 
-                var userRoles = (await UserManager.GetRolesAsync(await GetCurrentUserAsync())).ToList();
-                if (userRoles.Count > 0)
-                {
-                    if (userRoles.Contains(StaticRoleNames.Tenants.Consultant))
-                        lstItems.Where(d => d.ConsultantId == AbpSession.UserId);
+                if (userRoles.Contains(StaticRoleNames.Tenants.Contractor))
+                    lstItems.Where(d => d.ContractorId == AbpSession.UserId);
 
-                    if (userRoles.Contains(StaticRoleNames.Tenants.Contractor))
-                        lstItems.Where(d => d.ContractorId == AbpSession.UserId);
+                if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
+                    lstItems.Where(d => d.LabProjectManagerId == AbpSession.UserId);
 
-                    if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
-                        lstItems.Where(d => d.LabProjectManagerId == AbpSession.UserId);
+                if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingQuality))
+                    lstItems.Where(d => d.SupervisingQualityId == AbpSession.UserId);
 
-                    if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingQuality))
-                        lstItems.Where(d => d.SupervisingQualityId == AbpSession.UserId);
-
-                    if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingEngineer))
-                        lstItems.Where(d => d.SupervisingEngineerId == AbpSession.UserId);
-                }
+                if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingEngineer))
+                    lstItems.Where(d => d.SupervisingEngineerId == AbpSession.UserId);
             }
+        
             return lstItems.ToList().Count;
         }
 
