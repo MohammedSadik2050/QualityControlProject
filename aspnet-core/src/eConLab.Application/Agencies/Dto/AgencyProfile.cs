@@ -17,6 +17,7 @@ namespace eConLab.Agencies.Dto
 
             CreateMap<Agency, AgencyDto>().ReverseMap();
             CreateMap<CreateUpdateAgencyDto, Agency>().ReverseMap();
+            CreateMap<AgencyTypeDto, AgencyType>().ReverseMap();
         }
     }
 }

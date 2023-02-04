@@ -21,12 +21,14 @@ namespace eConLab.Agencies
         IAgencyAppService
     {
         private readonly IRepository<Agency,long> _agencyRepository;
+        private readonly IRepository<AgencyType,long> _agencyTypeRepo;
         private readonly IMapper _mapper;
-        public AgencyAppService(IMapper mapper,IRepository<Agency, long> agencyRepository)
+        public AgencyAppService(IMapper mapper,IRepository<Agency, long> agencyRepository, IRepository<AgencyType, long> agencyTypeRepo)
           
         {
             _mapper = mapper;
             _agencyRepository = agencyRepository;
+            _agencyTypeRepo = agencyTypeRepo;
         }
 
         public async Task<AgencyDto> CreateOrUpdate(CreateUpdateAgencyDto input)
@@ -99,6 +101,13 @@ namespace eConLab.Agencies
                 //.WhereIf(!filter.PublishDate.IsNullOrWhiteSpace(), x => x.PublishDate.ToString().Contains(filter.PublishDate))
                 .ToListAsync();
             return lstItems.Count;
+        }
+
+
+        public async Task<List<AgencyTypeDto>> GetAllAgencyTypeList()
+        {
+            var query = _agencyTypeRepo.GetAll().ToList();
+            return _mapper.Map<List<AgencyTypeDto>>(query);
         }
     }
 }

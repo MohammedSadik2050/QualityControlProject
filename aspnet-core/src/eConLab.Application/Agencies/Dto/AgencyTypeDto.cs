@@ -7,13 +7,9 @@ using System.Threading.Tasks;
 
 namespace eConLab.Agencies.Dto
 {
-    public class AgencyPaginatedDto : PagedAndSortedResultRequestDto
+    public class AgencyTypeDto:EntityDto<long>
     {
-        public long Id { get; set; }
-    }
-    public class AgencyFilter
-    {
-        public long Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

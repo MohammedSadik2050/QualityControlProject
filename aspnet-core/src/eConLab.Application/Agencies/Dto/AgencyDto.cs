@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace eConLab.Agencies.Dto
 {
-    public class AgencyDto : AuditedEntityDto<Guid>
+    public class AgencyDto : AuditedEntityDto<long>
     {
         public string Name { get; set; }
         public string Description { get; set; }

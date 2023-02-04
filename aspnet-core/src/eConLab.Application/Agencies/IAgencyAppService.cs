@@ -18,6 +18,7 @@ namespace eConLab.Agencies
         Task<AgencyDto> CreateOrUpdate(CreateUpdateAgencyDto input);
         Task<PagedResultDto<AgencyDto>> GetAll(AgencyPaginatedDto input);
         Task<AgencyDto> Get(long id);
+        Task<List<AgencyTypeDto>> GetAllAgencyTypeList();
     }
 
 }
