@@ -5,8 +5,10 @@ using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
 using Abp.Application.Services.Dto;
+using Abp.Collections.Extensions;
 using Abp.Domain.Repositories;
 using Abp.EntityFrameworkCore;
+using Abp.Extensions;
 using Abp.UI;
 using AutoMapper;
 using eConLab.Account;
@@ -139,38 +141,43 @@ namespace eConLab.QCUsers
 
             // var sorting = (string.IsNullOrEmpty(input.Sorting) ? "Name DESC" : input.Sorting).Replace("ShortName", "Name");
 
-            var lstItems = await GetListAsync(input.SkipCount, input.MaxResultCount);
-            var totalCount = await GetTotalCountAsync();
+            var lstItems = await GetListAsync(input.SkipCount, input.MaxResultCount, filter);
+            var totalCount = await GetTotalCountAsync(filter);
 
             return new PagedResultDto<QCUserDto>(totalCount, ObjectMapper.Map<List<QCUserDto>>(lstItems));
         }
 
 
-        private async Task<List<QCUser>> GetListAsync(int skipCount, int maxResultCount, QCUserFilter filter = null)
+        private async Task<List<QCUser>> GetListAsync(int skipCount, int maxResultCount, QCUserPagedAndSortedResultRequestDto filter = null)
         {
 
-            var lstItems = await _qcUsersRepo.GetAll()
+            var lstItems =  _qcUsersRepo.GetAll()
                 .Skip(skipCount)
                 .Take(maxResultCount)
-                .ToListAsync();
+                .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
+            .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.NationalId.Contains(filter.Search))
+             .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.PhoneNumber.Contains(filter.Search));
             //.WhereIf(!filter.Id.IsNullOrWhiteSpace(), x => x.Id.ToString().Contains(filter.Id))
             //.WhereIf(!filter.Name.IsNullOrWhiteSpace(), x => x.Name.Contains(filter.Name))
             //.WhereIf(!filter.Price.IsNullOrWhiteSpace(), x => x.Price.ToString().Contains(filter.Price))
             //.WhereIf(!filter.PublishDate.IsNullOrWhiteSpace(), x => x.PublishDate.ToString().Contains(filter.PublishDate))
 
-            return lstItems;
+            return lstItems.ToList();
         }
 
-        private async Task<int> GetTotalCountAsync(QCUserFilter filter = null)
+        private async Task<int> GetTotalCountAsync(QCUserPagedAndSortedResultRequestDto filter = null)
         {
 
-            var lstItems = await _qcUsersRepo.GetAll()
+            var lstItems =  _qcUsersRepo.GetAll()
+                          .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
+                          .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.NationalId.Contains(filter.Search))
+                          .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.PhoneNumber.Contains(filter.Search));
                 //.WhereIf(!filter.Id.IsNullOrWhiteSpace(), x => x.Id.ToString().Contains(filter.Id))
                 //.WhereIf(!filter.Name.IsNullOrWhiteSpace(), x => x.Name.Contains(filter.Name))
                 //.WhereIf(!filter.Price.IsNullOrWhiteSpace(), x => x.Price.ToString().Contains(filter.Price))
                 //.WhereIf(!filter.PublishDate.IsNullOrWhiteSpace(), x => x.PublishDate.ToString().Contains(filter.PublishDate))
-                .ToListAsync();
-            return lstItems.Count;
+                
+            return lstItems.Count();
         }
     }
 }

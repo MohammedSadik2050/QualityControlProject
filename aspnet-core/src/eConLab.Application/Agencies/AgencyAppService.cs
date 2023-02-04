@@ -72,7 +72,7 @@ namespace eConLab.Agencies
             // var sorting = (string.IsNullOrEmpty(input.Sorting) ? "Name DESC" : input.Sorting).Replace("ShortName", "Name");
 
             var lstItems = await GetListAsync(input.SkipCount, input.MaxResultCount, filter);
-            var totalCount = await GetTotalCountAsync();
+            var totalCount = await GetTotalCountAsync(filter);
 
             return new PagedResultDto<AgencyDto>(totalCount, ObjectMapper.Map<List<AgencyDto>>(lstItems));
         }
@@ -83,7 +83,8 @@ namespace eConLab.Agencies
 
             var lstItems = _agencyRepository.GetAll()
                 .Skip(skipCount)
-                .Take(maxResultCount).WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
+                .Take(maxResultCount)
+                .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
             .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.ResponsiblePerson.Contains(filter.Search))
              .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.PhoneNumber.Contains(filter.Search));
             //.WhereIf(!filter.Price.IsNullOrWhiteSpace(), x => x.Price.ToString().Contains(filter.Price))
@@ -92,16 +93,19 @@ namespace eConLab.Agencies
             return lstItems.ToList();
         }
 
-        private async Task<int> GetTotalCountAsync(QCUserFilter filter = null)
+        private async Task<int> GetTotalCountAsync(QCUserPagedAndSortedResultRequestDto filter = null)
         {
 
-            var lstItems = await _agencyRepository.GetAll()
+            var lstItems =  _agencyRepository.GetAll()
+                         .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
+                         .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.ResponsiblePerson.Contains(filter.Search))
+                         .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.PhoneNumber.Contains(filter.Search));
                 //.WhereIf(!filter.Id.IsNullOrWhiteSpace(), x => x.Id.ToString().Contains(filter.Id))
                 //.WhereIf(!filter.Name.IsNullOrWhiteSpace(), x => x.Name.Contains(filter.Name))
                 //.WhereIf(!filter.Price.IsNullOrWhiteSpace(), x => x.Price.ToString().Contains(filter.Price))
                 //.WhereIf(!filter.PublishDate.IsNullOrWhiteSpace(), x => x.PublishDate.ToString().Contains(filter.PublishDate))
-                .ToListAsync();
-            return lstItems.Count;
+               
+            return lstItems.Count();
         }
 
 
