@@ -105,15 +105,15 @@ export class AgenyComponent extends PagedListingComponentBase<AgencyDto> {
                 }
             );
         } else {
-            //createOrEditUserDialog = this._modalService.show(
-            //    AgencyEditComponent,
-            //    {
-            //        class: 'modal-lg',
-            //        initialState: {
-            //            id: id,
-            //        },
-            //    }
-            //);
+            createOrEditUserDialog = this._modalService.show(
+                AgencyEditComponent,
+                {
+                    class: 'modal-lg',
+                    initialState: {
+                        id: id,
+                    },
+                }
+            );
         }
 
         createOrEditUserDialog.content.onSave.subscribe(() => {

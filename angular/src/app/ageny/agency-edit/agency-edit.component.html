@@ -1,8 +1,8 @@
-<!--<form class="form-horizontal"
+<form class="form-horizontal"
       autocomplete="off"
       #createUserModal="ngForm"
       (ngSubmit)="save()">
-    <abp-modal-header [title]="'CreateNewAgency' | localize"
+    <abp-modal-header [title]="'Create' | localize"
                       (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body">
 
@@ -53,7 +53,7 @@
                         #agencyTypeIdModel="ngModel"
                         #agencyTypeId required>
                     <option *ngFor="let agencyType of agencyTypes" [value]="agencyType.id">{{agencyType.name}}</option>
-                </select>-->
+                </select>
                 <!--<input type="text"
                 class="form-control"
                 name="agencyTypeId"
@@ -63,7 +63,7 @@
                 [(ngModel)]="qcUser.address"
                 #addressModel="ngModel"
                 #address />-->
-                <!--<abp-validation-summary [control]="agencyTypeIdModel"
+                <abp-validation-summary [control]="agencyTypeIdModel"
                                         [controlEl]="agencyTypeId"></abp-validation-summary>
             </div>
         </div>
@@ -165,4 +165,4 @@
     <abp-modal-footer [cancelDisabled]="saving"
                       [saveDisabled]="!createUserModal.form.valid || saving"
                       (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
-</form>-->
+</form>
