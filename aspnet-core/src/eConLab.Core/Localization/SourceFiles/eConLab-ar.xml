@@ -49,7 +49,7 @@
 		<text name="WaitingForActivationMessage" value="Your account is waiting to be activated by system admin." />
 		<text name="TenantSelection" value="Tenant Selection" />
 		<text name="TenantSelection_Detail" value="Please select one of the following tenants." />
-		<text name="Logout" value="Logout" />
+		<text name="Logout" value="تسجيل الخروج" />
 		<text name="RegisterFormUserNameInvalidMessage">Please don't enter an email address for username.</text>
 		<text name="DatabaseConnectionString" value="Database connection string" />
 		<text name="Users" value="المستخدمين" />
