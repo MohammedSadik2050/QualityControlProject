@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
 	<texts>
+		<text name="UserType">User Type</text>
+		<text name="Fax">Fax</text>
+		<text name="NationalId">NationalId</text>
+		<text name="WorkPlace">Work Place</text>
+		<text name="NationalityName">Nationality Name</text>
+		<text name="StaffNumber">StaffNumber</text>
 		<text name="MobilePhoneNumber">Mobile Number</text>
 		<text name="CreateNewAgency">Create New Agency</text>
 		<text name="Agencies">Agencies</text>
@@ -58,6 +64,7 @@
 		<text name="RegisterFormUserNameInvalidMessage">Please don't enter an email address for username.</text>
 		<text name="DatabaseConnectionString" value="Database connection string" />
 		<text name="Users" value="Admin" />
+		<text name="AppUsers" value="Users" />
 		<text name="IsActive" value="Is active" />
 		<text name="FullName" value="Full name" />
 		<text name="CreateNewUser" value="Create new user" />

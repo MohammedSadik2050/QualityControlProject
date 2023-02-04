@@ -199,15 +199,16 @@
                     <div class="col-md-9">
                         <input type="text"
                                class="form-control"
-                               name="fax"
-                               id="fax"
+                               name="faxaa"
+                               id="faxaa"
                                required
+                               autocomplete="do-not-autofill"
                                maxlength="32"
                                [(ngModel)]="qcUser.fax"
                                #faxModel="ngModel"
-                               #fax />
+                               #faxaa/>
                         <abp-validation-summary [control]="faxModel"
-                                                [controlEl]="fax"></abp-validation-summary>
+                                                [controlEl]="faxaa"></abp-validation-summary>
                     </div>
                 </div>
             </tab>

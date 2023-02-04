@@ -1,5 +1,5 @@
 <form class="form-horizontal"
-      autocomplete="off"
+      autocomplete="do-not-autofill"
       #createUserModal="ngForm"
       (ngSubmit)="save()">
     <abp-modal-header [title]="'CreateNewContractor' | localize"
@@ -199,15 +199,16 @@
                     <div class="col-md-9">
                         <input type="text"
                                class="form-control"
-                               name="fax"
-                               id="fax"
+                               name="faxaa"
+                               id="faxaa"
                                required
+                               autocomplete="do-not-autofill"
                                maxlength="32"
                                [(ngModel)]="qcUser.fax"
-                               #faxModel="ngModel"
-                               #fax />
-                        <abp-validation-summary [control]="faxModel"
-                                                [controlEl]="fax"></abp-validation-summary>
+                               #faxaaModel="ngModel"
+                               #faxaa />
+                        <abp-validation-summary [control]="faxaaModel"
+                                                [controlEl]="faxaa"></abp-validation-summary>
                     </div>
                 </div>
             </tab>
@@ -250,7 +251,7 @@
                                                 [controlEl]="nameE1"></abp-validation-summary>
                     </div>
                 </div>
-                <div class="form-group row required">
+                <!--<div class="form-group row required">
                     <label class="col-md-3 col-form-label" for="surname">
                         {{ "Surname" | localize }}
                     </label>
@@ -267,7 +268,7 @@
                         <abp-validation-summary [control]="surnameModel"
                                                 [controlEl]="surnameE1"></abp-validation-summary>
                     </div>
-                </div>
+                </div>-->
                 <div class="form-group row required">
                     <label class="col-md-3 col-form-label" for="Email">
                         {{ "EmailAddress" | localize }}
@@ -294,18 +295,19 @@
                     <div class="col-md-9">
                         <input type="password"
                                class="form-control"
-                               name="password"
-                               id="password"
+                               name="field1"
+                               id="field1"
                                required
+                               autocomplete="nope"
                                maxlength="32"
-                               validateEqual="confirmPassword"
+                              
                                reverse="true"
                                pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)[0-9a-zA-Z!@#$%^&*()]*$"
                                [(ngModel)]="currentUser.password"
-                               #passwordModel="ngModel"
-                               #password />
-                        <abp-validation-summary [control]="passwordModel"
-                                                [controlEl]="password"
+                               #field1Model="ngModel"
+                               #field1 />
+                        <abp-validation-summary [control]="field1Model"
+                                                [controlEl]="field1"
                                                 [customValidationErrors]="passwordValidationErrors"></abp-validation-summary>
                     </div>
                 </div>

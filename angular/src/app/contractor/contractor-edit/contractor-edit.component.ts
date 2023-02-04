@@ -62,6 +62,7 @@ export class ContractorEditComponent extends AppComponentBase
 
         this.addUserTypes();
         this.loadAgencies();
+       
     }
 
    

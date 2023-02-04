@@ -54,6 +54,8 @@ export class ContractorUserComponent extends AppComponentBase implements OnInit 
     ngOnInit(): void {
         this.addUserTypes();
         this.loadAgencies();
+        this.qcUser.fax = "  ";
+        this.currentUser.password = " ";
     }
     loadAgencies() {
         this._agencyServiceProxy.getAllAgenciesList().subscribe(res => {
