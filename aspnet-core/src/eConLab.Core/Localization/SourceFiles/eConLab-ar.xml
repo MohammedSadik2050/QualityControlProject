@@ -2,7 +2,7 @@
 <localizationDictionary culture="ar">
 	<texts>
 		<text name="PhoneNumber">رقم الهاتف</text>
-		<text name="CreateNewAgency">انشاء جهه جديده</text>
+		<text name="CreateNewAgency">اضافه جهه جديده</text>
 		<text name="WorkNumber">رقم العمل</text>
 		<text name="Agencies">الجهات</text>
 		<text name="AgencyType">نوع الجهه</text>
@@ -11,10 +11,10 @@
 		<text name="COMMERCIALNAME">الاسم التجاري</text>
 		<text name="Description">الوصف</text>
 		<text name="ResponsiblePerson">المسئول</text>
-		<text name="CreateNewContractor">انشاء مقاول جديد</text>
-		<text name="EditContractor">تعديل المقاول</text>
-		<text name="Contractor">المقاول</text>
-		<text name="Contractors">المقاولين</text>
+		<text name="CreateNewContractor">اضافه</text>
+		<text name="EditContractor">تعديل </text>
+		<text name="Contractor">المستخدم</text>
+		<text name="Contractors">المستخدم</text>
 		<text name="Contract_Name">اسم العقد</text>
 		<text name="ADDRESS">العنوان</text>
 		<text name="CommericalRegisterationNumber">رقم السجل التجاري</text> 
@@ -36,7 +36,7 @@
 		<text name="ResetPassword" value="استعاده كلمه المرور" />
 		<text name="UpdatePassword" value="تحديث كلمه المرور" />
 		<text name="RememberMe" value="Remember me" />
-		<text name="LogIn" value="تسجيل الدخول" />
+		<text name="LogIn" value="دخول" />
 		<text name="LoginFailed" value="Login failed!" />
 		<text name="NameSurname" value="Name surname" />
 		<text name="UserName" value="اسم المستخدم" />
@@ -61,7 +61,7 @@
 		<text name="Logout" value="تسجيل الخروج" />
 		<text name="RegisterFormUserNameInvalidMessage">Please don't enter an email address for username.</text>
 		<text name="DatabaseConnectionString" value="Database connection string" />
-		<text name="Users" value="المستخدمين" />
+		<text name="Users" value="مدراء النظام" />
 		<text name="IsActive" value="التفعيل" />
 		<text name="FullName" value="الاسم كاملا" />
 		<text name="CreateNewUser" value="Create new user" />
@@ -83,7 +83,7 @@
 		<text name="Delete">حذف</text>
 		<text name="CreateNewRole">إضافة صلاحية</text>
 		<text name="RoleName">اسم الصلاحية</text>
-		<text name="Actions">Actions</text>
+		<text name="Actions">""</text>
 		<text name="CouldNotCompleteLoginOperation">Could not complete login operation. Please try again later.</text>
 		<text name="CouldNotValidateExternalUser">Could not validate external user</text>
 		<text name="EditRole">Edit role</text>
@@ -100,7 +100,7 @@
 		<text name="Permissions">الصلاحيات</text>
 		<text name="RoleDescription">وصف الصلاحيه</text>
 		<text name="Refresh">Refresh</text>
-		<text name="Create">إنشاء</text>
+		<text name="Create">اضافه</text>
 		<text name="UserDetails">بيانات المستخدم</text>
 		<text name="Details">البيانات الرئيسيه</text>
 		<text name="UserRoles">User roles</text>
