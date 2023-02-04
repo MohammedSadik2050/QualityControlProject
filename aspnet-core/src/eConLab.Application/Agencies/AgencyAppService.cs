@@ -35,22 +35,25 @@ namespace eConLab.Agencies
 
         public async Task<AgencyDto> CreateOrUpdate(CreateUpdateAgencyDto input)
         {
-            if (input.Id == default(int))
-            {
-                await _agencyRepository.InsertAsync(_mapper.Map<Agency>(input));
+            //if (input.Id == default(int))
+            //{
+                 _agencyRepository.InsertOrUpdate(_mapper.Map<Agency>(input));
                 await CurrentUnitOfWork.SaveChangesAsync();
 
-            }
-            else
-            {
-                var obje = await _agencyRepository.FirstOrDefaultAsync(x => x.Id == input.Id);
-                if (obje != null)
-                {
-                    await _agencyRepository.UpdateAsync(_mapper.Map<Agency>(input));
-                    await CurrentUnitOfWork.SaveChangesAsync();
-
-                }
-            }
+            //}
+            //else
+            //{
+            //    var obj = await _agencyRepository.FirstOrDefaultAsync(x => x.Id == input.Id);
+            //    if (obj != null)
+            //    {
+            //       // obj = _mapper.Map<Agency>(input);
+            //        //obj.LastModificationTime = DateTime.Now;
+            //        //obj.LastModifierUserId =AbpSession.UserId;
+            //        ObjectMapper.Map(obj, input);
+            //        await _agencyRepository.updae3
+            //        await CurrentUnitOfWork.SaveChangesAsync();
+            //    }
+            //}
 
             return _mapper.Map<AgencyDto>(input);
         }
