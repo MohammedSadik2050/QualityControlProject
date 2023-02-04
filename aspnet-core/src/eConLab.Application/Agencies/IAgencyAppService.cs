@@ -20,6 +20,8 @@ namespace eConLab.Agencies
         Task<AgencyDto> Get(long id);
         Task<List<AgencyTypeDto>> GetAllAgencyTypeList();
         Task<List<AgencyDto>> GetAllAgenciesList();
+
+        Task<bool> Delete(long Id);
     }
 
 }

@@ -56,7 +56,8 @@ export class AgenyComponent extends PagedListingComponentBase<AgencyDto> {
         this._agencyServiceProxy
             .getAll(
                 this.appSession.userId,
-                '',
+                this.keyword,
+               '' ,
                 request.skipCount,
                 request.maxResultCount
             )
@@ -71,16 +72,16 @@ export class AgenyComponent extends PagedListingComponentBase<AgencyDto> {
             });
     }
 
-    protected delete(user: AgencyDto): void {
+    protected delete(agency: AgencyDto): void {
         abp.message.confirm(
-            this.l('UserDeleteWarningMessage', user.name),
+            this.l('', agency.name),
             undefined,
             (result: boolean) => {
                 if (result) {
-                    //this._contractorServiceProxy.delete(user.id).subscribe(() => {
-                    //    abp.notify.success(this.l('SuccessfullyDeleted'));
-                    //    this.refresh();
-                    //});
+                    this._agencyServiceProxy.delete(agency.id).subscribe(() => {
+                        abp.notify.success(this.l('SuccessfullyDeleted'));
+                        this.refresh();
+                    });
                 }
             }
         );

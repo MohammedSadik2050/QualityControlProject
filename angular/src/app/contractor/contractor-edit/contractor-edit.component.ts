@@ -23,7 +23,8 @@ export class ContractorEditComponent extends AppComponentBase
     agencies: AgencyDto[] = [];
     userTypes: UserTypes[] = []; 
     qcUser = new QCUserDto(); 
-    currentUser = new UserDto();
+    currentUser = new RegisterInput();
+    contractorObject = new QCUserCreateDto();
     checkedRolesMap: { [key: string]: boolean } = {};
     id: number;
 
@@ -56,7 +57,8 @@ export class ContractorEditComponent extends AppComponentBase
             this.qcUser = result;
 
             this._userServiceProxy.get(this.qcUser.userId).subscribe((result2) => {
-                this.currentUser = result2;
+                this.currentUser.emailAddress = result2.emailAddress;
+                this.currentUser.name = result2.name;
             });
         });
 
@@ -83,13 +85,13 @@ export class ContractorEditComponent extends AppComponentBase
         userType = new UserTypes();
         userType.id = 2;
         userType.name = "Consultant";
-        userType.arabicName = "مستشار";
+        userType.arabicName = "الاستشاري";
         this.userTypes.push(userType);
 
         userType = new UserTypes();
         userType.id = 3;
         userType.name = "ConsultingEngineer";
-        userType.arabicName = "مستشار هندسي";
+        userType.arabicName = "المهندس الاستشاري";
         this.userTypes.push(userType);
 
         userType = new UserTypes();
@@ -128,17 +130,18 @@ export class ContractorEditComponent extends AppComponentBase
 
     save(): void {
         this.saving = true;
-
-        //this._userService.update(this.user).subscribe(
-        //    () => {
-        //        this.notify.info(this.l('SavedSuccessfully'));
-        //        this.bsModalRef.hide();
-        //        this.onSave.emit();
-        //    },
-        //    () => {
-        //        this.saving = false;
-        //    }
-        //);
+        this.contractorObject.registerInput = this.currentUser;
+        this.contractorObject.qcUserInput = this.qcUser;
+        this._qcUserServiceProxy.createOrUpdate(this.contractorObject).subscribe(
+            () => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.bsModalRef.hide();
+                this.onSave.emit();
+            },
+            () => {
+                this.saving = false;
+            }
+        );
     }
 }
 

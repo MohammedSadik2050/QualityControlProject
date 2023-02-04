@@ -79,6 +79,7 @@ export class ContractorsListComponent extends PagedListingComponentBase<QCUserDt
         this._qcUserServiceProxy
             .getAll(
                 this.appSession.userId,
+                ''  ,
                 '',
                 request.skipCount,
                 request.maxResultCount
@@ -157,13 +158,13 @@ export class ContractorsListComponent extends PagedListingComponentBase<QCUserDt
         userType = new UserTypes();
         userType.id = 2;
         userType.name = "Consultant";
-        userType.arabicName = "مستشار";
+        userType.arabicName = "الاستشاري";
         this.userTypes.push(userType);
 
         userType = new UserTypes();
         userType.id = 3;
         userType.name = "ConsultingEngineer";
-        userType.arabicName = "مستشار هندسي";
+        userType.arabicName = "المهندس الاستشاري";
         this.userTypes.push(userType);
 
         userType = new UserTypes();

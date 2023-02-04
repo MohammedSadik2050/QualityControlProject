@@ -10,10 +10,12 @@ namespace eConLab.Agencies.Dto
     public class AgencyPaginatedDto : PagedAndSortedResultRequestDto
     {
         public long Id { get; set; }
+        public string Search { get; set; }
     }
     public class AgencyFilter
     {
         public long Id { get; set; }
         public string Name { get; set; }
+       
     }
 }

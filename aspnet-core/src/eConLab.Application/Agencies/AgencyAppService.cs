@@ -12,6 +12,8 @@ using eConLab.QCUsers.Dto;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Abp.UI;
+using Abp.Collections.Extensions;
+using Abp.Extensions;
 
 namespace eConLab.Agencies
 {
@@ -20,11 +22,11 @@ namespace eConLab.Agencies
          eConLabAppServiceBase,
         IAgencyAppService
     {
-        private readonly IRepository<Agency,long> _agencyRepository;
-        private readonly IRepository<AgencyType,long> _agencyTypeRepo;
+        private readonly IRepository<Agency, long> _agencyRepository;
+        private readonly IRepository<AgencyType, long> _agencyTypeRepo;
         private readonly IMapper _mapper;
-        public AgencyAppService(IMapper mapper,IRepository<Agency, long> agencyRepository, IRepository<AgencyType, long> agencyTypeRepo)
-          
+        public AgencyAppService(IMapper mapper, IRepository<Agency, long> agencyRepository, IRepository<AgencyType, long> agencyTypeRepo)
+
         {
             _mapper = mapper;
             _agencyRepository = agencyRepository;
@@ -37,7 +39,7 @@ namespace eConLab.Agencies
             {
                 await _agencyRepository.InsertAsync(_mapper.Map<Agency>(input));
                 await CurrentUnitOfWork.SaveChangesAsync();
-               
+
             }
             else
             {
@@ -46,7 +48,7 @@ namespace eConLab.Agencies
                 {
                     await _agencyRepository.UpdateAsync(_mapper.Map<Agency>(input));
                     await CurrentUnitOfWork.SaveChangesAsync();
-                    
+
                 }
             }
 
@@ -69,26 +71,25 @@ namespace eConLab.Agencies
 
             // var sorting = (string.IsNullOrEmpty(input.Sorting) ? "Name DESC" : input.Sorting).Replace("ShortName", "Name");
 
-            var lstItems = await GetListAsync(input.SkipCount, input.MaxResultCount);
+            var lstItems = await GetListAsync(input.SkipCount, input.MaxResultCount, filter);
             var totalCount = await GetTotalCountAsync();
 
             return new PagedResultDto<AgencyDto>(totalCount, ObjectMapper.Map<List<AgencyDto>>(lstItems));
         }
 
 
-        private async Task<List<Agency>> GetListAsync(int skipCount, int maxResultCount, AgencyFilter filter = null)
+        private async Task<List<Agency>> GetListAsync(int skipCount, int maxResultCount, QCUserPagedAndSortedResultRequestDto filter = null)
         {
 
-            var lstItems = await _agencyRepository.GetAll()
+            var lstItems = _agencyRepository.GetAll()
                 .Skip(skipCount)
-                .Take(maxResultCount)
-                .ToListAsync();
-            //.WhereIf(!filter.Id.IsNullOrWhiteSpace(), x => x.Id.ToString().Contains(filter.Id))
-            //.WhereIf(!filter.Name.IsNullOrWhiteSpace(), x => x.Name.Contains(filter.Name))
+                .Take(maxResultCount).WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
+            .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.ResponsiblePerson.Contains(filter.Search))
+             .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.PhoneNumber.Contains(filter.Search));
             //.WhereIf(!filter.Price.IsNullOrWhiteSpace(), x => x.Price.ToString().Contains(filter.Price))
             //.WhereIf(!filter.PublishDate.IsNullOrWhiteSpace(), x => x.PublishDate.ToString().Contains(filter.PublishDate))
 
-            return lstItems;
+            return lstItems.ToList();
         }
 
         private async Task<int> GetTotalCountAsync(QCUserFilter filter = null)
@@ -114,6 +115,12 @@ namespace eConLab.Agencies
         {
             var query = _agencyTypeRepo.GetAll().ToList();
             return _mapper.Map<List<AgencyTypeDto>>(query);
+        }
+
+        public async Task<bool> Delete(long Id)
+        {
+            await _agencyRepository.DeleteAsync(Id);
+            return true;
         }
     }
 }
