@@ -37,6 +37,7 @@ namespace eConLab.QCUsers
         {
             if (input.Id == default(int))
             {
+                input.RegisterInput.Surname = input.RegisterInput.Name;
                 var resultCreateUser = await _accountAppService.RegisterUserByRole(input.RegisterInput, GetRoleNameByUserType(input.QCUserInput.UserTypes));
                 if (resultCreateUser != null)
                 {

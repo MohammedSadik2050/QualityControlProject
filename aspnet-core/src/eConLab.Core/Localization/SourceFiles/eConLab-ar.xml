@@ -10,7 +10,7 @@
 		<text name="NationalId">الرقم القومل/اقامه</text>
 		<text name="CreateNewAgency">اضافه جهه جديده</text>
 		<text name="WorkNumber">رقم العمل</text>
-		<text name="Agencies">الجهات</text>
+		<text name="Agencies">إدارة الجهات</text>
 		<text name="AgencyType">نوع الجهه</text>
 		<text name="Agency">الجهات</text>
 		<text name="MobilePhoneNumber">رقم الجوال</text>
@@ -21,6 +21,7 @@
 		<text name="EditContractor">تعديل </text>
 		<text name="Contractor">المستخدم</text>
 		<text name="Contractors">المستخدم</text>
+		<text name="QCUsers">إدارة منسوبي النظام</text>
 		<text name="Contract_Name">اسم العقد</text>
 		<text name="ADDRESS">العنوان</text>
 		<text name="CommericalRegisterationNumber">رقم السجل التجاري</text> 
@@ -67,7 +68,7 @@
 		<text name="Logout" value="تسجيل الخروج" />
 		<text name="RegisterFormUserNameInvalidMessage">Please don't enter an email address for username.</text>
 		<text name="DatabaseConnectionString" value="Database connection string" />
-		<text name="Users" value="مدراء النظام" />
+		<text name="Users" value="إدارة المستخدمين" />
 		<text name="AppUsers" value="المستخدمين" />
 		<text name="IsActive" value="التفعيل" />
 		<text name="FullName" value="الاسم كاملا" />
@@ -142,6 +143,7 @@
 		<text name="ResetPasswordStepOneInfo">1. Enter your administrator password</text>
 		<text name="ResetPasswordStepTwoInfo">2. Copy this random password so you can send it to the user</text>
 		<text name="UsersActivation">Users activation</text>
+		<text name="ProjectList">قائمة المشاريع</text>
 		
 	</texts>
 </localizationDictionary>

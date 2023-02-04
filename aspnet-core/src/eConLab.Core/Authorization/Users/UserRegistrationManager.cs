@@ -76,6 +76,7 @@ namespace eConLab.Authorization.Users
                         Name = roleName,
                         DisplayName = roleName,
                         NormalizedName = roleName.ToUpper(),
+                        TenantId= tenant.Id,
                     };
                     var roleId = _roleRepo.InsertAndGetId(role);
 

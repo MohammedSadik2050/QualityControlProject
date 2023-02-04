@@ -24,7 +24,7 @@ import { AgenyComponent } from './ageny/ageny.component';
                     { path: 'agencies', component: AgenyComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'qc-users', component: ContractorsListComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
-                    { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
+                   /* { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },*/
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] }
                 ]
             }

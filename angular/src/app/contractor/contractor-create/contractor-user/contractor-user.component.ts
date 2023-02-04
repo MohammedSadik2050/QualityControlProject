@@ -120,7 +120,7 @@ export class ContractorUserComponent extends AppComponentBase implements OnInit 
         this.qcUser.userId = this._sessionService.userId;
         this.contractorObject.qcUserInput = this.qcUser;
         this.contractorObject.registerInput = this.currentUser;
-
+        this.contractorObject.registerInput.surname = this.contractorObject.registerInput.name;
         this._qcUserServiceProxy.createOrUpdate(this.contractorObject).subscribe(
             () => {
                 this.notify.info(this.l('SavedSuccessfully'));
