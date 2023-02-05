@@ -48,26 +48,14 @@ namespace eConLab.Proj
             _projectItemRepo = projectItemRepo;
         }
 
-        [AbpAuthorize(PermissionNames.Pages_Manage_Project)]
+       // [AbpAuthorize(PermissionNames.Pages_Manage_Project)]
         public async Task<ProjectDto> CreateOrUpdate(ProjectDto input)
         {
-            if (input.Id == default(int))
-            {
-                await _projectRepo.InsertAsync(_mapper.Map<Project>(input));
-                await CurrentUnitOfWork.SaveChangesAsync();
+            
+            await _projectRepo.InsertOrUpdateAsync(_mapper.Map<Project>(input));
+            await CurrentUnitOfWork.SaveChangesAsync();
 
-            }
-            else
-            {
-                var obje = await _projectRepo.FirstOrDefaultAsync(x => x.Id == input.Id);
-                if (obje != null)
-                {
-                    await _projectRepo.UpdateAsync(_mapper.Map<Project>(input));
-                    await CurrentUnitOfWork.SaveChangesAsync();
-
-                }
-            }
-
+          
             return _mapper.Map<ProjectDto>(input);
         }
 
@@ -151,14 +139,5 @@ namespace eConLab.Proj
         
             return lstItems.ToList().Count;
         }
-
-
-        public async Task<List<ProjectDto>> GetAllProjectList()
-        {
-            var query = _projectRepo.GetAll().ToList();
-            return _mapper.Map<List<ProjectDto>>(query);
-        }
-
-        
     }
 }

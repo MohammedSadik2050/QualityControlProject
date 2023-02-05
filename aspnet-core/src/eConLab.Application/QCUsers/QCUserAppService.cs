@@ -157,10 +157,7 @@ namespace eConLab.QCUsers
                 .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
             .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.NationalId.Contains(filter.Search))
              .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.PhoneNumber.Contains(filter.Search));
-            //.WhereIf(!filter.Id.IsNullOrWhiteSpace(), x => x.Id.ToString().Contains(filter.Id))
-            //.WhereIf(!filter.Name.IsNullOrWhiteSpace(), x => x.Name.Contains(filter.Name))
-            //.WhereIf(!filter.Price.IsNullOrWhiteSpace(), x => x.Price.ToString().Contains(filter.Price))
-            //.WhereIf(!filter.PublishDate.IsNullOrWhiteSpace(), x => x.PublishDate.ToString().Contains(filter.PublishDate))
+           
 
             return lstItems.ToList();
         }
@@ -172,10 +169,7 @@ namespace eConLab.QCUsers
                           .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
                           .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.NationalId.Contains(filter.Search))
                           .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.PhoneNumber.Contains(filter.Search));
-                //.WhereIf(!filter.Id.IsNullOrWhiteSpace(), x => x.Id.ToString().Contains(filter.Id))
-                //.WhereIf(!filter.Name.IsNullOrWhiteSpace(), x => x.Name.Contains(filter.Name))
-                //.WhereIf(!filter.Price.IsNullOrWhiteSpace(), x => x.Price.ToString().Contains(filter.Price))
-                //.WhereIf(!filter.PublishDate.IsNullOrWhiteSpace(), x => x.PublishDate.ToString().Contains(filter.PublishDate))
+              
                 
             return lstItems.Count();
         }
