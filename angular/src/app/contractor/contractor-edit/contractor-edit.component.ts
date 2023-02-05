@@ -59,6 +59,7 @@ export class ContractorEditComponent extends AppComponentBase
             this._userServiceProxy.get(this.qcUser.userId).subscribe((result2) => {
                 this.currentUser.emailAddress = result2.emailAddress;
                 this.currentUser.name = result2.name;
+                this.currentUser.userName = result2.userName;
             });
         });
 
