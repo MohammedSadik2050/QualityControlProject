@@ -60,12 +60,12 @@ namespace eConLab.Proj
         }
 
 
+       
+
         public async Task<ProjectDto> Get(long id)
         {
             var obje = _projectRepo.FirstOrDefault(x => x.Id == id);
-
-            var obj = _mapper.Map<ProjectDto>(obje);
-            return obj;
+            return  _mapper.Map<ProjectDto>(obje) ?? null;
         }
 
 
@@ -139,5 +139,33 @@ namespace eConLab.Proj
         
             return lstItems.ToList().Count;
         }
+
+
+        #region ProjectItems
+        public async Task<ProjectItemDto> CreateOrUpdateProjectItem(ProjectItemDto input)
+        {
+
+            await _projectItemRepo.InsertOrUpdateAsync(_mapper.Map<ProjectItem>(input));
+            await CurrentUnitOfWork.SaveChangesAsync();
+
+
+            return _mapper.Map<ProjectItemDto>(input);
+        }
+
+        public async Task<List<ProjectItemDto>> GetProjectItemsByProjectId(int projectId)
+        {
+
+            var query = await _projectItemRepo.GetAll().Where(d => d.ProjectId == projectId).ToListAsync();
+            return _mapper.Map<List<ProjectItemDto>>(query);
+        }
+
+        public async Task<ProjectItemDto> GetProjectItem(long id)
+        {
+            var obj = _projectItemRepo.FirstOrDefault(x => x.Id == id);
+
+            return _mapper.Map<ProjectItemDto>(obj) ?? null;
+        }
+
+        #endregion
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace eConLab.Proj.Dto
 {
-    public class ProjectItemDto:AuditedEntityDto<long>
+    public class ProjectItemDto : EntityDto<long>
     {
         public long ProjectId { get; set; }
         public string Name { get; set; }

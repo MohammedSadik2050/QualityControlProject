@@ -14,7 +14,15 @@ namespace eConLab.Proj
         Task<ProjectDto> CreateOrUpdate(ProjectDto input);
         Task<ProjectDto> Get(long id);
         Task<PagedResultDto<ProjectDto>> GetAll(ProjectPaginatedDto input);
-      
+
+
+
+        #region ProjectItems
+        Task<ProjectItemDto> GetProjectItem(long id);
+        Task<List<ProjectItemDto>> GetProjectItemsByProjectId(int projectId);
+        Task<ProjectItemDto> CreateOrUpdateProjectItem(ProjectItemDto input);
+        #endregion
+
 
     }
 }
