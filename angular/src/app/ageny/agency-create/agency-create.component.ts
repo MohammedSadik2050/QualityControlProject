@@ -38,8 +38,6 @@ export class AgencyCreateComponent extends AppComponentBase implements OnInit {
 
     save(): void {
         this.saving = true;
-
-        this.agency.creatorUserId = this._sessionService.userId;
         this._agencyServiceProxy.createOrUpdate(this.agency).subscribe(
             () => {
                 this.notify.info(this.l('SavedSuccessfully'));

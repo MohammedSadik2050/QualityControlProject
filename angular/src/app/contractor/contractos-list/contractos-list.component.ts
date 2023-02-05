@@ -15,7 +15,7 @@ import { ContractorEditComponent } from '../contractor-edit/contractor-edit.comp
 
 class PagedUsersRequestDto extends PagedRequestDto {
     keyword: string;
-    isActive: boolean | null;
+    userType: number | null;
 }
 
 class UserTypes {
@@ -31,6 +31,7 @@ class UserTypes {
 export class ContractorsListComponent extends PagedListingComponentBase<QCUserDto> {
     users: QCUserDto[] = [];
     keyword = '';
+    userType = 0;
     userTypes: UserTypes[] = []; 
     isActive: boolean | null;
     advancedFiltersVisible = false;
@@ -58,6 +59,7 @@ export class ContractorsListComponent extends PagedListingComponentBase<QCUserDt
     clearFilters(): void {
         this.keyword = '';
         this.isActive = undefined;
+        this.userType = 0;
         this.getDataPage(1);
     }
     typValue(id) {
@@ -74,11 +76,11 @@ export class ContractorsListComponent extends PagedListingComponentBase<QCUserDt
         finishedCallback: Function
     ): void {
         request.keyword = this.keyword;
-        request.isActive = this.isActive;
+        request.userType = this.userType;
 
         this._qcUserServiceProxy
             .getAll(
-                this.appSession.userId,
+                this.userType,
                 ''  ,
                 '',
                 request.skipCount,

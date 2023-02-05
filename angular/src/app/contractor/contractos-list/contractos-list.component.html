@@ -53,47 +53,20 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row mb-0">
-                                            <label class="col-md-3 col-form-label">
-                                                {{ "IsActive" | localize }}
-                                            </label>
-                                            <div class="col-md-9 pt-2">
-                                                <div class="custom-control custom-radio d-inline">
-                                                    <input type="radio"
-                                                           class="custom-control-input"
-                                                           id="isActiveAll"
-                                                           name="isActive"
-                                                           [(ngModel)]="isActive"
-                                                           [value]="undefined"
-                                                           checked />
-                                                    <label class="custom-control-label" for="isActiveAll">
-                                                        {{ "All" | localize }}
-                                                    </label>
+                                            
+                                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                                    {{ "UserType" | localize }}
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <select name="userType"
+                                                            class="form-control"
+                                                            id="userType" [(ngModel)]="userType"
+                                                           >
+                                                        <option *ngFor="let userType of userTypes" [value]="userType.id">{{userType.arabicName}}</option>
+                                                    </select>
+                                                     
                                                 </div>
-                                                <div class="custom-control custom-radio d-inline mx-3">
-                                                    <input type="radio"
-                                                           class="custom-control-input"
-                                                           id="isActiveActive"
-                                                           name="isActive"
-                                                           [(ngModel)]="isActive"
-                                                           [value]="true" />
-                                                    <label class="custom-control-label"
-                                                           for="isActiveActive">
-                                                        {{ "Yes" | localize }}
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-radio d-inline">
-                                                    <input type="radio"
-                                                           class="custom-control-input"
-                                                           id="isActivePassive"
-                                                           name="isActive"
-                                                           [(ngModel)]="isActive"
-                                                           [value]="false" />
-                                                    <label class="custom-control-label"
-                                                           for="isActivePassive">
-                                                        {{ "No" | localize }}
-                                                    </label>
-                                                </div>
-                                            </div>
+                                           
                                         </div>
                                     </div>
                                 </div>

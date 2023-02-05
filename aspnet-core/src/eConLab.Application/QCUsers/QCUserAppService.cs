@@ -54,12 +54,26 @@ namespace eConLab.QCUsers
             {
                 //update
                 //just we need to update email and user Type 
-               
+
                 var currentUser = await UserManager.FindByIdAsync(input.QCUserInput.UserId.ToString());
 
-               
-                var qcUser=await _qcUsersRepo.FirstOrDefaultAsync(d=>d.UserId== input.QCUserInput.UserId);
-                qcUser = _mapper.Map<QCUser>(input.QCUserInput); 
+                var qcUser = new QCUser();
+                qcUser = await _qcUsersRepo.FirstOrDefaultAsync(d => d.UserId == input.QCUserInput.UserId);
+                //  qcUser = _mapper.Map<QCUser>(input.QCUserInput);
+                qcUser.UserTypes = input.QCUserInput.UserTypes;
+                qcUser.Name = input.QCUserInput.Name;
+                qcUser.NationalId = input.QCUserInput.NationalId;
+                qcUser.NationalityName = input.QCUserInput.NationalityName;
+                qcUser.StaffNumber = input.QCUserInput.StaffNumber;
+                qcUser.AgencyId = input.QCUserInput.AgencyId;
+                qcUser.PhoneNumber = input.QCUserInput.PhoneNumber;
+                qcUser.MobilePhoneNumber = input.QCUserInput.MobilePhoneNumber;
+                qcUser.WorkPlace = input.QCUserInput.WorkPlace;
+                qcUser.Address = input.QCUserInput.Address;
+                qcUser.Fax = input.QCUserInput.Fax;
+                _qcUsersRepo.Update(qcUser);
+
+
                 if (currentUser != null)
                 {
                     currentUser.EmailAddress = input.RegisterInput.EmailAddress;
@@ -70,9 +84,10 @@ namespace eConLab.QCUsers
                         await UserManager.AddToRoleAsync(currentUser, GetRoleNameByUserType(input.QCUserInput.UserTypes));
                     }
                     await _accountAppService.UserManager.UpdateAsync(currentUser);
+
                 }
                 await CurrentUnitOfWork.SaveChangesAsync();
-
+                return input.QCUserInput;
 
             }
             throw new UserFriendlyException("Invalide Data please try again");
@@ -150,14 +165,15 @@ namespace eConLab.QCUsers
 
         private async Task<List<QCUser>> GetListAsync(int skipCount, int maxResultCount, QCUserPagedAndSortedResultRequestDto filter = null)
         {
-
-            var lstItems =  _qcUsersRepo.GetAll()
+            //var currentUserType = (UserTypes)filter.Id;
+            var lstItems = _qcUsersRepo.GetAll()
                 .Skip(skipCount)
                 .Take(maxResultCount)
+                .WhereIf(filter.Id > 0, x => x.UserTypes == (UserTypes)filter.Id)
                 .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
             .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.NationalId.Contains(filter.Search))
              .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.PhoneNumber.Contains(filter.Search));
-           
+
 
             return lstItems.ToList();
         }
@@ -165,12 +181,13 @@ namespace eConLab.QCUsers
         private async Task<int> GetTotalCountAsync(QCUserPagedAndSortedResultRequestDto filter = null)
         {
 
-            var lstItems =  _qcUsersRepo.GetAll()
+            var lstItems = _qcUsersRepo.GetAll()
+                            .WhereIf(filter.Id > 0, x => x.UserTypes == (UserTypes)filter.Id)
                           .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
                           .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.NationalId.Contains(filter.Search))
                           .WhereIf(!filter.Search.IsNullOrWhiteSpace(), x => x.PhoneNumber.Contains(filter.Search));
-              
-                
+
+
             return lstItems.Count();
         }
     }

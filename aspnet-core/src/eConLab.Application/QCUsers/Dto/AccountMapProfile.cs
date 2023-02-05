@@ -18,7 +18,7 @@ namespace eConLab.QCUsers.Dto
         public AccountMapProfile()
         {
 
-            CreateMap<QCUserDto, QCUser>().ReverseMap();
+            CreateMap<QCUser, QCUserDto > ().ReverseMap();
         }
     }
 }

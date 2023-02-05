@@ -2,6 +2,7 @@
 <localizationDictionary culture="ar">
 	<texts>
 		<text name="UserType">نوع المستخدم</text>
+		<text name="Projects">مشاريع</text>
 		<text name="Fax">الفاكس</text>
 		<text name="WorkPlace">مكان العمل</text>
 		<text name="PhoneNumber">رقم الهاتف</text>

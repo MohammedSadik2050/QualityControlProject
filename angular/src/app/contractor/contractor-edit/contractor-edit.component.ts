@@ -55,7 +55,7 @@ export class ContractorEditComponent extends AppComponentBase
     ngOnInit(): void {
         this._qcUserServiceProxy.getById(this.id).subscribe((result) => {
             this.qcUser = result;
-
+            
             this._userServiceProxy.get(this.qcUser.userId).subscribe((result2) => {
                 this.currentUser.emailAddress = result2.emailAddress;
                 this.currentUser.name = result2.name;
@@ -131,6 +131,7 @@ export class ContractorEditComponent extends AppComponentBase
 
     save(): void {
         this.saving = true;
+        this.contractorObject.id = this.id;
         this.contractorObject.registerInput = this.currentUser;
         this.contractorObject.qcUserInput = this.qcUser;
         this.contractorObject.registerInput.surname = this.contractorObject.registerInput.name;
