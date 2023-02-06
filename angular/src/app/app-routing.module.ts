@@ -10,6 +10,7 @@ import { RolesComponent } from 'app/roles/roles.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component'; 
 import { ContractorsListComponent } from './contractor/contractos-list/contractos-list.component';
 import { AgenyComponent } from './ageny/ageny.component';
+import { ProjectComponent } from './project/project.component';
 
 @NgModule({
     imports: [
@@ -24,6 +25,7 @@ import { AgenyComponent } from './ageny/ageny.component';
                     { path: 'agencies', component: AgenyComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
                     { path: 'qc-users', component: ContractorsListComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
+                    { path: 'projects', component: ProjectComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
                    /* { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },*/
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] }
                 ]

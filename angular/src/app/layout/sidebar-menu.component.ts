@@ -78,9 +78,9 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
 
             new MenuItem(
                 this.l('ProjectList'),
-                '/app',
+                '/app/projects',
                 'fas fa-info-circle',
-                'Pages.Users'
+                ''
             ),
 
             //new MenuItem(this.l('MultiLevelMenu'), '', 'fas fa-circle', '', [
