@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { AbpSessionService } from 'abp-ng2-module';
+import * as moment from 'moment';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { AppComponentBase } from '../../../shared/app-component-base';
 import { AppAuthService } from '../../../shared/auth/app-auth.service';
-import { AgencyServiceProxy, AgencyTypeDto, ProjectDto } from '../../../shared/service-proxies/service-proxies';
+import { AgencyDto, AgencyServiceProxy, AgencyTypeDto, DropdownListDto, LookupServiceProxy, ProjectDto, ProjectServiceProxy } from '../../../shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'app-create-project',
@@ -14,11 +15,20 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
     saving = false;
     project = new ProjectDto();
     agencyTypes: AgencyTypeDto[] = [];
+    agencies: AgencyDto[] = [];
+    allAgencies: AgencyDto[] = [];
+    supervisingEngineers: DropdownListDto[] = [];
+    consultants: DropdownListDto[] = [];
+    contractors: DropdownListDto[] = [];
+    projectManagers: DropdownListDto[] = [];
+    supervisingQualities: DropdownListDto[] = [];
     @Output() onSave = new EventEmitter<any>();
 
     constructor(
         injector: Injector,
+        public _projectServiceProxy: ProjectServiceProxy,
         public _agencyServiceProxy: AgencyServiceProxy,
+        public _lookupServiceProxy: LookupServiceProxy,
         public bsModalRef: BsModalRef,
         public authService: AppAuthService,
         private _sessionService: AbpSessionService,
@@ -28,24 +38,72 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit(): void {
+        this.loadAgencyTypes();
+        this.loadAgencies();
+        this.loadSupervisingEngineers();
+        this.loadConsultants();
+        this.loadContractors();
+        this.loadProjectManagers();
+        this.loadSupervisingQualities();
+    }
+    loadSupervisingQualities() {
+        this._lookupServiceProxy.supervisingQualityList().subscribe(res => {
+            this.supervisingQualities = res;
+        });
+    }
+
+    loadProjectManagers() {
+        this._lookupServiceProxy.labProjectManagerList().subscribe(res => {
+            this.projectManagers = res;
+        });
+    }
+
+    loadContractors() {
+        this._lookupServiceProxy.contractorList().subscribe(res => {
+            this.contractors = res;
+        });
+    }
+
+    loadSupervisingEngineers() {
+        this._lookupServiceProxy.supervisingEngineerList().subscribe(res => {
+            this.supervisingEngineers = res;
+        });
+    }
+
+    loadConsultants() {
+        this._lookupServiceProxy.consultantList().subscribe(res => {
+            this.consultants = res;
+        });
+    }
+    loadAgencies() {
+        this._agencyServiceProxy.getAllAgenciesList().subscribe(res => {
+            this.allAgencies = res;
+        });
+    }
+    loadAgencyTypes() {
+
         this._agencyServiceProxy.getAllAgencyTypeList().subscribe(res => {
             this.agencyTypes = res;
         });
     }
-
-
+    onTypeChange() {
+        this.agencies = this.allAgencies.filter(s => s.agencyTypeId == this.project.agencyTypeId);
+    }
 
     save(): void {
         this.saving = true;
-        //this._agencyServiceProxy.createOrUpdate(this.agency).subscribe(
-        //    () => {
-        //        this.notify.info(this.l('SavedSuccessfully'));
-        //        this.bsModalRef.hide();
-        //        this.onSave.emit();
-        //    },
-        //    () => {
-        //        this.saving = false;
-        //    }
-        //);
+        this.project.startDate = moment(this.project.startDate, "YYYY-MM-DD");
+        this.project.completedDate = moment(this.project.completedDate, "YYYY-MM-DD");
+        this.project.siteDelivedDate = moment(this.project.siteDelivedDate, "YYYY-MM-DD");
+        this._projectServiceProxy.createOrUpdate(this.project).subscribe(
+            () => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.bsModalRef.hide();
+                this.onSave.emit();
+            },
+            () => {
+                this.saving = false;
+            }
+        );
     }
 }

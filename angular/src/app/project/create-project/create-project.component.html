@@ -44,14 +44,41 @@
         </div>
 
         <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
+                {{ "ContractNumber" | localize }}
+            </label>
+            <div class="col-md-9">
+                <input type="text"
+                       class="form-control"
+                       name="contractNumber"
+                       id="contractNumber"
+                       required
+                       maxlength="32"
+                       [(ngModel)]="project.contractNumber"
+                       #contractNumberModel="ngModel"
+                       #contractNumber />
+                <abp-validation-summary [control]="contractNumberModel"
+                                        [controlEl]="contractNumber"></abp-validation-summary>
+            </div>
+        </div>
+
+
+        <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="ADDRESS">
                 {{ "StartDate" | localize }}
             </label>
-            <div class="input-group date col-6" id="StartDate" data-target-input="nearest">
-                <input type="text" class="form-control datetimepicker-input" data-target="#StartDate">
-                <div class="input-group-append" data-target="#StartDate" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                </div>
+            <div class="col-md-9">
+                <input type="date"
+                       class="form-control"
+                       name="startDate"
+                       id="startDate"
+                       required
+                       maxlength="32"
+                       [(ngModel)]="project.startDate"
+                       #startDateModel="ngModel"
+                       #startDate />
+                <abp-validation-summary [control]="startDateModel"
+                                        [controlEl]="startDate"></abp-validation-summary>
             </div>
         </div>
 
@@ -59,11 +86,18 @@
             <label class="col-md-3 col-form-label" for="ADDRESS">
                 {{ "CompleteDate" | localize }}
             </label>
-            <div class="input-group date" id="CompleteDate" data-target-input="nearest">
-                <input type="text" class="form-control datetimepicker-input" data-target="CompleteDate">
-                <div class="input-group-append" data-target="#CompleteDate" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                </div>
+            <div class="col-md-9">
+                <input type="date"
+                       class="form-control"
+                       name="completeDate"
+                       id="completeDate"
+                       required
+                       maxlength="32"
+                       [(ngModel)]="project.completedDate"
+                       #completeDateModel="ngModel"
+                       #completeDate />
+                <abp-validation-summary [control]="completeDateModel"
+                                        [controlEl]="completeDate"></abp-validation-summary>
             </div>
         </div>
 
@@ -71,11 +105,18 @@
             <label class="col-md-3 col-form-label" for="ADDRESS">
                 {{ "SiteDelivedDate" | localize }}
             </label>
-            <div class="input-group date" id="SiteDelivedDate" data-target-input="nearest">
-                <input type="text" class="form-control datetimepicker-input" data-target="#SiteDelivedDate">
-                <div class="input-group-append" data-target="#SiteDelivedDate" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                </div>
+            <div class="col-md-9">
+                <input type="date"
+                       class="form-control"
+                       name="siteDelivedDate"
+                       id="siteDelivedDate"
+                       required
+                       maxlength="32"
+                       [(ngModel)]="project.siteDelivedDate"
+                       #siteDelivedDateModel="ngModel"
+                       #siteDelivedDate />
+                <abp-validation-summary [control]="siteDelivedDateModel"
+                                        [controlEl]="siteDelivedDate"></abp-validation-summary>
             </div>
         </div>
 
@@ -89,6 +130,7 @@
                 <select name="agencyTypeId"
                         class="form-control"
                         id="Address" [(ngModel)]="project.agencyTypeId"
+                        (ngModelChange)="onTypeChange()"
                         #agencyTypeIdModel="ngModel"
                         #agencyTypeId required>
                     <option *ngFor="let agencyType of agencyTypes" [value]="agencyType.id">{{agencyType.name}}</option>
@@ -109,7 +151,7 @@
                         id="AgencyId" [(ngModel)]="project.agencyId"
                         #agencyIdModel="ngModel"
                         #agencyId required>
-                    <option *ngFor="let agencyType of agencyTypes" [value]="agencyType.id">{{agencyType.name}}</option>
+                    <option *ngFor="let agency of agencies" [value]="agency.id">{{agency.name}}</option>
                 </select>
 
                 <abp-validation-summary [control]="agencyIdModel"
@@ -127,7 +169,9 @@
                         id="SupervisingEngineerId" [(ngModel)]="project.supervisingEngineerId"
                         #supervisingEngineerIdModel="ngModel"
                         #supervisingEngineerId required>
-                    <option *ngFor="let agencyType of agencyTypes" [value]="agencyType.id">{{agencyType.name}}</option>
+                    <option *ngFor="let supervisingEngineer of supervisingEngineers" [value]="supervisingEngineer.id">
+                        {{supervisingEngineer.name}}
+                    </option>
                 </select>
 
                 <abp-validation-summary [control]="supervisingEngineerIdModel"
@@ -145,7 +189,7 @@
                         id="ConsultantId" [(ngModel)]="project.consultantId"
                         #consultantIdModel="ngModel"
                         #consultantId required>
-                    <option *ngFor="let agencyType of agencyTypes" [value]="agencyType.id">{{agencyType.name}}</option>
+                    <option *ngFor="let consultant of consultants" [value]="consultant.id">{{consultant.name}}</option>
                 </select>
 
                 <abp-validation-summary [control]="consultantIdModel"
@@ -163,7 +207,7 @@
                         id="ContractorId" [(ngModel)]="project.contractorId"
                         #contractorIdModel="ngModel"
                         #contractorId required>
-                    <option *ngFor="let agencyType of agencyTypes" [value]="agencyType.id">{{agencyType.name}}</option>
+                    <option *ngFor="let contractor of contractors" [value]="contractor.id">{{contractor.name}}</option>
                 </select>
 
                 <abp-validation-summary [control]="contractorIdModel"
@@ -181,7 +225,7 @@
                         id="LabProjectManagerId" [(ngModel)]="project.labProjectManagerId"
                         #labProjectManagerIdModel="ngModel"
                         #labProjectManagerId required>
-                    <option *ngFor="let agencyType of agencyTypes" [value]="agencyType.id">{{agencyType.name}}</option>
+                    <option *ngFor="let projectManager of projectManagers" [value]="projectManager.id">{{projectManager.name}}</option>
                 </select>
 
                 <abp-validation-summary [control]="labProjectManagerIdModel"
@@ -199,7 +243,7 @@
                         id="SupervisingQualityId" [(ngModel)]="project.supervisingQualityId"
                         #supervisingQualityIdModel="ngModel"
                         #supervisingQualityId required>
-                    <option *ngFor="let agencyType of agencyTypes" [value]="agencyType.id">{{agencyType.name}}</option>
+                    <option *ngFor="let supervisingQuality of supervisingQualities" [value]="supervisingQuality.id">{{supervisingQuality.name}}</option>
                 </select>
 
                 <abp-validation-summary [control]="supervisingQualityIdModel"
@@ -207,7 +251,7 @@
             </div>
         </div>
 
-    
+
     </div>
     <abp-modal-footer [cancelDisabled]="saving"
                       [saveDisabled]="!createUserModal.form.valid || saving"

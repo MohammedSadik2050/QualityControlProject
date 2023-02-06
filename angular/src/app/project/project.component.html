@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-6">
-                    <h1>{{ "Project" | localize }}</h1>
+                    <h1>{{ "Projects" | localize }}</h1>
                 </div>
                 <div class="col-6 text-right">
                     <a href="javascript:;" class="btn bg-blue" (click)="createProject()">
@@ -139,9 +139,9 @@
                 ">
                                     <td>{{ project.name }}</td>
                                     <td>{{ project.contractNumber }}</td>
-                                    <td>{{ project.startDate }}</td>
-                                    <td>{{ project.completedDate }}</td>
-                                    <td>{{ project.siteDelivedDate }}</td>
+                                    <td>{{ project.startDate | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{ project.completedDate | date: 'dd/MM/yyyy' }}</td>
+                                    <td>{{ project.siteDelivedDate  | date: 'dd/MM/yyyy'}}</td>
                                     <td>
                                         <button type="button"
                                                 class="btn btn-sm bg-secondary"
