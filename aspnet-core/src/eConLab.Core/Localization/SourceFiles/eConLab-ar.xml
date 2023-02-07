@@ -2,6 +2,15 @@
 <localizationDictionary culture="ar">
 	<texts>
 		<text name="UserType">نوع المستخدم</text>
+		<text name="Qty">الكميه</text>
+		<text name="LabProjectManager">مدير المشروع</text>
+		<text name="SupervisingQuality">مشرف الجوده</text>
+		<text name="ContractNumber">رقم العقد</text>
+		<text name="StartDate">بدايه المشروع</text>
+		<text name="CompletedDate">تاريخ الانتهاء</text>
+		<text name="SupervisingEngineer">مهندس مشرف</text>
+		<text name="Consultant">استشاري</text>
+		<text name="SiteDelivedDate">تاريخ التسليم</text>
 		<text name="Projects">مشاريع</text>
 		<text name="Fax">الفاكس</text>
 		<text name="WorkPlace">مكان العمل</text>
@@ -20,7 +29,7 @@
 		<text name="ResponsiblePerson">المسئول</text>
 		<text name="CreateNewContractor">اضافه</text>
 		<text name="EditContractor">تعديل </text>
-		<text name="Contractor">المستخدم</text>
+		<text name="Contractor">المقاول</text>
 		<text name="Contractors">المستخدم</text>
 		<text name="QCUsers">إدارة منسوبي النظام</text>
 		<text name="Contract_Name">اسم العقد</text>

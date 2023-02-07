@@ -1,0 +1,396 @@
+<div [@routerTransition]>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h1>{{ "Edit" | localize }}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content px-2">
+        <div class="container-fluid">
+            <div class="card col-md-9">
+                <div class="card-body">
+
+                    <form class="form-horizontal"
+                          autocomplete="off"
+                          #createUserModal="ngForm"
+                          (ngSubmit)="save()">
+
+
+                        <div class="row">
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "Name" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="name"
+                                           id="name"
+                                           required
+                                           maxlength="32"
+                                           [(ngModel)]="project.name"
+                                           #nameModel="ngModel"
+                                           #nameE1 />
+                                    <abp-validation-summary [control]="nameModel"
+                                                            [controlEl]="nameE1"></abp-validation-summary>
+                                </div>
+                            </div>
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
+                                    {{ "Description" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="description"
+                                           id="description"
+                                           required
+                                           maxlength="32"
+                                           [(ngModel)]="project.description"
+                                           #descriptionModel="ngModel"
+                                           #descriptionE1 />
+                                    <abp-validation-summary [control]="descriptionModel"
+                                                            [controlEl]="descriptionE1"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
+                                    {{ "ContractNumber" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="contractNumber"
+                                           id="contractNumber"
+                                           required
+                                           maxlength="32"
+                                           [(ngModel)]="project.contractNumber"
+                                           #contractNumberModel="ngModel"
+                                           #contractNumber />
+                                    <abp-validation-summary [control]="contractNumberModel"
+                                                            [controlEl]="contractNumber"></abp-validation-summary>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "StartDate" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="date"
+                                           class="form-control"
+                                           name="startDate"
+                                           id="startDate"
+                                           style="text-align: right;"
+                                           required
+                                           maxlength="32"
+                                           [(ngModel)]="startDatemodel"
+                                           #startDateModel="ngModel"
+                                           #startDate />
+                                    <abp-validation-summary [control]="startDateModel"
+                                                            [controlEl]="startDate"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "CompletedDate" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="date"
+                                           class="form-control"
+                                           style="text-align: right;"
+                                           name="completeDate"
+                                           id="completeDate"
+                                           required
+                                           maxlength="32"
+                                           [(ngModel)]="completeDatemodel"
+                                           #completeDateModel="ngModel"
+                                           #completeDate />
+                                    <abp-validation-summary [control]="completeDateModel"
+                                                            [controlEl]="completeDate"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "SiteDelivedDate" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="date"
+                                           class="form-control"
+                                           name="siteDelivedDate"
+                                           style="text-align: right;"
+                                           id="siteDelivedDate"
+                                           required
+                                           maxlength="32"
+                                           [(ngModel)]="siteDelivedDatemodel"
+                                           #siteDelivedDateModel="ngModel"
+                                           #siteDelivedDate />
+                                    <abp-validation-summary [control]="siteDelivedDateModel"
+                                                            [controlEl]="siteDelivedDate"></abp-validation-summary>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "AgencyType" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <select name="agencyTypeId"
+                                            class="form-control"
+                                            id="Address" [(ngModel)]="project.agencyTypeId"
+                                            (ngModelChange)="onTypeChange()"
+                                            #agencyTypeIdModel="ngModel"
+                                            #agencyTypeId required>
+                                        <option *ngFor="let agencyType of agencyTypes" [value]="agencyType.id">{{agencyType.name}}</option>
+                                    </select>
+
+                                    <abp-validation-summary [control]="agencyTypeIdModel"
+                                                            [controlEl]="agencyTypeId"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "Agency" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <select name="agencyTypeId"
+                                            class="form-control"
+                                            id="AgencyId" [(ngModel)]="project.agencyId"
+                                            #agencyIdModel="ngModel"
+                                            #agencyId required>
+                                        <option *ngFor="let agency of agencies" [value]="agency.id">{{agency.name}}</option>
+                                    </select>
+
+                                    <abp-validation-summary [control]="agencyIdModel"
+                                                            [controlEl]="agencyId"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "SupervisingEngineer" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <select name="agencyTypeId"
+                                            class="form-control"
+                                            id="SupervisingEngineerId" [(ngModel)]="project.supervisingEngineerId"
+                                            #supervisingEngineerIdModel="ngModel"
+                                            #supervisingEngineerId required>
+                                        <option *ngFor="let supervisingEngineer of supervisingEngineers" [value]="supervisingEngineer.id">
+                                            {{supervisingEngineer.name}}
+                                        </option>
+                                    </select>
+
+                                    <abp-validation-summary [control]="supervisingEngineerIdModel"
+                                                            [controlEl]="supervisingEngineerId"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "Consultant" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <select name="ConsultantId"
+                                            class="form-control"
+                                            id="ConsultantId" [(ngModel)]="project.consultantId"
+                                            #consultantIdModel="ngModel"
+                                            #consultantId required>
+                                        <option *ngFor="let consultant of consultants" [value]="consultant.id">{{consultant.name}}</option>
+                                    </select>
+
+                                    <abp-validation-summary [control]="consultantIdModel"
+                                                            [controlEl]="consultantId"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "Contractor" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <select name="ContractorId"
+                                            class="form-control"
+                                            id="ContractorId" [(ngModel)]="project.contractorId"
+                                            #contractorIdModel="ngModel"
+                                            #contractorId required>
+                                        <option *ngFor="let contractor of contractors" [value]="contractor.id">{{contractor.name}}</option>
+                                    </select>
+
+                                    <abp-validation-summary [control]="contractorIdModel"
+                                                            [controlEl]="contractorId"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "LabProjectManager" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <select name="LabProjectManagerId"
+                                            class="form-control"
+                                            id="LabProjectManagerId" [(ngModel)]="project.labProjectManagerId"
+                                            #labProjectManagerIdModel="ngModel"
+                                            #labProjectManagerId required>
+                                        <option *ngFor="let projectManager of projectManagers" [value]="projectManager.id">{{projectManager.name}}</option>
+                                    </select>
+
+                                    <abp-validation-summary [control]="labProjectManagerIdModel"
+                                                            [controlEl]="labProjectManagerId"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "SupervisingQuality" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <select name="SupervisingQualityId"
+                                            class="form-control"
+                                            id="SupervisingQualityId" [(ngModel)]="project.supervisingQualityId"
+                                            #supervisingQualityIdModel="ngModel"
+                                            #supervisingQualityId required>
+                                        <option *ngFor="let supervisingQuality of supervisingQualities" [value]="supervisingQuality.id">{{supervisingQuality.name}}</option>
+                                    </select>
+
+                                    <abp-validation-summary [control]="supervisingQualityIdModel"
+                                                            [controlEl]="supervisingQualityId"></abp-validation-summary>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit"
+                                [disabled]="!createUserModal.form.valid || saving"
+                                class="btn btn-primary"
+                                aria-label="Close">
+                            {{ "Save" | localize }}
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="content px-2">
+        <div class="container-fluid">
+            <div class="card col-md-9">
+                <div class="card-body">
+
+                    <form class="form-horizontal"
+                          autocomplete="off"
+                          #projectDetails="ngForm"
+                          (ngSubmit)="saveProductItems()">
+
+                        <div class="row" style="display: -webkit-box !important">
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "Name" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="name"
+                                           id="name"
+                                           required
+                                           maxlength="32"
+                                           [(ngModel)]="projectItem.name"
+                                           #projectItemnameModel="ngModel"
+                                           #projectItemnameE1 />
+                                    <abp-validation-summary [control]="projectItemnameModel"
+                                                            [controlEl]="projectItemnameE1"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required">
+                                <label class="col-md-4 col-form-label" for="Name">
+                                    {{ "Description" | localize }}
+                                </label>
+                                <div class="col-md-8">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="description"
+                                           id="description"
+                                           required
+                                           maxlength="32"
+                                           [(ngModel)]="projectItem.description"
+                                           #projectItemdescriptionModel="ngModel"
+                                           #projectItemdescription />
+                                    <abp-validation-summary [control]="projectItemdescriptionModel"
+                                                            [controlEl]="projectItemdescription"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "Qty" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number"
+                                           class="form-control"
+                                           name="Qty"
+                                           id="Qty"
+                                           required
+                                           maxlength="32"
+                                           [(ngModel)]="projectItem.quantity"
+                                           #QtyModel="ngModel"
+                                           #Qty />
+                                    <abp-validation-summary [control]="QtyModel"
+                                                            [controlEl]="Qty"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <button type="button"
+                                    [disabled]="!projectDetails.form.valid || saving"
+                                    class="btn btn-primary" style="margin-right: 14px"
+                                    (click)="saveProductItems()"
+                                    aria-label="Close">
+                                {{ "Save" | localize }}
+                            </button>
+                        </div>
+
+
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>{{ "Name" | localize }}</th>
+                                    <th>{{ "Description" | localize }}</th>
+                                    <th>{{ "Qty" | localize }}</th>
+                                    <th style="width: 310px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let projectItem of projectItems">
+                                    <td>{{ projectItem.name }}</td>
+                                    <td>{{ projectItem.description }}</td>
+                                    <td>{{ projectItem.quantity}}</td>
+                                    <td>
+                                        <button type="button"
+                                                class="btn btn-sm bg-secondary"
+                                                (click)="editProjectItems(projectItem.id)">
+                                            <i class="fas fa-pencil-alt"></i>
+                                            {{ "Edit" | localize }}
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

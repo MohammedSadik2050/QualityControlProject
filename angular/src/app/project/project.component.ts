@@ -1,4 +1,5 @@
 import { Component, Injector, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 import { appModuleAnimation } from '../../shared/animations/routerTransition';
@@ -24,7 +25,8 @@ export class ProjectComponent extends PagedListingComponentBase<ProjectDto> {
     constructor(
         injector: Injector,
         private _projectServiceProxy: ProjectServiceProxy,
-        private _modalService: BsModalService
+        private _modalService: BsModalService,
+        private router: Router
     ) {
         super(injector);
     }
@@ -34,7 +36,8 @@ export class ProjectComponent extends PagedListingComponentBase<ProjectDto> {
     }
 
     editProject(project: ProjectDto): void {
-        this.showCreateOrEditUserDialog(project.id);
+        /* this.showCreateOrEditUserDialog(project.id);*/
+        this.router.navigateByUrl('/app/projects/edit/' + project.id);
     }
 
 

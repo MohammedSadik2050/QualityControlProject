@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
 	<texts>
+		<text name="Qty">Qty</text>
+		<text name="ContractNumber">Contract Number</text>
+		<text name="LabProjectManager">Lab Project Manager</text>
+		<text name="SupervisingQuality">Supervising Quality</text>
+		<text name="StartDate">Start Date</text>
+		<text name="CompletedDate">Complete Date</text>
+		<text name="SupervisingEngineer">Supervising Engineer</text>
+		<text name="SiteDelivedDate">Site Delived Date</text>
+		<text name="Consultant">Consultant</text>
 		<text name="UserType">User Type</text>
 		<text name="Fax">Fax</text>
 		<text name="NationalId">NationalId</text>

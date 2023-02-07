@@ -46,6 +46,7 @@ import { AgencyCreateComponent } from './ageny/agency-create/agency-create.compo
 import { AgencyEditComponent } from './ageny/agency-edit/agency-edit.component';
 import { ProjectComponent } from './project/project.component';
 import { CreateProjectComponent } from './project/create-project/create-project.component';
+import { EditProjectComponent } from './project/edit-project/edit-project.component';
 
 @NgModule({
     declarations: [
@@ -83,7 +84,8 @@ import { CreateProjectComponent } from './project/create-project/create-project.
         AgencyCreateComponent,
         AgencyEditComponent,
         ProjectComponent,
-        CreateProjectComponent
+        CreateProjectComponent,
+        EditProjectComponent
     ],
     imports: [
         CommonModule,
