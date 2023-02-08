@@ -10,7 +10,7 @@
     </section>
     <section class="content px-2">
         <div class="container-fluid">
-            <div class="card col-md-9">
+            <div class="col-md-9">
                 <div class="card-body">
 
                     <form class="form-horizontal"
@@ -268,7 +268,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit"
+                        <button type="submit" *ngIf="isGranted('Pages.Manage.Project')"
                                 [disabled]="!createUserModal.form.valid || saving"
                                 class="btn btn-primary"
                                 aria-label="Close">
@@ -284,10 +284,10 @@
 
     <section class="content px-2">
         <div class="container-fluid">
-            <div class="card col-md-9">
-                <div class="card-body">
+            <div class="col-md-9">
+                <div class="card-body" style="width:100% !important;">
 
-                    <form class="form-horizontal"
+                    <form class="form-horizontal" *ngIf="isGranted('Pages.Manage.Project')"
                           autocomplete="off"
                           #projectDetails="ngForm"
                           (ngSubmit)="saveProductItems()">
@@ -350,7 +350,7 @@
                                 </div>
                             </div>
 
-                            <button type="button"
+                            <button type="button" *ngIf="isGranted('Pages.Manage.Project')"
                                     [disabled]="!projectDetails.form.valid || saving"
                                     class="btn btn-primary" style="margin-right: 14px"
                                     (click)="saveProductItems()"
@@ -368,7 +368,7 @@
                                     <th>{{ "Name" | localize }}</th>
                                     <th>{{ "Description" | localize }}</th>
                                     <th>{{ "Qty" | localize }}</th>
-                                    <th style="width: 310px;"></th>
+                                    <th style="width: 310px;" *ngIf="isGranted('Pages.Manage.Project')"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -376,8 +376,8 @@
                                     <td>{{ projectItem.name }}</td>
                                     <td>{{ projectItem.description }}</td>
                                     <td>{{ projectItem.quantity}}</td>
-                                    <td>
-                                        <button type="button"
+                                    <td *ngIf="isGranted('Pages.Manage.Project')">
+                                        <button type="button" 
                                                 class="btn btn-sm bg-secondary"
                                                 (click)="editProjectItems(projectItem.id)">
                                             <i class="fas fa-pencil-alt"></i>

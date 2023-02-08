@@ -122,7 +122,7 @@
                                     <th>{{ "ResponsiblePerson" | localize }}</th>
                                     <th>{{ "PhoneNumber" | localize }}</th>
                                     <th>{{ "MobilePhoneNumber" | localize }}</th>
-                                    <th style="width: 310px;">{{ "Actions" | localize }}</th>
+                                    <th style="width: 310px;" *ngIf="isGranted('Pages.Manage.Agences')">{{ "Actions" | localize }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -140,14 +140,14 @@
                                     <td>{{ agency.responsiblePerson }}</td>
                                     <td>{{ agency.phoneNumber }}</td>
                                     <td>{{ agency.mobilePhoneNumber }}</td>
-                                    <td>
+                                    <td *ngIf="isGranted('Pages.Manage.Agences')">
                                         <button type="button"
                                                 class="btn btn-sm bg-secondary"
                                                 (click)="editAgency(agency)">
                                             <i class="fas fa-pencil-alt"></i>
                                             {{ "Edit" | localize }}
                                         </button>
-                                        <button type="button"
+                                        <button type="button" 
                                                 class="btn btn-sm bg-danger mx-2"
                                                 (click)="delete(agency)">
                                             <i class="fas fa-trash"></i>
