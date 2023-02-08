@@ -23,7 +23,7 @@ import { EditProjectComponent } from './project/edit-project/edit-project.compon
                     { path: 'home', component: HomeComponent,  canActivate: [AppRouteGuard] },
                     { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
-                    { path: 'agencies', component: AgenyComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
+                    { path: 'agencies', component: AgenyComponent, data: { permission: 'Pages.Manage.Agences' }, canActivate: [AppRouteGuard] },
                     { path: 'qc-users', component: ContractorsListComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'projects', component: ProjectComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
