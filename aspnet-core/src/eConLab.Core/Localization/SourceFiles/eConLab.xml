@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
 	<texts>
+		<text name="ProjectDetails">Project Details</text>
 		<text name="Qty">Qty</text>
 		<text name="ContractNumber">Contract Number</text>
 		<text name="LabProjectManager">Lab Project Manager</text>

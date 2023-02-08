@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AbpSessionService } from 'abp-ng2-module';
 import * as moment from 'moment';
@@ -7,17 +7,17 @@ import { AppAuthService } from '../../../shared/auth/app-auth.service';
 import { AgencyDto, AgencyServiceProxy, AgencyTypeDto, DropdownListDto, LookupServiceProxy, ProjectDto, ProjectItemDto, ProjectServiceProxy } from '../../../shared/service-proxies/service-proxies';
 
 @Component({
-  selector: 'app-edit-project',
-  templateUrl: './edit-project.component.html',
-  styleUrls: ['./edit-project.component.css']
+    selector: 'app-edit-project',
+    templateUrl: './edit-project.component.html',
+    styleUrls: ['./edit-project.component.css']
 })
 export class EditProjectComponent extends AppComponentBase implements OnInit {
     saving = false;
-    startDatemodel :string = new Date().toLocaleDateString();
-    completeDatemodel :string = new Date().toLocaleDateString();
+    startDatemodel: string = new Date().toLocaleDateString();
+    completeDatemodel: string = new Date().toLocaleDateString();
     siteDelivedDatemodel: string = new Date().toLocaleDateString();
     project = new ProjectDto();
-    projectItems :ProjectItemDto[]=[];
+    projectItems: ProjectItemDto[] = [];
     projectItem: ProjectItemDto = new ProjectItemDto();
     agencyTypes: AgencyTypeDto[] = [];
     agencies: AgencyDto[] = [];
@@ -26,7 +26,7 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
     consultants: DropdownListDto[] = [];
     contractors: DropdownListDto[] = [];
     projectManagers: DropdownListDto[] = [];
-    supervisingQualities: DropdownListDto[] = []; 
+    supervisingQualities: DropdownListDto[] = [];
     @Output() onSave = new EventEmitter<any>();
     projectId: number = 0;
     constructor(
@@ -36,7 +36,8 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         public _lookupServiceProxy: LookupServiceProxy,
         public authService: AppAuthService,
         private _sessionService: AbpSessionService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private changeDetectorRef: ChangeDetectorRef
 
     ) {
         super(injector);
@@ -45,7 +46,7 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
     ngOnInit(): void {
         this.projectId = this.route.snapshot.params['id'];
         this._projectServiceProxy.get(this.projectId).subscribe(res => {
-            this.project = res; 
+            this.project = res;
             this.startDatemodel = moment(this.project.startDate).format("YYYY-MM-DD");
             this.completeDatemodel = moment(this.project.completedDate).format("YYYY-MM-DD");
             this.siteDelivedDatemodel = moment(this.project.siteDelivedDate).format("YYYY-MM-DD");
@@ -58,7 +59,7 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
             this.loadSupervisingQualities();
             this.loadProjectItems();
         });
-       
+
     }
 
     loadProjectItems() {
@@ -109,6 +110,10 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
     }
     onTypeChange() {
         this.agencies = this.allAgencies.filter(s => s.agencyTypeId == this.project.agencyTypeId);
+        this.project.agencyId = this.project.agencyId;
+        this.changeDetectorRef.detectChanges();
+        console.log("data", this.agencies);
+        console.log("value", this.project.agencyId);
     }
 
     save(): void {
@@ -143,7 +148,19 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
             }
         );
     }
+    deleteItem(projectItem: ProjectItemDto) {
 
+        this._projectServiceProxy.deleteProjectItem(this.projectItem.id).subscribe(
+            () => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.loadProjectItems();
+                this.projectItem = new ProjectItemDto();
+            },
+            () => {
+                this.saving = false;
+            }
+        );
+    }
     editProjectItems(id: number) {
 
         this._projectServiceProxy.getProjectItem(id).subscribe(res => {

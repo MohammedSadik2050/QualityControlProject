@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <h1>{{ "Edit" | localize }}</h1>
+                    <h1>{{ "ProjectDetails" | localize }}</h1>
                 </div>
             </div>
         </div>
@@ -147,7 +147,7 @@
                                 <div class="col-md-9">
                                     <select name="agencyTypeId"
                                             class="form-control"
-                                            id="Address" [(ngModel)]="project.agencyTypeId"
+                                            id="agencyTypeId" [(ngModel)]="project.agencyTypeId"
                                             (ngModelChange)="onTypeChange()"
                                             #agencyTypeIdModel="ngModel"
                                             #agencyTypeId required>
@@ -164,9 +164,9 @@
                                     {{ "Agency" | localize }}
                                 </label>
                                 <div class="col-md-9">
-                                    <select name="agencyTypeId"
+                                    <select name="agencyId"
                                             class="form-control"
-                                            id="AgencyId" [(ngModel)]="project.agencyId"
+                                            id="agencyId" [(ngModel)]="project.agencyId"
                                             #agencyIdModel="ngModel"
                                             #agencyId required>
                                         <option *ngFor="let agency of agencies" [value]="agency.id">{{agency.name}}</option>
@@ -378,13 +378,18 @@
                                     <td>{{ projectItem.description }}</td>
                                     <td>{{ projectItem.quantity}}</td>
                                     <td *ngIf="isGranted('Pages.Manage.Project')">
-                                        <button type="button" 
+                                        <button type="button"
                                                 class="btn btn-sm bg-secondary"
                                                 (click)="editProjectItems(projectItem.id)">
                                             <i class="fas fa-pencil-alt"></i>
                                             {{ "Edit" | localize }}
                                         </button>
-
+                                        <button type="button" *ngIf="isGranted('Pages.Manage.Project')"
+                                                class="btn btn-sm bg-danger mx-2"
+                                                (click)="delete(project)">
+                                            <i class="fas fa-trash"></i>
+                                            {{ "Delete" | localize }}
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>

@@ -11,7 +11,8 @@
 		<text name="SupervisingEngineer">مهندس مشرف</text>
 		<text name="Consultant">استشاري</text>
 		<text name="SiteDelivedDate">تاريخ التسليم</text>
-		<text name="Projects">مشاريع</text>
+		<text name="Projects">قائمه المشاريع</text>
+		<text name="ProjectDetails">بيانات المشروع</text>
 		<text name="Fax">الفاكس</text>
 		<text name="WorkPlace">مكان العمل</text>
 		<text name="PhoneNumber">رقم الهاتف</text>
