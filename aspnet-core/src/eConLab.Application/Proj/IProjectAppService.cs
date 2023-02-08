@@ -21,6 +21,8 @@ namespace eConLab.Proj
         Task<ProjectItemDto> GetProjectItem(long id);
         Task<List<ProjectItemDto>> GetProjectItemsByProjectId(int projectId);
         Task<ProjectItemDto> CreateOrUpdateProjectItem(ProjectItemDto input);
+
+        Task<bool> DeleteProjectItem(long Id);
         #endregion
 
 

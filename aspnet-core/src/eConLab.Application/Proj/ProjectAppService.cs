@@ -48,7 +48,7 @@ namespace eConLab.Proj
             _projectItemRepo = projectItemRepo;
         }
 
-       // [AbpAuthorize(PermissionNames.Pages_Manage_Project)]
+        [AbpAuthorize(PermissionNames.Pages_Manage_Project)]
         public async Task<ProjectDto> CreateOrUpdate(ProjectDto input)
         {
             
@@ -165,6 +165,15 @@ namespace eConLab.Proj
 
             return _mapper.Map<ProjectItemDto>(obj) ?? null;
         }
+
+      
+
+        public async Task<bool> DeleteProjectItem(long Id)
+        {
+            await _projectItemRepo.DeleteAsync(Id);
+            return true;
+        }
+
 
         #endregion
     }
