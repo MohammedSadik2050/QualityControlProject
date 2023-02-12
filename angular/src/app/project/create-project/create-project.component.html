@@ -129,7 +129,7 @@
             <div class="col-md-9">
                 <select name="agencyTypeId"
                         class="form-control"
-                        id="Address" [(ngModel)]="project.agencyTypeId"
+                        id="agencyTypeId" [(ngModel)]="project.agencyTypeId"
                         (ngModelChange)="onTypeChange()"
                         #agencyTypeIdModel="ngModel"
                         #agencyTypeId required>
@@ -146,7 +146,7 @@
                 {{ "Agency" | localize }}
             </label>
             <div class="col-md-9">
-                <select name="agencyTypeId"
+                <select name="AgencyId"
                         class="form-control"
                         id="AgencyId" [(ngModel)]="project.agencyId"
                         #agencyIdModel="ngModel"

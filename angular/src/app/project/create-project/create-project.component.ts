@@ -26,11 +26,11 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
 
     constructor(
         injector: Injector,
-        public _projectServiceProxy: ProjectServiceProxy,
-        public _agencyServiceProxy: AgencyServiceProxy,
-        public _lookupServiceProxy: LookupServiceProxy,
+        private _projectServiceProxy: ProjectServiceProxy,
+        private _agencyServiceProxy: AgencyServiceProxy,
+        private _lookupServiceProxy: LookupServiceProxy,
         public bsModalRef: BsModalRef,
-        public authService: AppAuthService,
+        private authService: AppAuthService,
         private _sessionService: AbpSessionService,
 
     ) {

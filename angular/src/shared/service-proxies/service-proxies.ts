@@ -1237,13 +1237,28 @@ export class ProjectServiceProxy {
     }
 
     /**
+     * @param search (optional) 
+     * @param agencyTypeId (optional) 
+     * @param agencyId (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<ProjectDtoPagedResultDto> {
+    getAll(search: string | undefined, agencyTypeId: number | undefined, agencyId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<ProjectDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Project/GetAll?";
+        if (search === null)
+            throw new Error("The parameter 'search' cannot be null.");
+        else if (search !== undefined)
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
+        if (agencyTypeId === null)
+            throw new Error("The parameter 'agencyTypeId' cannot be null.");
+        else if (agencyTypeId !== undefined)
+            url_ += "AgencyTypeId=" + encodeURIComponent("" + agencyTypeId) + "&";
+        if (agencyId === null)
+            throw new Error("The parameter 'agencyId' cannot be null.");
+        else if (agencyId !== undefined)
+            url_ += "AgencyId=" + encodeURIComponent("" + agencyId) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
