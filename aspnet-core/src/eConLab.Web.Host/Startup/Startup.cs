@@ -93,8 +93,9 @@ namespace eConLab.Web.Host.Startup
         {
             app.UseAbp(options => { options.UseAbpRequestLocalization = false; }); // Initializes ABP framework.
 
-            app.UseCors(_defaultCorsPolicyName); // Enable CORS!
-
+           // app.UseCors(_defaultCorsPolicyName); // Enable CORS!
+            app.UseCors("AllowAllPolicy");
+            
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -127,6 +128,18 @@ namespace eConLab.Web.Host.Startup
         
         private void ConfigureSwagger(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllPolicy", builder =>
+                {
+
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+
+                });
+            });
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc(_apiVersion, new OpenApiInfo
