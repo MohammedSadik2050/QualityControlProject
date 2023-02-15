@@ -7,11 +7,11 @@ import { AboutComponent } from './about/about.component';
 import { UsersComponent } from './users/users.component';
 import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from 'app/roles/roles.component';
-import { ChangePasswordComponent } from './users/change-password/change-password.component'; 
-import { ContractorsListComponent } from './contractor/contractos-list/contractos-list.component';
+import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { AgenyComponent } from './ageny/ageny.component';
 import { ProjectComponent } from './project/project.component';
 import { EditProjectComponent } from './project/edit-project/edit-project.component';
+import { AppUsersComponent } from './app-users/app-users.component';
 
 @NgModule({
     imports: [
@@ -24,7 +24,7 @@ import { EditProjectComponent } from './project/edit-project/edit-project.compon
                     { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
                     { path: 'agencies', component: AgenyComponent, data: { permission: 'Pages.Manage.Agences' }, canActivate: [AppRouteGuard] },
-                    { path: 'qc-users', component: ContractorsListComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
+                    { path: 'qc-users', component: AppUsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'projects', component: ProjectComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
                     { path: 'projects/edit/:id', component: EditProjectComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },

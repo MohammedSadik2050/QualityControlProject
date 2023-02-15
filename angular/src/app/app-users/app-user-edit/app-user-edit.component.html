@@ -206,7 +206,7 @@
                                maxlength="32"
                                [(ngModel)]="qcUser.fax"
                                #faxModel="ngModel"
-                               #faxaa/>
+                               #faxaa />
                         <abp-validation-summary [control]="faxModel"
                                                 [controlEl]="faxaa"></abp-validation-summary>
                     </div>
@@ -252,23 +252,23 @@
                     </div>
                 </div>
                 <!--<div class="form-group row required">
-            <label class="col-md-3 col-form-label" for="surname">
-                {{ "Surname" | localize }}
-            </label>
-            <div class="col-md-9">
-                <input type="text"
-                       class="form-control"
-                       name="surname"
-                       id="surname"
-                       required
-                       maxlength="32"
-                       [(ngModel)]="currentUser.surname"
-                       #surnameModel="ngModel"
-                       #surnameE1 />
-                <abp-validation-summary [control]="surnameModel"
-                                        [controlEl]="surnameE1"></abp-validation-summary>
-            </div>
-        </div>-->
+                    <label class="col-md-3 col-form-label" for="surname">
+                        {{ "Surname" | localize }}
+                    </label>
+                    <div class="col-md-9">
+                        <input type="text"
+                               class="form-control"
+                               name="surname"
+                               id="surname"
+                               required
+                               maxlength="32"
+                               [(ngModel)]="currentUser.surname"
+                               #surnameModel="ngModel"
+                               #surnameE1 />
+                        <abp-validation-summary [control]="surnameModel"
+                                                [controlEl]="surnameE1"></abp-validation-summary>
+                    </div>
+                </div>-->
                 <div class="form-group row required">
                     <label class="col-md-3 col-form-label" for="Email">
                         {{ "EmailAddress" | localize }}
@@ -289,27 +289,27 @@
                     </div>
                 </div>
                 <!--<div class="form-group row required">
-            <label class="col-md-3 col-form-label" for="surname">
-                {{ "Password" | localize }}
-            </label>
-            <div class="col-md-9">
-                <input type="password"
-                       class="form-control"
-                       name="password"
-                       id="password"
-                       required
-                       maxlength="32"
-                       validateEqual="confirmPassword"
-                       reverse="true"
-                       pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)[0-9a-zA-Z!@#$%^&*()]*$"
-                       [(ngModel)]="currentUser.password"
-                       #passwordModel="ngModel"
-                       #password />
-                <abp-validation-summary [control]="passwordModel"
-                                        [controlEl]="password"
-                                        [customValidationErrors]="passwordValidationErrors"></abp-validation-summary>
-            </div>
-        </div>-->
+                    <label class="col-md-3 col-form-label" for="surname">
+                        {{ "Password" | localize }}
+                    </label>
+                    <div class="col-md-9">
+                        <input type="password"
+                               class="form-control"
+                               name="password"
+                               id="password"
+                               required
+                               maxlength="32"
+                               validateEqual="confirmPassword"
+                               reverse="true"
+                               pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)[0-9a-zA-Z!@#$%^&*()]*$"
+                               [(ngModel)]="currentUser.password"
+                               #passwordModel="ngModel"
+                               #password />
+                        <abp-validation-summary [control]="passwordModel"
+                                                [controlEl]="password"
+                                                [customValidationErrors]="passwordValidationErrors"></abp-validation-summary>
+                    </div>
+                </div>-->
             </tab>
         </tabset>
     </div>
