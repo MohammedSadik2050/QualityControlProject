@@ -5,6 +5,11 @@ using eConLab.Authorization.Users;
 using eConLab.MultiTenancy;
 using eConLab.Account;
 using eConLab.ProjectModels;
+using System.Linq;
+using eConLab.LookupModel;
+using eConLab.TestModels;
+using eConLab.Req;
+using eConLab.WF;
 
 namespace eConLab.EntityFrameworkCore
 {
@@ -16,6 +21,12 @@ namespace eConLab.EntityFrameworkCore
         public DbSet<Agency> Agencies { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectItem> ProjectItems { get; set; }
+        public DbSet<LookupApp> LookupApp { get; set; }
+        public DbSet<InspectionTest> InspectionTests { get; set; }
+        public DbSet<Request> Requests { get; set; }
+        public DbSet<RequestWF> RequestWFs { get; set; }
+        public DbSet<RequestWFHistory> RequestWFHistories { get; set; }
+        public DbSet<RequestInspectionTest> RequestInspectionTests { get; set; }
         public eConLabDbContext(DbContextOptions<eConLabDbContext> options)
             : base(options)
         {
