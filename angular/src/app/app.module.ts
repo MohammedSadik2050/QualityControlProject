@@ -38,15 +38,15 @@ import { SidebarComponent } from './layout/sidebar.component';
 import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
-import { ContractorUserComponent } from './contractor/contractor-create/contractor-user/contractor-user.component';
-import { ContractorsListComponent } from './contractor/contractos-list/contractos-list.component';
-import { ContractorEditComponent } from './contractor/contractor-edit/contractor-edit.component';
 import { AgenyComponent } from './ageny/ageny.component';
 import { AgencyCreateComponent } from './ageny/agency-create/agency-create.component';
 import { AgencyEditComponent } from './ageny/agency-edit/agency-edit.component';
 import { ProjectComponent } from './project/project.component';
 import { CreateProjectComponent } from './project/create-project/create-project.component';
 import { EditProjectComponent } from './project/edit-project/edit-project.component';
+import { AppUsersComponent } from './app-users/app-users.component';
+import { AppUserCreateComponent } from './app-users/app-user-create/app-user-create.component';
+import { AppUserEditComponent } from './app-users/app-user-edit/app-user-edit.component';
 
 @NgModule({
     declarations: [
@@ -77,15 +77,15 @@ import { EditProjectComponent } from './project/edit-project/edit-project.compon
         SidebarLogoComponent,
         SidebarUserPanelComponent,
         SidebarMenuComponent,
-        ContractorUserComponent,
-        ContractorsListComponent,
-        ContractorEditComponent,
         AgenyComponent,
         AgencyCreateComponent,
         AgencyEditComponent,
         ProjectComponent,
         CreateProjectComponent,
-        EditProjectComponent
+        EditProjectComponent,
+        AppUsersComponent,
+        AppUserCreateComponent,
+        AppUserEditComponent
     ],
     imports: [
         CommonModule,
@@ -114,9 +114,9 @@ import { EditProjectComponent } from './project/edit-project/edit-project.compon
         CreateUserDialogComponent,
         EditUserDialogComponent,
         ResetPasswordDialogComponent,
-        ContractorUserComponent,
-        ContractorsListComponent,
-        ContractorEditComponent,
+        AppUsersComponent,
+        AppUserCreateComponent,
+        AppUserEditComponent,
         AgencyCreateComponent,
         AgencyEditComponent
     ],

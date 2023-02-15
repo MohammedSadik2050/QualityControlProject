@@ -18,6 +18,7 @@ using eConLab.Authorization.Roles;
 using Microsoft.AspNetCore.Authorization;
 using Abp.Authorization;
 using eConLab.Authorization;
+using Abp.Extensions;
 
 namespace eConLab.Proj
 {
@@ -32,12 +33,12 @@ namespace eConLab.Proj
         private readonly IRepository<ProjectItem, long> _projectItemRepo;
         private readonly IMapper _mapper;
         public ProjectAppService(
-            IMapper mapper, 
-            IRepository<Agency, long> agencyRepository, 
+            IMapper mapper,
+            IRepository<Agency, long> agencyRepository,
             IRepository<AgencyType, long> agencyTypeRepo,
             IRepository<QCUser, long> qcUserRepo,
             IRepository<Project, long> projectRepo,
-            IRepository<ProjectItem, long> projectItemRepo )
+            IRepository<ProjectItem, long> projectItemRepo)
 
         {
             _mapper = mapper;
@@ -51,21 +52,21 @@ namespace eConLab.Proj
         [AbpAuthorize(PermissionNames.Pages_Manage_Project)]
         public async Task<ProjectDto> CreateOrUpdate(ProjectDto input)
         {
-            
+
             await _projectRepo.InsertOrUpdateAsync(_mapper.Map<Project>(input));
             await CurrentUnitOfWork.SaveChangesAsync();
 
-          
+
             return _mapper.Map<ProjectDto>(input);
         }
 
 
-       
+
 
         public async Task<ProjectDto> Get(long id)
         {
             var obje = _projectRepo.FirstOrDefault(x => x.Id == id);
-            return  _mapper.Map<ProjectDto>(obje) ?? null;
+            return _mapper.Map<ProjectDto>(obje) ?? null;
         }
 
 
@@ -73,53 +74,27 @@ namespace eConLab.Proj
         {
             var filter = ObjectMapper.Map<ProjectPaginatedDto>(input);
 
-            var lstItems = await GetListAsync(input.SkipCount, input.MaxResultCount);
-            var totalCount = await GetTotalCountAsync();
+            var lstItems = await GetListAsync(input.SkipCount, input.MaxResultCount, filter);
+            var totalCount = await GetTotalCountAsync(input);
 
             return new PagedResultDto<ProjectDto>(totalCount, ObjectMapper.Map<List<ProjectDto>>(lstItems));
         }
 
 
-        private async Task<List<Project>> GetListAsync(int skipCount, int maxResultCount, ProjectFilter filter = null)
+        private async Task<List<Project>> GetListAsync(int skipCount, int maxResultCount, ProjectPaginatedDto filter = null)
         {
 
             var lstItems = _projectRepo.GetAll()
                                           .Skip(skipCount)
-                                          .Take(maxResultCount);
-            
-               
-                //check user Role 
-                var userRoles =(await UserManager.GetRolesAsync(await GetCurrentUserAsync())).ToList();
-                if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin) == false)
-                {
-                    if (userRoles.Contains(StaticRoleNames.Tenants.Consultant))
-                        lstItems.Where(d => d.ConsultantId == AbpSession.UserId);
+                                          .Take(maxResultCount)
+                                          .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
+                                            .WhereIf(filter.AgencyId > 0, x => x.AgencyId == filter.AgencyId)
+                                             .WhereIf(filter.AgencyTypeId > 0, x => x.AgencyTypeId == filter.AgencyTypeId);
 
-                    if (userRoles.Contains(StaticRoleNames.Tenants.Contractor))
-                        lstItems.Where(d => d.ContractorId == AbpSession.UserId);
-
-                    if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
-                        lstItems.Where(d => d.LabProjectManagerId == AbpSession.UserId);
-
-                    if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingQuality))
-                        lstItems.Where(d => d.SupervisingQualityId == AbpSession.UserId);
-
-                    if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingEngineer))
-                        lstItems.Where(d => d.SupervisingEngineerId == AbpSession.UserId);
-                }
-            
-
-            return lstItems.ToList();
-        }
-
-        private async Task<int> GetTotalCountAsync(ProjectFilter filter = null)
-        {
-
-            var lstItems = _projectRepo.GetAll();
 
             //check user Role 
             var userRoles = (await UserManager.GetRolesAsync(await GetCurrentUserAsync())).ToList();
-            if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin)==false)
+            if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin) == false)
             {
                 if (userRoles.Contains(StaticRoleNames.Tenants.Consultant))
                     lstItems.Where(d => d.ConsultantId == AbpSession.UserId);
@@ -136,7 +111,39 @@ namespace eConLab.Proj
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingEngineer))
                     lstItems.Where(d => d.SupervisingEngineerId == AbpSession.UserId);
             }
-        
+
+
+            return lstItems.ToList();
+        }
+
+        private async Task<int> GetTotalCountAsync(ProjectPaginatedDto filter = null)
+        {
+
+            var lstItems = _projectRepo.GetAll()
+                             .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
+                             .WhereIf(filter.AgencyId > 0, x => x.AgencyId == filter.AgencyId)
+                              .WhereIf(filter.AgencyTypeId > 0, x => x.AgencyTypeId == filter.AgencyTypeId);
+
+            //check user Role 
+            var userRoles = (await UserManager.GetRolesAsync(await GetCurrentUserAsync())).ToList();
+            if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin) == false)
+            {
+                if (userRoles.Contains(StaticRoleNames.Tenants.Consultant))
+                    lstItems.Where(d => d.ConsultantId == AbpSession.UserId);
+
+                if (userRoles.Contains(StaticRoleNames.Tenants.Contractor))
+                    lstItems.Where(d => d.ContractorId == AbpSession.UserId);
+
+                if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
+                    lstItems.Where(d => d.LabProjectManagerId == AbpSession.UserId);
+
+                if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingQuality))
+                    lstItems.Where(d => d.SupervisingQualityId == AbpSession.UserId);
+
+                if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingEngineer))
+                    lstItems.Where(d => d.SupervisingEngineerId == AbpSession.UserId);
+            }
+
             return lstItems.ToList().Count;
         }
 
@@ -166,7 +173,7 @@ namespace eConLab.Proj
             return _mapper.Map<ProjectItemDto>(obj) ?? null;
         }
 
-      
+
 
         public async Task<bool> DeleteProjectItem(long Id)
         {

@@ -4,7 +4,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { AppComponentBase } from '../../../shared/app-component-base';
 import { AppAuthService } from '../../../shared/auth/app-auth.service';
 import { AbpValidationError } from '../../../shared/components/validation/abp-validation.api';
-import { QCUserDto, QCUserServiceProxy, QCUserCreateDto, CreateUserDto, RegisterInput, RoleServiceProxy, UserServiceProxy, UserDto, AgencyDto, AgencyServiceProxy } from './../../../shared/service-proxies/service-proxies';
+import { AgencyDto, AgencyServiceProxy, QCUserCreateDto, QCUserDto, QCUserServiceProxy, RegisterInput, UserServiceProxy } from '../../../shared/service-proxies/service-proxies';
 
 class UserTypes {
     name: string;
@@ -13,29 +13,28 @@ class UserTypes {
 
 }
 @Component({
-  selector: 'app-contractor-edit',
-  templateUrl: './contractor-edit.component.html',
-  styleUrls: ['./contractor-edit.component.css']
+  selector: 'app-app-user-create',
+  templateUrl: './app-user-create.component.html',
+  styleUrls: ['./app-user-create.component.css']
 })
-export class ContractorEditComponent extends AppComponentBase
-    implements OnInit {
+export class AppUserCreateComponent extends AppComponentBase implements OnInit {
     saving = false;
+    qcUser = new QCUserDto();
     agencies: AgencyDto[] = [];
-    userTypes: UserTypes[] = []; 
-    qcUser = new QCUserDto(); 
+    userTypes: UserTypes[] = [];
     currentUser = new RegisterInput();
     contractorObject = new QCUserCreateDto();
-    checkedRolesMap: { [key: string]: boolean } = {};
-    id: number;
-
     @Output() onSave = new EventEmitter<any>();
 
     constructor(
         injector: Injector,
-        public _agencyServiceProxy: AgencyServiceProxy,
         public _qcUserServiceProxy: QCUserServiceProxy,
-        public _userServiceProxy: UserServiceProxy,
-        public bsModalRef: BsModalRef
+        public _agencyServiceProxy: AgencyServiceProxy,
+        public bsModalRef: BsModalRef,
+        public authService: AppAuthService,
+        private _sessionService: AbpSessionService,
+        public _userService: UserServiceProxy,
+
     ) {
         super(injector);
     }
@@ -53,24 +52,11 @@ export class ContractorEditComponent extends AppComponentBase
         },
     ];
     ngOnInit(): void {
-        this._qcUserServiceProxy.getById(this.id).subscribe((result) => {
-            this.qcUser = result;
-            
-            this._userServiceProxy.get(this.qcUser.userId).subscribe((result2) => {
-                this.currentUser.emailAddress = result2.emailAddress;
-                this.currentUser.name = result2.name;
-                this.currentUser.userName = result2.userName;
-            });
-        });
-
         this.addUserTypes();
         this.loadAgencies();
-       
+        this.qcUser.fax = "  ";
+        this.currentUser.password = " ";
     }
-
-   
- 
-
     loadAgencies() {
         this._agencyServiceProxy.getAllAgenciesList().subscribe(res => {
             this.agencies = res;
@@ -127,13 +113,13 @@ export class ContractorEditComponent extends AppComponentBase
 
     }
 
-   
 
     save(): void {
         this.saving = true;
-        this.contractorObject.id = this.id;
-        this.contractorObject.registerInput = this.currentUser;
+
+        this.qcUser.userId = this._sessionService.userId;
         this.contractorObject.qcUserInput = this.qcUser;
+        this.contractorObject.registerInput = this.currentUser;
         this.contractorObject.registerInput.surname = this.contractorObject.registerInput.name;
         this._qcUserServiceProxy.createOrUpdate(this.contractorObject).subscribe(
             () => {
@@ -147,4 +133,3 @@ export class ContractorEditComponent extends AppComponentBase
         );
     }
 }
-

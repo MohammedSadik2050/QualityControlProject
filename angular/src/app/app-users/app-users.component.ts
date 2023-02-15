@@ -1,17 +1,12 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
-import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from '../../../shared/paged-listing-component-base';
-import { QCUserDto, QCUserServiceProxy, UserServiceProxy } from '../../../shared/service-proxies/service-proxies'; 
-import { ContractorUserComponent } from '../contractor-create/contractor-user/contractor-user.component';
-import { ContractorEditComponent } from '../contractor-edit/contractor-edit.component';
+import { appModuleAnimation } from '../../shared/animations/routerTransition';
+import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from '../../shared/paged-listing-component-base';
+import { QCUserDto, QCUserServiceProxy } from '../../shared/service-proxies/service-proxies';
+import { AppUserCreateComponent } from './app-user-create/app-user-create.component';
+import { AppUserEditComponent } from './app-user-edit/app-user-edit.component';
 
-//@Component({
-//    selector: 'app-contractors-list',
-//    templateUrl: './contractos-list.component.html',
-//    styleUrls: ['./contractos-list.component.css']
-//})
 
 class PagedUsersRequestDto extends PagedRequestDto {
     keyword: string;
@@ -25,14 +20,15 @@ class UserTypes {
 
 }
 @Component({
-    templateUrl: './contractos-list.component.html',
+  
+    templateUrl: './app-users.component.html',
     animations: [appModuleAnimation()]
 })
-export class ContractorsListComponent extends PagedListingComponentBase<QCUserDto> {
+export class AppUsersComponent extends PagedListingComponentBase<QCUserDto> {
     users: QCUserDto[] = [];
     keyword = '';
     userType = 0;
-    userTypes: UserTypes[] = []; 
+    userTypes: UserTypes[] = [];
     isActive: boolean | null;
     advancedFiltersVisible = false;
 
@@ -63,7 +59,7 @@ export class ContractorsListComponent extends PagedListingComponentBase<QCUserDt
         this.getDataPage(1);
     }
     typValue(id) {
-        if (id>0) {
+        if (id > 0) {
             var res = this.userTypes.find(s => s.id == id);
             return res.arabicName;
         }
@@ -81,7 +77,7 @@ export class ContractorsListComponent extends PagedListingComponentBase<QCUserDt
         this._qcUserServiceProxy
             .getAll(
                 this.userType,
-                ''  ,
+                '',
                 '',
                 request.skipCount,
                 request.maxResultCount
@@ -126,14 +122,14 @@ export class ContractorsListComponent extends PagedListingComponentBase<QCUserDt
         let createOrEditUserDialog: BsModalRef;
         if (!id) {
             createOrEditUserDialog = this._modalService.show(
-                ContractorUserComponent,
+                AppUserCreateComponent,
                 {
                     class: 'modal-lg',
                 }
             );
         } else {
             createOrEditUserDialog = this._modalService.show(
-                ContractorEditComponent,
+                AppUserEditComponent,
                 {
                     class: 'modal-lg',
                     initialState: {
@@ -147,7 +143,7 @@ export class ContractorsListComponent extends PagedListingComponentBase<QCUserDt
             this.refresh();
         });
 
-     
+
     }
 
     addUserTypes() {

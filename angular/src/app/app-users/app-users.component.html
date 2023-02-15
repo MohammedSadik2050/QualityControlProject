@@ -53,20 +53,19 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row mb-0">
-                                            
-                                                <label class="col-md-3 col-form-label" for="ADDRESS">
-                                                    {{ "UserType" | localize }}
-                                                </label>
-                                                <div class="col-md-9">
-                                                    <select name="userType"
-                                                            class="form-control"
-                                                            id="userType" [(ngModel)]="userType"
-                                                           >
-                                                        <option *ngFor="let userType of userTypes" [value]="userType.id">{{userType.arabicName}}</option>
-                                                    </select>
-                                                     
-                                                </div>
-                                           
+
+                                            <label class="col-md-3 col-form-label" for="ADDRESS">
+                                                {{ "UserType" | localize }}
+                                            </label>
+                                            <div class="col-md-9">
+                                                <select name="userType"
+                                                        class="form-control"
+                                                        id="userType" [(ngModel)]="userType">
+                                                    <option *ngFor="let userType of userTypes" [value]="userType.id">{{userType.arabicName}}</option>
+                                                </select>
+
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -126,7 +125,7 @@
                                             <i class="fas fa-trash"></i>
                                             {{ "Delete" | localize }}
                                         </button>-->
-                                      
+
                                     </td>
                                 </tr>
                             </tbody>

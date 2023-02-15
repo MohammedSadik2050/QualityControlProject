@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
-import { AbpSessionService } from 'abp-ng2-module';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { AppComponentBase } from '../../../../shared/app-component-base';
-import { AppAuthService } from '../../../../shared/auth/app-auth.service';
-import { AbpValidationError } from '../../../../shared/components/validation/abp-validation.api';
-import { QCUserDto, QCUserServiceProxy, QCUserCreateDto, CreateUserDto, RegisterInput, RoleServiceProxy, UserServiceProxy, AgencyDto, AgencyServiceProxy } from '../../../../shared/service-proxies/service-proxies';
+import { AppComponentBase } from '../../../shared/app-component-base';
+import { AbpValidationError } from '../../../shared/components/validation/abp-validation.api';
+import { AgencyDto, AgencyServiceProxy, QCUserCreateDto, QCUserDto, QCUserServiceProxy, RegisterInput, UserServiceProxy } from '../../../shared/service-proxies/service-proxies';
 
 class UserTypes {
     name: string;
@@ -13,28 +11,29 @@ class UserTypes {
 
 }
 @Component({
-    selector: 'app-contractor-user',
-    templateUrl: './contractor-user.component.html',
-    styleUrls: ['./contractor-user.component.css']
+  selector: 'app-app-user-edit',
+  templateUrl: './app-user-edit.component.html',
+  styleUrls: ['./app-user-edit.component.css']
 })
-export class ContractorUserComponent extends AppComponentBase implements OnInit {
+export class AppUserEditComponent extends AppComponentBase
+    implements OnInit {
     saving = false;
-    qcUser = new QCUserDto(); 
     agencies: AgencyDto[] = [];
-    userTypes: UserTypes[] = []; 
-    currentUser = new RegisterInput(); 
+    userTypes: UserTypes[] = [];
+    qcUser = new QCUserDto();
+    currentUser = new RegisterInput();
     contractorObject = new QCUserCreateDto();
+    checkedRolesMap: { [key: string]: boolean } = {};
+    id: number;
+
     @Output() onSave = new EventEmitter<any>();
 
     constructor(
         injector: Injector,
-        public _qcUserServiceProxy: QCUserServiceProxy,
         public _agencyServiceProxy: AgencyServiceProxy,
-        public bsModalRef: BsModalRef,
-        public authService: AppAuthService,
-        private _sessionService: AbpSessionService,
-        public _userService: UserServiceProxy,
-
+        public _qcUserServiceProxy: QCUserServiceProxy,
+        public _userServiceProxy: UserServiceProxy,
+        public bsModalRef: BsModalRef
     ) {
         super(injector);
     }
@@ -52,11 +51,24 @@ export class ContractorUserComponent extends AppComponentBase implements OnInit 
         },
     ];
     ngOnInit(): void {
+        this._qcUserServiceProxy.getById(this.id).subscribe((result) => {
+            this.qcUser = result;
+
+            this._userServiceProxy.get(this.qcUser.userId).subscribe((result2) => {
+                this.currentUser.emailAddress = result2.emailAddress;
+                this.currentUser.name = result2.name;
+                this.currentUser.userName = result2.userName;
+            });
+        });
+
         this.addUserTypes();
         this.loadAgencies();
-        this.qcUser.fax = "  ";
-        this.currentUser.password = " ";
+
     }
+
+
+
+
     loadAgencies() {
         this._agencyServiceProxy.getAllAgenciesList().subscribe(res => {
             this.agencies = res;
@@ -112,14 +124,14 @@ export class ContractorUserComponent extends AppComponentBase implements OnInit 
         this.userTypes.push(userType);
 
     }
-   
+
+
 
     save(): void {
         this.saving = true;
-
-        this.qcUser.userId = this._sessionService.userId;
-        this.contractorObject.qcUserInput = this.qcUser;
+        this.contractorObject.id = this.id;
         this.contractorObject.registerInput = this.currentUser;
+        this.contractorObject.qcUserInput = this.qcUser;
         this.contractorObject.registerInput.surname = this.contractorObject.registerInput.name;
         this._qcUserServiceProxy.createOrUpdate(this.contractorObject).subscribe(
             () => {
@@ -133,3 +145,4 @@ export class ContractorUserComponent extends AppComponentBase implements OnInit 
         );
     }
 }
+
