@@ -1,1 +1,397 @@
-<p>request-edit works!</p>
+<div>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h1>{{ "Edit" | localize }}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-fluid ng-tns-c101-4">
+        <div class="container-fluid">
+            <div class="col-container">
+                <div class="card-body card ng-tns-c101-3">
+
+                    <form class="form-horizontal"
+                          autocomplete="off"
+                          #createRequestForm="ngForm"
+                          (ngSubmit)="save()">
+
+
+                        <div class="row">
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "ProjectName" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control" disabled
+                                           name="projectname"
+                                           id="projectname"
+                                           
+                                           maxlength="32"
+                                           [(ngModel)]="projectName"
+                                           #projectnameModel="ngModel"
+                                           #projectnameE1 />
+                                    <abp-validation-summary [control]="projectnameModel"
+                                                            [controlEl]="projectnameE1"></abp-validation-summary>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
+                                    {{ "ContractNumber" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control" disabled
+                                           name="contractNumber"
+                                           id="contractNumber"
+                                           
+                                           maxlength="32"
+                                           [(ngModel)]="projectContractNumber"
+                                           #contractNumberModel="ngModel"
+                                           #contractNumber />
+                                    <abp-validation-summary [control]="contractNumberModel"
+                                                            [controlEl]="contractNumber"></abp-validation-summary>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "StartDate" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="date"
+                                           class="form-control" disabled
+                                           name="startDate"
+                                           id="startDate"
+                                           style="text-align: right;"
+                                           
+                                           maxlength="32"
+                                           [(ngModel)]="startDatemodel"
+                                           #startDateModel="ngModel"
+                                           #startDate />
+                                    <abp-validation-summary [control]="startDateModel"
+                                                            [controlEl]="startDate"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "EndProject" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="date"
+                                           class="form-control" disabled
+                                           style="text-align: right;"
+                                           name="completeDate"
+                                           id="completeDate"
+                                           
+                                           maxlength="32"
+                                           [(ngModel)]="completeDatemodel"
+                                           #completeDateModel="ngModel"
+                                           #completeDate />
+                                    <abp-validation-summary [control]="completeDateModel"
+                                                            [controlEl]="completeDate"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "Name" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text" [disabled]="request.id>0"
+                                           class="form-control"
+                                           name="name"
+                                           id="name"
+                                           
+                                           maxlength="32"
+                                           [(ngModel)]="request.name"
+                                           #nameModel="ngModel"
+                                           #nameE1 />
+                                    <abp-validation-summary [control]="nameModel"
+                                                            [controlEl]="nameE1"></abp-validation-summary>
+                                </div>
+                            </div>
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
+                                    {{ "Code" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text" [disabled]="request.id>0"
+                                           class="form-control"
+                                           name="code"
+                                           id="code"
+                                           
+                                           maxlength="32"
+                                           [(ngModel)]="request.code"
+                                           #codeModel="ngModel"
+                                           #codeE1 />
+                                    <abp-validation-summary [control]="codeModel"
+                                                            [controlEl]="codeE1"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "InspectionDate" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="date" 
+                                           class="form-control"
+                                           name="inspectionDate"
+                                           id="inspectionDate"
+                                           required
+                                           maxlength="32"
+                                           [(ngModel)]="InspectionDatemodel"
+                                           #inspectionDateModel="ngModel"
+                                           #inspectionDate />
+                                    <abp-validation-summary [control]="inspectionDateModel"
+                                                            [controlEl]="inspectionDate"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="Description">
+                                    {{ "Description" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="description"
+                                           id="description"
+                                           
+                                           maxlength="32"
+                                           [(ngModel)]="request.description"
+                                           #descriptionModel="ngModel"
+                                           #descriptionE1 />
+                                    <abp-validation-summary [control]="descriptionModel"
+                                                            [controlEl]="descriptionE1"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "ChooseProject" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <select name="project" [disabled]="request.id>0"
+                                            class="form-control"
+                                            id="project" [(ngModel)]="request.projectId"
+                                            #projectModel="ngModel"
+                                            #project>
+                                        <option *ngFor="let project of projects" [value]="project.id">{{project.name}}</option>
+                                    </select>
+                                    <abp-validation-summary [control]="projectModel"
+                                                            [controlEl]="project"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="DistrictName">
+                                    {{ "DistrictName" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text" 
+                                           class="form-control"
+                                           name="districtName"
+                                           id="districtName"
+                                           required
+                                           maxlength="32"
+                                           [(ngModel)]="request.districtName"
+                                           #districtNameModel="ngModel"
+                                           #districtNameE1 />
+                                    <abp-validation-summary [control]="districtNameModel"
+                                                            [controlEl]="districtNameE1"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="DistrictName">
+                                    {{ "PhoneNumberSiteResponsible1" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number" 
+                                           class="form-control"
+                                           name="phomeNumberSiteResponsibleOne"
+                                           id="phomeNumberSiteResponsibleOne"
+                                           required
+                                           maxlength="32"
+                                           [(ngModel)]="request.phomeNumberSiteResponsibleOne"
+                                           #phomeNumberSiteResponsibleOneModel="ngModel"
+                                           #phomeNumberSiteResponsibleOneE1 />
+                                    <abp-validation-summary [control]="phomeNumberSiteResponsibleOneModel"
+                                                            [controlEl]="phomeNumberSiteResponsibleOneE1"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="DistrictName">
+                                    {{ "PhoneNumberSiteResponsible2" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number" 
+                                           class="form-control"
+                                           name="phomeNumberSiteResponsibleTwo"
+                                           id="phomeNumberSiteResponsibleTwo"
+                                           required
+                                           maxlength="32"
+                                           [(ngModel)]="request.phomeNumberSiteResponsibleTwo"
+                                           #phomeNumberSiteResponsibleTwoModel="ngModel"
+                                           #phomeNumberSiteResponsibleTwoE1 />
+                                    <abp-validation-summary [control]="phomeNumberSiteResponsibleTwoModel"
+                                                            [controlEl]="phomeNumberSiteResponsibleTwoE1"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "MainRequestTypes" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <select name="mainRequestType" [disabled]="request.id>0"
+                                            class="form-control"
+                                            id="mainRequestType" [(ngModel)]="request.mainRequestType"
+                                            #mainRequestTypeModel="ngModel"
+                                            #mainRequestType >
+                                        <option *ngFor="let mainRequestType of mainRequestTypes" [value]="mainRequestType.id">{{mainRequestType.name | localize}}</option>
+                                    </select>
+                                    <abp-validation-summary [control]="mainRequestTypeModel"
+                                                            [controlEl]="mainRequestType"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="isLabTest">
+                                    {{ "HasSample" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" (ngModelChange)="sampleChange($event)" [disabled]="request.id>0"
+                                               class="custom-control-input"
+                                               name="hasSample"
+                                               id="hasSample"
+                                               [(ngModel)]="hasSample" />
+                                        <label class="custom-control-label mt-2" for="hasSample"></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row required col-6" *ngIf="hasSample">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "InspectionTestTypes" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <select name="testType"
+                                            class="form-control" [disabled]="request.id>0"
+                                            id="testType" [(ngModel)]="request.testType"
+                                            #testTypeModel="ngModel"
+                                            #testTypeType >
+                                        <option *ngFor="let inspectionTestType of inspectionTestTypes" [value]="inspectionTestType.id">{{inspectionTestType.name | localize}}</option>
+                                    </select>
+                                    <abp-validation-summary [control]="testTypeModel"
+                                                            [controlEl]="testTypeType"></abp-validation-summary>
+                                </div>
+                            </div>
+
+                        </div>
+                        <button *ngIf="request.id==0" type="submit"
+                                [disabled]="!createRequestForm.form.valid || saving"
+                                class="btn btn-primary"
+                                aria-label="Close">
+                            {{ saveText | localize }}
+                        </button>
+
+                        <button *ngIf="request.id>0" type="submit"
+                                [disabled]="requestTests.length==0"
+                                class="btn btn-primary"
+                                aria-label="Close">
+                            {{ "SendToConsultant" | localize }}
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content px-2" *ngIf="hasSample && request.id>0">
+        <div class="container-fluid">
+            <div class="col-container">
+                <div class="card-body card ng-tns-c101-3" style="width:100% !important;">
+
+                    <form class="form-horizontal"
+                          autocomplete="off"
+                          #requestInspectionForm="ngForm"
+                          (ngSubmit)="saveProductItems()">
+
+                        <div class="row" style="display: -webkit-box !important">
+                            <div class="form-group row col-8 required">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "InspectionTest" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <select name="inspectionTestId"
+                                            class="form-control"
+                                            id="inspectionTestId" [(ngModel)]="requestInspection.inspectionTestId"
+                                            #inspectionTestIdModel="ngModel"
+                                            #inspectionTestId required>
+                                        <option *ngFor="let inspectionTest of inspectionTests" [value]="inspectionTest.id">{{inspectionTest.name}}</option>
+                                    </select>
+                                    <abp-validation-summary [control]="inspectionTestIdModel"
+                                                            [controlEl]="inspectionTestId"></abp-validation-summary>
+                                </div>
+                            </div>
+
+
+
+                            <button type="button"
+                                    [disabled]="!requestInspectionForm.form.valid || saving"
+                                    class="btn btn-primary col-1" style="margin-right: 14px"
+                                    (click)="saveInspectionTest()"
+                                    aria-label="Close">
+                                {{ "Save" | localize }}
+                            </button>
+                        </div>
+
+
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>{{ "Name" | localize }}</th>
+                                    <th>{{ "Code" | localize }}</th>
+                                    <th>{{ "Cost" | localize }}</th>
+                                    <th style="width: 310px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let requestTest of requestTests">
+                                    <td>{{ requestTest.name }}</td>
+                                    <td>{{ requestTest.code }}</td>
+                                    <td>{{ requestTest.cost}}</td>
+                                    <td>
+
+                                        <button type="button"
+                                                class="btn btn-sm bg-danger mx-2"
+                                                (click)="delete(requestTest)">
+                                            <i class="fas fa-trash"></i>
+                                            {{ "Delete" | localize }}
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

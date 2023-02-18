@@ -20,5 +20,7 @@ namespace eConLab.Lookup
         Task<List<DropdownListDto>> InspectionTestTypes();
 
         Task<List<DropdownListDto>> MainRequestTypes();
+
+        Task<List<DropdownListDto>> RequestsStatus();
     }
 }

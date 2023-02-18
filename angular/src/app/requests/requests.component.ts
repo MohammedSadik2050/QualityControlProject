@@ -37,7 +37,10 @@ export class RequestsComponent extends PagedListingComponentBase<RequestDto> {
         this.showCreateOrEditUserDialog(row.id);
     }
 
+    viewRow(row:any) {
 
+        this.router.navigateByUrl('/app/examinationRequest/view/' + row.id);
+    }
 
     clearFilters(): void {
         this.keyword = '';
@@ -104,6 +107,7 @@ export class RequestsComponent extends PagedListingComponentBase<RequestDto> {
             //);
             this.router.navigateByUrl('/app/examinationRequest/create');
         } else {
+            this.router.navigateByUrl('/app/examinationRequest/edit/' + id);
             //let createOrEditUserDialog: BsModalRef;
             //createOrEditUserDialog = this._modalService.show(
             //    InspectionTestEditComponent,

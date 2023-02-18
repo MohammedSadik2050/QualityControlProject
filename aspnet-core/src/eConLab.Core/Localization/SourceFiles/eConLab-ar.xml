@@ -178,5 +178,10 @@
 		<text name="ChooseProject">اختر مشروع</text>
 		<text name="SendToConsultant">ارسال الى الاستشاري</text>
 		<text name="DuplicateTest">تم ادخال هذا الاختبار من قبل</text>
+		<text name="Pending">قيد الانتظار</text>
+		<text name="Submitted">تم التقديم</text>
+		<text name="ProjectName">اسم المشروع</text>
+		<text name="EndProject">نهايه المشروع</text>
+		<text name="View">عرض</text>
 	</texts>
 </localizationDictionary>
