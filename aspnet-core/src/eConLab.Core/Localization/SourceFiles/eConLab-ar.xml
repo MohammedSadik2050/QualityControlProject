@@ -165,6 +165,7 @@
 		<text name="Asphalt">أسفلت</text>
 		<text name="InspectionTestTypes">نوع العينه</text>
 		<text name="Requests">الطلبات</text>
+		<text name="AddRequest">اضافه طلب</text>
 		<text name="ExaminationRequest">طلبات الفحص</text>
 		<text name="InspectionDate">تاريخ الفحص</text>
 		<text name="DistrictName">موقع الفحص</text>
