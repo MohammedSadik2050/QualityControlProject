@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using eConLab.Lookup.Dto;
 using eConLab.ProjectModels;
+using eConLab.Enum;
 
 namespace eConLab.Lookup
 {
@@ -37,13 +38,13 @@ namespace eConLab.Lookup
             _agencyRepository = agencyRepository;
             _agencyTypeRepo = agencyTypeRepo;
             _qcUserRepo = qcUserRepo;
-            _projectRepo= projectRepo;
+            _projectRepo = projectRepo;
         }
 
         public async Task<List<DropdownListDto>> AgencyList()
         {
-           return  _agencyRepository.GetAll().Select(d=> new DropdownListDto { Id=d.Id,Name=d.Name}).ToList();
-           
+            return _agencyRepository.GetAll().Select(d => new DropdownListDto { Id = d.Id, Name = d.Name }).ToList();
+
         }
 
         public async Task<List<DropdownListDto>> AgencyTypeList()
@@ -53,7 +54,7 @@ namespace eConLab.Lookup
 
         public async Task<List<DropdownListDto>> ConsultantList()
         {
-            return _qcUserRepo.GetAll().Where(d=>d.UserTypes==UserTypes.Consultant).Select(d => new DropdownListDto { Id = d.Id, Name = d.Name }).ToList();
+            return _qcUserRepo.GetAll().Where(d => d.UserTypes == UserTypes.Consultant).Select(d => new DropdownListDto { Id = d.Id, Name = d.Name }).ToList();
         }
         public async Task<List<DropdownListDto>> ContractorList()
         {
@@ -80,6 +81,16 @@ namespace eConLab.Lookup
             return _projectRepo.GetAll().Select(d => new DropdownListDto { Id = d.Id, Name = d.Name }).ToList();
         }
 
+        public async Task<List<DropdownListDto>> InspectionTestTypes()
+        {
+
+            return Enum.InspectionTestTypes.GetValues(typeof(InspectionTestTypes))
+                          .Cast<InspectionTestTypes>().Select(mod => new DropdownListDto
+                          {
+                              Name = mod.ToString(),
+                              Id = (long)mod,
+                          }).ToList();
+        }
 
     }
 }

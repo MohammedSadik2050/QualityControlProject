@@ -14,6 +14,7 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.QCUserServiceProxy,
         ApiServiceProxies.ProjectServiceProxy,
         ApiServiceProxies.AgencyServiceProxy,
+        ApiServiceProxies.InspectionTestServiceProxy,
         ApiServiceProxies.TokenAuthServiceProxy,
         ApiServiceProxies.AccountServiceProxy,
         ApiServiceProxies.ConfigurationServiceProxy,

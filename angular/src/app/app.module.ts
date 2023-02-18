@@ -47,6 +47,9 @@ import { EditProjectComponent } from './project/edit-project/edit-project.compon
 import { AppUsersComponent } from './app-users/app-users.component';
 import { AppUserCreateComponent } from './app-users/app-user-create/app-user-create.component';
 import { AppUserEditComponent } from './app-users/app-user-edit/app-user-edit.component';
+import { InspectionTestComponent } from './inspection-test/inspection-test.component';
+import { InspectionTestCreateComponent } from './inspection-test/inspection-test-create/inspection-test-create.component';
+import { InspectionTestEditComponent } from './inspection-test/inspection-test-edit/inspection-test-edit.component';
 
 @NgModule({
     declarations: [
@@ -85,7 +88,10 @@ import { AppUserEditComponent } from './app-users/app-user-edit/app-user-edit.co
         EditProjectComponent,
         AppUsersComponent,
         AppUserCreateComponent,
-        AppUserEditComponent
+        AppUserEditComponent,
+        InspectionTestComponent,
+        InspectionTestCreateComponent,
+        InspectionTestEditComponent
     ],
     imports: [
         CommonModule,

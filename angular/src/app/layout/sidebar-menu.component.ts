@@ -82,6 +82,12 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 'fas fa-info-circle',
                 ''
             ),
+            new MenuItem(
+                this.l('InspectionTest'),
+                '/app/inspectionTest',
+                'fas fa-info-circle',
+                'Pages.Manage.InspectionTest'
+            ),
 
             //new MenuItem(this.l('MultiLevelMenu'), '', 'fas fa-circle', '', [
             //    new MenuItem('ASP.NET Boilerplate', '', 'fas fa-dot-circle', '', [

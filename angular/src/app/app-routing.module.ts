@@ -12,6 +12,7 @@ import { AgenyComponent } from './ageny/ageny.component';
 import { ProjectComponent } from './project/project.component';
 import { EditProjectComponent } from './project/edit-project/edit-project.component';
 import { AppUsersComponent } from './app-users/app-users.component';
+import { InspectionTestComponent } from './inspection-test/inspection-test.component';
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import { AppUsersComponent } from './app-users/app-users.component';
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'projects', component: ProjectComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
                     { path: 'projects/edit/:id', component: EditProjectComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
+                    { path: 'inspectionTest', component: InspectionTestComponent, data: { permission: 'Pages.Manage.InspectionTest' }, canActivate: [AppRouteGuard] },
                    /* { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },*/
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] }
                 ]

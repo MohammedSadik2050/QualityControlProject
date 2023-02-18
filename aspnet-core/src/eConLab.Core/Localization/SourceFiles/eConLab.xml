@@ -152,5 +152,9 @@
 		<text name="CommericalRegisterationNumber">Commerical Registeration Number</text>
 		<text name="Contract_Name">Contract Name</text>
 		<text name="ADDRESS">Address</text>
+		<text name="InspectionTest">Inspection Test</text>
+		<text name="Code">Code</text>
+		<text name="Cost">Cost</text>
+		<text name="IsLabTest">Is Labtest</text>
 	</texts>
 </localizationDictionary>

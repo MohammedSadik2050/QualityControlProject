@@ -40,6 +40,7 @@ namespace eConLab.Test
         [AbpAuthorize(PermissionNames.Pages_Manage_InspectionTest)]
         public async Task<InspectionTestDto> CreateOrUpdate(CreateUpdateInspectionTestDto input)
         {
+
             await _inspectionTestRepository.InsertOrUpdateAsync(_mapper.Map<InspectionTest>(input));
             await CurrentUnitOfWork.SaveChangesAsync();
 
@@ -58,7 +59,7 @@ namespace eConLab.Test
 
         public async Task<PagedResultDto<InspectionTestDto>> GetAll(InspectionTestPaginatedDto input)
         {
-          //  var filter = ObjectMapper.Map<InspectionTestFilter>(input);
+            //  var filter = ObjectMapper.Map<InspectionTestFilter>(input);
 
             // var sorting = (string.IsNullOrEmpty(input.Sorting) ? "Name DESC" : input.Sorting).Replace("ShortName", "Name");
 
@@ -85,7 +86,7 @@ namespace eConLab.Test
 
             var lstItems = _inspectionTestRepository.GetAll()
                          .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search));
-          
+
 
             return lstItems.Count();
         }

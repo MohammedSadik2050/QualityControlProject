@@ -18,6 +18,7 @@ namespace eConLab.Test.Dto
         {
 
             CreateMap<InspectionTest, InspectionTestDto>().ReverseMap();
+            CreateMap<CreateUpdateInspectionTestDto, InspectionTestDto>().ReverseMap();
             CreateMap<CreateUpdateInspectionTestDto, InspectionTest>().ReverseMap();
             //CreateMap<InspectionTestPaginatedDto, QCUserPagedAndSortedResultRequestDto>().ReverseMap();
         }

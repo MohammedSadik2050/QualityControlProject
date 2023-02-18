@@ -1,0 +1,101 @@
+<form class="form-horizontal"
+      autocomplete="off"
+      #createinspectionTestForm="ngForm"
+      (ngSubmit)="save()">
+    <abp-modal-header [title]="'Create' | localize"
+                      (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="modal-body">
+
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="Name">
+                {{ "Name" | localize }}
+            </label>
+            <div class="col-md-9">
+                <input type="text"
+                       class="form-control"
+                       name="name"
+                       id="name"
+                       required
+                       maxlength="32"
+                       [(ngModel)]="inspectionTest.name"
+                       #nameModel="ngModel"
+                       #nameE1 />
+                <abp-validation-summary [control]="nameModel"
+                                        [controlEl]="nameE1"></abp-validation-summary>
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
+                {{ "Code" | localize }}
+            </label>
+            <div class="col-md-9">
+                <input type="text"
+                       class="form-control"
+                       name="code"
+                       id="code"
+                       required
+                       maxlength="32"
+                       [(ngModel)]="inspectionTest.code"
+                       #codeModel="ngModel"
+                       #codeE1 />
+                <abp-validation-summary [control]="codeModel"
+                                        [controlEl]="codeE1"></abp-validation-summary>
+            </div>
+        </div>
+
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="CONTRACTNAME">
+                {{ "Cost" | localize }}
+            </label>
+            <div class="col-md-9">
+                <input type="number"
+                       class="form-control"
+                       name="cost"
+                       id="cost"
+                       required
+                       maxlength="32"
+                       [(ngModel)]="inspectionTest.cost"
+                       #costModel="ngModel"
+                       #cost />
+                <abp-validation-summary [control]="costModel"
+                                        [controlEl]="cost"></abp-validation-summary>
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="ADDRESS">
+                {{ "InspectionTestTypes" | localize }}
+            </label>
+            <div class="col-md-9">
+                <select name="testType"
+                        class="form-control"
+                        id="testType" [(ngModel)]="inspectionTest.testType"
+                        #testTypeModel="ngModel"
+                        #testType required>
+                    <option *ngFor="let inspectionTestType of inspectionTestTypes" [value]="inspectionTestType.id">{{inspectionTestType.name}}</option>
+                </select>
+                <abp-validation-summary [control]="testTypeModel"
+                                        [controlEl]="testType"></abp-validation-summary>
+            </div>
+        </div>
+
+
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="isLabTest">
+                {{ "IsLabTest" | localize }}
+            </label>
+            <div class="col-md-9">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox"
+                           class="custom-control-input"
+                           name="isLabTest"
+                           id="isLabTest"
+                           [(ngModel)]="inspectionTest.isLabTest" />
+                    <label class="custom-control-label mt-2" for="isLabTest"></label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving"
+                      [saveDisabled]="!createinspectionTestForm.form.valid || saving"
+                      (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+</form>
