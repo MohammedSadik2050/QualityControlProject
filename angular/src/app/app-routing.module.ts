@@ -33,8 +33,8 @@ import { RequestCreateComponent } from './requests/request-create/request-create
                     { path: 'projects', component: ProjectComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
                     { path: 'projects/edit/:id', component: EditProjectComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
                     { path: 'inspectionTest', component: InspectionTestComponent, data: { permission: 'Pages.Manage.InspectionTest' }, canActivate: [AppRouteGuard] },
-                    { path: 'examinationRequest', component: RequestsComponent, data: { permission: 'Pages.Manage.Requests' }, canActivate: [AppRouteGuard] },
-                    { path: 'examinationRequest/create', component: RequestCreateComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
+                    { path: 'examinationRequest', component: RequestsComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
+                    { path: 'examinationRequest/create', component: RequestCreateComponent, data: { permission: 'Pages.Manage.Contractor' }, canActivate: [AppRouteGuard] },
                    /* { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },*/
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] }
                 ]

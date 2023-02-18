@@ -88,7 +88,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 'fas fa-info-circle',
                 'Pages.Manage.InspectionTest'
             ),
-            new MenuItem(this.l('Requests'), '', 'fas fa-circle', 'Pages.Manage.Requests', [
+            new MenuItem(this.l('Requests'), '', 'fas fa-circle', '', [
 
                 new MenuItem(
                     this.l('ExaminationRequest'),
