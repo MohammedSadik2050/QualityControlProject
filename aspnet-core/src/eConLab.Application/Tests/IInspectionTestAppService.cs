@@ -15,6 +15,7 @@ namespace eConLab.Test
         Task<InspectionTestDto> Get(long id);
         Task<PagedResultDto<InspectionTestDto>> GetAll(InspectionTestPaginatedDto input);
         Task<List<InspectionTestDto>> GetAllInspectionTestList();
+        Task<List<InspectionTestDto>> GetAllInspectionTestListByType(int type);
         //Task<bool> Delete(long Id);
     }
 }

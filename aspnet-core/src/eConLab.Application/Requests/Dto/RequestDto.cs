@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace eConLab.Requests.Dto
 {
-    public class RequestDto:EntityDto<long>
+    public class RequestDto : EntityDto<long>
     {
         public string Name { get; set; }
         public string Code { get; set; }
@@ -20,6 +20,8 @@ namespace eConLab.Requests.Dto
         public string PhomeNumberSiteResponsibleTwo { get; set; }
         public MainRequestTypes MainRequestType { get; set; }
         public HasSamples HasSample { get; set; }
+        public InspectionTestTypes TestType { get; set; }
+        public RequestStatus Status { get; set; }
         public string Geometry { get; set; }
     }
 }

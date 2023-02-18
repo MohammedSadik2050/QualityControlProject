@@ -156,5 +156,23 @@
 		<text name="Code">Code</text>
 		<text name="Cost">Cost</text>
 		<text name="IsLabTest">Is Labtest</text>
-	</texts>
+		<text name="Concret">Concret</text>
+		<text name="Soil">Soil</text>
+		<text name="Asphalt">Asphalt</text>
+		<text name="InspectionTestTypes">Inspection Test Types</text>
+		<text name="Requests">Requests</text>
+		<text name="ExaminationRequest">Examination Request</text>
+		<text name="InspectionDate">Inspection Date</text>
+		<text name="DistrictName">DistrictName</text>
+		<text name="HasSample">HasSample</text>
+		<text name="PhoneNumberSiteResponsible1">PhoneNumber Site Responsible One</text>
+		<text name="PhoneNumberSiteResponsible2">PhoneNumber Site Responsible Two</text>
+		<text name="MainRequestTypes">Main Request Types</text>
+		<text name="Inspection">Inspection</text>
+		<text name="CONTINUE">continue</text>
+		<text name="CreateExaminationRequest">Create Examination Request</text>
+		<text name="ChooseProject">Choose Project</text>
+		<text name="SendToConsultant">Send to Consultant</text>
+		<text name="DuplicateTest">Duplicate Test</text>
+</texts>
 </localizationDictionary>

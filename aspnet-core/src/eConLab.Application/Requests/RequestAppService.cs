@@ -49,16 +49,24 @@ namespace eConLab.Requests
             _qcUserRepo = qcUserRepo;
             _projectRepo = projectRepo;
             _projectItemRepo = projectItemRepo;
-            _requestRepo= requestRepo;
+            _requestRepo = requestRepo;
         }
 
-       
+
         public async Task<RequestDto> CreateOrUpdate(RequestDto input)
         {
-            var max= await _requestRepo.GetAll().MaxAsync(d => d.Id);
-            input.Code = "R-"+input.MainRequestType + "-C-" + max + 1;
-            await _requestRepo.InsertOrUpdateAsync(_mapper.Map<Request>(input));
+            long max = 0;
+            try
+            {
+                max = _requestRepo.GetAll().Max(d => d.Id);
+            }
+            catch
+            {
+            }
+            input.Code = "R-" + input.MainRequestType + "-C-" + (max + 1);
+            var res = await _requestRepo.InsertOrUpdateAsync(_mapper.Map<Request>(input));
             await CurrentUnitOfWork.SaveChangesAsync();
+            input.Id = res.Id;
             return _mapper.Map<RequestDto>(input);
         }
         public async Task<RequestDto> Get(long id)
@@ -92,13 +100,13 @@ namespace eConLab.Requests
         private async Task<int> GetTotalCountAsync(RequestFilter filter = null)
         {
 
-            var lstItems = _projectRepo.GetAll();
+            var lstItems = _requestRepo.GetAll();
             return lstItems.ToList().Count;
         }
 
-        public async Task<RequestViewDto> GetRequestView([Required]long id)
+        public async Task<RequestViewDto> GetRequestView([Required] long id)
         {
-            var obj =await _requestRepo.GetAllIncluding(d => d.Project).FirstOrDefaultAsync(x => x.Id == id);
+            var obj = await _requestRepo.GetAllIncluding(d => d.Project).FirstOrDefaultAsync(x => x.Id == id);
 
             return _mapper.Map<RequestViewDto>(obj) ?? null;
         }

@@ -13,6 +13,9 @@ import { ProjectComponent } from './project/project.component';
 import { EditProjectComponent } from './project/edit-project/edit-project.component';
 import { AppUsersComponent } from './app-users/app-users.component';
 import { InspectionTestComponent } from './inspection-test/inspection-test.component';
+import { RequestsComponent } from './requests/requests.component';
+import { InspectionTestCreateComponent } from './inspection-test/inspection-test-create/inspection-test-create.component';
+import { RequestCreateComponent } from './requests/request-create/request-create.component';
 
 @NgModule({
     imports: [
@@ -30,6 +33,8 @@ import { InspectionTestComponent } from './inspection-test/inspection-test.compo
                     { path: 'projects', component: ProjectComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
                     { path: 'projects/edit/:id', component: EditProjectComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
                     { path: 'inspectionTest', component: InspectionTestComponent, data: { permission: 'Pages.Manage.InspectionTest' }, canActivate: [AppRouteGuard] },
+                    { path: 'examinationRequest', component: RequestsComponent, data: { permission: 'Pages.Manage.Requests' }, canActivate: [AppRouteGuard] },
+                    { path: 'examinationRequest/create', component: RequestCreateComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
                    /* { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },*/
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] }
                 ]

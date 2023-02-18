@@ -18,5 +18,7 @@ namespace eConLab.Lookup
         Task<List<DropdownListDto>> LabProjectManagerList();
         Task<List<DropdownListDto>> LabProjecList();
         Task<List<DropdownListDto>> InspectionTestTypes();
+
+        Task<List<DropdownListDto>> MainRequestTypes();
     }
 }

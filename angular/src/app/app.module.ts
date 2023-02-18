@@ -50,6 +50,9 @@ import { AppUserEditComponent } from './app-users/app-user-edit/app-user-edit.co
 import { InspectionTestComponent } from './inspection-test/inspection-test.component';
 import { InspectionTestCreateComponent } from './inspection-test/inspection-test-create/inspection-test-create.component';
 import { InspectionTestEditComponent } from './inspection-test/inspection-test-edit/inspection-test-edit.component';
+import { RequestsComponent } from './requests/requests.component';
+import { RequestCreateComponent } from './requests/request-create/request-create.component';
+import { RequestEditComponent } from './requests/request-edit/request-edit.component';
 
 @NgModule({
     declarations: [
@@ -91,7 +94,10 @@ import { InspectionTestEditComponent } from './inspection-test/inspection-test-e
         AppUserEditComponent,
         InspectionTestComponent,
         InspectionTestCreateComponent,
-        InspectionTestEditComponent
+        InspectionTestEditComponent,
+        RequestsComponent,
+        RequestCreateComponent,
+        RequestEditComponent
     ],
     imports: [
         CommonModule,

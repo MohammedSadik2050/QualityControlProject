@@ -15,7 +15,7 @@ namespace eConLab.Proj
         Task<ProjectDto> Get(long id);
         Task<PagedResultDto<ProjectDto>> GetAll(ProjectPaginatedDto input);
 
-
+        Task<List<ProjectDto>> GetAllDropdown();
 
         #region ProjectItems
         Task<ProjectItemDto> GetProjectItem(long id);

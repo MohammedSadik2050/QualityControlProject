@@ -92,5 +92,15 @@ namespace eConLab.Lookup
                           }).ToList();
         }
 
+        public async Task<List<DropdownListDto>> MainRequestTypes()
+        {
+
+            return Enum.MainRequestTypes.GetValues(typeof(MainRequestTypes))
+                          .Cast<MainRequestTypes>().Select(mod => new DropdownListDto
+                          {
+                              Name = mod.ToString(),
+                              Id = (long)mod,
+                          }).ToList();
+        }
     }
 }

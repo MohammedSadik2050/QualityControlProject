@@ -893,6 +893,69 @@ export class InspectionTestServiceProxy {
         }
         return _observableOf<InspectionTestDto[]>(<any>null);
     }
+
+    /**
+     * @param type (optional) 
+     * @return Success
+     */
+    getAllInspectionTestListByType(type: number | undefined) : Observable<InspectionTestDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/InspectionTest/GetAllInspectionTestListByType?";
+        if (type === null)
+            throw new Error("The parameter 'type' cannot be null.");
+        else if (type !== undefined)
+            url_ += "type=" + encodeURIComponent("" + type) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllInspectionTestListByType(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllInspectionTestListByType(<any>response_);
+                } catch (e) {
+                    return <Observable<InspectionTestDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<InspectionTestDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllInspectionTestListByType(response: HttpResponseBase): Observable<InspectionTestDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(InspectionTestDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<InspectionTestDto[]>(<any>null);
+    }
 }
 
 @Injectable()
@@ -1427,6 +1490,64 @@ export class LookupServiceProxy {
         }
         return _observableOf<DropdownListDto[]>(<any>null);
     }
+
+    /**
+     * @return Success
+     */
+    mainRequestTypes() : Observable<DropdownListDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Lookup/MainRequestTypes";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processMainRequestTypes(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processMainRequestTypes(<any>response_);
+                } catch (e) {
+                    return <Observable<DropdownListDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DropdownListDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processMainRequestTypes(response: HttpResponseBase): Observable<DropdownListDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(DropdownListDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DropdownListDto[]>(<any>null);
+    }
 }
 
 @Injectable()
@@ -1631,6 +1752,64 @@ export class ProjectServiceProxy {
             }));
         }
         return _observableOf<ProjectDtoPagedResultDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllDropdown() : Observable<ProjectDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Project/GetAllDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllDropdown(<any>response_);
+                } catch (e) {
+                    return <Observable<ProjectDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ProjectDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllDropdown(response: HttpResponseBase): Observable<ProjectDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(ProjectDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ProjectDto[]>(<any>null);
     }
 
     /**
@@ -2307,6 +2486,249 @@ export class RequestServiceProxy {
             }));
         }
         return _observableOf<RequestViewDto>(<any>null);
+    }
+}
+
+@Injectable()
+export class RequestnspectionTestServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrUpdate(body: CreateUpdateRequestTestDto | undefined) : Observable<RequestInspectionTestDto> {
+        let url_ = this.baseUrl + "/api/services/app/RequestnspectionTest/CreateOrUpdate";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<RequestInspectionTestDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<RequestInspectionTestDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateOrUpdate(response: HttpResponseBase): Observable<RequestInspectionTestDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = RequestInspectionTestDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<RequestInspectionTestDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    get(id: number | undefined) : Observable<RequestInspectionTestDto> {
+        let url_ = this.baseUrl + "/api/services/app/RequestnspectionTest/Get?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<RequestInspectionTestDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<RequestInspectionTestDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<RequestInspectionTestDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = RequestInspectionTestDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<RequestInspectionTestDto>(<any>null);
+    }
+
+    /**
+     * @param requestId (optional) 
+     * @return Success
+     */
+    getAll(requestId: number | undefined) : Observable<RequestInspectionTestViewDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/RequestnspectionTest/GetAll?";
+        if (requestId === null)
+            throw new Error("The parameter 'requestId' cannot be null.");
+        else if (requestId !== undefined)
+            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<RequestInspectionTestViewDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<RequestInspectionTestViewDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<RequestInspectionTestViewDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(RequestInspectionTestViewDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<RequestInspectionTestViewDto[]>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined) : Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/RequestnspectionTest/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
     }
 }
 
@@ -4878,6 +5300,61 @@ export interface ICreateUpdateInspectionTestDto {
     testType: InspectionTestTypes;
 }
 
+export class CreateUpdateRequestTestDto implements ICreateUpdateRequestTestDto {
+    id: number;
+    requestId: number;
+    inspectionTestType: InspectionTestTypes;
+    inspectionTestId: number;
+
+    constructor(data?: ICreateUpdateRequestTestDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.requestId = _data["requestId"];
+            this.inspectionTestType = _data["inspectionTestType"];
+            this.inspectionTestId = _data["inspectionTestId"];
+        }
+    }
+
+    static fromJS(data: any): CreateUpdateRequestTestDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateUpdateRequestTestDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["requestId"] = this.requestId;
+        data["inspectionTestType"] = this.inspectionTestType;
+        data["inspectionTestId"] = this.inspectionTestId;
+        return data; 
+    }
+
+    clone(): CreateUpdateRequestTestDto {
+        const json = this.toJSON();
+        let result = new CreateUpdateRequestTestDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateUpdateRequestTestDto {
+    id: number;
+    requestId: number;
+    inspectionTestType: InspectionTestTypes;
+    inspectionTestId: number;
+}
+
 export class CreateUserDto implements ICreateUserDto {
     userName: string;
     name: string;
@@ -6265,6 +6742,8 @@ export class RequestDto implements IRequestDto {
     phomeNumberSiteResponsibleTwo: string | undefined;
     mainRequestType: MainRequestTypes;
     hasSample: HasSamples;
+    testType: InspectionTestTypes;
+    status: RequestStatus;
     geometry: string | undefined;
 
     constructor(data?: IRequestDto) {
@@ -6289,6 +6768,8 @@ export class RequestDto implements IRequestDto {
             this.phomeNumberSiteResponsibleTwo = _data["phomeNumberSiteResponsibleTwo"];
             this.mainRequestType = _data["mainRequestType"];
             this.hasSample = _data["hasSample"];
+            this.testType = _data["testType"];
+            this.status = _data["status"];
             this.geometry = _data["geometry"];
         }
     }
@@ -6313,6 +6794,8 @@ export class RequestDto implements IRequestDto {
         data["phomeNumberSiteResponsibleTwo"] = this.phomeNumberSiteResponsibleTwo;
         data["mainRequestType"] = this.mainRequestType;
         data["hasSample"] = this.hasSample;
+        data["testType"] = this.testType;
+        data["status"] = this.status;
         data["geometry"] = this.geometry;
         return data; 
     }
@@ -6337,6 +6820,8 @@ export interface IRequestDto {
     phomeNumberSiteResponsibleTwo: string | undefined;
     mainRequestType: MainRequestTypes;
     hasSample: HasSamples;
+    testType: InspectionTestTypes;
+    status: RequestStatus;
     geometry: string | undefined;
 }
 
@@ -6393,6 +6878,134 @@ export class RequestDtoPagedResultDto implements IRequestDtoPagedResultDto {
 export interface IRequestDtoPagedResultDto {
     items: RequestDto[] | undefined;
     totalCount: number;
+}
+
+export class RequestInspectionTestDto implements IRequestInspectionTestDto {
+    id: number;
+    requestId: number;
+    inspectionTestType: InspectionTestTypes;
+    inspectionTestId: number;
+
+    constructor(data?: IRequestInspectionTestDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.requestId = _data["requestId"];
+            this.inspectionTestType = _data["inspectionTestType"];
+            this.inspectionTestId = _data["inspectionTestId"];
+        }
+    }
+
+    static fromJS(data: any): RequestInspectionTestDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RequestInspectionTestDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["requestId"] = this.requestId;
+        data["inspectionTestType"] = this.inspectionTestType;
+        data["inspectionTestId"] = this.inspectionTestId;
+        return data; 
+    }
+
+    clone(): RequestInspectionTestDto {
+        const json = this.toJSON();
+        let result = new RequestInspectionTestDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IRequestInspectionTestDto {
+    id: number;
+    requestId: number;
+    inspectionTestType: InspectionTestTypes;
+    inspectionTestId: number;
+}
+
+export class RequestInspectionTestViewDto implements IRequestInspectionTestViewDto {
+    id: number;
+    requestId: number;
+    inspectionTestType: InspectionTestTypes;
+    inspectionTestId: number;
+    cost: number;
+    name: string | undefined;
+    code: string | undefined;
+
+    constructor(data?: IRequestInspectionTestViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.requestId = _data["requestId"];
+            this.inspectionTestType = _data["inspectionTestType"];
+            this.inspectionTestId = _data["inspectionTestId"];
+            this.cost = _data["cost"];
+            this.name = _data["name"];
+            this.code = _data["code"];
+        }
+    }
+
+    static fromJS(data: any): RequestInspectionTestViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RequestInspectionTestViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["requestId"] = this.requestId;
+        data["inspectionTestType"] = this.inspectionTestType;
+        data["inspectionTestId"] = this.inspectionTestId;
+        data["cost"] = this.cost;
+        data["name"] = this.name;
+        data["code"] = this.code;
+        return data; 
+    }
+
+    clone(): RequestInspectionTestViewDto {
+        const json = this.toJSON();
+        let result = new RequestInspectionTestViewDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IRequestInspectionTestViewDto {
+    id: number;
+    requestId: number;
+    inspectionTestType: InspectionTestTypes;
+    inspectionTestId: number;
+    cost: number;
+    name: string | undefined;
+    code: string | undefined;
+}
+
+export enum RequestStatus {
+    _1 = 1,
+    _2 = 2,
+    _3 = 3,
 }
 
 export class RequestViewDto implements IRequestViewDto {

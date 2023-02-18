@@ -22,6 +22,8 @@ namespace eConLab.Req
         public string PhomeNumberSiteResponsibleOne { get; set; }
         public string PhomeNumberSiteResponsibleTwo { get; set; }
         public  MainRequestTypes MainRequestType { get; set; }
+        public InspectionTestTypes TestType { get; set; }
+        public RequestStatus Status { get; set; }
         public HasSamples HasSample { get; set; }
         public string Geometry { get; set; }
         public Project Project { get; set; }

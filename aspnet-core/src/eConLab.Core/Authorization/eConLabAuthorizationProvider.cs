@@ -12,6 +12,8 @@ namespace eConLab.Authorization
             context.CreatePermission(PermissionNames.Pages_Users_Activation, L("UsersActivation"));
             context.CreatePermission(PermissionNames.Pages_Roles, L("Roles"));
             context.CreatePermission(PermissionNames.Pages_Manage_Agences, L("Agencies"));
+            context.CreatePermission(PermissionNames.Pages_Manage_Contractor, L("Contractor"));
+            context.CreatePermission(PermissionNames.Pages_Manage_Requests, L("Requests"));
             context.CreatePermission(PermissionNames.Pages_Manage_Project, L("Projects"));
             context.CreatePermission(PermissionNames.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
             context.CreatePermission(PermissionNames.Pages_Manage_InspectionTest, L("InspectionTest"));

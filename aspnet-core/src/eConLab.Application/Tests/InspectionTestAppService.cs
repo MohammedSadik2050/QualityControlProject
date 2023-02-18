@@ -17,6 +17,7 @@ using Abp.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Abp.Authorization;
 using eConLab.Authorization;
+using eConLab.Enum;
 
 namespace eConLab.Test
 {
@@ -98,6 +99,11 @@ namespace eConLab.Test
             return _mapper.Map<List<InspectionTestDto>>(query);
         }
 
+        public async Task<List<InspectionTestDto>> GetAllInspectionTestListByType(int type)
+        {
+            var query = _inspectionTestRepository.GetAll().Where(s=>s.TestType == (InspectionTestTypes)type).ToList();
+            return _mapper.Map<List<InspectionTestDto>>(query);
+        }
 
         //[AbpAuthorize(PermissionNames.Pages_Manage_InspectionTest)]
         //public async Task<bool> Delete(long Id)

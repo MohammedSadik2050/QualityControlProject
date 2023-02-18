@@ -15,10 +15,16 @@ namespace eConLab.Enum
     public enum InspectionTestTypes
     {
         Concret = 1,
-        Soil,
-        Asphalt
+        Soil=2,
+        Asphalt=3
     }
 
+    public enum RequestStatus
+    {
+        Pending = 1,
+        Submitted=2,
+        Approved=3
+    }
     public enum MainRequestTypes
     {
         Inspection = 1,
