@@ -15,6 +15,7 @@ namespace eConLab.Requests.Dto
         public RequestProfile()
         {
             CreateMap<RequestDto, Request>().ReverseMap();
+            CreateMap<RequestDto, RequestViewDto>().ReverseMap();
             CreateMap<RequestViewDto, Request>().ReverseMap();
         }
     }

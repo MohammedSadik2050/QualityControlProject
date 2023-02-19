@@ -13,7 +13,7 @@ namespace eConLab.Requests
     public interface IRequestAppService
     {
         Task<RequestDto> CreateOrUpdate(RequestDto input);
-        Task<PagedResultDto<RequestDto>> GetAll(RequestPaginatedDto input);
+        Task<PagedResultDto<RequestViewDto>> GetAll(RequestPaginatedDto input);
         Task<RequestViewDto> GetRequestView([Required] long id);
         Task<RequestDto> Get(long id);
 

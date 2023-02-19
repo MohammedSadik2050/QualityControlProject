@@ -77,7 +77,8 @@ namespace eConLab.Test
             var lstItems = _inspectionTestRepository.GetAll()
                 .Skip(skipCount)
                 .Take(maxResultCount)
-                .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search));
+                .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
+                 .WhereIf(filter.TypeId >0, x => x.TestType == (InspectionTestTypes)filter.TypeId);
 
             return lstItems.ToList();
         }
@@ -86,7 +87,8 @@ namespace eConLab.Test
         {
 
             var lstItems = _inspectionTestRepository.GetAll()
-                         .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search));
+                         .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
+                          .WhereIf(filter.TypeId > 0, x => x.TestType == (InspectionTestTypes)filter.TypeId);
 
 
             return lstItems.Count();

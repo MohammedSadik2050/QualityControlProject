@@ -179,5 +179,9 @@
 		<text name="ProjectName">Project Name</text>
 		<text name="EndProject">EndProject</text>
 		<text name="View">View</text>
+		<text name="AddRequest">Add Request</text>
+		<text name="RequestCode">Request Code</text>
+		<text name="Status">Status</text>
+		<text name="Approved">Request Approved</text>
 </texts>
 </localizationDictionary>

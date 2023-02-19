@@ -761,19 +761,19 @@ export class InspectionTestServiceProxy {
     }
 
     /**
-     * @param id (optional) 
+     * @param typeId (optional) 
      * @param search (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(id: number | undefined, search: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<InspectionTestDtoPagedResultDto> {
+    getAll(typeId: number | undefined, search: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<InspectionTestDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/InspectionTest/GetAll?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        if (typeId === null)
+            throw new Error("The parameter 'typeId' cannot be null.");
+        else if (typeId !== undefined)
+            url_ += "TypeId=" + encodeURIComponent("" + typeId) + "&";
         if (search === null)
             throw new Error("The parameter 'search' cannot be null.");
         else if (search !== undefined)
@@ -1521,6 +1521,64 @@ export class LookupServiceProxy {
     }
 
     protected processMainRequestTypes(response: HttpResponseBase): Observable<DropdownListDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(DropdownListDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DropdownListDto[]>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    requestsStatus() : Observable<DropdownListDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Lookup/RequestsStatus";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRequestsStatus(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRequestsStatus(<any>response_);
+                } catch (e) {
+                    return <Observable<DropdownListDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DropdownListDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processRequestsStatus(response: HttpResponseBase): Observable<DropdownListDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -2368,13 +2426,33 @@ export class RequestServiceProxy {
     }
 
     /**
+     * @param projectId (optional) 
+     * @param contractNumber (optional) 
+     * @param requestCode (optional) 
+     * @param status (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestDtoPagedResultDto> {
+    getAll(projectId: number | undefined, contractNumber: string | undefined, requestCode: string | undefined, status: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestViewDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Request/GetAll?";
+        if (projectId === null)
+            throw new Error("The parameter 'projectId' cannot be null.");
+        else if (projectId !== undefined)
+            url_ += "ProjectId=" + encodeURIComponent("" + projectId) + "&";
+        if (contractNumber === null)
+            throw new Error("The parameter 'contractNumber' cannot be null.");
+        else if (contractNumber !== undefined)
+            url_ += "ContractNumber=" + encodeURIComponent("" + contractNumber) + "&";
+        if (requestCode === null)
+            throw new Error("The parameter 'requestCode' cannot be null.");
+        else if (requestCode !== undefined)
+            url_ += "RequestCode=" + encodeURIComponent("" + requestCode) + "&";
+        if (status === null)
+            throw new Error("The parameter 'status' cannot be null.");
+        else if (status !== undefined)
+            url_ += "Status=" + encodeURIComponent("" + status) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -2404,14 +2482,14 @@ export class RequestServiceProxy {
                 try {
                     return this.processGetAll(<any>response_);
                 } catch (e) {
-                    return <Observable<RequestDtoPagedResultDto>><any>_observableThrow(e);
+                    return <Observable<RequestViewDtoPagedResultDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<RequestDtoPagedResultDto>><any>_observableThrow(response_);
+                return <Observable<RequestViewDtoPagedResultDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAll(response: HttpResponseBase): Observable<RequestDtoPagedResultDto> {
+    protected processGetAll(response: HttpResponseBase): Observable<RequestViewDtoPagedResultDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -2422,7 +2500,7 @@ export class RequestServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = RequestDtoPagedResultDto.fromJS(resultData200);
+            result200 = RequestViewDtoPagedResultDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -2430,7 +2508,7 @@ export class RequestServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<RequestDtoPagedResultDto>(<any>null);
+        return _observableOf<RequestViewDtoPagedResultDto>(<any>null);
     }
 
     /**
@@ -6825,61 +6903,6 @@ export interface IRequestDto {
     geometry: string | undefined;
 }
 
-export class RequestDtoPagedResultDto implements IRequestDtoPagedResultDto {
-    items: RequestDto[] | undefined;
-    totalCount: number;
-
-    constructor(data?: IRequestDtoPagedResultDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items.push(RequestDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): RequestDtoPagedResultDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new RequestDtoPagedResultDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data; 
-    }
-
-    clone(): RequestDtoPagedResultDto {
-        const json = this.toJSON();
-        let result = new RequestDtoPagedResultDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IRequestDtoPagedResultDto {
-    items: RequestDto[] | undefined;
-    totalCount: number;
-}
-
 export class RequestInspectionTestDto implements IRequestInspectionTestDto {
     id: number;
     requestId: number;
@@ -7011,6 +7034,7 @@ export enum RequestStatus {
 export class RequestViewDto implements IRequestViewDto {
     id: number;
     name: string | undefined;
+    status: string | undefined;
     code: string | undefined;
     inspectionDate: moment.Moment;
     description: string | undefined;
@@ -7036,6 +7060,7 @@ export class RequestViewDto implements IRequestViewDto {
         if (_data) {
             this.id = _data["id"];
             this.name = _data["name"];
+            this.status = _data["status"];
             this.code = _data["code"];
             this.inspectionDate = _data["inspectionDate"] ? moment(_data["inspectionDate"].toString()) : <any>undefined;
             this.description = _data["description"];
@@ -7061,6 +7086,7 @@ export class RequestViewDto implements IRequestViewDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["name"] = this.name;
+        data["status"] = this.status;
         data["code"] = this.code;
         data["inspectionDate"] = this.inspectionDate ? this.inspectionDate.toISOString() : <any>undefined;
         data["description"] = this.description;
@@ -7086,6 +7112,7 @@ export class RequestViewDto implements IRequestViewDto {
 export interface IRequestViewDto {
     id: number;
     name: string | undefined;
+    status: string | undefined;
     code: string | undefined;
     inspectionDate: moment.Moment;
     description: string | undefined;
@@ -7097,6 +7124,61 @@ export interface IRequestViewDto {
     hasSample: HasSamples;
     geometry: string | undefined;
     project: ProjectDto;
+}
+
+export class RequestViewDtoPagedResultDto implements IRequestViewDtoPagedResultDto {
+    items: RequestViewDto[] | undefined;
+    totalCount: number;
+
+    constructor(data?: IRequestViewDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(RequestViewDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): RequestViewDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RequestViewDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data; 
+    }
+
+    clone(): RequestViewDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new RequestViewDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IRequestViewDtoPagedResultDto {
+    items: RequestViewDto[] | undefined;
+    totalCount: number;
 }
 
 export class RequestWFDto implements IRequestWFDto {

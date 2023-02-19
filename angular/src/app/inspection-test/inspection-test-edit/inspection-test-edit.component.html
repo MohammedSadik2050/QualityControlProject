@@ -71,7 +71,7 @@
                         id="testType" [(ngModel)]="inspectionTest.testType"
                         #testTypeModel="ngModel"
                         #testType required>
-                    <option *ngFor="let inspectionTestType of inspectionTestTypes" [value]="inspectionTestType.id">{{inspectionTestType.name}}</option>
+                    <option *ngFor="let inspectionTestType of inspectionTestTypes" [value]="inspectionTestType.id">{{inspectionTestType.name | localize}}</option>
                 </select>
                 <abp-validation-summary [control]="testTypeModel"
                                         [controlEl]="testType"></abp-validation-summary>

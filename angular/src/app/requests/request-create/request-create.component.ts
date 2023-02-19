@@ -12,6 +12,11 @@ import { CreateUpdateInspectionTestDto, CreateUpdateRequestTestDto, DropdownList
     styleUrls: ['./request-create.component.css']
 })
 export class RequestCreateComponent extends AppComponentBase implements OnInit {
+    startDatemodel: string = new Date().toLocaleDateString();
+    completeDatemodel: string = new Date().toLocaleDateString();
+    projectName: string = '';
+    projectContractNumber: string = '';
+    project = new ProjectDto();
     saving = false;
     hide = false;
     hasSample = false;
@@ -88,18 +93,15 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
         });
     }
 
-    save(): void {
+    save(status:number): void {
         this.saving = true;
+        this.request.mainRequestType = 1;
         if (this.hasSample == true) {
             this.request.hasSample = 1;
         } else {
             this.request.hasSample = 2;
         }
-        if (this.saveText =='SendToConsultant' || this.request.id>0) {
-            this.request.status = RequestStatus._2;
-        } else {
-            this.request.status = RequestStatus._1;
-        }
+        this.request.status = status;
       
         this.request.inspectionDate = moment(this.InspectionDatemodel, "YYYY-MM-DD");
         this._requestServiceProxy.createOrUpdate(this.request).subscribe(
@@ -147,6 +149,19 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
     delete(row: RequestInspectionTestViewDto) {
         this._requestnspectionTestServiceProxy.delete(row.id).subscribe(res => {
             this.loadRequestTests();
+        });
+    }
+
+    LoadProject(event) {
+        
+        this._projectServiceProxy.get(event).subscribe(res => {
+            this.project = res;
+           
+            this.projectName = this.project.name;
+            this.projectContractNumber = this.project.contractNumber;
+            this.startDatemodel = moment(this.project.startDate).format("YYYY-MM-DD");
+            this.completeDatemodel = moment(this.project.completedDate).format("YYYY-MM-DD");
+          
         });
     }
 }

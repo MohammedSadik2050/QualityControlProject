@@ -17,6 +17,9 @@ using eConLab.Req;
 using eConLab.Requests.Dto;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using Abp.Collections.Extensions;
+using eConLab.Enum;
+using Abp.Extensions;
 
 namespace eConLab.Requests
 {
@@ -55,15 +58,20 @@ namespace eConLab.Requests
 
         public async Task<RequestDto> CreateOrUpdate(RequestDto input)
         {
-            long max = 0;
-            try
+            if (string.IsNullOrEmpty(input.Code))
             {
-                max = _requestRepo.GetAll().Max(d => d.Id);
+                long max = 0;
+                try
+                {
+                    max = _requestRepo.GetAll().Max(d => d.Id);
+                }
+                catch
+                {
+                }
+                input.Code = "R-" + input.MainRequestType + "-C-" + (max + 1);
             }
-            catch
-            {
-            }
-            input.Code = "R-" + input.MainRequestType + "-C-" + (max + 1);
+
+            input.Name = input.MainRequestType.ToString();
             var res = await _requestRepo.InsertOrUpdateAsync(_mapper.Map<Request>(input));
             await CurrentUnitOfWork.SaveChangesAsync();
             input.Id = res.Id;
@@ -76,31 +84,64 @@ namespace eConLab.Requests
         }
 
 
-        public async Task<PagedResultDto<RequestDto>> GetAll(RequestPaginatedDto input)
+        public async Task<PagedResultDto<RequestViewDto>> GetAll(RequestPaginatedDto input)
         {
             var filter = ObjectMapper.Map<RequestPaginatedDto>(input);
 
-            var lstItems = await GetListAsync(input.SkipCount, input.MaxResultCount);
-            var totalCount = await GetTotalCountAsync();
+            var lstItems = await GetListAsync(input.SkipCount, input.MaxResultCount, input);
+            var totalCount = await GetTotalCountAsync(input);
 
-            return new PagedResultDto<RequestDto>(totalCount, ObjectMapper.Map<List<RequestDto>>(lstItems));
+            return new PagedResultDto<RequestViewDto>(totalCount, ObjectMapper.Map<List<RequestViewDto>>(lstItems));
         }
 
 
-        private async Task<List<Request>> GetListAsync(int skipCount, int maxResultCount, RequestFilter filter = null)
+        private async Task<List<RequestViewDto>> GetListAsync(int skipCount, int maxResultCount, RequestPaginatedDto filter = null)
         {
 
-            var lstItems = _requestRepo.GetAll()
+            var lstItems = _requestRepo.GetAll().Include(s => s.Project)
                                           .Skip(skipCount)
-                                          .Take(maxResultCount);
+                                          .Take(maxResultCount)
+                                           .WhereIf(filter.ProjectId > 0, x => x.ProjectId == filter.ProjectId)
+                                         .WhereIf(!filter.ContractNumber.IsNullOrEmpty(), x => x.Project.ContractNumber.Contains(filter.ContractNumber))
+                                          .WhereIf(!filter.RequestCode.IsNullOrEmpty(), x => x.Code.Contains(filter.RequestCode))
+                                          .WhereIf(filter.Status > 0, x => (int)x.Status == filter.Status);
 
-            return lstItems.ToList();
+            var result = lstItems.Select(mod => new RequestViewDto
+            {
+                Id = mod.Id,
+                Code = mod.Code,
+                InspectionDate = mod.InspectionDate,
+                Description = mod.Description,
+                ProjectId = mod.ProjectId,
+                DistrictName = mod.DistrictName,
+                PhomeNumberSiteResponsibleOne = mod.PhomeNumberSiteResponsibleOne,
+                PhomeNumberSiteResponsibleTwo = mod.PhomeNumberSiteResponsibleTwo,
+                MainRequestType = mod.MainRequestType,
+                HasSample = mod.HasSample,
+                Status = mod.Status.ToString(),
+                Project = new ProjectDto
+                {
+                    Id = mod.Project.Id,
+                    Name = mod.Project.Name,
+                    ContractNumber = mod.Project.ContractNumber,
+                    StartDate = mod.Project.StartDate,
+                    SiteDelivedDate = mod.Project.SiteDelivedDate,
+                }
+
+            }).ToList();
+            return result;
         }
 
-        private async Task<int> GetTotalCountAsync(RequestFilter filter = null)
+        private async Task<int> GetTotalCountAsync(RequestPaginatedDto filter = null)
         {
 
-            var lstItems = _requestRepo.GetAll();
+            var lstItems = _requestRepo.GetAll().Include(s => s.Project)
+                                         
+                                           .WhereIf(filter.ProjectId > 0, x => x.ProjectId == filter.ProjectId)
+                                         .WhereIf(!filter.ContractNumber.IsNullOrEmpty(), x => x.Project.ContractNumber.Contains(filter.ContractNumber))
+                                          .WhereIf(!filter.RequestCode.IsNullOrEmpty(), x => x.Code.Contains(filter.RequestCode))
+                                          .WhereIf(filter.Status > 0, x => (int)x.Status == filter.Status);
+
             return lstItems.ToList().Count;
         }
 

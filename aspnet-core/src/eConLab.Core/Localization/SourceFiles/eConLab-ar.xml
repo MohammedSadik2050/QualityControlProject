@@ -32,10 +32,10 @@
 		<text name="EditContractor">تعديل </text>
 		<text name="Contractor">مقاول</text>
 		<text name="Contractors">المستخدم</text>
-		<text name="QCUsers">مدراء النظام</text>
+		<text name="QCUsers">إدارة المستخدمين</text>
 		<text name="Contract_Name">اسم العقد</text>
 		<text name="ADDRESS">العنوان</text>
-		<text name="CommericalRegisterationNumber">رقم السجل التجاري</text> 
+		<text name="CommericalRegisterationNumber">رقم السجل التجاري</text>
 		<text name="HomePage" value="الصفحة الرئيسية" />
 		<text name="About" value="نبذه عنا" />
 		<text name="WelcomeMessage" value="مرحبا" />
@@ -79,7 +79,7 @@
 		<text name="Logout" value="تسجيل الخروج" />
 		<text name="RegisterFormUserNameInvalidMessage">Please don't enter an email address for username.</text>
 		<text name="DatabaseConnectionString" value="Database connection string" />
-		<text name="Users" value="إدارة المستخدمين" />
+		<text name="Users" value="مدراء النظام" />
 		<text name="AppUsers" value="المستخدمين" />
 		<text name="IsActive" value="التفعيل" />
 		<text name="FullName" value="الاسم كاملا" />
@@ -156,15 +156,16 @@
 		<text name="UsersActivation">Users activation</text>
 		<text name="ProjectList">قائمة المشاريع</text>
 
-		<text name="InspectionTest">الاختبارات</text>
+		<text name="InspectionTest">قائمة الإختبارات</text>
 		<text name="Code">الكود</text>
 		<text name="Cost">التكلفه</text>
 		<text name="IsLabTest">معملي</text>
-		<text name="Concret">خرسانه</text>
-		<text name="Soil">تربه</text>
-		<text name="Asphalt">أسفلت</text>
+		<text name="Concret">إختبارات خرسانيه</text>
+		<text name="Soil">إختبارات ترابيه</text>
+		<text name="Asphalt">إختبارات أسفلتيه</text>
 		<text name="InspectionTestTypes">نوع العينه</text>
 		<text name="Requests">الطلبات</text>
+		<text name="AddRequest">إضافه طلب جديد</text>
 		<text name="ExaminationRequest">طلبات الفحص</text>
 		<text name="InspectionDate">تاريخ الفحص</text>
 		<text name="DistrictName">موقع الفحص</text>
@@ -176,12 +177,15 @@
 		<text name="CONTINUE">استكمال</text>
 		<text name="CreateExaminationRequest">انشاء طلب فحص</text>
 		<text name="ChooseProject">اختر مشروع</text>
-		<text name="SendToConsultant">ارسال الى الاستشاري</text>
+		<text name="SendToConsultant">ارسال</text>
 		<text name="DuplicateTest">تم ادخال هذا الاختبار من قبل</text>
 		<text name="Pending">قيد الانتظار</text>
 		<text name="Submitted">تم التقديم</text>
-		<text name="ProjectName">اسم المشروع</text>
+		<text name="ProjectName">إسم المشروع</text>
 		<text name="EndProject">نهايه المشروع</text>
 		<text name="View">عرض</text>
+		<text name="RequestCode">رقم الطلب</text>
+		<text name="Status">حاله الطلب</text>
+		<text name="Approved">تم الموافقه على الطلب</text>
 	</texts>
 </localizationDictionary>
