@@ -35,7 +35,7 @@
                                        [placeholder]="'SearchWithThreeDot' | localize"
                                        [(ngModel)]="keyword"
                                        (keyup.enter)="getDataPage(1)" />
-                                <!--<div class="input-group-append">
+                                <div class="input-group-append">
                                     <button type="button"
                                             class="btn btn-default"
                                             (click)="advancedFiltersVisible = !advancedFiltersVisible">
@@ -43,7 +43,7 @@
                                            [class.fa-angle-up]="advancedFiltersVisible"
                                            [class.fa-angle-down]="!advancedFiltersVisible"></i>
                                     </button>
-                                </div>-->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -53,46 +53,72 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row mb-0">
-                                            <label class="col-md-3 col-form-label">
-                                                {{ "IsActive" | localize }}
+                                            <label class="col-md-3 col-form-label" for="ADDRESS">
+                                                {{ "ChooseProject" | localize }}
                                             </label>
-                                            <div class="col-md-9 pt-2">
-                                                <div class="custom-control custom-radio d-inline">
-                                                    <input type="radio"
-                                                           class="custom-control-input"
-                                                           id="isActiveAll"
-                                                           name="isActive"
-                                                           [(ngModel)]="isActive"
-                                                           [value]="undefined"
-                                                           checked />
-                                                    <label class="custom-control-label" for="isActiveAll">
-                                                        {{ "All" | localize }}
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-radio d-inline mx-3">
-                                                    <input type="radio"
-                                                           class="custom-control-input"
-                                                           id="isActiveActive"
-                                                           name="isActive"
-                                                           [(ngModel)]="isActive"
-                                                           [value]="true" />
-                                                    <label class="custom-control-label"
-                                                           for="isActiveActive">
-                                                        {{ "Yes" | localize }}
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-radio d-inline">
-                                                    <input type="radio"
-                                                           class="custom-control-input"
-                                                           id="isActivePassive"
-                                                           name="isActive"
-                                                           [(ngModel)]="isActive"
-                                                           [value]="false" />
-                                                    <label class="custom-control-label"
-                                                           for="isActivePassive">
-                                                        {{ "No" | localize }}
-                                                    </label>
-                                                </div>
+                                            <div class="col-md-8">
+                                                <select name="project"
+                                                        class="form-control"
+                                                        id="projectId" [(ngModel)]="projectId"
+                                                        #projectModel="ngModel">
+                                                    <option *ngFor="let project of projects" [value]="project.id">{{project.name}}</option>
+                                                </select>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group row mb-0">
+                                            <label class="col-md-3 col-form-label" for="ADDRESS">
+                                                {{ "ContractNumber" | localize }}
+                                            </label>
+                                            <div class="col-md-8">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       name="projectContractNumber"
+                                                       id="projectContractNumber"
+                                                        
+                                                       [(ngModel)]="contractNumber" />
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 mt-3">
+                                        <div class="form-group row mb-0">
+                                            <label class="col-md-3 col-form-label" for="ADDRESS">
+                                                {{ "RequestCode" | localize }}
+                                            </label>
+                                            <div class="col-md-8">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       name="requestCode"
+                                                       id="requestCode"
+                                                        
+                                                       [(ngModel)]="requestCode" />
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 mt-3">
+                                        <div class="form-group row mb-0">
+                                            <label class="col-md-3 col-form-label" for="ADDRESS">
+                                                {{ "Status" | localize }}
+                                            </label>
+                                            <div class="col-md-8">
+                                                <select name="statusId"
+                                                        class="form-control"
+                                                        id="statusId" [(ngModel)]="statusId"
+                                                        #statusIdModel="ngModel">
+                                                    <option *ngFor="let requestStatus of requestStatuses" [value]="requestStatus.id">{{requestStatus.name | localize}}</option>
+                                                </select>
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -118,11 +144,13 @@
                         <table class="table table-striped table-bordered" [busy]="isTableLoading">
                             <thead class="bg-light">
                                 <tr>
-                                    <th>{{ "Name" | localize }}</th>
-                                    <th>{{ "Code" | localize }}</th>
+                                    <th>{{ "ProjectName" | localize }}</th>
+                                    <th>{{ "ContractNumber" | localize }}</th>
+                                    <th>{{ "RequestCode" | localize }}</th>
                                     <th>{{ "InspectionDate" | localize }}</th>
-                                    <th>{{ "DistrictName" | localize }}</th>
+                                    <th>{{ "Status" | localize }}</th>
                                     <th>{{ "HasSample" | localize }}</th>
+
                                     <th style="width: 310px;" *ngIf="isGranted('Pages.Manage.InspectionTest')">{{ "Actions" | localize }}</th>
                                 </tr>
                             </thead>
@@ -137,10 +165,11 @@
                           totalItems: totalItems
                         }
                 ">
-                                    <td>{{ request.name }}</td>
+                                    <td>{{ request.project.name }}</td>
+                                    <td>{{ request.project.contractNumber }}</td>
                                     <td>{{ request.code }}</td>
                                     <td>{{ request.inspectionDate | date: 'dd/MM/yyyy'}}</td>
-                                    <td>{{ request.districtName }}</td>
+                                    <td>{{ request.status | localize }}</td>
                                     <td>
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox"
@@ -153,16 +182,23 @@
                                     <td *ngIf="isGranted('Pages.Manage.Agences')">
                                         <button type="button"
                                                 class="btn btn-sm bg-secondary"
-                                                (click)="editRow(inspectionTest)">
+                                                (click)="editRow(request)">
                                             <i class="fas fa-pencil-alt"></i>
                                             {{ "Edit" | localize }}
                                         </button>
                                         <button type="button"
                                                 class="btn btn-sm bg-danger mx-2"
-                                                (click)="delete(inspectionTest)">
+                                                (click)="delete(request)">
                                             <i class="fas fa-trash"></i>
                                             {{ "Delete" | localize }}
                                         </button>
+                                        <button type="button"
+                                                class="btn btn-sm bg-primary"
+                                                (click)="viewRow(request)">
+                                            <i class="fa fa-eye"></i>
+                                            {{ "View" | localize }}
+                                        </button>
+
 
                                     </td>
                                 </tr>

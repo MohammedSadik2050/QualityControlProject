@@ -9,7 +9,7 @@ namespace eConLab.Tests.Dto
 {
     public class InspectionTestPaginatedDto : PagedAndSortedResultRequestDto
     {
-        public long Id { get; set; }
+        public int TypeId { get; set; }
         public string Search { get; set; }
     }
     public class InspectionTestFilter

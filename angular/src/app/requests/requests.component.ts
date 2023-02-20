@@ -3,32 +3,52 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { appModuleAnimation } from '../../shared/animations/routerTransition';
 import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from '../../shared/paged-listing-component-base';
-import { RequestDto, RequestServiceProxy } from '../../shared/service-proxies/service-proxies';
+import { DropdownListDto, LookupServiceProxy, ProjectDto, ProjectServiceProxy, RequestDto, RequestServiceProxy, RequestViewDto } from '../../shared/service-proxies/service-proxies';
 import { RequestCreateComponent } from './request-create/request-create.component';
 
 class PageRequestDto extends PagedRequestDto {
     keyword: string;
 }
 @Component({
- 
+
     templateUrl: './requests.component.html',
     animations: [appModuleAnimation()]
 })
-export class RequestsComponent extends PagedListingComponentBase<RequestDto> {
-    requests: RequestDto[] = [];
+export class RequestsComponent extends PagedListingComponentBase<RequestViewDto>{
+    requests: RequestViewDto[] = [];
+    projects: ProjectDto[] = [];
     keyword = '';
+    projectId: number = 0;
+    contractNumber: string = '';
+    requestCode: string = '';
+    statusId: number = 0;
     isActive: boolean | null;
     advancedFiltersVisible = false;
-
+    requestStatuses: DropdownListDto[] = [];
     constructor(
         injector: Injector,
+        public _projectServiceProxy: ProjectServiceProxy,
         private _requestServiceProxy: RequestServiceProxy,
+        public _lookupServiceProxy: LookupServiceProxy,
         //private _modalService: BsModalService,
         private router: Router
     ) {
         super(injector);
     }
 
+    loadAllProject() {
+
+        this._projectServiceProxy.getAllDropdown().subscribe(res => {
+            this.projects = res;
+        });
+    }
+
+    loadAllStatuses() {
+
+        this._lookupServiceProxy.requestsStatus().subscribe(res => {
+            this.requestStatuses = res;
+        });
+    }
     createAgency(): void {
         this.showCreateOrEditUserDialog();
     }
@@ -37,11 +57,18 @@ export class RequestsComponent extends PagedListingComponentBase<RequestDto> {
         this.showCreateOrEditUserDialog(row.id);
     }
 
+    viewRow(row: any) {
 
+        this.router.navigateByUrl('/app/examinationRequest/view/' + row.id);
+    }
 
     clearFilters(): void {
         this.keyword = '';
         this.isActive = undefined;
+        this.projectId = undefined;
+        this.contractNumber = undefined;
+        this.requestCode = undefined;
+        this.statusId = undefined;
         this.getDataPage(1);
     }
 
@@ -51,9 +78,14 @@ export class RequestsComponent extends PagedListingComponentBase<RequestDto> {
         finishedCallback: Function
     ): void {
         request.keyword = this.keyword;
-
+        this.loadAllProject();
+        this.loadAllStatuses();
         this._requestServiceProxy
             .getAll(
+                this.projectId,
+                this.contractNumber,
+                this.requestCode,
+                this.statusId,
                 '',
                 request.skipCount,
                 request.maxResultCount
@@ -69,7 +101,7 @@ export class RequestsComponent extends PagedListingComponentBase<RequestDto> {
             });
     }
 
-    protected delete(row: RequestDto): void {
+    protected delete(row: RequestViewDto): void {
         abp.message.confirm(
             this.l('', row.name),
             undefined,
@@ -94,7 +126,7 @@ export class RequestsComponent extends PagedListingComponentBase<RequestDto> {
     //}
 
     private showCreateOrEditUserDialog(id?: number): void {
-      
+
         if (!id) {
             //createOrEditUserDialog = this._modalService.show(
             //    RequestCreateComponent,
@@ -104,6 +136,7 @@ export class RequestsComponent extends PagedListingComponentBase<RequestDto> {
             //);
             this.router.navigateByUrl('/app/examinationRequest/create');
         } else {
+            this.router.navigateByUrl('/app/examinationRequest/edit/' + id);
             //let createOrEditUserDialog: BsModalRef;
             //createOrEditUserDialog = this._modalService.show(
             //    InspectionTestEditComponent,

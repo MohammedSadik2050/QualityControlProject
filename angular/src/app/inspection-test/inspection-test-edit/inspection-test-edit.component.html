@@ -16,7 +16,7 @@
                        name="name"
                        id="name"
                        required
-                       maxlength="32"
+                        
                        [(ngModel)]="inspectionTest.name"
                        #nameModel="ngModel"
                        #nameE1 />
@@ -34,7 +34,7 @@
                        name="code"
                        id="code"
                        required
-                       maxlength="32"
+                        
                        [(ngModel)]="inspectionTest.code"
                        #codeModel="ngModel"
                        #codeE1 />
@@ -53,7 +53,7 @@
                        name="cost"
                        id="cost"
                        required
-                       maxlength="32"
+                        
                        [(ngModel)]="inspectionTest.cost"
                        #costModel="ngModel"
                        #cost />
@@ -71,7 +71,7 @@
                         id="testType" [(ngModel)]="inspectionTest.testType"
                         #testTypeModel="ngModel"
                         #testType required>
-                    <option *ngFor="let inspectionTestType of inspectionTestTypes" [value]="inspectionTestType.id">{{inspectionTestType.name}}</option>
+                    <option *ngFor="let inspectionTestType of inspectionTestTypes" [value]="inspectionTestType.id">{{inspectionTestType.name | localize}}</option>
                 </select>
                 <abp-validation-summary [control]="testTypeModel"
                                         [controlEl]="testType"></abp-validation-summary>

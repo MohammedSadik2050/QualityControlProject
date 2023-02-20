@@ -53,6 +53,7 @@ import { InspectionTestEditComponent } from './inspection-test/inspection-test-e
 import { RequestsComponent } from './requests/requests.component';
 import { RequestCreateComponent } from './requests/request-create/request-create.component';
 import { RequestEditComponent } from './requests/request-edit/request-edit.component';
+import { RequestViewComponent } from './requests/request-view/request-view.component';
 
 @NgModule({
     declarations: [
@@ -97,7 +98,8 @@ import { RequestEditComponent } from './requests/request-edit/request-edit.compo
         InspectionTestEditComponent,
         RequestsComponent,
         RequestCreateComponent,
-        RequestEditComponent
+        RequestEditComponent,
+        RequestViewComponent
     ],
     imports: [
         CommonModule,

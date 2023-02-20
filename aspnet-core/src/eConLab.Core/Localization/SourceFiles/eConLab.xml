@@ -174,5 +174,14 @@
 		<text name="ChooseProject">Choose Project</text>
 		<text name="SendToConsultant">Send to Consultant</text>
 		<text name="DuplicateTest">Duplicate Test</text>
+		<text name="Pending">Pending</text>
+		<text name="Submitted">Submitted</text>
+		<text name="ProjectName">Project Name</text>
+		<text name="EndProject">EndProject</text>
+		<text name="View">View</text>
+		<text name="AddRequest">Add Request</text>
+		<text name="RequestCode">Request Code</text>
+		<text name="Status">Status</text>
+		<text name="Approved">Request Approved</text>
 </texts>
 </localizationDictionary>

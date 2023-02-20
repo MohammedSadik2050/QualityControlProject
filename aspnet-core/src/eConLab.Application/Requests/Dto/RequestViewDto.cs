@@ -12,6 +12,7 @@ namespace eConLab.Requests.Dto
     public class RequestViewDto:EntityDto<long>
     {
         public string Name { get; set; }
+        public string Status { get; set; }
         public string Code { get; set; }
         public DateTime InspectionDate { get; set; }
         public string Description { get; set; }

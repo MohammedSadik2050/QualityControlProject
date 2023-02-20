@@ -11,19 +11,20 @@ import {
     RequestStatus, RequestWFDto, RequestWFServiceProxy
 } from '../../../shared/service-proxies/service-proxies';
 
+
 @Component({
-  selector: 'app-request-edit',
-  templateUrl: './request-edit.component.html',
-  styleUrls: ['./request-edit.component.css']
+  selector: 'app-request-view',
+  templateUrl: './request-view.component.html',
+  styleUrls: ['./request-view.component.css']
 })
-export class RequestEditComponent extends AppComponentBase implements OnInit {
+export class RequestViewComponent extends AppComponentBase implements OnInit {
     saving = false;
-    startDatemodel: string = new Date().toLocaleDateString();
-    completeDatemodel: string = new Date().toLocaleDateString();
-    projectName: string = '';
-    projectContractNumber: string = '';
     hide = false;
     hasSample = false;
+    startDatemodel: string = new Date().toLocaleDateString();
+    completeDatemodel: string = new Date().toLocaleDateString();
+    projectName: string ='';
+    projectContractNumber: string ='';
     saveText = 'SendToConsultant';
     request = new RequestDto();
     projects: ProjectDto[] = [];
@@ -58,9 +59,8 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         this.loadTestTypes();
         this.request.id = this.routeActive.snapshot.params['id'];
         this._requestServiceProxy.get(this.request.id).subscribe(res => {
-            this.request = res;
             this.hasSample = res.hasSample == 1 ? true : false;
-            this.InspectionDatemodel = moment(this.request.inspectionDate).format("YYYY-MM-DD");
+            this.request = res;
             this.loadRequestTests();
             this.loadTestsByTypes();
             this.LoadProject();
@@ -68,7 +68,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     }
 
     LoadProject() {
-
+        console.log('asdasdas');
         this._projectServiceProxy.get(this.request.projectId).subscribe(res => {
             this.project = res;
             this.startDatemodel = moment(this.project.startDate).format("YYYY-MM-DD");

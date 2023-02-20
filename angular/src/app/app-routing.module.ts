@@ -16,6 +16,9 @@ import { InspectionTestComponent } from './inspection-test/inspection-test.compo
 import { RequestsComponent } from './requests/requests.component';
 import { InspectionTestCreateComponent } from './inspection-test/inspection-test-create/inspection-test-create.component';
 import { RequestCreateComponent } from './requests/request-create/request-create.component';
+import { RequestEditComponent } from './requests/request-edit/request-edit.component';
+import { RequestViewDto } from '../shared/service-proxies/service-proxies';
+import { RequestViewComponent } from './requests/request-view/request-view.component';
 
 @NgModule({
     imports: [
@@ -35,6 +38,8 @@ import { RequestCreateComponent } from './requests/request-create/request-create
                     { path: 'inspectionTest', component: InspectionTestComponent, data: { permission: 'Pages.Manage.InspectionTest' }, canActivate: [AppRouteGuard] },
                     { path: 'examinationRequest', component: RequestsComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
                     { path: 'examinationRequest/create', component: RequestCreateComponent, data: { permission: 'Pages.Manage.Contractor' }, canActivate: [AppRouteGuard] },
+                    { path: 'examinationRequest/edit/:id', component: RequestEditComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
+                    { path: 'examinationRequest/view/:id', component: RequestViewComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
                    /* { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },*/
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] }
                 ]

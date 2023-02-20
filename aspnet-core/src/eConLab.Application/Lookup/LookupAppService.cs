@@ -102,5 +102,16 @@ namespace eConLab.Lookup
                               Id = (long)mod,
                           }).ToList();
         }
+
+        public async Task<List<DropdownListDto>> RequestsStatus()
+        {
+
+            return Enum.RequestStatus.GetValues(typeof(RequestStatus))
+                          .Cast<RequestStatus>().Select(mod => new DropdownListDto
+                          {
+                              Name = mod.ToString(),
+                              Id = (long)mod,
+                          }).ToList();
+        }
     }
 }

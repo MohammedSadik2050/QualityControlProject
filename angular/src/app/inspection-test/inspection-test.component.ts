@@ -3,7 +3,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 import { appModuleAnimation } from '../../shared/animations/routerTransition';
 import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from '../../shared/paged-listing-component-base';
-import { AgencyServiceProxy, InspectionTestDto, InspectionTestServiceProxy } from '../../shared/service-proxies/service-proxies';
+import { AgencyServiceProxy, DropdownListDto, InspectionTestDto, InspectionTestServiceProxy, LookupServiceProxy } from '../../shared/service-proxies/service-proxies';
 import { InspectionTestCreateComponent } from './inspection-test-create/inspection-test-create.component';
 import { InspectionTestEditComponent } from './inspection-test-edit/inspection-test-edit.component';
 
@@ -19,11 +19,13 @@ class PagedAgencyRequestDto extends PagedRequestDto {
 export class InspectionTestComponent extends PagedListingComponentBase<InspectionTestDto> {
     inspectionTests: InspectionTestDto[] = [];
     keyword = '';
+    inspectionTestTypId: number = 0;
     isActive: boolean | null;
     advancedFiltersVisible = false;
-
+    inspectionTestTypes: DropdownListDto[] = [];
     constructor(
         injector: Injector,
+        public _lookupServiceProxy: LookupServiceProxy,
         private _inspectionTestServiceProxy: InspectionTestServiceProxy,
         private _modalService: BsModalService
     ) {
@@ -38,11 +40,18 @@ export class InspectionTestComponent extends PagedListingComponentBase<Inspectio
         this.showCreateOrEditUserDialog(inspectionTest.id);
     }
 
+    loadTypes() {
+        this._lookupServiceProxy.inspectionTestTypes().subscribe(res => {
+            console.log('Data');
+            this.inspectionTestTypes = res;
+        });
+    }
 
 
     clearFilters(): void {
         this.keyword = '';
         this.isActive = undefined;
+        this.inspectionTestTypId = undefined;
         this.getDataPage(1);
     }
 
@@ -53,10 +62,10 @@ export class InspectionTestComponent extends PagedListingComponentBase<Inspectio
     ): void {
         request.keyword = this.keyword;
         request.isActive = this.isActive;
-
+       
         this._inspectionTestServiceProxy
             .getAll(
-                this.appSession.userId,
+                this.inspectionTestTypId,
                 this.keyword,
                 '',
                 request.skipCount,
@@ -70,6 +79,10 @@ export class InspectionTestComponent extends PagedListingComponentBase<Inspectio
             .subscribe((result: PagedResultDto) => {
                 this.inspectionTests = result.items;
                 this.showPaging(result, pageNumber);
+                if (this.inspectionTestTypes.length<1) {
+                    this.loadTypes();
+                }
+              
             });
     }
 
