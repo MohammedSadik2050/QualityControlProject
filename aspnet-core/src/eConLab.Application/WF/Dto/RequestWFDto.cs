@@ -11,5 +11,7 @@ namespace eConLab.WF.Dto
     {
         public long RequestId { get; set; }
         public long CurrentUserId { get; set; }
+        public string ActionName { get; set; }
+        public string ActionNotes { get; set; }
     }
 }

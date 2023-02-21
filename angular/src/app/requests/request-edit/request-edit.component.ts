@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbpSessionService } from 'abp-ng2-module';
+import { stat } from 'fs';
 import * as moment from 'moment';
 import { AppComponentBase } from '../../../shared/app-component-base';
 import { AppAuthService } from '../../../shared/auth/app-auth.service';
@@ -118,18 +119,15 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         });
     }
 
-    save(): void {
+    save(status: number): void {
+        
         this.saving = true;
         if (this.hasSample == true) {
             this.request.hasSample = 1;
         } else {
             this.request.hasSample = 2;
         }
-        if (this.saveText == 'SendToConsultant' || this.request.id > 0) {
-            this.request.status = RequestStatus._2;
-        } else {
-            this.request.status = RequestStatus._1;
-        }
+        this.request.status = status;
 
         this.request.inspectionDate = moment(this.InspectionDatemodel, "YYYY-MM-DD");
         this._requestServiceProxy.createOrUpdate(this.request).subscribe(
@@ -155,6 +153,13 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         var workFlow = new RequestWFDto();
         workFlow.requestId = this.request.id;
         workFlow.currentUserId = currentProject.consultantId;
+        if (this.request.status ==2) {
+            workFlow.actionName = "إرسال الي الإسشاري";
+        }
+
+        if (this.request.status == 3) {
+            workFlow.actionName = "تمت الموافقه على الطلب";
+        }
         this._requestWFServiceProxy.createOrUpdate(workFlow).subscribe(res => {
             this.router.navigateByUrl('/app/examinationRequest');
         });

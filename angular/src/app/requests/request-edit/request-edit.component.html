@@ -17,7 +17,7 @@
                     <form class="form-horizontal"
                           autocomplete="off"
                           #createRequestForm="ngForm"
-                          (ngSubmit)="save()">
+                          (ngSubmit)="save(1)">
 
 
                         <div class="row">
@@ -30,8 +30,6 @@
                                            class="form-control" disabled
                                            name="projectname"
                                            id="projectname"
-                                           
-                                            
                                            [(ngModel)]="projectName"
                                            #projectnameModel="ngModel"
                                            #projectnameE1 />
@@ -50,8 +48,6 @@
                                            class="form-control" disabled
                                            name="contractNumber"
                                            id="contractNumber"
-                                           
-                                            
                                            [(ngModel)]="projectContractNumber"
                                            #contractNumberModel="ngModel"
                                            #contractNumber />
@@ -71,8 +67,6 @@
                                            name="startDate"
                                            id="startDate"
                                            style="text-align: right;"
-                                           
-                                            
                                            [(ngModel)]="startDatemodel"
                                            #startDateModel="ngModel"
                                            #startDate />
@@ -91,8 +85,6 @@
                                            style="text-align: right;"
                                            name="completeDate"
                                            id="completeDate"
-                                           
-                                            
                                            [(ngModel)]="completeDatemodel"
                                            #completeDateModel="ngModel"
                                            #completeDate />
@@ -110,8 +102,6 @@
                                            class="form-control"
                                            name="name"
                                            id="name"
-                                           
-                                            
                                            [(ngModel)]="request.name"
                                            #nameModel="ngModel"
                                            #nameE1 />
@@ -128,8 +118,6 @@
                                            class="form-control"
                                            name="code"
                                            id="code"
-                                           
-                                            
                                            [(ngModel)]="request.code"
                                            #codeModel="ngModel"
                                            #codeE1 />
@@ -143,12 +131,11 @@
                                     {{ "InspectionDate" | localize }}
                                 </label>
                                 <div class="col-md-9">
-                                    <input type="date" 
+                                    <input type="date"
                                            class="form-control"
                                            name="inspectionDate"
                                            id="inspectionDate"
                                            required
-                                            
                                            [(ngModel)]="InspectionDatemodel"
                                            #inspectionDateModel="ngModel"
                                            #inspectionDate />
@@ -166,8 +153,6 @@
                                            class="form-control"
                                            name="description"
                                            id="description"
-                                           
-                                            
                                            [(ngModel)]="request.description"
                                            #descriptionModel="ngModel"
                                            #descriptionE1 />
@@ -198,12 +183,11 @@
                                     {{ "DistrictName" | localize }}
                                 </label>
                                 <div class="col-md-9">
-                                    <input type="text" 
+                                    <input type="text"
                                            class="form-control"
                                            name="districtName"
                                            id="districtName"
                                            required
-                                            
                                            [(ngModel)]="request.districtName"
                                            #districtNameModel="ngModel"
                                            #districtNameE1 />
@@ -217,12 +201,11 @@
                                     {{ "PhoneNumberSiteResponsible1" | localize }}
                                 </label>
                                 <div class="col-md-9">
-                                    <input type="number" 
+                                    <input type="number"
                                            class="form-control"
                                            name="phomeNumberSiteResponsibleOne"
                                            id="phomeNumberSiteResponsibleOne"
                                            required
-                                            
                                            [(ngModel)]="request.phomeNumberSiteResponsibleOne"
                                            #phomeNumberSiteResponsibleOneModel="ngModel"
                                            #phomeNumberSiteResponsibleOneE1 />
@@ -236,12 +219,11 @@
                                     {{ "PhoneNumberSiteResponsible2" | localize }}
                                 </label>
                                 <div class="col-md-9">
-                                    <input type="number" 
+                                    <input type="number"
                                            class="form-control"
                                            name="phomeNumberSiteResponsibleTwo"
                                            id="phomeNumberSiteResponsibleTwo"
                                            required
-                                            
                                            [(ngModel)]="request.phomeNumberSiteResponsibleTwo"
                                            #phomeNumberSiteResponsibleTwoModel="ngModel"
                                            #phomeNumberSiteResponsibleTwoE1 />
@@ -259,7 +241,7 @@
                                             class="form-control"
                                             id="mainRequestType" [(ngModel)]="request.mainRequestType"
                                             #mainRequestTypeModel="ngModel"
-                                            #mainRequestType >
+                                            #mainRequestType>
                                         <option *ngFor="let mainRequestType of mainRequestTypes" [value]="mainRequestType.id">{{mainRequestType.name | localize}}</option>
                                     </select>
                                     <abp-validation-summary [control]="mainRequestTypeModel"
@@ -292,7 +274,7 @@
                                             class="form-control" [disabled]="request.id>0"
                                             id="testType" [(ngModel)]="request.testType"
                                             #testTypeModel="ngModel"
-                                            #testTypeType >
+                                            #testTypeType>
                                         <option *ngFor="let inspectionTestType of inspectionTestTypes" [value]="inspectionTestType.id">{{inspectionTestType.name | localize}}</option>
                                     </select>
                                     <abp-validation-summary [control]="testTypeModel"
@@ -301,18 +283,35 @@
                             </div>
 
                         </div>
-                        <button *ngIf="request.id==0" type="submit"
+                        <button *ngIf="request.status ==1 && isGranted('Pages.Manage.Contractor')" type="submit"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 class="btn btn-primary"
                                 aria-label="Close">
                             {{ saveText | localize }}
                         </button>
 
-                        <button *ngIf="request.id>0" type="submit"
+                        <button *ngIf="request.id>0 && isGranted('Pages.Manage.Contractor')" type="button"
                                 [disabled]="requestTests.length==0"
+                                (click)="save(2)"
                                 class="btn btn-primary"
                                 aria-label="Close">
                             {{ "SendToConsultant" | localize }}
+                        </button>
+
+                        <button *ngIf="request.status ==2 &&  appSession.userId == project.consultantId" type="button"
+                                [disabled]="!createRequestForm.form.valid || saving"
+                                (click)="save(3)"
+                                class="btn btn-primary"
+                                aria-label="Close">
+                            {{ "Approved" | localize }}
+                        </button>
+
+                        <button *ngIf="request.status ==2 &&  appSession.userId == project.consultantId" type="button"
+                                [disabled]="!createRequestForm.form.valid || saving"
+                                (click)="save(3)"
+                                class="btn btn-primary"
+                                aria-label="Close">
+                            {{ "RequestRejected" | localize }}
                         </button>
                     </form>
 

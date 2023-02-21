@@ -7185,6 +7185,8 @@ export class RequestWFDto implements IRequestWFDto {
     id: number;
     requestId: number;
     currentUserId: number;
+    actionName: string | undefined;
+    actionNotes: string | undefined;
 
     constructor(data?: IRequestWFDto) {
         if (data) {
@@ -7200,6 +7202,8 @@ export class RequestWFDto implements IRequestWFDto {
             this.id = _data["id"];
             this.requestId = _data["requestId"];
             this.currentUserId = _data["currentUserId"];
+            this.actionName = _data["actionName"];
+            this.actionNotes = _data["actionNotes"];
         }
     }
 
@@ -7215,6 +7219,8 @@ export class RequestWFDto implements IRequestWFDto {
         data["id"] = this.id;
         data["requestId"] = this.requestId;
         data["currentUserId"] = this.currentUserId;
+        data["actionName"] = this.actionName;
+        data["actionNotes"] = this.actionNotes;
         return data; 
     }
 
@@ -7230,6 +7236,8 @@ export interface IRequestWFDto {
     id: number;
     requestId: number;
     currentUserId: number;
+    actionName: string | undefined;
+    actionNotes: string | undefined;
 }
 
 export class RequestWFDtoPagedResultDto implements IRequestWFDtoPagedResultDto {

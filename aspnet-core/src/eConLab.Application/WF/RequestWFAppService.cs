@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using eConLab.WF.Dto;
+using eConLab.Authorization.Users;
 
 namespace eConLab.WF
 {
@@ -55,8 +56,31 @@ namespace eConLab.WF
        
         public async Task<RequestWFDto> CreateOrUpdate(RequestWFDto input)
         {
+            var requestWf = await _requestWFRepo.FirstOrDefaultAsync(s=>s.RequestId == input.RequestId);
+            var history = new RequestWFHistory();
+            if (requestWf !=null)
+            {
+                history = new RequestWFHistory
+                {
+                    UserId = requestWf.CurrentUserId,
+                    ActionNotes = input.ActionNotes,
+                    ActionName = input.ActionName,
+                    RequestWFId = requestWf.RequestId,
+                };
+                await _requestWFHistoryRepo.InsertOrUpdateAsync(history);
+            }
+           
+            requestWf = _mapper.Map<RequestWF>(input);
+            await _requestWFRepo.InsertOrUpdateAsync(requestWf);
 
-            await _requestWFRepo.InsertOrUpdateAsync(_mapper.Map<RequestWF>(input));
+            history = new RequestWFHistory
+            {
+                UserId = requestWf.CurrentUserId,
+                ActionNotes = input.ActionNotes,
+                ActionName = input.ActionName,
+                RequestWFId = requestWf.RequestId,
+            };
+            await _requestWFHistoryRepo.InsertOrUpdateAsync(history);
             await CurrentUnitOfWork.SaveChangesAsync();
 
 
