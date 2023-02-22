@@ -9,7 +9,7 @@ import {
     CreateUpdateRequestTestDto, DropdownListDto, InspectionTestDto,
     InspectionTestServiceProxy, LookupServiceProxy, ProjectDto, ProjectServiceProxy,
     RequestDto, RequestInspectionTestViewDto, RequestnspectionTestServiceProxy, RequestServiceProxy,
-    RequestStatus, RequestWFDto, RequestWFServiceProxy
+    RequestStatus, RequestWFDto, RequestWFHistoryDto, RequestWFServiceProxy
 } from '../../../shared/service-proxies/service-proxies';
 
 @Component({
@@ -35,6 +35,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     requestTests: RequestInspectionTestViewDto[] = [];
     mainRequestTypes: DropdownListDto[] = [];
     @Output() onSave = new EventEmitter<any>();
+    requestHistories: RequestWFHistoryDto[] = [];
     InspectionDatemodel: string = new Date().toLocaleDateString();
     constructor(
         injector: Injector,
@@ -65,6 +66,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             this.loadRequestTests();
             this.loadTestsByTypes();
             this.LoadProject();
+            this.LoadRequestHistory();
         });
     }
 
@@ -78,6 +80,15 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             this.projectContractNumber = res.contractNumber;
         });
     }
+
+    LoadRequestHistory() {
+
+        this._requestWFServiceProxy.getAllHistory(this.request.id).subscribe(res => {
+            this.requestHistories = res;
+            console.log('History', this.requestHistories);
+        });
+    }
+
     loadTestTypes() {
 
         this._lookupServiceProxy.inspectionTestTypes().subscribe(res => {
@@ -154,12 +165,16 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         workFlow.requestId = this.request.id;
         workFlow.currentUserId = currentProject.consultantId;
         if (this.request.status ==2) {
-            workFlow.actionName = "إرسال الي الإسشاري";
+            workFlow.actionName = "تم التسجيل";
+            workFlow.actionNotes = "تم الإرسال الى الاستشاري";
         }
 
         if (this.request.status == 3) {
             workFlow.actionName = "تمت الموافقه على الطلب";
+            workFlow.actionNotes = "الإستشاري وافق على الطلب";
         }
+
+
         this._requestWFServiceProxy.createOrUpdate(workFlow).subscribe(res => {
             this.router.navigateByUrl('/app/examinationRequest');
         });

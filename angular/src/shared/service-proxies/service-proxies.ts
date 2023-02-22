@@ -2934,13 +2934,18 @@ export class RequestWFServiceProxy {
     }
 
     /**
+     * @param requestId (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestWFDtoPagedResultDto> {
+    getAll(requestId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestWFDto[]> {
         let url_ = this.baseUrl + "/api/services/app/RequestWF/GetAll?";
+        if (requestId === null)
+            throw new Error("The parameter 'requestId' cannot be null.");
+        else if (requestId !== undefined)
+            url_ += "RequestId=" + encodeURIComponent("" + requestId) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -2970,14 +2975,14 @@ export class RequestWFServiceProxy {
                 try {
                     return this.processGetAll(<any>response_);
                 } catch (e) {
-                    return <Observable<RequestWFDtoPagedResultDto>><any>_observableThrow(e);
+                    return <Observable<RequestWFDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<RequestWFDtoPagedResultDto>><any>_observableThrow(response_);
+                return <Observable<RequestWFDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAll(response: HttpResponseBase): Observable<RequestWFDtoPagedResultDto> {
+    protected processGetAll(response: HttpResponseBase): Observable<RequestWFDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -2988,7 +2993,14 @@ export class RequestWFServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = RequestWFDtoPagedResultDto.fromJS(resultData200);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(RequestWFDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -2996,7 +3008,70 @@ export class RequestWFServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<RequestWFDtoPagedResultDto>(<any>null);
+        return _observableOf<RequestWFDto[]>(<any>null);
+    }
+
+    /**
+     * @param requestId (optional) 
+     * @return Success
+     */
+    getAllHistory(requestId: number | undefined) : Observable<RequestWFHistoryDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/RequestWF/GetAllHistory?";
+        if (requestId === null)
+            throw new Error("The parameter 'requestId' cannot be null.");
+        else if (requestId !== undefined)
+            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllHistory(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllHistory(<any>response_);
+                } catch (e) {
+                    return <Observable<RequestWFHistoryDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<RequestWFHistoryDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllHistory(response: HttpResponseBase): Observable<RequestWFHistoryDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(RequestWFHistoryDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<RequestWFHistoryDto[]>(<any>null);
     }
 }
 
@@ -7240,11 +7315,15 @@ export interface IRequestWFDto {
     actionNotes: string | undefined;
 }
 
-export class RequestWFDtoPagedResultDto implements IRequestWFDtoPagedResultDto {
-    items: RequestWFDto[] | undefined;
-    totalCount: number;
+export class RequestWFHistoryDto implements IRequestWFHistoryDto {
+    id: number;
+    requestId: number;
+    currentUserId: number;
+    actionName: string | undefined;
+    actionNotes: string | undefined;
+    creationTime: moment.Moment;
 
-    constructor(data?: IRequestWFDtoPagedResultDto) {
+    constructor(data?: IRequestWFHistoryDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -7255,44 +7334,48 @@ export class RequestWFDtoPagedResultDto implements IRequestWFDtoPagedResultDto {
 
     init(_data?: any) {
         if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items.push(RequestWFDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
+            this.id = _data["id"];
+            this.requestId = _data["requestId"];
+            this.currentUserId = _data["currentUserId"];
+            this.actionName = _data["actionName"];
+            this.actionNotes = _data["actionNotes"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
         }
     }
 
-    static fromJS(data: any): RequestWFDtoPagedResultDto {
+    static fromJS(data: any): RequestWFHistoryDto {
         data = typeof data === 'object' ? data : {};
-        let result = new RequestWFDtoPagedResultDto();
+        let result = new RequestWFHistoryDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
+        data["id"] = this.id;
+        data["requestId"] = this.requestId;
+        data["currentUserId"] = this.currentUserId;
+        data["actionName"] = this.actionName;
+        data["actionNotes"] = this.actionNotes;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         return data; 
     }
 
-    clone(): RequestWFDtoPagedResultDto {
+    clone(): RequestWFHistoryDto {
         const json = this.toJSON();
-        let result = new RequestWFDtoPagedResultDto();
+        let result = new RequestWFHistoryDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IRequestWFDtoPagedResultDto {
-    items: RequestWFDto[] | undefined;
-    totalCount: number;
+export interface IRequestWFHistoryDto {
+    id: number;
+    requestId: number;
+    currentUserId: number;
+    actionName: string | undefined;
+    actionNotes: string | undefined;
+    creationTime: moment.Moment;
 }
 
 export class ResetPasswordDto implements IResetPasswordDto {

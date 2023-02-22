@@ -9,7 +9,7 @@ namespace eConLab.WF.Dto
 {
     public class RequestWFPaginatedDto : PagedAndSortedResultRequestDto
     {
-
+        public long RequestId { get; set; }
     }
     public class RequestWFFilter
     {

@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using eConLab.WF.Dto;
 using eConLab.Authorization.Users;
+using eConLab.Requests.Dto;
 
 namespace eConLab.WF
 {
@@ -97,38 +98,31 @@ namespace eConLab.WF
         }
 
 
-        public async Task<PagedResultDto<RequestWFDto>> GetAll(RequestWFPaginatedDto input)
+        public async Task<List<RequestWFDto>> GetAll(RequestWFPaginatedDto input)
         {
             var filter = ObjectMapper.Map<RequestWFPaginatedDto>(input);
 
-            var lstItems = await GetListAsync(input.SkipCount, input.MaxResultCount);
-            var totalCount = await GetTotalCountAsync();
+            var lstItems = await GetListAsync(filter);
 
-            return new PagedResultDto<RequestWFDto>(totalCount, ObjectMapper.Map<List<RequestWFDto>>(lstItems));
+            return ObjectMapper.Map<List<RequestWFDto>>(lstItems);
         }
 
 
-        private async Task<List<RequestWF>> GetListAsync(int skipCount, int maxResultCount, RequestWFFilter filter = null)
+        private async Task<List<RequestWF>> GetListAsync( RequestWFPaginatedDto filter = null)
         {
 
-            var lstItems = _requestWFRepo.GetAll()
-                                          .Skip(skipCount)
-                                          .Take(maxResultCount);
-
-
-           
-
-
+            var lstItems = _requestWFRepo.GetAll().Where(s=>s.RequestId == filter.RequestId).OrderByDescending(s=>s.CreationTime);
             return lstItems.ToList();
         }
 
-        private async Task<int> GetTotalCountAsync(RequestWFFilter filter = null)
+
+        public async Task<List<RequestWFHistoryDto>> GetAllHistory(long requestId)
         {
 
-            var lstItems = _requestWFRepo.GetAll();
 
+            var lstItems = _requestWFHistoryRepo.GetAll().Where(s => s.RequestWFId == requestId).ToList();
 
-            return lstItems.ToList().Count;
+            return ObjectMapper.Map<List<RequestWFHistoryDto>>(lstItems);
         }
     }
 }

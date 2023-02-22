@@ -12,6 +12,7 @@ namespace eConLab.WF
     {
         Task<RequestWFDto> CreateOrUpdate(RequestWFDto input);
         Task<RequestWFDto> Get(long id);
-        Task<PagedResultDto<RequestWFDto>> GetAll(RequestWFPaginatedDto input);
+        Task<List<RequestWFDto>> GetAll(RequestWFPaginatedDto input);
+        Task<List<RequestWFHistoryDto>> GetAllHistory(long requestId);
     }
 }
