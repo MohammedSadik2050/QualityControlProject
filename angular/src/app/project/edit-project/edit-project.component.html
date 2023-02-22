@@ -145,10 +145,10 @@
                                     {{ "AgencyType" | localize }}
                                 </label>
                                 <div class="col-md-9">
-                                    <select name="agencyTypeId"
+                                    <select name="AgencyTypeId"
                                             class="form-control"
                                             id="agencyTypeId" [(ngModel)]="project.agencyTypeId"
-                                            (ngModelChange)="onTypeChange()"
+                                            (ngModelChange)="onTypeChange($event)"
                                             #agencyTypeIdModel="ngModel"
                                             #agencyTypeId required>
                                         <option *ngFor="let agencyType of agencyTypes" [value]="agencyType.id">{{agencyType.name}}</option>
