@@ -54,6 +54,7 @@ import { RequestsComponent } from './requests/requests.component';
 import { RequestCreateComponent } from './requests/request-create/request-create.component';
 import { RequestEditComponent } from './requests/request-edit/request-edit.component';
 import { RequestViewComponent } from './requests/request-view/request-view.component';
+import { RejectModalComponent } from './requests/reject-modal/reject-modal.component';
 
 @NgModule({
     declarations: [
@@ -99,7 +100,8 @@ import { RequestViewComponent } from './requests/request-view/request-view.compo
         RequestsComponent,
         RequestCreateComponent,
         RequestEditComponent,
-        RequestViewComponent
+        RequestViewComponent,
+        RejectModalComponent
     ],
     imports: [
         CommonModule,

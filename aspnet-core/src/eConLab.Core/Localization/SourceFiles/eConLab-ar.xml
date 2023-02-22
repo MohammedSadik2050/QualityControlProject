@@ -187,5 +187,7 @@
 		<text name="RequestCode">رقم الطلب</text>
 		<text name="Status">حاله الطلب</text>
 		<text name="Approved">تم الموافقه على الطلب</text>
+		<text name="RequestRejected">رفض الطلب</text>
+		<text name="History">عمليات الطلب</text>
 	</texts>
 </localizationDictionary>

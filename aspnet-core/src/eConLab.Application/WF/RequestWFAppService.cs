@@ -59,17 +59,7 @@ namespace eConLab.WF
         {
             var requestWf = await _requestWFRepo.FirstOrDefaultAsync(s=>s.RequestId == input.RequestId);
             var history = new RequestWFHistory();
-            if (requestWf !=null)
-            {
-                history = new RequestWFHistory
-                {
-                    UserId = requestWf.CurrentUserId,
-                    ActionNotes = input.ActionNotes,
-                    ActionName = input.ActionName,
-                    RequestWFId = requestWf.RequestId,
-                };
-                await _requestWFHistoryRepo.InsertOrUpdateAsync(history);
-            }
+           
            
             requestWf = _mapper.Map<RequestWF>(input);
             await _requestWFRepo.InsertOrUpdateAsync(requestWf);
@@ -120,7 +110,8 @@ namespace eConLab.WF
         {
 
 
-            var lstItems = _requestWFHistoryRepo.GetAll().Where(s => s.RequestWFId == requestId).ToList();
+            var lstItems = _requestWFHistoryRepo.GetAll().OrderByDescending(s=>s.CreationTime)
+                            .Where(s => s.RequestWFId == requestId).ToList();
 
             return ObjectMapper.Map<List<RequestWFHistoryDto>>(lstItems);
         }

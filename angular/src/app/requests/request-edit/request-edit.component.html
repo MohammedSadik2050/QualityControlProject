@@ -214,7 +214,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row required col-6">
+                            <div class="form-group row col-6">
                                 <label class="col-md-3 col-form-label" for="DistrictName">
                                     {{ "PhoneNumberSiteResponsible2" | localize }}
                                 </label>
@@ -223,7 +223,7 @@
                                            class="form-control"
                                            name="phomeNumberSiteResponsibleTwo"
                                            id="phomeNumberSiteResponsibleTwo"
-                                           required
+                                           
                                            [(ngModel)]="request.phomeNumberSiteResponsibleTwo"
                                            #phomeNumberSiteResponsibleTwoModel="ngModel"
                                            #phomeNumberSiteResponsibleTwoE1 />
@@ -290,7 +290,7 @@
                             {{ saveText | localize }}
                         </button>
 
-                        <button *ngIf="request.id>0 && isGranted('Pages.Manage.Contractor')" type="button"
+                        <button *ngIf="request.id>0 && isGranted('Pages.Manage.Contractor') && request.status ==1" type="button"
                                 [disabled]="requestTests.length==0"
                                 (click)="save(2)"
                                 class="btn btn-primary"
@@ -308,8 +308,8 @@
 
                         <button *ngIf="request.status ==2 &&  appSession.userId == project.consultantId" type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
-                                (click)="save(3)"
-                                class="btn btn-primary"
+                                (click)="rejectRequest()"
+                                class="btn btn-primary mr-3"
                                 aria-label="Close">
                             {{ "RequestRejected" | localize }}
                         </button>
