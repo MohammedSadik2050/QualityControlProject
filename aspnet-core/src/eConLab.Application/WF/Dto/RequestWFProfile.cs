@@ -14,6 +14,7 @@ namespace eConLab.WF.Dto
         public RequestWFProfile()
         {
             CreateMap<RequestWFDto, RequestWF>().ReverseMap();
+            CreateMap<RequestWFHistoryDto, RequestWFHistory>().ReverseMap();
         }
     }
 }

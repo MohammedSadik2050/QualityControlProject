@@ -121,6 +121,7 @@ export class AppUserCreateComponent extends AppComponentBase implements OnInit {
         this.contractorObject.qcUserInput = this.qcUser;
         this.contractorObject.registerInput = this.currentUser;
         this.contractorObject.registerInput.surname = this.contractorObject.registerInput.name;
+        this.contractorObject.registerInput.name = this.qcUser.name;
         this._qcUserServiceProxy.createOrUpdate(this.contractorObject).subscribe(
             () => {
                 this.notify.info(this.l('SavedSuccessfully'));

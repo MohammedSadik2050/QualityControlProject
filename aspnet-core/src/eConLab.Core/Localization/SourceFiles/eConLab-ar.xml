@@ -18,7 +18,7 @@
 		<text name="PhoneNumber">رقم الهاتف</text>
 		<text name="NationalityName">الجنسيه</text>
 		<text name="StaffNumber">المسلسل الوظيفي</text>
-		<text name="NationalId">الرقم القومل/اقامه</text>
+		<text name="NationalId">الهويه الوطنيه</text>
 		<text name="CreateNewAgency">اضافه جهه جديده</text>
 		<text name="WorkNumber">رقم العمل</text>
 		<text name="Agencies">إدارة الجهات</text>
@@ -187,5 +187,7 @@
 		<text name="RequestCode">رقم الطلب</text>
 		<text name="Status">حاله الطلب</text>
 		<text name="Approved">تم الموافقه على الطلب</text>
+		<text name="RequestRejected">رفض الطلب</text>
+		<text name="History">عمليات الطلب</text>
 	</texts>
 </localizationDictionary>

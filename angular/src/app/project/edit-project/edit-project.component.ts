@@ -99,17 +99,19 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
     loadAgencies() {
         this._agencyServiceProxy.getAllAgenciesList().subscribe(res => {
             this.allAgencies = res;
-            this.onTypeChange();
+           
         });
     }
     loadAgencyTypes() {
 
         this._agencyServiceProxy.getAllAgencyTypeList().subscribe(res => {
             this.agencyTypes = res;
+            this.onTypeChange(this.project.agencyTypeId);
+            this.project.agencyTypeId = this.project.agencyTypeId;
         });
     }
-    onTypeChange() {
-        this.agencies = this.allAgencies.filter(s => s.agencyTypeId == this.project.agencyTypeId);
+    onTypeChange(event) {
+        this.agencies = this.allAgencies.filter(s => s.agencyTypeId == event);
         this.project.agencyId = this.project.agencyId;
         this.changeDetectorRef.detectChanges();
         console.log("data", this.agencies);

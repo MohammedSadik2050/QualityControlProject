@@ -1,20 +1,23 @@
 import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbpSessionService } from 'abp-ng2-module';
+import { stat } from 'fs';
 import * as moment from 'moment';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AppComponentBase } from '../../../shared/app-component-base';
 import { AppAuthService } from '../../../shared/auth/app-auth.service';
 import {
     CreateUpdateRequestTestDto, DropdownListDto, InspectionTestDto,
     InspectionTestServiceProxy, LookupServiceProxy, ProjectDto, ProjectServiceProxy,
     RequestDto, RequestInspectionTestViewDto, RequestnspectionTestServiceProxy, RequestServiceProxy,
-    RequestStatus, RequestWFDto, RequestWFServiceProxy
+    RequestStatus, RequestWFDto, RequestWFHistoryDto, RequestWFServiceProxy
 } from '../../../shared/service-proxies/service-proxies';
+import { RejectModalComponent } from '../reject-modal/reject-modal.component';
 
 @Component({
-  selector: 'app-request-edit',
-  templateUrl: './request-edit.component.html',
-  styleUrls: ['./request-edit.component.css']
+    selector: 'app-request-edit',
+    templateUrl: './request-edit.component.html',
+    styleUrls: ['./request-edit.component.css']
 })
 export class RequestEditComponent extends AppComponentBase implements OnInit {
     saving = false;
@@ -33,7 +36,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     inspectionTests: InspectionTestDto[] = [];
     requestTests: RequestInspectionTestViewDto[] = [];
     mainRequestTypes: DropdownListDto[] = [];
-    @Output() onSave = new EventEmitter<any>();
+    requestHistories: RequestWFHistoryDto[] = [];
     InspectionDatemodel: string = new Date().toLocaleDateString();
     constructor(
         injector: Injector,
@@ -47,6 +50,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         private _sessionService: AbpSessionService,
         private router: Router,
         private routeActive: ActivatedRoute,
+        private _modalService: BsModalService
 
     ) {
         super(injector);
@@ -64,6 +68,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             this.loadRequestTests();
             this.loadTestsByTypes();
             this.LoadProject();
+            this.LoadRequestHistory();
         });
     }
 
@@ -77,6 +82,15 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             this.projectContractNumber = res.contractNumber;
         });
     }
+
+    LoadRequestHistory() {
+
+        this._requestWFServiceProxy.getAllHistory(this.request.id).subscribe(res => {
+            this.requestHistories = res;
+            console.log('History', this.requestHistories);
+        });
+    }
+
     loadTestTypes() {
 
         this._lookupServiceProxy.inspectionTestTypes().subscribe(res => {
@@ -118,18 +132,15 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         });
     }
 
-    save(): void {
+    save(status: number): void {
+
         this.saving = true;
         if (this.hasSample == true) {
             this.request.hasSample = 1;
         } else {
             this.request.hasSample = 2;
         }
-        if (this.saveText == 'SendToConsultant' || this.request.id > 0) {
-            this.request.status = RequestStatus._2;
-        } else {
-            this.request.status = RequestStatus._1;
-        }
+        this.request.status = status;
 
         this.request.inspectionDate = moment(this.InspectionDatemodel, "YYYY-MM-DD");
         this._requestServiceProxy.createOrUpdate(this.request).subscribe(
@@ -150,11 +161,42 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             }
         );
     }
+
+    rejectRequest() {
+        let rejectModal: BsModalRef;
+        rejectModal = this._modalService.show(
+            RejectModalComponent,
+            {
+                class: 'modal-lg',
+                initialState: {
+                    id: this.request.id,
+                    consultantId: this.project.consultantId,
+                    request: this.request,
+                },
+            }
+        );
+
+        rejectModal.content.onSave.subscribe(() => {
+            this.ngOnInit();
+        });
+    }
+
     saveWorkFlow() {
         var currentProject = this.projects.find(x => x.id === parseInt(this.request.projectId.toString()));
         var workFlow = new RequestWFDto();
         workFlow.requestId = this.request.id;
         workFlow.currentUserId = currentProject.consultantId;
+        if (this.request.status == 2) {
+            workFlow.actionName = "تم التسجيل";
+            workFlow.actionNotes = "تم الإرسال الى الاستشاري";
+        }
+
+        if (this.request.status == 3) {
+            workFlow.actionName = "تمت الموافقه على الطلب";
+            workFlow.actionNotes = "الإستشاري وافق على الطلب";
+        }
+
+
         this._requestWFServiceProxy.createOrUpdate(workFlow).subscribe(res => {
             this.router.navigateByUrl('/app/examinationRequest');
         });

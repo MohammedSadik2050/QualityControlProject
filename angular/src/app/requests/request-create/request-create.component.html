@@ -263,21 +263,21 @@
                             </div>
 
                         </div>
-                        <button *ngIf="request.id==0" type="submit"
+                        <button *ngIf="request.id==0 && isGranted('Pages.Manage.Contractor')" type="submit"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 class="btn btn-primary"
                                 aria-label="Close">
                             {{ "Save" | localize }}
                         </button>
 
-                        <button *ngIf="request.id>0" type="submit"
+                        <button *ngIf="request.id>0 && isGranted('Pages.Manage.Contractor')" type="submit"
                                 [disabled]="saving"
                                 class="btn btn-primary"
                                 aria-label="Close">
                             {{ "Save" | localize }}
                         </button>
 
-                        <button *ngIf="request.id>0" type="button"
+                        <button *ngIf="request.id>0 && isGranted('Pages.Manage.Contractor')" type="button"
                                 [disabled]="requestTests.length==0"
                                 class="btn btn-primary mr-5"
                                 aria-label="Close" (click)="save(2)">
