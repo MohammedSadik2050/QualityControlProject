@@ -3,6 +3,7 @@ using Abp.Domain.Repositories;
 using AutoMapper;
 using eConLab.Authorization;
 using eConLab.Proj.Dto;
+using eConLab.ProjectModels;
 using eConLab.Req;
 using eConLab.ReqProjectItems.Dto;
 using eConLab.RequestTests.Dto;
@@ -59,7 +60,7 @@ namespace eConLab.ReqProjectItems
                     .Select(s => new RequestProjectItemViewDto
                     {
                         Id = s.Id,
-                       RequestProjectItem = _mapper.Map<ProjectDto>(s.ProjectItem),
+                       RequestProjectItem = _mapper.Map<ProjectItemDto>(s.ProjectItem),
                         ProjectIdItemId=s.ProjectItemId,
                     }).ToList();
 

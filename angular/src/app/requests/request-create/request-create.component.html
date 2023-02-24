@@ -48,7 +48,6 @@
                                            class="form-control" disabled
                                            name="projectname"
                                            id="projectname"
-                                            
                                            [(ngModel)]="projectName"
                                            #projectnameModel="ngModel"
                                            #projectnameE1 />
@@ -67,7 +66,6 @@
                                            class="form-control" disabled
                                            name="projectContractNumber"
                                            id="projectContractNumber"
-                                            
                                            [(ngModel)]="projectContractNumber" />
                                     <!--<abp-validation-summary [control]="contractNumberModel"
                                         [controlEl]="contractNumber"></abp-validation-summary>-->
@@ -85,7 +83,6 @@
                                            name="startDate"
                                            id="startDate"
                                            style="text-align: right;"
-                                            
                                            [(ngModel)]="startDatemodel"
                                            #startDateModel="ngModel"
                                            #startDate />
@@ -104,7 +101,6 @@
                                            style="text-align: right;"
                                            name="completeDate"
                                            id="completeDate"
-                                            
                                            [(ngModel)]="completeDatemodel"
                                            #completeDateModel="ngModel"
                                            #completeDate />
@@ -127,7 +123,6 @@
                                            name="inspectionDate"
                                            id="inspectionDate"
                                            required
-                                            
                                            [(ngModel)]="InspectionDatemodel"
                                            #inspectionDateModel="ngModel"
                                            #inspectionDate />
@@ -145,7 +140,6 @@
                                            class="form-control"
                                            name="description"
                                            id="description"
-                                            
                                            [(ngModel)]="request.description"
                                            #descriptionModel="ngModel"
                                            #descriptionE1 />
@@ -166,7 +160,6 @@
                                            name="districtName"
                                            id="districtName"
                                            required
-                                            
                                            [(ngModel)]="request.districtName"
                                            #districtNameModel="ngModel"
                                            #districtNameE1 />
@@ -185,7 +178,6 @@
                                            name="phomeNumberSiteResponsibleOne"
                                            id="phomeNumberSiteResponsibleOne"
                                            required
-                                            
                                            [(ngModel)]="request.phomeNumberSiteResponsibleOne"
                                            #phomeNumberSiteResponsibleOneModel="ngModel"
                                            #phomeNumberSiteResponsibleOneE1 />
@@ -203,7 +195,6 @@
                                            class="form-control"
                                            name="phomeNumberSiteResponsibleTwo"
                                            id="phomeNumberSiteResponsibleTwo"
-                                            
                                            [(ngModel)]="request.phomeNumberSiteResponsibleTwo"
                                            #phomeNumberSiteResponsibleTwoModel="ngModel"
                                            #phomeNumberSiteResponsibleTwoE1 />
@@ -213,21 +204,21 @@
                             </div>
 
                             <!--<div class="form-group row required col-6">
-            <label class="col-md-3 col-form-label" for="ADDRESS">
-                {{ "MainRequestTypes" | localize }}
-            </label>
-            <div class="col-md-9">
-                <select name="mainRequestType" [disabled]="request.id>0"
-                        class="form-control"
-                        id="mainRequestType" [(ngModel)]="request.mainRequestType"
-                        #mainRequestTypeModel="ngModel"
-                        #mainRequestType required>
-                    <option *ngFor="let mainRequestType of mainRequestTypes" [value]="mainRequestType.id">{{mainRequestType.name | localize}}</option>
-                </select>
-                <abp-validation-summary [control]="mainRequestTypeModel"
-                                        [controlEl]="mainRequestType"></abp-validation-summary>
-            </div>
-        </div>-->
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "MainRequestTypes" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <select name="mainRequestType" [disabled]="request.id>0"
+                                            class="form-control"
+                                            id="mainRequestType" [(ngModel)]="request.mainRequestType"
+                                            #mainRequestTypeModel="ngModel"
+                                            #mainRequestType required>
+                                        <option *ngFor="let mainRequestType of mainRequestTypes" [value]="mainRequestType.id">{{mainRequestType.name | localize}}</option>
+                                    </select>
+                                    <abp-validation-summary [control]="mainRequestTypeModel"
+                                                            [controlEl]="mainRequestType"></abp-validation-summary>
+                                </div>
+                            </div>-->
 
                             <div class="form-group row required col-6">
                                 <label class="col-md-3 col-form-label" for="isLabTest">
@@ -294,70 +285,140 @@
         <div class="container-fluid">
             <div class="col-container">
                 <div class="card-body card ng-tns-c101-3" style="width:100% !important;">
+                    <tabset>
+                        <tab [heading]="'InspectionTest' | localize" class="pt-3 px-2">
+                            <form class="form-horizontal"
+                                  autocomplete="off"
+                                  #requestInspectionForm="ngForm"
+                                  (ngSubmit)="saveProductItems()">
 
-                    <form class="form-horizontal"
-                          autocomplete="off"
-                          #requestInspectionForm="ngForm"
-                          (ngSubmit)="saveProductItems()">
+                                <div class="row" style="display: -webkit-box !important">
+                                    <div class="form-group row col-8 required">
+                                        <label class="col-md-3 col-form-label" for="Name">
+                                            {{ "InspectionTest" | localize }}
+                                        </label>
+                                        <div class="col-md-9">
+                                            <select name="inspectionTestId"
+                                                    class="form-control"
+                                                    id="inspectionTestId" [(ngModel)]="requestInspection.inspectionTestId"
+                                                    #inspectionTestIdModel="ngModel"
+                                                    #inspectionTestId required>
+                                                <option *ngFor="let inspectionTest of inspectionTests" [value]="inspectionTest.id">{{inspectionTest.name}}</option>
+                                            </select>
+                                            <abp-validation-summary [control]="inspectionTestIdModel"
+                                                                    [controlEl]="inspectionTestId"></abp-validation-summary>
+                                        </div>
+                                    </div>
 
-                        <div class="row" style="display: -webkit-box !important">
-                            <div class="form-group row col-8 required">
-                                <label class="col-md-3 col-form-label" for="Name">
-                                    {{ "InspectionTest" | localize }}
-                                </label>
-                                <div class="col-md-9">
-                                    <select name="inspectionTestId"
-                                            class="form-control"
-                                            id="inspectionTestId" [(ngModel)]="requestInspection.inspectionTestId"
-                                            #inspectionTestIdModel="ngModel"
-                                            #inspectionTestId required>
-                                        <option *ngFor="let inspectionTest of inspectionTests" [value]="inspectionTest.id">{{inspectionTest.name}}</option>
-                                    </select>
-                                    <abp-validation-summary [control]="inspectionTestIdModel"
-                                                            [controlEl]="inspectionTestId"></abp-validation-summary>
+
+
+                                    <button type="button"
+                                            [disabled]="!requestInspectionForm.form.valid || saving"
+                                            class="btn btn-primary col-1" style="margin-right: 14px"
+                                            (click)="saveInspectionTest()"
+                                            aria-label="Close">
+                                        {{ "Save" | localize }}
+                                    </button>
                                 </div>
+
+
+                            </form>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th>{{ "Name" | localize }}</th>
+                                            <th>{{ "Code" | localize }}</th>
+                                            <th>{{ "Cost" | localize }}</th>
+                                            <th style="width: 310px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let requestTest of requestTests">
+                                            <td>{{ requestTest.name }}</td>
+                                            <td>{{ requestTest.code }}</td>
+                                            <td>{{ requestTest.cost}}</td>
+                                            <td>
+                                                <button type="button"
+                                                        class="btn btn-sm bg-danger mx-2"
+                                                        (click)="delete(requestTest)">
+                                                    <i class="fas fa-trash"></i>
+                                                    {{ "Delete" | localize }}
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
+                        </tab>
+                        <tab [heading]="'ProjectItems' | localize" class="pt-3 px-2">
+                            <form class="form-horizontal"
+                                  autocomplete="off"
+                                  #projectItemsForm="ngForm"
+                                  (ngSubmit)="saveProductItems()">
 
-                          
+                                <div class="row" style="display: -webkit-box !important">
+                                    <div class="form-group row col-8 required">
+                                        <label class="col-md-3 col-form-label" for="Name">
+                                            {{ "ProjectItems" | localize }}
+                                        </label>
+                                        <div class="col-md-9">
+                                            <select name="ProjectItemId"
+                                                    class="form-control"
+                                                    id="ProjectItemId" [(ngModel)]="selectedprojectItem"
+                                                    #projectItemIdModel="ngModel"
+                                                    #projectItemId required>
+                                                <option *ngFor="let projectItem of projectItems" [value]="projectItem.id">{{projectItem.name}}</option>
+                                            </select>
+                                            <abp-validation-summary [control]="projectItemIdModel"
+                                                                    [controlEl]="projectItemId"></abp-validation-summary>
+                                        </div>
+                                    </div>
 
-                            <button type="button"
-                                    [disabled]="!requestInspectionForm.form.valid || saving"
-                                    class="btn btn-primary col-1" style="margin-right: 14px"
-                                    (click)="saveInspectionTest()"
-                                    aria-label="Close">
-                                {{ "Save" | localize }}
-                            </button>
-                        </div>
 
 
-                    </form>
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered">
-                            <thead class="bg-light">
-                                <tr>
-                                    <th>{{ "Name" | localize }}</th>
-                                    <th>{{ "Code" | localize }}</th>
-                                    <th>{{ "Cost" | localize }}</th>
-                                    <th style="width: 310px;"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let requestTest of requestTests">
-                                    <td>{{ requestTest.name }}</td>
-                                    <td>{{ requestTest.code }}</td>
-                                    <td>{{ requestTest.cost}}</td>
-                                    <td>
-                                        <button type="button"
-                                                class="btn btn-sm bg-danger mx-2"
-                                                (click)="delete(requestTest)">
-                                            <i class="fas fa-trash"></i>
-                                            {{ "Delete" | localize }}
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                                    <button type="button"
+                                            [disabled]="!projectItemsForm.form.valid || saving"
+                                            class="btn btn-primary col-1" style="margin-right: 14px"
+                                            (click)="saveProjectItems()"
+                                            aria-label="Close">
+                                        {{ "Save" | localize }}
+                                    </button>
+                                </div>
+
+
+                            </form>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th>{{ "Name" | localize }}</th>
+                                            <th>{{ "Description" | localize }}</th>
+                                            <th>{{ "Qty" | localize }}</th>
+                                            <th style="width: 310px;" *ngIf="isGranted('Pages.Manage.Contractor')"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let requestProjectItem of requestProjectItems">
+                                            <td>{{ requestProjectItem.requestProjectItem.name }}</td>
+                                            <td>{{ requestProjectItem.requestProjectItem.description }}</td>
+                                            <td>{{ requestProjectItem.requestProjectItem.quantity}}</td>
+                                            <td *ngIf="isGranted('Pages.Manage.Contractor')">
+                                                <button type="button" *ngIf="isGranted('Pages.Manage.Project')"
+                                                        class="btn btn-sm bg-danger mx-2"
+                                                        (click)="deleteRequestItem(requestProjectItem)">
+                                                    <i class="fas fa-trash"></i>
+                                                    {{ "Delete" | localize }}
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </tab>
+                    </tabset>
+
+                 
                 </div>
             </div>
         </div>

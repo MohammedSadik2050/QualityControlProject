@@ -21,6 +21,7 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.RequestServiceProxy,
         ApiServiceProxies.RequestnspectionTestServiceProxy,
         ApiServiceProxies.RequestWFServiceProxy,
+        ApiServiceProxies.RequestProjectItemServiceProxy,
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]
 })

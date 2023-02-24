@@ -15,6 +15,8 @@ namespace eConLab.ReqProjectItems.Dto
         {
 
             CreateMap<RequestProjectItemDto, RequestProjectItem>().ReverseMap();
+            CreateMap<CreateOrUpdateRequestProjectItemDto, RequestProjectItem>().ReverseMap();
+            CreateMap<CreateOrUpdateRequestProjectItemDto, RequestProjectItemDto>().ReverseMap();
         }
     }
 }
