@@ -155,12 +155,7 @@ namespace eConLab.Requests
         private async Task<int> GetTotalCountAsync(RequestPaginatedDto filter = null)
         {
 
-            var lstItems = _requestRepo.GetAll().Include(s => s.Project)
-
-
-       
-
-                                           .WhereIf(filter.ProjectId > 0, x => x.ProjectId == filter.ProjectId)
+            var lstItems = _requestRepo.GetAll().Include(s => s.Project).WhereIf(filter.ProjectId > 0, x => x.ProjectId == filter.ProjectId)
                                          .WhereIf(!filter.ContractNumber.IsNullOrEmpty(), x => x.Project.ContractNumber.Contains(filter.ContractNumber))
                                           .WhereIf(!filter.RequestCode.IsNullOrEmpty(), x => x.Code.Contains(filter.RequestCode))
                                           .WhereIf(filter.Status > 0, x => (int)x.Status == filter.Status);

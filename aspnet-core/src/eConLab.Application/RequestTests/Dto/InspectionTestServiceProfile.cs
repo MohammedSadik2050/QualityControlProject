@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using eConLab.Account;
 using eConLab.QCUsers.Dto;
-using eConLab.TestModels;
+using eConLab.Req;
 using eConLab.Tests.Dto;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace eConLab.RequestTests.Dto
 {
- 
+
     public class RequestInspectionTestServiceProfile : Profile
     {
         public RequestInspectionTestServiceProfile()

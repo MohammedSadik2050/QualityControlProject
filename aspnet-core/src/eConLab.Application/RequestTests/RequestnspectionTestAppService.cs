@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using eConLab.TestModels;
 using eConLab.Tests.Dto;
 using Abp.Collections.Extensions;
 using Abp.Extensions;
@@ -18,6 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 using Abp.Authorization;
 using eConLab.Authorization;
 using eConLab.RequestTests.Dto;
+using eConLab.Req;
 
 namespace eConLab.Test
 {
