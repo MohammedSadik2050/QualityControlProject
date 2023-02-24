@@ -189,5 +189,7 @@
 		<text name="Approved">تم الموافقه على الطلب</text>
 		<text name="RequestRejected">رفض الطلب</text>
 		<text name="History">عمليات الطلب</text>
+		<text name="DuplicateProjectItem">تمت إضافه البند من قبل</text>
+		<text name="ProjectItems">بنود المشروع</text>
 	</texts>
 </localizationDictionary>

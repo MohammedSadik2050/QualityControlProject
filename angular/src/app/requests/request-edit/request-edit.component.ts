@@ -8,8 +8,8 @@ import { AppComponentBase } from '../../../shared/app-component-base';
 import { AppAuthService } from '../../../shared/auth/app-auth.service';
 import {
     CreateUpdateRequestTestDto, DropdownListDto, InspectionTestDto,
-    InspectionTestServiceProxy, LookupServiceProxy, ProjectDto, ProjectServiceProxy,
-    RequestDto, RequestInspectionTestViewDto, RequestnspectionTestServiceProxy, RequestServiceProxy,
+    InspectionTestServiceProxy, LookupServiceProxy, ProjectDto, ProjectItemDto, ProjectServiceProxy,
+    RequestDto, RequestInspectionTestViewDto, RequestnspectionTestServiceProxy, RequestProjectItemDto, RequestProjectItemServiceProxy, RequestProjectItemViewDto, RequestServiceProxy,
     RequestStatus, RequestWFDto, RequestWFHistoryDto, RequestWFServiceProxy
 } from '../../../shared/service-proxies/service-proxies';
 import { RejectModalComponent } from '../reject-modal/reject-modal.component';
@@ -27,6 +27,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     projectContractNumber: string = '';
     hide = false;
     hasSample = false;
+    selectedprojectItem:number = 0;
     saveText = 'SendToConsultant';
     request = new RequestDto();
     projects: ProjectDto[] = [];
@@ -37,9 +38,12 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     requestTests: RequestInspectionTestViewDto[] = [];
     mainRequestTypes: DropdownListDto[] = [];
     requestHistories: RequestWFHistoryDto[] = [];
+    projectItems: ProjectItemDto[] = [];
+    requestProjectItems: RequestProjectItemViewDto[] = [];
     InspectionDatemodel: string = new Date().toLocaleDateString();
     constructor(
         injector: Injector,
+        public _requestProjectItemServiceProxy: RequestProjectItemServiceProxy,
         public _requestServiceProxy: RequestServiceProxy,
         public _projectServiceProxy: ProjectServiceProxy,
         public _lookupServiceProxy: LookupServiceProxy,
@@ -69,6 +73,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             this.loadTestsByTypes();
             this.LoadProject();
             this.LoadRequestHistory();
+            this.loadRequestProjectItems();
         });
     }
 
@@ -80,9 +85,16 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             this.completeDatemodel = moment(this.project.completedDate).format("YYYY-MM-DD");
             this.projectName = res.name;
             this.projectContractNumber = res.contractNumber;
+            this.loadProjectItems();
         });
     }
 
+    loadProjectItems() {
+        this._projectServiceProxy.getProjectItemsByProjectId(this.request.projectId).subscribe(res => {
+            this.projectItems = res;
+
+        });
+    }
     LoadRequestHistory() {
 
         this._requestWFServiceProxy.getAllHistory(this.request.id).subscribe(res => {
@@ -109,6 +121,13 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
 
         this._requestnspectionTestServiceProxy.getAll(this.request.id).subscribe(res => {
             this.requestTests = res;
+        });
+    }
+
+    loadRequestProjectItems() {
+
+        this._requestProjectItemServiceProxy.getAll(this.request.id).subscribe(res => {
+            this.requestProjectItems = res;
         });
     }
     loadMainRequestTypes() {
@@ -216,9 +235,29 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         });
     }
 
+    saveProjectItems() {
+        var check = this.requestProjectItems.filter(x => x.projectIdItemId === parseInt(this.selectedprojectItem.toString()));
+        if (check != undefined && check.length > 0) {
+            this.notify.error(this.l('DuplicateProjectItem'));
+            return null;
+        }
+        var requestProjectItem = new RequestProjectItemDto();
+        requestProjectItem.requestId = this.request.id;
+        requestProjectItem.projectItemId = this.selectedprojectItem;
+        this._requestProjectItemServiceProxy.createOrUpdate(requestProjectItem).subscribe(res => {
+            this.loadRequestProjectItems();
+        });
+    }
+
     delete(row: RequestInspectionTestViewDto) {
         this._requestnspectionTestServiceProxy.delete(row.id).subscribe(res => {
             this.loadRequestTests();
+        });
+    }
+
+    deleteRequestItem(row: RequestProjectItemViewDto) {
+        this._requestProjectItemServiceProxy.delete(row.id).subscribe(res => {
+            this.loadRequestProjectItems();
         });
     }
 }

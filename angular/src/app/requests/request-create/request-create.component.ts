@@ -4,7 +4,7 @@ import { AbpSessionService } from 'abp-ng2-module';
 import * as moment from 'moment';
 import { AppComponentBase } from '../../../shared/app-component-base';
 import { AppAuthService } from '../../../shared/auth/app-auth.service';
-import { CreateUpdateInspectionTestDto, CreateUpdateRequestTestDto, DropdownListDto, InspectionTestDto, InspectionTestServiceProxy, LookupServiceProxy, ProjectDto, ProjectDtoPagedResultDto, ProjectServiceProxy, RequestDto, RequestInspectionTestDto, RequestInspectionTestViewDto, RequestnspectionTestServiceProxy, RequestServiceProxy, RequestStatus, RequestWFDto, RequestWFServiceProxy } from '../../../shared/service-proxies/service-proxies';
+import { CreateUpdateInspectionTestDto, CreateUpdateRequestTestDto, DropdownListDto, InspectionTestDto, InspectionTestServiceProxy, LookupServiceProxy, ProjectDto, ProjectDtoPagedResultDto, ProjectItemDto, ProjectServiceProxy, RequestDto, RequestInspectionTestDto, RequestInspectionTestViewDto, RequestnspectionTestServiceProxy, RequestProjectItemDto, RequestProjectItemServiceProxy, RequestProjectItemViewDto, RequestServiceProxy, RequestStatus, RequestWFDto, RequestWFServiceProxy } from '../../../shared/service-proxies/service-proxies';
 
 @Component({
     selector: 'app-request-create',
@@ -29,9 +29,13 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
     requestTests: RequestInspectionTestViewDto[] = [];
     mainRequestTypes: DropdownListDto[] = [];
     @Output() onSave = new EventEmitter<any>();
+    projectItems: ProjectItemDto[] = [];
+    requestProjectItems: RequestProjectItemViewDto[] = [];
+    selectedprojectItem: number = 0;
     InspectionDatemodel: string = new Date().toLocaleDateString();
     constructor(
         injector: Injector,
+        public _requestProjectItemServiceProxy: RequestProjectItemServiceProxy,
         public _requestServiceProxy: RequestServiceProxy,
         public _projectServiceProxy: ProjectServiceProxy,
         public _lookupServiceProxy: LookupServiceProxy,
@@ -108,6 +112,7 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
             res => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.request = res;
+                this.loadEditData();
                 this.InspectionDatemodel = moment(this.request.inspectionDate).format("YYYY-MM-DD");
                 this.loadTestsByTypes();
                 this.saving = false;
@@ -121,6 +126,24 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
                 this.saving = false;
             }
         );
+    }
+    loadEditData() {
+        this.loadRequestProjectItems();
+        this.loadProjectItems();
+    }
+
+    loadRequestProjectItems() {
+
+        this._requestProjectItemServiceProxy.getAll(this.request.id).subscribe(res => {
+            this.requestProjectItems = res;
+        });
+    }
+
+    loadProjectItems() {
+        this._projectServiceProxy.getProjectItemsByProjectId(this.request.projectId).subscribe(res => {
+            this.projectItems = res;
+
+        });
     }
     saveWorkFlow() {
         var currentProject = this.projects.find(x => x.id === parseInt(this.request.projectId.toString()));
@@ -162,6 +185,26 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
             this.startDatemodel = moment(this.project.startDate).format("YYYY-MM-DD");
             this.completeDatemodel = moment(this.project.completedDate).format("YYYY-MM-DD");
           
+        });
+    }
+
+    deleteRequestItem(row: RequestProjectItemViewDto) {
+        this._requestProjectItemServiceProxy.delete(row.id).subscribe(res => {
+            this.loadRequestProjectItems();
+        });
+    }
+
+    saveProjectItems() {
+        var check = this.requestProjectItems.filter(x => x.projectIdItemId === parseInt(this.selectedprojectItem.toString()));
+        if (check != undefined && check.length > 0) {
+            this.notify.error(this.l('DuplicateProjectItem'));
+            return null;
+        }
+        var requestProjectItem = new RequestProjectItemDto();
+        requestProjectItem.requestId = this.request.id;
+        requestProjectItem.projectItemId = this.selectedprojectItem;
+        this._requestProjectItemServiceProxy.createOrUpdate(requestProjectItem).subscribe(res => {
+            this.loadRequestProjectItems();
         });
     }
 }
