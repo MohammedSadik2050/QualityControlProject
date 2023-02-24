@@ -289,7 +289,7 @@
                             {{ saveText | localize }}
                         </button>
 
-                        <button *ngIf="request.id>0 && isGranted('Pages.Manage.Contractor') && request.status ==1" type="button"
+                        <button *ngIf="request.id>0 && isGranted('Pages.Manage.Contractor') && (request.status ==1 ||request.status ==5  )" type="button"
                                 [disabled]="requestTests.length==0"
                                 (click)="save(2)"
                                 class="btn btn-primary"
