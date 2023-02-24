@@ -182,7 +182,9 @@
 		<text name="AddRequest">Add Request</text>
 		<text name="RequestCode">Request Code</text>
 		<text name="Status">Status</text>
-		<text name="Approved">Request Approved</text>
+		<text name="ApprovedByConsultant">Approved By Consultant</text>
+		<text name="ApprovedBySupervisingQuality">Approved BySupervising Quality</text>
+		<text name="Rejected">Rejected</text>
 		<text name="RequestRejected">Request Rejected</text>
 		<text name="History">History</text>
 		<text name="DuplicateProjectItem">DuplicateProjectItem</text>

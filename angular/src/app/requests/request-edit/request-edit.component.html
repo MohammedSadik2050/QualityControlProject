@@ -223,7 +223,6 @@
                                            class="form-control"
                                            name="phomeNumberSiteResponsibleTwo"
                                            id="phomeNumberSiteResponsibleTwo"
-                                           
                                            [(ngModel)]="request.phomeNumberSiteResponsibleTwo"
                                            #phomeNumberSiteResponsibleTwoModel="ngModel"
                                            #phomeNumberSiteResponsibleTwoE1 />
@@ -306,7 +305,15 @@
                             {{ "Approved" | localize }}
                         </button>
 
-                        <button *ngIf="request.status ==2 &&  appSession.userId == project.consultantId" type="button"
+                        <button *ngIf="request.status ==3 &&  appSession.userId == project.supervisingQualityId" type="button"
+                                [disabled]="!createRequestForm.form.valid || saving"
+                                (click)="save(4)"
+                                class="btn btn-primary"
+                                aria-label="Close">
+                            {{ "Approved" | localize }}
+                        </button>
+
+                        <button *ngIf="(request.status ==2 && project.consultantId ==appSession.userId)|| (request.status ==3 && appSession.userId == project.supervisingQualityId)" type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="rejectRequest()"
                                 class="btn btn-primary mr-3"

@@ -215,6 +215,11 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             workFlow.actionNotes = "الإستشاري وافق على الطلب";
         }
 
+        if (this.request.status == 4) {
+            workFlow.actionName = "مراقب الجوده وافق على الطلب";
+            workFlow.actionNotes = "مراقب الجوده وافق على الطلب";
+        }
+        
 
         this._requestWFServiceProxy.createOrUpdate(workFlow).subscribe(res => {
             this.router.navigateByUrl('/app/examinationRequest');

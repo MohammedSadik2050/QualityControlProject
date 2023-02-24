@@ -38,8 +38,8 @@ export class RejectModalComponent extends AppComponentBase implements OnInit {
         this._requestWFServiceProxy.createOrUpdate(workFlow).subscribe(
             () => {
                 this.notify.info(this.l('SavedSuccessfully'));
-                this.bsModalRef.hide();
-                this.onSave.emit();
+                this.saveRequest();
+              
             },
             () => {
                 this.saving = false;
@@ -50,10 +50,12 @@ export class RejectModalComponent extends AppComponentBase implements OnInit {
 
     saveRequest() {
       
-        this.request.status = 4;
+        this.request.status = 5;
         this._requestServiceProxy.createOrUpdate(this.request).subscribe(
             res => {
                 this.notify.info(this.l('SavedSuccessfully'));
+                this.bsModalRef.hide();
+                this.onSave.emit();
             },
             () => {
                 this.saving = false;
