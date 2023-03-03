@@ -7683,6 +7683,7 @@ export class RequestDto implements IRequestDto {
     hasSample: HasSamples;
     testType: InspectionTestTypes;
     status: RequestStatus;
+    statusName: string | undefined;
     geometry: string | undefined;
 
     constructor(data?: IRequestDto) {
@@ -7709,6 +7710,7 @@ export class RequestDto implements IRequestDto {
             this.hasSample = _data["hasSample"];
             this.testType = _data["testType"];
             this.status = _data["status"];
+            this.statusName = _data["statusName"];
             this.geometry = _data["geometry"];
         }
     }
@@ -7735,6 +7737,7 @@ export class RequestDto implements IRequestDto {
         data["hasSample"] = this.hasSample;
         data["testType"] = this.testType;
         data["status"] = this.status;
+        data["statusName"] = this.statusName;
         data["geometry"] = this.geometry;
         return data; 
     }
@@ -7761,6 +7764,7 @@ export interface IRequestDto {
     hasSample: HasSamples;
     testType: InspectionTestTypes;
     status: RequestStatus;
+    statusName: string | undefined;
     geometry: string | undefined;
 }
 

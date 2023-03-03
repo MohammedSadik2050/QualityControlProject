@@ -22,6 +22,7 @@ namespace eConLab.Requests.Dto
         public HasSamples HasSample { get; set; }
         public InspectionTestTypes TestType { get; set; }
         public RequestStatus Status { get; set; }
+        public string StatusName { get; set; }
         public string Geometry { get; set; }
     }
 }

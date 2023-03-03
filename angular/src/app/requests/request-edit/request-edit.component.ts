@@ -7,7 +7,9 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AppComponentBase } from '../../../shared/app-component-base';
 import { AppAuthService } from '../../../shared/auth/app-auth.service';
 import {
-    CreateUpdateRequestTestDto, DropdownListDto, InspectionTestDto,
+    AgencyDto,
+    AgencyServiceProxy,
+    CreateUpdateRequestTestDto, DepartmentDto, DepartmentServiceProxy, DropdownListDto, InspectionTestDto,
     InspectionTestServiceProxy, LookupServiceProxy, ProjectDto, ProjectItemDto, ProjectServiceProxy,
     RequestDto, RequestInspectionTestViewDto, RequestnspectionTestServiceProxy, RequestProjectItemDto, RequestProjectItemServiceProxy, RequestProjectItemViewDto, RequestServiceProxy,
     RequestStatus, RequestWFDto, RequestWFHistoryDto, RequestWFServiceProxy
@@ -27,6 +29,8 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     projectContractNumber: string = '';
     hide = false;
     hasSample = false;
+    projectDepartmentId: number = 0;
+    projectAgency: number = 0;
     selectedprojectItem:number = 0;
     saveText = 'SendToConsultant';
     request = new RequestDto();
@@ -41,8 +45,12 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     projectItems: ProjectItemDto[] = [];
     requestProjectItems: RequestProjectItemViewDto[] = [];
     InspectionDatemodel: string = new Date().toLocaleDateString();
+    allAgencies: AgencyDto[] = [];
+    allDepartments: DepartmentDto[] = [];
     constructor(
         injector: Injector,
+        private _departmentServiceProxy: DepartmentServiceProxy,
+        private _agencyServiceProxy: AgencyServiceProxy,
         public _requestProjectItemServiceProxy: RequestProjectItemServiceProxy,
         public _requestServiceProxy: RequestServiceProxy,
         public _projectServiceProxy: ProjectServiceProxy,
@@ -74,13 +82,28 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             this.LoadProject();
             this.LoadRequestHistory();
             this.loadRequestProjectItems();
+            this.loadAllDepartments();
+            this.loadAgencies();
         });
     }
+    loadAllDepartments() {
+        this._departmentServiceProxy.getAllDepartmentDropDown().subscribe(res => {
+            this.allDepartments = res;
+        });
+    }
+    loadAgencies() {
+        this._agencyServiceProxy.getAllAgenciesList().subscribe(res => {
+            this.allAgencies = res;
 
+
+        });
+    }
     LoadProject() {
 
         this._projectServiceProxy.get(this.request.projectId).subscribe(res => {
             this.project = res;
+            this.projectAgency = this.project.agencyId;
+            this.projectDepartmentId = this.project.departmentId;
             this.startDatemodel = moment(this.project.startDate).format("YYYY-MM-DD");
             this.completeDatemodel = moment(this.project.completedDate).format("YYYY-MM-DD");
             this.projectName = res.name;

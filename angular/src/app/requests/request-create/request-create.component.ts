@@ -4,7 +4,7 @@ import { AbpSessionService } from 'abp-ng2-module';
 import * as moment from 'moment';
 import { AppComponentBase } from '../../../shared/app-component-base';
 import { AppAuthService } from '../../../shared/auth/app-auth.service';
-import { CreateUpdateInspectionTestDto, CreateUpdateRequestTestDto, DropdownListDto, InspectionTestDto, InspectionTestServiceProxy, LookupServiceProxy, ProjectDto, ProjectDtoPagedResultDto, ProjectItemDto, ProjectServiceProxy, RequestDto, RequestInspectionTestDto, RequestInspectionTestViewDto, RequestnspectionTestServiceProxy, RequestProjectItemDto, RequestProjectItemServiceProxy, RequestProjectItemViewDto, RequestServiceProxy, RequestStatus, RequestWFDto, RequestWFServiceProxy } from '../../../shared/service-proxies/service-proxies';
+import { AgencyDto, AgencyServiceProxy, CreateUpdateInspectionTestDto, CreateUpdateRequestTestDto, DepartmentDto, DepartmentServiceProxy, DropdownListDto, InspectionTestDto, InspectionTestServiceProxy, LookupServiceProxy, ProjectDto, ProjectDtoPagedResultDto, ProjectItemDto, ProjectServiceProxy, RequestDto, RequestInspectionTestDto, RequestInspectionTestViewDto, RequestnspectionTestServiceProxy, RequestProjectItemDto, RequestProjectItemServiceProxy, RequestProjectItemViewDto, RequestServiceProxy, RequestStatus, RequestWFDto, RequestWFServiceProxy } from '../../../shared/service-proxies/service-proxies';
 
 @Component({
     selector: 'app-request-create',
@@ -16,6 +16,8 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
     completeDatemodel: string = new Date().toLocaleDateString();
     projectName: string = '';
     projectContractNumber: string = '';
+    projectDepartmentId: number = 0;
+    projectAgency: number = 0;
     project = new ProjectDto();
     saving = false;
     hide = false;
@@ -33,6 +35,8 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
     requestProjectItems: RequestProjectItemViewDto[] = [];
     selectedprojectItem: number = 0;
     InspectionDatemodel: string = new Date().toLocaleDateString();
+    allAgencies: AgencyDto[] = [];
+    allDepartments: DepartmentDto[] = [];
     constructor(
         injector: Injector,
         public _requestProjectItemServiceProxy: RequestProjectItemServiceProxy,
@@ -44,6 +48,8 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
         public _requestWFServiceProxy: RequestWFServiceProxy,
         public authService: AppAuthService,
         private _sessionService: AbpSessionService,
+        private _departmentServiceProxy: DepartmentServiceProxy,
+        public _agencyServiceProxy: AgencyServiceProxy,
         private router: Router,
 
     ) {
@@ -55,6 +61,20 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
         this.loadMainRequestTypes();
         this.loadTestTypes();
         this.request.id = 0;
+        this.loadAllDepartments();
+        this.loadAgencies();
+    }
+    loadAllDepartments() {
+        this._departmentServiceProxy.getAllDepartmentDropDown().subscribe(res => {
+            this.allDepartments = res;
+        });
+    }
+    loadAgencies() {
+        this._agencyServiceProxy.getAllAgenciesList().subscribe(res => {
+            this.allAgencies = res;
+
+
+        });
     }
     loadTestTypes() {
 
@@ -181,6 +201,9 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
             this.project = res;
            
             this.projectName = this.project.name;
+            this.projectContractNumber = this.project.contractNumber;
+            this.projectAgency = this.project.agencyId;
+            this.projectDepartmentId = this.project.departmentId;
             this.projectContractNumber = this.project.contractNumber;
             this.startDatemodel = moment(this.project.startDate).format("YYYY-MM-DD");
             this.completeDatemodel = moment(this.project.completedDate).format("YYYY-MM-DD");
