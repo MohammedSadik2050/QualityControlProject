@@ -142,7 +142,9 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
             this.project.agencyId = this.project.agencyId;
         } else {
             this.project.agencyId = 0;
+            this.project.departmentId = 0;
             this.agencies = this.allAgencies.filter(s => s.agencyTypeId == event);
+            this.onAgencyChange(0);
         }
       
      
