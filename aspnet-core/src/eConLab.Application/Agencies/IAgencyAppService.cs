@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using eConLab.Agencies.Dto;
 using eConLab.Account;
 using eConLab.QCUsers.Dto;
+using eConLab.Departments.Dto;
 
 namespace eConLab.Agencies
 {

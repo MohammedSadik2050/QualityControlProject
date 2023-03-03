@@ -4,7 +4,7 @@ import { AbpSessionService } from 'abp-ng2-module';
 import * as moment from 'moment';
 import { AppComponentBase } from '../../../shared/app-component-base';
 import { AppAuthService } from '../../../shared/auth/app-auth.service';
-import { AgencyDto, AgencyServiceProxy, AgencyTypeDto, DropdownListDto, LookupServiceProxy, ProjectDto, ProjectItemDto, ProjectServiceProxy } from '../../../shared/service-proxies/service-proxies';
+import { AgencyDto, AgencyServiceProxy, AgencyTypeDto, DepartmentDto, DepartmentServiceProxy, DropdownListDto, LookupServiceProxy, ProjectDto, ProjectItemDto, ProjectServiceProxy } from '../../../shared/service-proxies/service-proxies';
 
 @Component({
     selector: 'app-edit-project',
@@ -27,10 +27,14 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
     contractors: DropdownListDto[] = [];
     projectManagers: DropdownListDto[] = [];
     supervisingQualities: DropdownListDto[] = [];
+    departments: DepartmentDto[] = [];
+    allDepartments: DepartmentDto[] = [];
     @Output() onSave = new EventEmitter<any>();
     projectId: number = 0;
+
     constructor(
         injector: Injector,
+        private _departmentServiceProxy: DepartmentServiceProxy,
         public _projectServiceProxy: ProjectServiceProxy,
         public _agencyServiceProxy: AgencyServiceProxy,
         public _lookupServiceProxy: LookupServiceProxy,
@@ -50,6 +54,7 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
             this.startDatemodel = moment(this.project.startDate).format("YYYY-MM-DD");
             this.completeDatemodel = moment(this.project.completedDate).format("YYYY-MM-DD");
             this.siteDelivedDatemodel = moment(this.project.siteDelivedDate).format("YYYY-MM-DD");
+            this.loadAllDepartments();
             this.loadAgencyTypes();
             this.loadAgencies();
             this.loadSupervisingEngineers();
@@ -58,8 +63,26 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
             this.loadProjectManagers();
             this.loadSupervisingQualities();
             this.loadProjectItems();
+          
         });
 
+    }
+    loadAllDepartments() {
+        this._departmentServiceProxy.getAllDepartmentDropDown().subscribe(res => {
+            this.allDepartments = res;
+            this.onAgencyChange(this.project.agencyId,true);
+        });
+    }
+
+    onAgencyChange(event, isFirstLoad = false) {
+        console.log(event);
+        if (isFirstLoad == true) {
+            this.departments = this.allDepartments.filter(s => s.agencyId == event);
+        } else {
+            this.project.departmentId = 0;
+            this.departments = this.allDepartments.filter(s => s.agencyId == event);
+        }
+   
     }
 
     loadProjectItems() {
@@ -99,6 +122,8 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
     loadAgencies() {
         this._agencyServiceProxy.getAllAgenciesList().subscribe(res => {
             this.allAgencies = res;
+            this.onTypeChange(this.project.agencyTypeId, true);
+         
            
         });
     }
@@ -106,16 +131,24 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
 
         this._agencyServiceProxy.getAllAgencyTypeList().subscribe(res => {
             this.agencyTypes = res;
-            this.onTypeChange(this.project.agencyTypeId);
+        
             this.project.agencyTypeId = this.project.agencyTypeId;
         });
     }
-    onTypeChange(event) {
-        this.agencies = this.allAgencies.filter(s => s.agencyTypeId == event);
-        this.project.agencyId = this.project.agencyId;
-        this.changeDetectorRef.detectChanges();
-        console.log("data", this.agencies);
-        console.log("value", this.project.agencyId);
+    onTypeChange(event, isFirstLoad=false) {
+        if (isFirstLoad ===true) {
+          //  this.project.agencyId = 0;
+            this.agencies = this.allAgencies.filter(s => s.agencyTypeId == event);
+            this.project.agencyId = this.project.agencyId;
+        } else {
+            this.project.agencyId = 0;
+            this.agencies = this.allAgencies.filter(s => s.agencyTypeId == event);
+        }
+      
+     
+        //this.changeDetectorRef.detectChanges();
+        //console.log("data", this.agencies);
+        //console.log("value", this.project.agencyId);
     }
 
     save(): void {

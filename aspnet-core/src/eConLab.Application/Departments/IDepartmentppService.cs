@@ -19,6 +19,7 @@ namespace eConLab.Agencies
         Task<DepartmentDto> CreateOrUpdate(CreateUpdateDepartmentDto input);
         Task<DepartmentDto> Get(long id);
         Task<PagedResultDto<DepartmentDto>> GetAll(DepartmentPaginatedDto input);
+        Task<List<DepartmentDto>> GetAllDepartmentDropDown();
         Task<bool> Delete(long Id);
     }
 

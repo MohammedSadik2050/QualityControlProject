@@ -16,6 +16,7 @@ using Abp.Collections.Extensions;
 using Abp.Extensions;
 using eConLab.Departments;
 using eConLab.Departments.Dto;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace eConLab.Agencies
 {
@@ -51,6 +52,13 @@ namespace eConLab.Agencies
             return obj;
         }
 
+        public async Task<List<DepartmentDto>> GetAllDepartmentDropDown()
+        {
+
+
+            var lstItems = _departmentRepository.GetAllList();
+            return _mapper.Map<List<DepartmentDto>>(lstItems);
+        }
 
         public async Task<PagedResultDto<DepartmentDto>> GetAll(DepartmentPaginatedDto input)
         {

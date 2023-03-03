@@ -12,6 +12,7 @@ namespace eConLab.Proj.Dto
         public string Search { get; set; }
         public int? AgencyTypeId { get; set; }
         public int? AgencyId { get; set; }
+        public long? DepartmentId { get; set; }
     }
     public class ProjectFilter
     {

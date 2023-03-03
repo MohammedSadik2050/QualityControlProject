@@ -4,7 +4,7 @@ import * as moment from 'moment';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { AppComponentBase } from '../../../shared/app-component-base';
 import { AppAuthService } from '../../../shared/auth/app-auth.service';
-import { AgencyDto, AgencyServiceProxy, AgencyTypeDto, DropdownListDto, LookupServiceProxy, ProjectDto, ProjectServiceProxy } from '../../../shared/service-proxies/service-proxies';
+import { AgencyDto, AgencyServiceProxy, AgencyTypeDto, DepartmentDto, DepartmentServiceProxy, DropdownListDto, LookupServiceProxy, ProjectDto, ProjectServiceProxy } from '../../../shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'app-create-project',
@@ -17,6 +17,8 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
     agencyTypes: AgencyTypeDto[] = [];
     agencies: AgencyDto[] = [];
     allAgencies: AgencyDto[] = [];
+    departments: DepartmentDto[] = [];
+    allDepartments: DepartmentDto[] = [];
     supervisingEngineers: DropdownListDto[] = [];
     consultants: DropdownListDto[] = [];
     contractors: DropdownListDto[] = [];
@@ -29,6 +31,7 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
         private _projectServiceProxy: ProjectServiceProxy,
         private _agencyServiceProxy: AgencyServiceProxy,
         private _lookupServiceProxy: LookupServiceProxy,
+        private _departmentServiceProxy: DepartmentServiceProxy,
         public bsModalRef: BsModalRef,
         private authService: AppAuthService,
         private _sessionService: AbpSessionService,
@@ -45,6 +48,12 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
         this.loadContractors();
         this.loadProjectManagers();
         this.loadSupervisingQualities();
+        this.loadAllDepartments();
+    }
+    loadAllDepartments() {
+        this._departmentServiceProxy.getAllDepartmentDropDown().subscribe(res => {
+            this.allDepartments = res;
+        });
     }
     loadSupervisingQualities() {
         this._lookupServiceProxy.supervisingQualityList().subscribe(res => {
@@ -86,8 +95,15 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
             this.agencyTypes = res;
         });
     }
-    onTypeChange() {
-        this.agencies = this.allAgencies.filter(s => s.agencyTypeId == this.project.agencyTypeId);
+    onTypeChange(event) {
+        this.project.agencyId = 0;
+        this.agencies = this.allAgencies.filter(s => s.agencyTypeId == event);
+    }
+
+    onAgencyChange(event) {
+        console.log(event);
+        this.project.departmentId = 0;
+        this.departments = this.allDepartments.filter(s => s.agencyId == event);
     }
 
     save(): void {

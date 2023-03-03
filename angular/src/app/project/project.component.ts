@@ -66,7 +66,7 @@ export class ProjectComponent extends PagedListingComponentBase<ProjectDto> {
         this.loadAgencies();
         this._projectServiceProxy
             .getAll(
-                this.keyword,this.projectAgencyTypeId,this.projectAgencyId,
+                this.keyword,this.projectAgencyTypeId,this.projectAgencyId,0,
                 '',
                 request.skipCount,
                 request.maxResultCount

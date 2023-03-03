@@ -761,6 +761,64 @@ export class DepartmentServiceProxy {
     }
 
     /**
+     * @return Success
+     */
+    getAllDepartmentDropDown() : Observable<DepartmentDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Department/GetAllDepartmentDropDown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllDepartmentDropDown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllDepartmentDropDown(<any>response_);
+                } catch (e) {
+                    return <Observable<DepartmentDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DepartmentDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllDepartmentDropDown(response: HttpResponseBase): Observable<DepartmentDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(DepartmentDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DepartmentDto[]>(<any>null);
+    }
+
+    /**
      * @param agencyId (optional) 
      * @param search (optional) 
      * @param sorting (optional) 
@@ -1991,12 +2049,13 @@ export class ProjectServiceProxy {
      * @param search (optional) 
      * @param agencyTypeId (optional) 
      * @param agencyId (optional) 
+     * @param departmentId (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(search: string | undefined, agencyTypeId: number | undefined, agencyId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<ProjectDtoPagedResultDto> {
+    getAll(search: string | undefined, agencyTypeId: number | undefined, agencyId: number | undefined, departmentId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<ProjectDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Project/GetAll?";
         if (search === null)
             throw new Error("The parameter 'search' cannot be null.");
@@ -2010,6 +2069,10 @@ export class ProjectServiceProxy {
             throw new Error("The parameter 'agencyId' cannot be null.");
         else if (agencyId !== undefined)
             url_ += "AgencyId=" + encodeURIComponent("" + agencyId) + "&";
+        if (departmentId === null)
+            throw new Error("The parameter 'departmentId' cannot be null.");
+        else if (departmentId !== undefined)
+            url_ += "DepartmentId=" + encodeURIComponent("" + departmentId) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -7053,6 +7116,7 @@ export class ProjectDto implements IProjectDto {
     siteDelivedDate: moment.Moment;
     agencyTypeId: number;
     agencyId: number;
+    departmentId: number;
     supervisingEngineerId: number;
     consultantId: number;
     contractorId: number;
@@ -7080,6 +7144,7 @@ export class ProjectDto implements IProjectDto {
             this.siteDelivedDate = _data["siteDelivedDate"] ? moment(_data["siteDelivedDate"].toString()) : <any>undefined;
             this.agencyTypeId = _data["agencyTypeId"];
             this.agencyId = _data["agencyId"];
+            this.departmentId = _data["departmentId"];
             this.supervisingEngineerId = _data["supervisingEngineerId"];
             this.consultantId = _data["consultantId"];
             this.contractorId = _data["contractorId"];
@@ -7107,6 +7172,7 @@ export class ProjectDto implements IProjectDto {
         data["siteDelivedDate"] = this.siteDelivedDate ? this.siteDelivedDate.toISOString() : <any>undefined;
         data["agencyTypeId"] = this.agencyTypeId;
         data["agencyId"] = this.agencyId;
+        data["departmentId"] = this.departmentId;
         data["supervisingEngineerId"] = this.supervisingEngineerId;
         data["consultantId"] = this.consultantId;
         data["contractorId"] = this.contractorId;
@@ -7134,6 +7200,7 @@ export interface IProjectDto {
     siteDelivedDate: moment.Moment;
     agencyTypeId: number;
     agencyId: number;
+    departmentId: number;
     supervisingEngineerId: number;
     consultantId: number;
     contractorId: number;
