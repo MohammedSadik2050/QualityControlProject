@@ -54,40 +54,45 @@ namespace eConLab.Agencies
 
         public async Task<PagedResultDto<DepartmentDto>> GetAll(DepartmentPaginatedDto input)
         {
-            var filter = ObjectMapper.Map<QCUserPagedAndSortedResultRequestDto>(input);
-
-            // var sorting = (string.IsNullOrEmpty(input.Sorting) ? "Name DESC" : input.Sorting).Replace("ShortName", "Name");
+          
 
             var lstItems = await GetListAsync(input.SkipCount, input.MaxResultCount, input);
             var totalCount = await GetTotalCountAsync(input);
 
-            return new PagedResultDto<DepartmentDto>(totalCount, ObjectMapper.Map<List<DepartmentDto>>(lstItems));
+            return new PagedResultDto<DepartmentDto>(totalCount, lstItems);
         }
 
 
-        private async Task<List<Department>> GetListAsync(int skipCount, int maxResultCount, DepartmentPaginatedDto filter = null)
+        private async Task<List<DepartmentDto>> GetListAsync(int skipCount, int maxResultCount, DepartmentPaginatedDto filter = null)
         {
 
-            var lstItems = _departmentRepository.GetAll()
+            var lstItems = _departmentRepository.GetAllIncluding(s => s.Agency)
                 .Skip(skipCount)
                 .Take(maxResultCount)
-                .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search));
-            //.WhereIf(!filter.Price.IsNullOrWhiteSpace(), x => x.Price.ToString().Contains(filter.Price))
+                .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
+                .WhereIf(filter.AgencyId>0, x => x.AgencyId == filter.AgencyId);
             //.WhereIf(!filter.PublishDate.IsNullOrWhiteSpace(), x => x.PublishDate.ToString().Contains(filter.PublishDate))
-
-            return lstItems.ToList();
+            var res = lstItems.Select(mod => new DepartmentDto
+            {
+                Id= mod.Id,
+                Name= mod.Name,
+                AgencyId= mod.AgencyId,
+                AgencyName= mod.Agency.Name,
+            }).ToList();
+            return res;
         }
 
         private async Task<int> GetTotalCountAsync(DepartmentPaginatedDto filter = null)
         {
 
             var lstItems = _departmentRepository.GetAll()
-                         .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search));
-                //.WhereIf(!filter.Id.IsNullOrWhiteSpace(), x => x.Id.ToString().Contains(filter.Id))
-                //.WhereIf(!filter.Name.IsNullOrWhiteSpace(), x => x.Name.Contains(filter.Name))
-                //.WhereIf(!filter.Price.IsNullOrWhiteSpace(), x => x.Price.ToString().Contains(filter.Price))
-                //.WhereIf(!filter.PublishDate.IsNullOrWhiteSpace(), x => x.PublishDate.ToString().Contains(filter.PublishDate))
-               
+                         .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
+                         .WhereIf(filter.AgencyId > 0, x => x.AgencyId == filter.AgencyId);
+            //.WhereIf(!filter.Id.IsNullOrWhiteSpace(), x => x.Id.ToString().Contains(filter.Id))
+            //.WhereIf(!filter.Name.IsNullOrWhiteSpace(), x => x.Name.Contains(filter.Name))
+            //.WhereIf(!filter.Price.IsNullOrWhiteSpace(), x => x.Price.ToString().Contains(filter.Price))
+            //.WhereIf(!filter.PublishDate.IsNullOrWhiteSpace(), x => x.PublishDate.ToString().Contains(filter.PublishDate))
+
             return lstItems.Count();
         }
 

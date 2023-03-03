@@ -19,6 +19,7 @@ import { RequestCreateComponent } from './requests/request-create/request-create
 import { RequestEditComponent } from './requests/request-edit/request-edit.component';
 import { RequestViewDto } from '../shared/service-proxies/service-proxies';
 import { RequestViewComponent } from './requests/request-view/request-view.component';
+import { DepartmentsComponent } from './departments/departments.component';
 
 @NgModule({
     imports: [
@@ -31,6 +32,7 @@ import { RequestViewComponent } from './requests/request-view/request-view.compo
                     { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
                     { path: 'agencies', component: AgenyComponent, data: { permission: 'Pages.Manage.Agences' }, canActivate: [AppRouteGuard] },
+                    { path: 'departments', component: DepartmentsComponent, data: { permission: 'Pages.Manage.Departments' }, canActivate: [AppRouteGuard] },
                     { path: 'qc-users', component: AppUsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'projects', component: ProjectComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },

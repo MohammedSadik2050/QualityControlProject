@@ -9,7 +9,7 @@ namespace eConLab.Departments.Dto
 {
     public class DepartmentPaginatedDto : PagedAndSortedResultRequestDto
     {
-        public long Id { get; set; }
+        public long AgencyId { get; set; }
         public string Search { get; set; }
     }
     public class DepartmentFilter

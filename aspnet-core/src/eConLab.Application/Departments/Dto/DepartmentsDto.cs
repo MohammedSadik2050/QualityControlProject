@@ -12,5 +12,6 @@ namespace eConLab.Departments.Dto
         public string Name { get; set; }
         public string Description { get; set; }
         public long AgencyId { get; set; }
+        public string AgencyName { get; set; }
     }
 }

@@ -1,0 +1,101 @@
+<form class="form-horizontal"
+      autocomplete="off"
+      #createUserModal="ngForm"
+      (ngSubmit)="save()">
+    <abp-modal-header [title]="'Create' | localize"
+                      (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="modal-body">
+
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="Name">
+                {{ "Name" | localize }}
+            </label>
+            <div class="col-md-9">
+                <input type="text"
+                       class="form-control"
+                       name="name"
+                       id="name"
+                       required
+                       [(ngModel)]="department.name"
+                       #nameModel="ngModel"
+                       #nameE1 />
+                <abp-validation-summary [control]="nameModel"
+                                        [controlEl]="nameE1"></abp-validation-summary>
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
+                {{ "Description" | localize }}
+            </label>
+            <div class="col-md-9">
+                <input type="text"
+                       class="form-control"
+                       name="description"
+                       id="description"
+                       required
+                       [(ngModel)]="department.description"
+                       #descriptionModel="ngModel"
+                       #descriptionE1 />
+                <abp-validation-summary [control]="descriptionModel"
+                                        [controlEl]="descriptionE1"></abp-validation-summary>
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="ADDRESS">
+                {{ "AgencyType" | localize }}
+            </label>
+            <div class="col-md-9">
+                <select name="agencyTypeId"
+                        class="form-control"
+                        (ngModelChange)="onTypeChange($event)"
+                        id="Address" [(ngModel)]="departmentAgencyType"
+                        #agencyTypeIdModel="ngModel"
+                        #agencyTypeId required>
+                    <option *ngFor="let agencyType of agencyTypes" [value]="agencyType.id">{{agencyType.name}}</option>
+                </select>
+                <!--<input type="text"
+                class="form-control"
+                name="agencyTypeId"
+                id="Address"
+                required
+
+                [(ngModel)]="qcUser.address"
+                #addressModel="ngModel"
+                #address />-->
+                <abp-validation-summary [control]="agencyTypeIdModel"
+                                        [controlEl]="agencyTypeId"></abp-validation-summary>
+            </div>
+        </div>
+
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="ADDRESS">
+                {{ "Agency" | localize }}
+            </label>
+            <div class="col-md-9">
+                <select class="form-control"
+                        name="AgencyId"
+                        id="AgencyId"
+                        [(ngModel)]="department.agencyId"
+                        #agencyIdModel="ngModel"
+                        #agencyId required>
+                    <option *ngFor="let agency of agencies" [value]="agency.id">{{agency.name}}</option>
+                </select>
+                <!--<input type="text"
+                class="form-control"
+                name="agencyTypeId"
+                id="Address"
+                required
+
+                [(ngModel)]="qcUser.address"
+                #addressModel="ngModel"
+                #address />-->
+                <abp-validation-summary [control]="agencyTypeIdModel"
+                                        [controlEl]="agencyTypeId"></abp-validation-summary>
+            </div>
+        </div>
+
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving"
+                      [saveDisabled]="!createUserModal.form.valid || saving"
+                      (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+</form>
