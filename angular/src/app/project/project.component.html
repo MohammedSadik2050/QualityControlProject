@@ -60,14 +60,14 @@
                                                 <select name="agencyTypeId"
                                                         class="form-control"
                                                         id="agencyTypeId" [(ngModel)]="projectAgencyTypeId"
-                                                        (ngModelChange)="onTypeChange()"
+                                                        (ngModelChange)="onTypeChange($event)"
                                                         #agencyTypeIdModel="ngModel"
                                                         #agencyTypeId>
                                                     <option *ngFor="let agencyType of agencyTypes" [value]="agencyType.id">{{agencyType.name}}</option>
                                                 </select>
 
                                                 <!--<abp-validation-summary [control]="agencyTypeIdModel"
-                                        [controlEl]="agencyTypeId"></abp-validation-summary>-->
+                [controlEl]="agencyTypeId"></abp-validation-summary>-->
                                             </div>
                                         </div>
                                     </div>
@@ -81,12 +81,33 @@
                                                 <select name="AgencyId"
                                                         class="form-control"
                                                         id="AgencyId" [(ngModel)]="projectAgencyId"
+                                                        (ngModelChange)="onAgencyChange($event)"
                                                         #agencyIdModel="ngModel"
                                                         #agencyId>
                                                     <option *ngFor="let agency of agencies" [value]="agency.id">{{agency.name}}</option>
                                                 </select>
 
-                                             
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 mt-3">
+                                        <div class="form-group row mb-0">
+                                            <label class="col-md-3 col-form-label" for="ADDRESS">
+                                                {{ "Departments" | localize }}
+                                            </label>
+                                            <div class="col-md-8">
+                                                <select name="ProjectDepartmentId"
+                                                        class="form-control"
+                                                        id="ProjectDepartmentId" [(ngModel)]="projectDepartmentId"
+                                                       
+                                                        #projectDepartmentIdModel="ngModel"
+                                                        projectDepartmentId>
+                                                    <option *ngFor="let department of departments" [value]="department.id">{{department.name}}</option>
+                                                </select>
+
+
                                             </div>
                                         </div>
                                     </div>

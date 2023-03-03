@@ -4,7 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 import { appModuleAnimation } from '../../shared/animations/routerTransition';
 import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from '../../shared/paged-listing-component-base';
-import { AgencyDto, AgencyServiceProxy, AgencyTypeDto, ProjectDto, ProjectServiceProxy } from '../../shared/service-proxies/service-proxies';
+import { AgencyDto, AgencyServiceProxy, AgencyTypeDto, DepartmentDto, DepartmentServiceProxy, ProjectDto, ProjectServiceProxy } from '../../shared/service-proxies/service-proxies';
 import { CreateProjectComponent } from './create-project/create-project.component';
 
 class PagedProjectRequestDto extends PagedRequestDto {
@@ -26,7 +26,11 @@ export class ProjectComponent extends PagedListingComponentBase<ProjectDto> {
     allAgencies: AgencyDto[] = [];
     projectAgencyTypeId = 0;
     projectAgencyId = 0;
+    projectDepartmentId = 0;
+    departments: DepartmentDto[] = [];
+    allDepartments: DepartmentDto[] = [];
     constructor(
+        private _departmentServiceProxy: DepartmentServiceProxy,
         private _agencyServiceProxy: AgencyServiceProxy,
         injector: Injector,
         private _projectServiceProxy: ProjectServiceProxy,
@@ -52,6 +56,7 @@ export class ProjectComponent extends PagedListingComponentBase<ProjectDto> {
         this.isActive = undefined;
         this.projectAgencyId = 0;
         this.projectAgencyTypeId = 0;
+        this.projectDepartmentId = 0;
         this.getDataPage(1);
     }
 
@@ -62,11 +67,15 @@ export class ProjectComponent extends PagedListingComponentBase<ProjectDto> {
     ): void {
         request.keyword = this.keyword;
         request.isActive = this.isActive;
-        this.loadAgencyTypes();
-        this.loadAgencies();
+        if (this.allAgencies.length<1) {
+            this.loadAgencyTypes();
+            this.loadAgencies();
+            this.loadAllDepartments();
+        }
+      
         this._projectServiceProxy
             .getAll(
-                this.keyword,this.projectAgencyTypeId,this.projectAgencyId,0,
+                this.keyword, this.projectAgencyTypeId, this.projectAgencyId, this.projectDepartmentId,
                 '',
                 request.skipCount,
                 request.maxResultCount
@@ -81,6 +90,11 @@ export class ProjectComponent extends PagedListingComponentBase<ProjectDto> {
                 this.showPaging(result, pageNumber);
             });
     }
+    loadAllDepartments() {
+        this._departmentServiceProxy.getAllDepartmentDropDown().subscribe(res => {
+            this.allDepartments = res;
+        });
+    }
     loadAgencies() {
         this._agencyServiceProxy.getAllAgenciesList().subscribe(res => {
             this.allAgencies = res;
@@ -92,8 +106,10 @@ export class ProjectComponent extends PagedListingComponentBase<ProjectDto> {
             this.agencyTypes = res;
         });
     }
-    onTypeChange() {
-        this.agencies = this.allAgencies.filter(s => s.agencyTypeId == this.projectAgencyTypeId);
+    onTypeChange(event) {
+        this.projectAgencyId = 0;
+        this.onAgencyChange(0);
+        this.agencies = this.allAgencies.filter(s => s.agencyTypeId == event);
     }
     protected delete(project: ProjectDto): void {
         abp.message.confirm(
@@ -118,7 +134,11 @@ export class ProjectComponent extends PagedListingComponentBase<ProjectDto> {
     //        },
     //    });
     //}
-
+    onAgencyChange(event) {
+        console.log(event);
+        this.projectDepartmentId = 0;
+        this.departments = this.allDepartments.filter(s => s.agencyId == event);
+    }
     private showCreateOrEditUserDialog(id?: number): void {
         let createOrEditUserDialog: BsModalRef;
         if (!id) {
