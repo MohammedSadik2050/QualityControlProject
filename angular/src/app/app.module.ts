@@ -55,6 +55,9 @@ import { RequestCreateComponent } from './requests/request-create/request-create
 import { RequestEditComponent } from './requests/request-edit/request-edit.component';
 import { RequestViewComponent } from './requests/request-view/request-view.component';
 import { RejectModalComponent } from './requests/reject-modal/reject-modal.component';
+import { DepartmentsComponent } from './departments/departments.component';
+import { DepartmentCreateComponent } from './departments/department-create/department-create.component';
+import { DepartmentEditComponent } from './departments/department-edit/department-edit.component';
 
 @NgModule({
     declarations: [
@@ -101,7 +104,10 @@ import { RejectModalComponent } from './requests/reject-modal/reject-modal.compo
         RequestCreateComponent,
         RequestEditComponent,
         RequestViewComponent,
-        RejectModalComponent
+        RejectModalComponent,
+        DepartmentsComponent,
+        DepartmentCreateComponent,
+        DepartmentEditComponent
     ],
     imports: [
         CommonModule,

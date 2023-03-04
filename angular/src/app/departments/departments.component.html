@@ -3,10 +3,10 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-6">
-                    <h1>{{ "Projects" | localize }}</h1>
+                    <h1>{{ "Agency" | localize }}</h1>
                 </div>
                 <div class="col-6 text-right">
-                    <a href="javascript:;" class="btn bg-blue" (click)="createProject()" *ngIf="isGranted('Pages.Manage.Project')">
+                    <a href="javascript:;" class="btn bg-blue" (click)="createAgency()">
                         <i class="fa fa-plus-square"></i>
                         {{ "Create" | localize }}
                     </a>
@@ -59,7 +59,7 @@
                                             <div class="col-md-8">
                                                 <select name="agencyTypeId"
                                                         class="form-control"
-                                                        id="agencyTypeId" [(ngModel)]="projectAgencyTypeId"
+                                                        id="agencyTypeId" [(ngModel)]="departmentAgencyTypeId"
                                                         (ngModelChange)="onTypeChange($event)"
                                                         #agencyTypeIdModel="ngModel"
                                                         #agencyTypeId>
@@ -67,11 +67,10 @@
                                                 </select>
 
                                                 <!--<abp-validation-summary [control]="agencyTypeIdModel"
-                [controlEl]="agencyTypeId"></abp-validation-summary>-->
+                                                [controlEl]="agencyTypeId"></abp-validation-summary>-->
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-md-6">
                                         <div class="form-group row mb-0">
                                             <label class="col-md-3 col-form-label" for="ADDRESS">
@@ -80,31 +79,10 @@
                                             <div class="col-md-8">
                                                 <select name="AgencyId"
                                                         class="form-control"
-                                                        id="AgencyId" [(ngModel)]="projectAgencyId"
-                                                        (ngModelChange)="onAgencyChange($event)"
+                                                        id="AgencyId" [(ngModel)]="departmentAgencyId"
                                                         #agencyIdModel="ngModel"
                                                         #agencyId>
                                                     <option *ngFor="let agency of agencies" [value]="agency.id">{{agency.name}}</option>
-                                                </select>
-
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 mt-3">
-                                        <div class="form-group row mb-0">
-                                            <label class="col-md-3 col-form-label" for="ADDRESS">
-                                                {{ "Departments" | localize }}
-                                            </label>
-                                            <div class="col-md-8">
-                                                <select name="ProjectDepartmentId"
-                                                        class="form-control"
-                                                        id="ProjectDepartmentId" [(ngModel)]="projectDepartmentId"
-                                                       
-                                                        #projectDepartmentIdModel="ngModel"
-                                                        projectDepartmentId>
-                                                    <option *ngFor="let department of departments" [value]="department.id">{{department.name}}</option>
                                                 </select>
 
 
@@ -134,16 +112,13 @@
                             <thead class="bg-light">
                                 <tr>
                                     <th>{{ "Name" | localize }}</th>
-                                    <th>{{ "ContractNumber" | localize }}</th>
-                                    <th>{{ "StartDate" | localize }}</th>
-                                    <th>{{ "CompletedDate" | localize }}</th>
-                                    <th>{{ "SiteDelivedDate" | localize }}</th>
-                                    <th style="width: 310px;"></th>
+                                    <th>{{ "RelatedAgency" | localize }}</th>
+                                    <th style="width: 310px;" *ngIf="isGranted('Pages.Manage.Agences')">{{ "Actions" | localize }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="
-                  let project of projects
+                  let department of departments
                     | paginate
                       : {
                           id: 'server',
@@ -152,21 +127,19 @@
                           totalItems: totalItems
                         }
                 ">
-                                    <td>{{ project.name }}</td>
-                                    <td>{{ project.contractNumber }}</td>
-                                    <td>{{ project.startDate | date: 'dd/MM/yyyy'}}</td>
-                                    <td>{{ project.completedDate | date: 'dd/MM/yyyy' }}</td>
-                                    <td>{{ project.siteDelivedDate  | date: 'dd/MM/yyyy'}}</td>
-                                    <td>
+                                    <td>{{ department.name }}</td>
+                                    <td>{{ department.agencyName }}</td>
+                                   
+                                    <td *ngIf="isGranted('Pages.Manage.Departments')">
                                         <button type="button"
                                                 class="btn btn-sm bg-secondary"
-                                                (click)="editProject(project)">
+                                                (click)="edit(department)">
                                             <i class="fas fa-pencil-alt"></i>
-                                            {{ "ProjectDetails" | localize }}
+                                            {{ "Edit" | localize }}
                                         </button>
-                                        <button type="button" *ngIf="isGranted('Pages.Manage.Project')"
+                                        <button type="button"
                                                 class="btn btn-sm bg-danger mx-2"
-                                                (click)="delete(project)">
+                                                (click)="delete(department)">
                                             <i class="fas fa-trash"></i>
                                             {{ "Delete" | localize }}
                                         </button>

@@ -5,18 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eConLab.Proj.Dto
+namespace eConLab.Departments.Dto
 {
-    public class ProjectPaginatedDto : PagedAndSortedResultRequestDto
+    public class DepartmentPaginatedDto : PagedAndSortedResultRequestDto
     {
+        public long AgencyId { get; set; }
         public string Search { get; set; }
-        public int? AgencyTypeId { get; set; }
-        public int? AgencyId { get; set; }
-        public long? DepartmentId { get; set; }
     }
-    public class ProjectFilter
+    public class DepartmentFilter
     {
         public long Id { get; set; }
         public string Name { get; set; }
+       
     }
 }

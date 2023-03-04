@@ -189,6 +189,11 @@
 		<text name="History">History</text>
 		<text name="DuplicateProjectItem">DuplicateProjectItem</text>
 		<text name="ProjectItems">Project Items</text>
+		<text name="Departments">Departments</text>
+		<text name="RelatedAgency">Related Agency</text>
+		<text name="ActionName">Action Name</text>
+		<text name="ActionNote">Action Note</text>
+		<text name="CreationDate">Creation Date</text>
 		
 </texts>
 </localizationDictionary>

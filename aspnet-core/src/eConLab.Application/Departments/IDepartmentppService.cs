@@ -13,15 +13,13 @@ using eConLab.Departments.Dto;
 namespace eConLab.Agencies
 {
   
-    public interface IAgencyAppService :
+    public interface IDepartmentAppService :
         IApplicationService
     {
-        Task<AgencyDto> CreateOrUpdate(CreateUpdateAgencyDto input);
-        Task<PagedResultDto<AgencyDto>> GetAll(AgencyPaginatedDto input);
-        Task<AgencyDto> Get(long id);
-        Task<List<AgencyTypeDto>> GetAllAgencyTypeList();
-        Task<List<AgencyDto>> GetAllAgenciesList();
-
+        Task<DepartmentDto> CreateOrUpdate(CreateUpdateDepartmentDto input);
+        Task<DepartmentDto> Get(long id);
+        Task<PagedResultDto<DepartmentDto>> GetAll(DepartmentPaginatedDto input);
+        Task<List<DepartmentDto>> GetAllDepartmentDropDown();
         Task<bool> Delete(long Id);
     }
 

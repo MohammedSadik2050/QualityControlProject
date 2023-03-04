@@ -69,6 +69,12 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 'fas fa-theater-masks',
                 'Pages.Manage.Agences'
             ),
+              new MenuItem(
+                this.l('Departments'),
+                '/app/departments',
+                'fas fa-theater-masks',
+                'Pages.Manage.Departments'
+            ),
             new MenuItem(
                 this.l('QCUsers'),
                 '/app/qc-users',

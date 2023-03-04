@@ -81,7 +81,9 @@ namespace eConLab.Requests
         public async Task<RequestDto> Get(long id)
         {
             var obj = _requestRepo.FirstOrDefault(x => x.Id == id);
-            return _mapper.Map<RequestDto>(obj) ?? null;
+            var result = _mapper.Map<RequestDto>(obj);
+            result.StatusName = obj.Status.ToString();
+            return result ?? null;
         }
 
 
