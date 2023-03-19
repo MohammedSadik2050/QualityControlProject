@@ -165,6 +165,7 @@
                                 </label>
                                 <div class="col-md-9">
                                     <input type="date"
+                                           [min]="minDate"
                                            class="form-control"
                                            name="inspectionDate"
                                            id="inspectionDate"
@@ -330,7 +331,7 @@
                             {{ "SendToConsultant" | localize }}
                         </button>
 
-                        <button *ngIf="request.status ==2 &&  appSession.userId == project.consultantId" type="button"
+                        <button *ngIf="(request.status ==2 &&  appSession.userId == project.consultantId) || (request.status ==2 && isGranted('Pages.Manage.Admin')) " type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="save(3)"
                                 class="btn btn-primary"
@@ -338,7 +339,7 @@
                             {{ "Approved" | localize }}
                         </button>
 
-                        <button *ngIf="request.status ==3 &&  appSession.userId == project.supervisingQualityId" type="button"
+                        <button *ngIf="(request.status ==3 &&  appSession.userId == project.supervisingQualityId) || (request.status ==3 && isGranted('Pages.Manage.Admin')) " type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="save(4)"
                                 class="btn btn-primary"
@@ -346,7 +347,9 @@
                             {{ "Approved" | localize }}
                         </button>
 
-                        <button *ngIf="(request.status ==2 && project.consultantId ==appSession.userId)|| (request.status ==3 && appSession.userId == project.supervisingQualityId)" type="button"
+                        <button *ngIf="(request.status ==2 && project.consultantId ==appSession.userId)
+                                    || (request.status ==3 && appSession.userId == project.supervisingQualityId)
+                                    || ((request.status ==2 ||request.status ==3)  && isGranted('Pages.Manage.Admin')) " type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="rejectRequest()"
                                 class="btn btn-primary mr-3"

@@ -16,8 +16,8 @@ namespace eConLab.ProjectModels
         public DateTime StartDate { get; set; } 
         public DateTime CompletedDate { get; set; } 
         public DateTime SiteDelivedDate { get; set; }
-        public long AgencyTypeId { get; set; }
-        public long AgencyId { get; set; } 
+        public long? AgencyTypeId { get; set; }
+        public long? AgencyId { get; set; } 
         public long DepartmentId { get; set; } 
         public long SupervisingEngineerId { get; set; } 
         public long ConsultantId { get; set; } 

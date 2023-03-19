@@ -25,7 +25,7 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
     projectManagers: DropdownListDto[] = [];
     supervisingQualities: DropdownListDto[] = [];
     @Output() onSave = new EventEmitter<any>();
-
+    minDate = moment(this.project.startDate).format("YYYY-MM-DD");
     constructor(
         injector: Injector,
         private _projectServiceProxy: ProjectServiceProxy,

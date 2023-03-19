@@ -116,7 +116,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row required">
+                <div class="form-group row ">
                     <label class="col-md-3 col-form-label" for="CONTRACTNAME">
                         {{ "PhoneNumber" | localize }}
                     </label>
@@ -125,7 +125,7 @@
                                class="form-control"
                                name="phoneNumber"
                                id="phoneNumber"
-                               required
+                               
                                 
                                [(ngModel)]="qcUser.phoneNumber"
                                #phoneNumberModel="ngModel"
@@ -192,7 +192,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row required">
+                <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="CONTRACTNAME">
                         {{ "Fax" | localize }}
                     </label>
@@ -201,7 +201,7 @@
                                class="form-control"
                                name="faxaa"
                                id="faxaa"
-                               required
+                               
                                autocomplete="do-not-autofill"
                                 
                                [(ngModel)]="qcUser.fax"
