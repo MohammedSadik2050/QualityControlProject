@@ -22,7 +22,7 @@ using eConLab.Req;
 namespace eConLab.Test
 {
 
-    [AbpAuthorize]
+   // [AbpAuthorize]
     public class RequestnspectionTestAppService :
         eConLabAppServiceBase,
        IRequestInspectionTestAppService
@@ -38,12 +38,12 @@ namespace eConLab.Test
             _requestInspectionTestRepository = requestInspectionTestRepository;
         }
 
-        [AbpAuthorize(PermissionNames.Pages_Manage_InspectionTest)]
+      //  [AbpAuthorize(PermissionNames.Pages_Manage_InspectionTest, PermissionNames.ad)]
         public async Task<RequestInspectionTestDto> CreateOrUpdate(CreateUpdateRequestTestDto input)
         {
 
             await _requestInspectionTestRepository.InsertOrUpdateAsync(_mapper.Map<RequestInspectionTest>(input));
-            await CurrentUnitOfWork.SaveChangesAsync();
+           // await CurrentUnitOfWork.SaveChangesAsync();
 
             return _mapper.Map<RequestInspectionTestDto>(input);
         }
@@ -69,8 +69,8 @@ namespace eConLab.Test
                         InspectionTestType = s.InspectionTestType,
                         InspectionTestId = s.InspectionTestId,
                         Cost = s.InspectionTest.Cost,
-                        Name = s.InspectionTest.Name,
-                        Code = s.InspectionTest.Code,
+                        Name = s.InspectionTest.Name ?? "",
+                        Code = s.InspectionTest.Code ?? "",
                     }).ToList();
          
         }
