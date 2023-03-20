@@ -23,7 +23,7 @@
                                         [controlEl]="nameE1"></abp-validation-summary>
             </div>
         </div>
-        <div class="form-group row required">
+        <!--<div class="form-group row required">
             <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
                 {{ "Description" | localize }}
             </label>
@@ -39,7 +39,7 @@
                 <abp-validation-summary [control]="descriptionModel"
                                         [controlEl]="descriptionE1"></abp-validation-summary>
             </div>
-        </div>
+        </div>-->
 
         <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
@@ -69,6 +69,7 @@
                        class="form-control"
                        name="startDate"
                        id="startDate"
+                        [min]="minDate"
                        required
                        [(ngModel)]="project.startDate"
                        #startDateModel="ngModel"
@@ -85,6 +86,7 @@
             <div class="col-md-9">
                 <input type="date"
                        class="form-control"
+                       [min]="project.startDate"
                        name="completeDate"
                        id="completeDate"
                        required
@@ -102,6 +104,7 @@
             </label>
             <div class="col-md-9">
                 <input type="date"
+                         [min]="project.startDate"
                        class="form-control"
                        name="siteDelivedDate"
                        id="siteDelivedDate"
@@ -116,7 +119,7 @@
 
 
 
-        <div class="form-group row required">
+        <div class="form-group row">
             <label class="col-md-3 col-form-label" for="ADDRESS">
                 {{ "AgencyType" | localize }}
             </label>
@@ -126,7 +129,7 @@
                         id="agencyTypeId" [(ngModel)]="project.agencyTypeId"
                         (ngModelChange)="onTypeChange($event)"
                         #agencyTypeIdModel="ngModel"
-                        #agencyTypeId required>
+                        #agencyTypeId>
                     <option *ngFor="let agencyType of agencyTypes" [value]="agencyType.id">{{agencyType.name}}</option>
                 </select>
 
@@ -135,7 +138,7 @@
             </div>
         </div>
 
-        <div class="form-group row required">
+        <div class="form-group row">
             <label class="col-md-3 col-form-label" for="ADDRESS">
                 {{ "Agency" | localize }}
             </label>
@@ -145,7 +148,7 @@
                         id="AgencyId" [(ngModel)]="project.agencyId"
                         (ngModelChange)="onAgencyChange($event)"
                         #agencyIdModel="ngModel"
-                        #agencyId required>
+                        #agencyId>
                     <option *ngFor="let agency of agencies" [value]="agency.id">{{agency.name}}</option>
                 </select>
 

@@ -151,6 +151,7 @@
                                     <input type="date" [disabled]="request.id>0"
                                            class="form-control"
                                            name="inspectionDate"
+                                           [min]="minDate"
                                            id="inspectionDate"
                                            required
                                            [(ngModel)]="InspectionDatemodel"

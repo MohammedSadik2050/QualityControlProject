@@ -31,6 +31,7 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
     allDepartments: DepartmentDto[] = [];
     @Output() onSave = new EventEmitter<any>();
     projectId: number = 0;
+    minDate = moment(this.project.startDate).format("YYYY-MM-DD");
 
     constructor(
         injector: Injector,

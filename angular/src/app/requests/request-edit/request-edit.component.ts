@@ -47,6 +47,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     InspectionDatemodel: string = new Date().toLocaleDateString();
     allAgencies: AgencyDto[] = [];
     allDepartments: DepartmentDto[] = [];
+    minDate = moment(this.project.startDate).format("YYYY-MM-DD");
     constructor(
         injector: Injector,
         private _departmentServiceProxy: DepartmentServiceProxy,
