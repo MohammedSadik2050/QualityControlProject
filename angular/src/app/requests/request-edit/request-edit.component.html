@@ -13,7 +13,52 @@
         <div class="container-fluid">
             <div class="col-container">
                 <div class="card-header d-flex justify-content-center">
-                    <h3 class="card-title">{{ request.statusName | localize }}</h3>
+                    <h3 class="card-title" style="margin-top: 8px; color: white;">{{ request.statusName | localize }}</h3>
+                    <div class="" style="padding-right: 384px">
+                        <button *ngIf="request.id<1  &&request.status ==1 && isGranted('Pages.Manage.Contractor')" type="button"
+                                (click)="save(1)"
+                                [disabled]="!createRequestForm.form.valid || saving"
+                                class="btn btn-success"
+                                aria-label="Close">
+                            {{ saveText | localize }}
+                        </button>
+
+                        <button *ngIf="request.id>0 && isGranted('Pages.Manage.Contractor') && (request.status ==1 ||request.status ==5  )" type="button"
+                                [disabled]="requestTests.length==0"
+                                (click)="save(2)"
+                                class="btn btn-success"
+                                aria-label="Close">
+                            {{ "SendToConsultant" | localize }}
+                        </button>
+
+                        <button *ngIf="(request.status ==2 &&  appSession.userId == project.consultantId) || (request.status ==2 && isGranted('Pages.Roles')) " type="button"
+                                [disabled]="!createRequestForm.form.valid || saving"
+                                (click)="save(3)"
+                                class="btn btn-success"
+                                aria-label="Close">
+                            {{ "Approved" | localize }}
+                        </button>
+
+                        <button *ngIf="(request.status ==3 &&  appSession.userId == project.supervisingQualityId) || (request.status ==3 && isGranted('Pages.Roles')) " type="button"
+                                [disabled]="!createRequestForm.form.valid || saving"
+                                (click)="save(4)"
+                                class="btn btn-success"
+                                aria-label="Close">
+                            {{ "Approved" | localize }}
+                        </button>
+
+                        <button *ngIf="(request.status ==2 && project.consultantId ==appSession.userId)
+                                    || (request.status ==3 && appSession.userId == project.supervisingQualityId)
+                                    || ((request.status ==2 ||request.status ==3)  && isGranted('Pages.Roles')) " type="button"
+                                [disabled]="!createRequestForm.form.valid || saving"
+                                (click)="rejectRequest()"
+                                class="btn btn-danger mr-3"
+                                aria-label="Close">
+                            {{ "RequestRejected" | localize }}
+                        </button>
+
+                    </div>
+                   
                 </div>
                 <div class="card-body card ng-tns-c101-3">
 
@@ -316,46 +361,7 @@
                             </div>
 
                         </div>
-                        <button *ngIf="request.id<1  &&request.status ==1 && isGranted('Pages.Manage.Contractor')" type="submit"
-                                [disabled]="!createRequestForm.form.valid || saving"
-                                class="btn btn-primary"
-                                aria-label="Close">
-                            {{ saveText | localize }}
-                        </button>
-
-                        <button *ngIf="request.id>0 && isGranted('Pages.Manage.Contractor') && (request.status ==1 ||request.status ==5  )" type="button"
-                                [disabled]="requestTests.length==0"
-                                (click)="save(2)"
-                                class="btn btn-primary"
-                                aria-label="Close">
-                            {{ "SendToConsultant" | localize }}
-                        </button>
-
-                        <button *ngIf="(request.status ==2 &&  appSession.userId == project.consultantId) || (request.status ==2 && isGranted('Pages.Manage.Admin')) " type="button"
-                                [disabled]="!createRequestForm.form.valid || saving"
-                                (click)="save(3)"
-                                class="btn btn-primary"
-                                aria-label="Close">
-                            {{ "Approved" | localize }}
-                        </button>
-
-                        <button *ngIf="(request.status ==3 &&  appSession.userId == project.supervisingQualityId) || (request.status ==3 && isGranted('Pages.Manage.Admin')) " type="button"
-                                [disabled]="!createRequestForm.form.valid || saving"
-                                (click)="save(4)"
-                                class="btn btn-primary"
-                                aria-label="Close">
-                            {{ "Approved" | localize }}
-                        </button>
-
-                        <button *ngIf="(request.status ==2 && project.consultantId ==appSession.userId)
-                                    || (request.status ==3 && appSession.userId == project.supervisingQualityId)
-                                    || ((request.status ==2 ||request.status ==3)  && isGranted('Pages.Manage.Admin')) " type="button"
-                                [disabled]="!createRequestForm.form.valid || saving"
-                                (click)="rejectRequest()"
-                                class="btn btn-primary mr-3"
-                                aria-label="Close">
-                            {{ "RequestRejected" | localize }}
-                        </button>
+                       
                     </form>
 
                 </div>

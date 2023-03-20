@@ -186,6 +186,7 @@
 		<text name="View">عرض</text>
 		<text name="RequestCode">رقم الطلب</text>
 		<text name="Status">حاله الطلب</text>
+		<text name="Approved">إستكامل الطلب</text>
 		<text name="ApprovedByConsultant">الإستشاري وافق على الطلب</text>
 		<text name="ApprovedBySupervisingQuality">مراقب الجوده وافق على الطلب</text>
 		<text name="Rejected">الطلب مرفوض</text>
