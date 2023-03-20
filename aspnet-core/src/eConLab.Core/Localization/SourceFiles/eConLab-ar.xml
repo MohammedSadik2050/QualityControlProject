@@ -199,5 +199,7 @@
 		<text name="ActionName">التغيير</text>
 		<text name="ActionNote">الملاحظات</text>
 		<text name="CreationDate">تاريخ الإدخال</text>
+		<text name="Commetns">ملاحظات</text>
+		<text name="TypeofTest">نوع الإختبارات</text>
 	</texts>
 </localizationDictionary>

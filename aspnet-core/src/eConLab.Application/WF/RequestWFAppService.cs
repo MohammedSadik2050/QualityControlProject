@@ -66,7 +66,7 @@ namespace eConLab.WF
 
             history = new RequestWFHistory
             {
-                UserId = requestWf.CurrentUserId,
+                UserId = input.CurrentUserId,
                 ActionNotes = input.ActionNotes,
                 ActionName = input.ActionName,
                 RequestWFId = requestWf.RequestId,

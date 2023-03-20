@@ -195,6 +195,7 @@
 		<text name="ActionNote">Action Note</text>
 		<text name="CreationDate">Creation Date</text>
 		<text name="Approved">Approved</text>
+		<text name="Commetns">Commetns</text>
 		
 </texts>
 </localizationDictionary>

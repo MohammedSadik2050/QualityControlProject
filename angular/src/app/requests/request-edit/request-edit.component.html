@@ -31,7 +31,7 @@
                             {{ "SendToConsultant" | localize }}
                         </button>
 
-                        <button *ngIf="(request.status ==2 &&  appSession.userId == project.consultantId) || (request.status ==2 && isGranted('Pages.Roles')) " type="button"
+                        <button *ngIf="(request.status ==2 && consultantId== appSession.userId) || (request.status ==2 && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="save(3)"
                                 class="btn btn-success"
@@ -39,7 +39,7 @@
                             {{ "Approved" | localize }}
                         </button>
 
-                        <button *ngIf="(request.status ==3 &&  appSession.userId == project.supervisingQualityId) || (request.status ==3 && isGranted('Pages.Roles')) " type="button"
+                        <button *ngIf="(request.status ==3 &&  appSession.userId == supervisingQualityId) || (request.status ==3 && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="save(4)"
                                 class="btn btn-success"
@@ -47,8 +47,8 @@
                             {{ "Approved" | localize }}
                         </button>
 
-                        <button *ngIf="(request.status ==2 && project.consultantId ==appSession.userId)
-                                    || (request.status ==3 && appSession.userId == project.supervisingQualityId)
+                        <button *ngIf="(request.status ==2 && consultantId ==appSession.userId)
+                                    || (request.status ==3 && appSession.userId == supervisingQualityId)
                                     || ((request.status ==2 ||request.status ==3)  && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="rejectRequest()"
@@ -223,9 +223,24 @@
                                 </div>
                             </div>
 
+                            <!--<div class="form-group row required col-6">
+                                <label class="col-md-3 col-form-label" for="ADDRESS">
+                                    {{ "InspectionTime" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="number"
+                                           min="1" max="60"
+                                           class="form-control"
+                                           name="inspectionTime"
+                                           id="inspectionTime"
+                                             [(ngModel)]="hourse"
+                                           (change)= "hourse < 0 ? hourse = 0 : hourse; hourse > 60 ? hourse = 0 : hourse;">
+                                </div>
+                            </div>-->
+
                             <div class="form-group row required col-6">
                                 <label class="col-md-3 col-form-label" for="Description">
-                                    {{ "Description" | localize }}
+                                    {{ "Commetns" | localize }}
                                 </label>
                                 <div class="col-md-9">
                                     <input type="text"
@@ -345,7 +360,7 @@
 
                             <div class="form-group row required col-6" *ngIf="hasSample">
                                 <label class="col-md-3 col-form-label" for="ADDRESS">
-                                    {{ "InspectionTestTypes" | localize }}
+                                    {{ "TypeofTest" | localize }}
                                 </label>
                                 <div class="col-md-9">
                                     <select name="testType"

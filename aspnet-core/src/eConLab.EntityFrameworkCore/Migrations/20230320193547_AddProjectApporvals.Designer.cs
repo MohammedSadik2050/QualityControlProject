@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eConLab.EntityFrameworkCore;
 
 namespace eConLab.Migrations
 {
     [DbContext(typeof(eConLabDbContext))]
-    partial class eConLabDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230320193547_AddProjectApporvals")]
+    partial class AddProjectApporvals
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1837,7 +1839,7 @@ namespace eConLab.Migrations
                     b.Property<long?>("CreatorUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("DepartmentId")
+                    b.Property<long>("DepartmentId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Description")
@@ -1845,9 +1847,6 @@ namespace eConLab.Migrations
 
                     b.Property<string>("GeometryLocations")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<long>("LabProjectManagerId")
                         .HasColumnType("bigint");

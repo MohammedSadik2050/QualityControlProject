@@ -18,13 +18,17 @@ namespace eConLab.ProjectModels
         public DateTime SiteDelivedDate { get; set; }
         public long? AgencyTypeId { get; set; }
         public long? AgencyId { get; set; } 
-        public long DepartmentId { get; set; } 
+        public long? DepartmentId { get; set; } 
         public long SupervisingEngineerId { get; set; } 
         public long ConsultantId { get; set; } 
         public long ContractorId { get; set; } 
         public long LabProjectManagerId { get; set; } 
         public long SupervisingQualityId { get; set; } 
         public string GeometryLocations { get; set; }
+        public bool ApprovedByConsultant { get; set; } = false;
+        public bool ApprovedBySupervising { get; set; } = false;
+        public bool ApprovedByLabProjectManager { get; set; } = false;
+        public bool IsActive { get; set; } = false;
 
     }
 }

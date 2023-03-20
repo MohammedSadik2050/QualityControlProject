@@ -151,7 +151,7 @@
                                     <th>{{ "Status" | localize }}</th>
                                     <th>{{ "HasSample" | localize }}</th>
 
-                                    <th style="width: 310px;" *ngIf="isGranted('Pages.Manage.InspectionTest')">{{ "Actions" | localize }}</th>
+                                    <th style="width: 310px;">{{ "Actions" | localize }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -179,7 +179,7 @@
                                             <label class="custom-control-label"></label>
                                         </div>
                                     </td>
-                                    <td *ngIf="isGranted('Pages.Manage.Agences')">
+                                    <td>
                                         <button type="button"
                                                 class="btn btn-sm bg-secondary"
                                                 (click)="editRow(request)">

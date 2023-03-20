@@ -30,8 +30,11 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     hide = false;
     hasSample = false;
     projectDepartmentId: number = 0;
+    consultantId: number = 0;
+    supervisingQualityId: number = 0;
     projectAgency: number = 0;
-    selectedprojectItem:number = 0;
+    selectedprojectItem: number = 0;
+    hourse: number = 0;
     saveText = 'SendToConsultant';
     request = new RequestDto();
     projects: ProjectDto[] = [];
@@ -76,11 +79,11 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         this.request.id = this.routeActive.snapshot.params['id'];
         this._requestServiceProxy.get(this.request.id).subscribe(res => {
             this.request = res;
+            this.LoadProject();
             this.hasSample = res.hasSample == 1 ? true : false;
             this.InspectionDatemodel = moment(this.request.inspectionDate).format("YYYY-MM-DD");
             this.loadRequestTests();
             this.loadTestsByTypes();
-            this.LoadProject();
             this.LoadRequestHistory();
             this.loadRequestProjectItems();
             this.loadAllDepartments();
@@ -103,7 +106,10 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
 
         this._projectServiceProxy.get(this.request.projectId).subscribe(res => {
             this.project = res;
+            console.log('Project', this.appSession.userId);
             this.projectAgency = this.project.agencyId;
+            this.supervisingQualityId = this.project.supervisingQualityId;
+            this.consultantId = this.project.consultantId;
             this.projectDepartmentId = this.project.departmentId;
             this.startDatemodel = moment(this.project.startDate).format("YYYY-MM-DD");
             this.completeDatemodel = moment(this.project.completedDate).format("YYYY-MM-DD");
@@ -193,9 +199,9 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
                 this.InspectionDatemodel = moment(this.request.inspectionDate).format("YYYY-MM-DD");
                 this.loadTestsByTypes();
                 this.saving = false;
-                if (this.request.status == RequestStatus._2) {
+               /* if (this.request.status == RequestStatus._2) {*/
                     this.saveWorkFlow();
-                }
+              //  }
                 //this.bsModalRef.hide();
                 //this.onSave.emit();
             },
@@ -225,10 +231,10 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     }
 
     saveWorkFlow() {
-        var currentProject = this.projects.find(x => x.id === parseInt(this.request.projectId.toString()));
+       
         var workFlow = new RequestWFDto();
         workFlow.requestId = this.request.id;
-        workFlow.currentUserId = currentProject.consultantId;
+        workFlow.currentUserId = this.appSession.userId;
         if (this.request.status == 2) {
             workFlow.actionName = "تم التسجيل";
             workFlow.actionNotes = "تم الإرسال الى الاستشاري";
