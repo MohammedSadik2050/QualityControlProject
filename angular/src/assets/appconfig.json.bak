@@ -1,6 +1,6 @@
 {
-  "remoteServiceBaseUrl": "http://emawadsw-001-site2.gtempurl.com",
-  "appBaseUrl": "http://emawadsw-001-site1.gtempurl.com",
+  "remoteServiceBaseUrl": "http://emawadsw-001-site2.gtempurl.com/",
+  "appBaseUrl": "http://emawadsw-001-site1.gtempurl.com/",
   "localeMappings": [
     {
       "from": "pt-BR",

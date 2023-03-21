@@ -16,7 +16,10 @@ namespace eConLab.Enum
     {
         Concret = 1,
         Soil=2,
-        Asphalt=3
+        Asphalt=3,
+        Visual = 4,
+        Tile = 5,
+        MixingWater=6
     }
 
     public enum RequestStatus

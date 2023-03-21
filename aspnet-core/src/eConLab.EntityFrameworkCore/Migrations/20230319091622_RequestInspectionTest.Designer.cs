@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eConLab.EntityFrameworkCore;
 
 namespace eConLab.Migrations
 {
     [DbContext(typeof(eConLabDbContext))]
-    partial class eConLabDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230319091622_RequestInspectionTest")]
+    partial class RequestInspectionTest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1804,20 +1806,11 @@ namespace eConLab.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("AgencyId")
+                    b.Property<long>("AgencyId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("AgencyTypeId")
+                    b.Property<long>("AgencyTypeId")
                         .HasColumnType("bigint");
-
-                    b.Property<bool>("ApprovedByConsultant")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ApprovedByLabProjectManager")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ApprovedBySupervising")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("CompletedDate")
                         .HasColumnType("datetime2");
@@ -1837,7 +1830,7 @@ namespace eConLab.Migrations
                     b.Property<long?>("CreatorUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("DepartmentId")
+                    b.Property<long>("DepartmentId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Description")
@@ -1845,9 +1838,6 @@ namespace eConLab.Migrations
 
                     b.Property<string>("GeometryLocations")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<long>("LabProjectManagerId")
                         .HasColumnType("bigint");
@@ -1942,9 +1932,6 @@ namespace eConLab.Migrations
                     b.Property<int>("HasSample")
                         .HasColumnType("int");
 
-                    b.Property<int>("Hours")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("InspectionDate")
                         .HasColumnType("datetime2");
 
@@ -1955,9 +1942,6 @@ namespace eConLab.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<int>("MainRequestType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Min")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")

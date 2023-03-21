@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using eConLab.TestModels;
 using eConLab.Tests.Dto;
 using Abp.Collections.Extensions;
 using Abp.Extensions;
@@ -18,11 +17,12 @@ using Microsoft.AspNetCore.Authorization;
 using Abp.Authorization;
 using eConLab.Authorization;
 using eConLab.RequestTests.Dto;
+using eConLab.Req;
 
 namespace eConLab.Test
 {
 
-    [AbpAuthorize]
+   // [AbpAuthorize]
     public class RequestnspectionTestAppService :
         eConLabAppServiceBase,
        IRequestInspectionTestAppService
@@ -43,7 +43,7 @@ namespace eConLab.Test
         {
 
             await _requestInspectionTestRepository.InsertOrUpdateAsync(_mapper.Map<RequestInspectionTest>(input));
-            await CurrentUnitOfWork.SaveChangesAsync();
+           // await CurrentUnitOfWork.SaveChangesAsync();
 
             return _mapper.Map<RequestInspectionTestDto>(input);
         }
@@ -69,8 +69,8 @@ namespace eConLab.Test
                         InspectionTestType = s.InspectionTestType,
                         InspectionTestId = s.InspectionTestId,
                         Cost = s.InspectionTest.Cost,
-                        Name = s.InspectionTest.Name,
-                        Code = s.InspectionTest.Code,
+                        Name = s.InspectionTest.Name ?? "",
+                        Code = s.InspectionTest.Code ?? "",
                     }).ToList();
          
         }
