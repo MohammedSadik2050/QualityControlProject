@@ -15,7 +15,7 @@
                 <div class="card-header d-flex justify-content-center">
                     <h3 class="card-title" style="margin-top: 8px; color: white;">{{ request.statusName | localize }}</h3>
                     <div class="" style="padding-right: 384px">
-                        <button *ngIf="request.id<1  &&request.status ==1 && isGranted('Pages.Manage.Contractor')" type="button"
+                        <button style="background-color: #ffc107" *ngIf="request.id<1  &&request.status ==1 && isGranted('Pages.Manage.Contractor')" type="button"
                                 (click)="save(1)"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 class="btn btn-success"
@@ -38,8 +38,8 @@
                                 aria-label="Close">
                             {{ "Approved" | localize }}
                         </button>
-
-                        <button *ngIf="(request.status ==3 && isGranted('Pages.Manage.LabProjectManager')) || (request.status ==3 && isGranted('Pages.Roles')) " type="button"
+                        <!--(request.status ==3 && isGranted('Pages.Manage.LabProjectManager')) ||-->
+                        <button *ngIf=" (request.status ==3 && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="save(4)"
                                 class="btn btn-success"
@@ -48,7 +48,7 @@
                         </button>
 
                         <button *ngIf="(request.status ==2 && consultantId ==appSession.userId)
-                             || isGranted('Pages.Manage.LabProjectManager')       || (request.status ==3 && appSession.userId == supervisingQualityId)
+                             || (request.status ==3 && isGranted('Pages.Manage.LabProjectManager'))     || (request.status ==3 && appSession.userId == supervisingQualityId)
                                     || ((request.status ==2 ||request.status ==3)  && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="rejectRequest()"

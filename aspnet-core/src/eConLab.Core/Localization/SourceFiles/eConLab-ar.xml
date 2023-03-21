@@ -187,7 +187,7 @@
 		<text name="Status">حاله الطلب</text>
 		<text name="Approved">إعتماد الطلب</text>
 		<text name="ApprovedByConsultant">الإستشاري وافق على الطلب</text>
-		<text name="ApprovedBySupervisingQuality">مراقب الجوده وافق على الطلب</text>
+		<text name="ApprovedBySupervisingQuality">تم إعتماد الطلب</text>
 		<text name="Rejected">الطلب مرفوض</text>
 		<text name="RequestRejected">رفض الطلب</text>
 		<text name="History">عمليات الطلب</text>

@@ -240,8 +240,8 @@ export class RequestViewComponent extends AppComponentBase implements OnInit {
         }
 
         if (this.request.status == 4) {
-            workFlow.actionName = "مراقب الجوده وافق على الطلب";
-            workFlow.actionNotes = "مراقب الجوده وافق على الطلب";
+            workFlow.actionName = "تم إعتماد الطلب";
+            workFlow.actionNotes = "تم إعتماد الطلب";
         }
 
 
