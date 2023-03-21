@@ -68,7 +68,7 @@
                                            id="projectContractNumber"
                                            [(ngModel)]="projectContractNumber" />
                                     <!--<abp-validation-summary [control]="contractNumberModel"
-                [controlEl]="contractNumber"></abp-validation-summary>-->
+            [controlEl]="contractNumber"></abp-validation-summary>-->
                                 </div>
                             </div>
                             <div class="form-group row required col-6">
@@ -83,9 +83,9 @@
                                         <option *ngFor="let agency of allAgencies" [value]="agency.id">{{agency.name}}</option>
                                     </select>
 
-                                   
-                            </div>
+
                                 </div>
+                            </div>
 
                             <div class="form-group row required col-6">
                                 <label class="col-md-3 col-form-label" for="ADDRESS">
@@ -95,11 +95,11 @@
                                     <select name="DepartmentId"
                                             class="form-control"
                                             id="DepartmentId" [(ngModel)]="projectDepartmentId"
-                                           disabled >
+                                            disabled>
                                         <option *ngFor="let department of allDepartments" [value]="department.id">{{department.name}}</option>
                                     </select>
 
-                                   
+
                                 </div>
                             </div>
 
@@ -161,10 +161,57 @@
                                                             [controlEl]="inspectionDate"></abp-validation-summary>
                                 </div>
                             </div>
+                            <div class="row col-12">
+                                <div class="form-group  required col-2">
+                                    <label class="col-md-12 col-form-label" for="ADDRESS">
+                                        {{ "SiteReadinessTime" | localize }}
+                                    </label>
 
+                                </div>
+
+                                <div class="form-group row required col-2">
+                                    <label class="col-md-6 col-form-label" for="ADDRESS">
+                                        {{ "Min" | localize }}
+                                    </label>
+                                    <div class="col-md-5">
+                                        <input type="number"
+                                               min="1" max="60"
+                                               class="form-control"
+                                               name="Min"
+                                               id="Min"
+                                               required
+                                               [(ngModel)]="request.min"
+                                               #MinModel="ngModel"
+                                               #Min />
+                                        <abp-validation-summary [control]="MinModel"
+                                                                [controlEl]="Min"></abp-validation-summary>
+                                        <!--(change)="hourse < 0 ? hourse = 0 : hourse; hourse > 60 ? hourse = 0 : hourse;"-->
+                                    </div>
+                                </div>
+
+                                <div class="form-group row required col-2">
+                                    <label class="col-md-6 col-form-label" for="ADDRESS">
+                                        {{ "Hours" | localize }}
+                                    </label>
+                                    <div class="col-md-5">
+                                        <input type="number"
+                                               min="1" max="60"
+                                               class="form-control"
+                                               name="Hours"
+                                               id="Hours"
+                                               required
+                                               [(ngModel)]="request.hours"
+                                               #HoursModel="ngModel"
+                                               #Hours />
+                                        <abp-validation-summary [control]="HoursModel"
+                                                                [controlEl]="Hours"></abp-validation-summary>
+                                        <!--(change)="request.hours < 0 ? request.hours = 0 : request.hours; request.hours > 60 ? request.hours = 0 : request.hours;"-->
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group row  col-6">
                                 <label class="col-md-3 col-form-label" for="Description">
-                                    {{ "Description" | localize }}
+                                    {{ "Commetns" | localize }}
                                 </label>
                                 <div class="col-md-9">
                                     <input type="text" [disabled]="request.id>0"
@@ -269,7 +316,7 @@
 
                             <div class="form-group row required col-6" *ngIf="hasSample">
                                 <label class="col-md-3 col-form-label" for="ADDRESS">
-                                    {{ "InspectionTestTypes" | localize }}
+                                    {{ "TypeofTest" | localize }}
                                 </label>
                                 <div class="col-md-9">
                                     <select name="testType"

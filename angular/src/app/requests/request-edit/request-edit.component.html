@@ -39,7 +39,7 @@
                             {{ "Approved" | localize }}
                         </button>
 
-                        <button *ngIf="(request.status ==3 &&  appSession.userId == supervisingQualityId) || (request.status ==3 && isGranted('Pages.Roles')) " type="button"
+                        <button *ngIf="(request.status ==3 && isGranted('Pages.Manage.LabProjectManager')) || (request.status ==3 && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="save(4)"
                                 class="btn btn-success"
@@ -48,7 +48,7 @@
                         </button>
 
                         <button *ngIf="(request.status ==2 && consultantId ==appSession.userId)
-                                    || (request.status ==3 && appSession.userId == supervisingQualityId)
+                             || isGranted('Pages.Manage.LabProjectManager')       || (request.status ==3 && appSession.userId == supervisingQualityId)
                                     || ((request.status ==2 ||request.status ==3)  && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="rejectRequest()"
@@ -222,21 +222,56 @@
                                                             [controlEl]="inspectionDate"></abp-validation-summary>
                                 </div>
                             </div>
+                           <div class="row col-12">
+                                <div class="form-group  required col-2">
+                                    <label class="col-md-12 col-form-label" for="ADDRESS">
+                                        {{ "SiteReadinessTime" | localize }}
+                                    </label>
 
-                            <!--<div class="form-group row required col-6">
-                                <label class="col-md-3 col-form-label" for="ADDRESS">
-                                    {{ "InspectionTime" | localize }}
-                                </label>
-                                <div class="col-md-9">
-                                    <input type="number"
-                                           min="1" max="60"
-                                           class="form-control"
-                                           name="inspectionTime"
-                                           id="inspectionTime"
-                                             [(ngModel)]="hourse"
-                                           (change)= "hourse < 0 ? hourse = 0 : hourse; hourse > 60 ? hourse = 0 : hourse;">
                                 </div>
-                            </div>-->
+
+                                <div class="form-group row required col-2">
+                                    <label class="col-md-6 col-form-label" for="ADDRESS">
+                                        {{ "Min" | localize }}
+                                    </label>
+                                    <div class="col-md-5">
+                                        <input type="number"
+                                               min="1" max="60"
+                                               class="form-control"
+                                               name="Min"
+                                               id="Min"
+                                               required
+                                               [(ngModel)]="request.min"
+                                               #MinModel="ngModel"
+                                                  #Min />
+                                    <abp-validation-summary [control]="MinModel"
+                                                            [controlEl]="Min"></abp-validation-summary>
+                                        <!--(change)="hourse < 0 ? hourse = 0 : hourse; hourse > 60 ? hourse = 0 : hourse;"-->
+                                    </div>
+                                </div>
+
+                                <div class="form-group row required col-2">
+                                    <label class="col-md-6 col-form-label" for="ADDRESS">
+                                        {{ "Hours" | localize }}
+                                    </label>
+                                    <div class="col-md-5">
+                                        <input type="number"
+                                               min="1" max="60"
+                                               class="form-control"
+                                               name="Hours"
+                                               id="Hours"
+                                               required
+                                               [(ngModel)]="request.hours"
+                                               #HoursModel="ngModel"
+                                               #Hours />
+                                        <abp-validation-summary [control]="HoursModel"
+                                                                [controlEl]="Hours"></abp-validation-summary>
+                                        <!--(change)="request.hours < 0 ? request.hours = 0 : request.hours; request.hours > 60 ? request.hours = 0 : request.hours;"-->
+                                    </div>
+                                </div>
+                            </div>
+                         
+
 
                             <div class="form-group row required col-6">
                                 <label class="col-md-3 col-form-label" for="Description">

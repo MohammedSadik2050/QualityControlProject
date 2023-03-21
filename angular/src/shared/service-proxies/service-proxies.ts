@@ -7685,6 +7685,8 @@ export class RequestDto implements IRequestDto {
     status: RequestStatus;
     statusName: string | undefined;
     geometry: string | undefined;
+    hours: number;
+    min: number;
 
     constructor(data?: IRequestDto) {
         if (data) {
@@ -7712,6 +7714,8 @@ export class RequestDto implements IRequestDto {
             this.status = _data["status"];
             this.statusName = _data["statusName"];
             this.geometry = _data["geometry"];
+            this.hours = _data["hours"];
+            this.min = _data["min"];
         }
     }
 
@@ -7739,6 +7743,8 @@ export class RequestDto implements IRequestDto {
         data["status"] = this.status;
         data["statusName"] = this.statusName;
         data["geometry"] = this.geometry;
+        data["hours"] = this.hours;
+        data["min"] = this.min;
         return data; 
     }
 
@@ -7766,6 +7772,8 @@ export interface IRequestDto {
     status: RequestStatus;
     statusName: string | undefined;
     geometry: string | undefined;
+    hours: number;
+    min: number;
 }
 
 export class RequestInspectionTestDto implements IRequestInspectionTestDto {

@@ -138,7 +138,7 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
                 this.loadTestsByTypes();
                 this.saving = false;
                 if (this.request.status == RequestStatus._2) {
-                    this.saveWorkFlow();
+                 //   this.saveWorkFlow();
                 }
                 //this.bsModalRef.hide();
                 //this.onSave.emit();

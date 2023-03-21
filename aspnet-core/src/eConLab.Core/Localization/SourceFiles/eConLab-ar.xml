@@ -3,7 +3,6 @@
 	<texts>
 		<text name="UserType">نوع المستخدم</text>
 		<text name="Qty">الكميه</text>
-		<text name="LabProjectManager">مدير المشروع</text>
 		<text name="SupervisingQuality">مشرف الجوده</text>
 		<text name="ContractNumber">رقم العقد</text>
 		<text name="StartDate">بدايه المشروع</text>
@@ -200,6 +199,10 @@
 		<text name="ActionNote">الملاحظات</text>
 		<text name="CreationDate">تاريخ الإدخال</text>
 		<text name="Commetns">ملاحظات</text>
-		<text name="TypeofTest">نوع الإختبارات</text>
+		<text name="TypeofTest">نوع الإختبار</text>
+		<text name="SiteReadinessTime">وقت جاهزيه الموقع</text>
+		<text name="Hours">ساعات</text>
+		<text name="Min">دقائق</text>
+		<text name="LabProjectManager">مدير المختير</text>
 	</texts>
 </localizationDictionary>
