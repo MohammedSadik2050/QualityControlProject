@@ -23,6 +23,7 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.RequestWFServiceProxy,
         ApiServiceProxies.RequestProjectItemServiceProxy,
         ApiServiceProxies.DepartmentServiceProxy,
+        ApiServiceProxies.DashboardServiceProxy,
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]
 })

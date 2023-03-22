@@ -638,6 +638,69 @@ export class ConfigurationServiceProxy {
 }
 
 @Injectable()
+export class DashboardServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getSystemStatisticsDashboard() : Observable<StatisticsDto> {
+        let url_ = this.baseUrl + "/api/services/app/Dashboard/GetSystemStatisticsDashboard";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSystemStatisticsDashboard(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSystemStatisticsDashboard(<any>response_);
+                } catch (e) {
+                    return <Observable<StatisticsDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<StatisticsDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetSystemStatisticsDashboard(response: HttpResponseBase): Observable<StatisticsDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = StatisticsDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<StatisticsDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class DepartmentServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -6861,6 +6924,9 @@ export enum InspectionTestTypes {
     _1 = 1,
     _2 = 2,
     _3 = 3,
+    _4 = 4,
+    _5 = 5,
+    _6 = 6,
 }
 
 export class Int64EntityDto implements IInt64EntityDto {
@@ -7321,6 +7387,53 @@ export interface IProjectItemDto {
     name: string | undefined;
     description: string | undefined;
     quantity: number;
+}
+
+export class ProjectStatisticsDto implements IProjectStatisticsDto {
+    totalProjectApproved: number;
+    totalProjectUnderReview: number;
+
+    constructor(data?: IProjectStatisticsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalProjectApproved = _data["totalProjectApproved"];
+            this.totalProjectUnderReview = _data["totalProjectUnderReview"];
+        }
+    }
+
+    static fromJS(data: any): ProjectStatisticsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectStatisticsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalProjectApproved"] = this.totalProjectApproved;
+        data["totalProjectUnderReview"] = this.totalProjectUnderReview;
+        return data; 
+    }
+
+    clone(): ProjectStatisticsDto {
+        const json = this.toJSON();
+        let result = new ProjectStatisticsDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectStatisticsDto {
+    totalProjectApproved: number;
+    totalProjectUnderReview: number;
 }
 
 export class QCUserCreateDto implements IQCUserCreateDto {
@@ -8004,6 +8117,53 @@ export interface IRequestProjectItemViewDto {
     projectIdItemId: number;
 }
 
+export class RequestStatisticsDto implements IRequestStatisticsDto {
+    totalRequestApproved: number;
+    totalRequestPending: number;
+
+    constructor(data?: IRequestStatisticsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalRequestApproved = _data["totalRequestApproved"];
+            this.totalRequestPending = _data["totalRequestPending"];
+        }
+    }
+
+    static fromJS(data: any): RequestStatisticsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RequestStatisticsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalRequestApproved"] = this.totalRequestApproved;
+        data["totalRequestPending"] = this.totalRequestPending;
+        return data; 
+    }
+
+    clone(): RequestStatisticsDto {
+        const json = this.toJSON();
+        let result = new RequestStatisticsDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IRequestStatisticsDto {
+    totalRequestApproved: number;
+    totalRequestPending: number;
+}
+
 export enum RequestStatus {
     _1 = 1,
     _2 = 2,
@@ -8683,6 +8843,104 @@ export class RoleListDtoListResultDto implements IRoleListDtoListResultDto {
 
 export interface IRoleListDtoListResultDto {
     items: RoleListDto[] | undefined;
+}
+
+export class StackholderDto implements IStackholderDto {
+    totalContractorUsers: number;
+    totalConsultantUsers: number;
+
+    constructor(data?: IStackholderDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalContractorUsers = _data["totalContractorUsers"];
+            this.totalConsultantUsers = _data["totalConsultantUsers"];
+        }
+    }
+
+    static fromJS(data: any): StackholderDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new StackholderDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalContractorUsers"] = this.totalContractorUsers;
+        data["totalConsultantUsers"] = this.totalConsultantUsers;
+        return data; 
+    }
+
+    clone(): StackholderDto {
+        const json = this.toJSON();
+        let result = new StackholderDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IStackholderDto {
+    totalContractorUsers: number;
+    totalConsultantUsers: number;
+}
+
+export class StatisticsDto implements IStatisticsDto {
+    stackholderDto: StackholderDto;
+    projectStatisticsDto: ProjectStatisticsDto;
+    requestStatisticsDto: RequestStatisticsDto;
+
+    constructor(data?: IStatisticsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.stackholderDto = _data["stackholderDto"] ? StackholderDto.fromJS(_data["stackholderDto"]) : <any>undefined;
+            this.projectStatisticsDto = _data["projectStatisticsDto"] ? ProjectStatisticsDto.fromJS(_data["projectStatisticsDto"]) : <any>undefined;
+            this.requestStatisticsDto = _data["requestStatisticsDto"] ? RequestStatisticsDto.fromJS(_data["requestStatisticsDto"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): StatisticsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new StatisticsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["stackholderDto"] = this.stackholderDto ? this.stackholderDto.toJSON() : <any>undefined;
+        data["projectStatisticsDto"] = this.projectStatisticsDto ? this.projectStatisticsDto.toJSON() : <any>undefined;
+        data["requestStatisticsDto"] = this.requestStatisticsDto ? this.requestStatisticsDto.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): StatisticsDto {
+        const json = this.toJSON();
+        let result = new StatisticsDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IStatisticsDto {
+    stackholderDto: StackholderDto;
+    projectStatisticsDto: ProjectStatisticsDto;
+    requestStatisticsDto: RequestStatisticsDto;
 }
 
 export enum TenantAvailabilityState {

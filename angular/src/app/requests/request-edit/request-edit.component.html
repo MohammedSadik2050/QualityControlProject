@@ -23,7 +23,7 @@
                             {{ saveText | localize }}
                         </button>
 
-                        <button *ngIf="request.id>0 && isGranted('Pages.Manage.Contractor') && (request.status ==1 ||request.status ==5  )" type="button"
+                        <button style="background-color: #ffc107" *ngIf="request.id>0 && isGranted('Pages.Manage.Contractor') && (request.status ==1 ||request.status ==5  )" type="button"
                                 [disabled]="requestTests.length==0"
                                 (click)="save(2)"
                                 class="btn btn-success"
@@ -31,7 +31,7 @@
                             {{ "SendToConsultant" | localize }}
                         </button>
 
-                        <button *ngIf="(request.status ==2 && consultantId== appSession.userId) || (request.status ==2 && isGranted('Pages.Roles')) " type="button"
+                        <button style="background-color: #ffc107" *ngIf="(request.status ==2 && consultantId== appSession.userId) || (request.status ==2 && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="save(3)"
                                 class="btn btn-success"
@@ -39,7 +39,7 @@
                             {{ "Approved" | localize }}
                         </button>
                         <!--(request.status ==3 && isGranted('Pages.Manage.LabProjectManager')) ||-->
-                        <button *ngIf=" (request.status ==3 && isGranted('Pages.Roles')) " type="button"
+                        <button style="background-color: #ffc107" *ngIf=" (request.status ==3 && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="save(4)"
                                 class="btn btn-success"
@@ -48,7 +48,7 @@
                         </button>
 
                         <button *ngIf="(request.status ==2 && consultantId ==appSession.userId)
-                             || (request.status ==3 && isGranted('Pages.Manage.LabProjectManager'))     || (request.status ==3 && appSession.userId == supervisingQualityId)
+                             || (request.status ==3 && isGranted('Pages.Manage.LabProjectManager')) || (request.status ==3 && appSession.userId == supervisingQualityId)
                                     || ((request.status ==2 ||request.status ==3)  && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="rejectRequest()"
