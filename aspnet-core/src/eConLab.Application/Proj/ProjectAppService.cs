@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authorization;
 using Abp.Authorization;
 using eConLab.Authorization;
 using Abp.Extensions;
+using eConLab.Enum;
 
 namespace eConLab.Proj
 {
@@ -49,10 +50,13 @@ namespace eConLab.Proj
             _projectItemRepo = projectItemRepo;
         }
 
-        [AbpAuthorize(PermissionNames.Pages_Manage_Project)]
+        //[AbpAuthorize(PermissionNames.Pages_Manage_Project)]
         public async Task<ProjectDto> CreateOrUpdate(ProjectDto input)
         {
-
+            if (input.Status == ProjectStatus.ApprovedByLabProjectManager)
+            {
+                input.IsActive = true;
+            }
             await _projectRepo.InsertOrUpdateAsync(_mapper.Map<Project>(input));
             await CurrentUnitOfWork.SaveChangesAsync();
 
@@ -66,7 +70,10 @@ namespace eConLab.Proj
         public async Task<ProjectDto> Get(long id)
         {
             var obje = _projectRepo.FirstOrDefault(x => x.Id == id);
-            return _mapper.Map<ProjectDto>(obje) ?? null;
+
+            var restult = _mapper.Map<ProjectDto>(obje);
+            restult.StatusName = restult.Status.ToString();
+            return restult ?? null;
         }
 
 
@@ -75,9 +82,12 @@ namespace eConLab.Proj
             var filter = ObjectMapper.Map<ProjectPaginatedDto>(input);
 
             var lstItems = await GetListAsync(input.SkipCount, input.MaxResultCount, filter);
-            var totalCount = await GetTotalCountAsync(input);
 
-            return new PagedResultDto<ProjectDto>(totalCount, ObjectMapper.Map<List<ProjectDto>>(lstItems));
+            var totalCount = await GetTotalCountAsync(input);
+            var result = ObjectMapper.Map<List<ProjectDto>>(lstItems);
+            result.ForEach(m => { m.StatusName = m.Status.ToString(); });
+            
+            return new PagedResultDto<ProjectDto>(totalCount, result);
         }
 
 
@@ -97,19 +107,19 @@ namespace eConLab.Proj
             if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin) == false)
             {
                 if (userRoles.Contains(StaticRoleNames.Tenants.Consultant))
-                    lstItems= lstItems.Where(d => d.ConsultantId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.ConsultantId == AbpSession.UserId);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.Contractor))
-                    lstItems= lstItems.Where(d => d.ContractorId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.ContractorId == AbpSession.UserId);
 
-                if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
-                    lstItems= lstItems.Where(d => d.LabProjectManagerId == AbpSession.UserId);
+                //if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
+                //    lstItems= lstItems.Where(d => d.LabProjectManagerId == AbpSession.UserId);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingQuality))
-                    lstItems= lstItems.Where(d => d.SupervisingQualityId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.SupervisingQualityId == AbpSession.UserId);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingEngineer))
-                    lstItems= lstItems.Where(d => d.SupervisingEngineerId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.SupervisingEngineerId == AbpSession.UserId);
             }
 
 
@@ -120,7 +130,7 @@ namespace eConLab.Proj
         public async Task<List<ProjectDto>> GetAllDropdown()
         {
 
-            var lstItems = _projectRepo.GetAll();
+            var lstItems = _projectRepo.GetAll().Where(s=>s.IsActive==true);
 
             var userRoles = (await UserManager.GetRolesAsync(await GetCurrentUserAsync())).ToList();
             if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin) == false)
@@ -131,8 +141,8 @@ namespace eConLab.Proj
                 if (userRoles.Contains(StaticRoleNames.Tenants.Contractor))
                     lstItems = lstItems.Where(d => d.ContractorId == AbpSession.UserId);
 
-                if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
-                    lstItems = lstItems.Where(d => d.LabProjectManagerId == AbpSession.UserId);
+                //if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
+                //    lstItems = lstItems.Where(d => d.LabProjectManagerId == AbpSession.UserId);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingQuality))
                     lstItems = lstItems.Where(d => d.SupervisingQualityId == AbpSession.UserId);
@@ -144,7 +154,7 @@ namespace eConLab.Proj
             var res = lstItems.ToList();
             return ObjectMapper.Map<List<ProjectDto>>(lstItems);
 
-         
+
         }
         private async Task<int> GetTotalCountAsync(ProjectPaginatedDto filter = null)
         {
@@ -159,19 +169,19 @@ namespace eConLab.Proj
             if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin) == false)
             {
                 if (userRoles.Contains(StaticRoleNames.Tenants.Consultant))
-                    lstItems= lstItems.Where(d => d.ConsultantId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.ConsultantId == AbpSession.UserId);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.Contractor))
-                    lstItems= lstItems.Where(d => d.ContractorId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.ContractorId == AbpSession.UserId);
 
-                if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
-                    lstItems= lstItems.Where(d => d.LabProjectManagerId == AbpSession.UserId);
+                //if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
+                //    lstItems= lstItems.Where(d => d.LabProjectManagerId == AbpSession.UserId);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingQuality))
-                    lstItems= lstItems.Where(d => d.SupervisingQualityId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.SupervisingQualityId == AbpSession.UserId);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingEngineer))
-                    lstItems= lstItems.Where(d => d.SupervisingEngineerId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.SupervisingEngineerId == AbpSession.UserId);
             }
 
             return lstItems.ToList().Count;
@@ -181,7 +191,7 @@ namespace eConLab.Proj
         #region ProjectItems
         public async Task<ProjectItemDto> CreateOrUpdateProjectItem(ProjectItemDto input)
         {
-
+           
             await _projectItemRepo.InsertOrUpdateAsync(_mapper.Map<ProjectItem>(input));
             await CurrentUnitOfWork.SaveChangesAsync();
 

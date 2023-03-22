@@ -204,5 +204,15 @@
 		<text name="Hours">ساعات</text>
 		<text name="Min">دقائق</text>
 		<text name="LabProjectManager">مدير المختير</text>
+		<text name="ApprovedByConsultantRevstion">تمت المراجعه</text>
+		<text name="ApprovedBySupervising">تم الإعتماد</text>
+		<text name="ApprovedByLabProjectManager">تم التسجيل</text>
+		<text name="ProjectRegister">تسجيل الطلب</text>
+		<text name="TotalContractors">المقاولون</text>
+		<text name="Consultants">الإستشاريين</text>
+		<text name="ActivatedProjects">المشروعات المفعله</text>
+		<text name="ProjectsUnderReview">مشروعات تحت الفحص</text>
+		<text name="TotalPendingRequests">طلبات معلقه</text>
+		<text name="FinishedRequests">طلبات معتمده</text>
 	</texts>
 </localizationDictionary>

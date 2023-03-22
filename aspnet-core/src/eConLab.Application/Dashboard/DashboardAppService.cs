@@ -46,13 +46,13 @@ namespace eConLab.Dashboard
             result.StackholderDto.TotalContractorUsers = lstUsers.Where(d => d.UserTypes == UserTypes.Contractor).Count();
 
             var lstProjects = _projectRepo.GetAll().ToList();
-            result.ProjectStatisticsDto.TotalProjectApproved = lstProjects/*.Where(d => d.IsActive ==true)*/.Count();
-            result.ProjectStatisticsDto.TotalProjectUnderReview = lstProjects/*.Where(d => d.IsActive == true)*/.Count();
+            result.ProjectStatisticsDto.TotalProjectApproved = lstProjects.Where(d => d.IsActive ==true).Count();
+            result.ProjectStatisticsDto.TotalProjectUnderReview = lstProjects.Where(d => d.IsActive == false).Count();
 
             var lstRequests = _requestRepo.GetAll().ToList();
             
-            result.RequestStatisticsDto.TotalRequestApproved = lstRequests.Where(d => d.Status == Enum.RequestStatus.ApprovedBySupervisingQuality).Count();
-            result.RequestStatisticsDto.TotalRequestPending = lstRequests.Where(d => d.Status < Enum.RequestStatus.ApprovedBySupervisingQuality).Count();
+            result.RequestStatisticsDto.TotalRequestApproved = lstRequests.Where(d => d.Status == Enum.RequestStatus.ApprovedBySupervisingQuality || d.Status == Enum.RequestStatus.ApprovedByConsultant).Count();
+            result.RequestStatisticsDto.TotalRequestPending = lstRequests.Where(d => d.Status != Enum.RequestStatus.ApprovedBySupervisingQuality && d.Status != Enum.RequestStatus.ApprovedByConsultant).Count();
             return result;
         }
     }

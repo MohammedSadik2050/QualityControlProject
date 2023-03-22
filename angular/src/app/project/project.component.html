@@ -138,6 +138,8 @@
                                     <th>{{ "StartDate" | localize }}</th>
                                     <th>{{ "CompletedDate" | localize }}</th>
                                     <th>{{ "SiteDelivedDate" | localize }}</th>
+                                    <th>{{ "Status" | localize }}</th>
+                                    <th>{{ "IsActive" | localize }}</th>
                                     <th style="width: 310px;"></th>
                                 </tr>
                             </thead>
@@ -157,6 +159,16 @@
                                     <td>{{ project.startDate | date: 'dd/MM/yyyy'}}</td>
                                     <td>{{ project.completedDate | date: 'dd/MM/yyyy' }}</td>
                                     <td>{{ project.siteDelivedDate  | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{ project.statusName | localize}}</td>
+                                    <td>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox"
+                                                   class="custom-control-input"
+                                                   disabled
+                                                   [checked]="project.isActive" />
+                                            <label class="custom-control-label"></label>
+                                        </div>
+                                    </td>
                                     <td>
                                         <button type="button"
                                                 class="btn btn-sm bg-secondary"

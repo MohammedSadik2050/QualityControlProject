@@ -121,7 +121,7 @@ export class RequestViewComponent extends AppComponentBase implements OnInit {
     }
     LoadRequestHistory() {
 
-        this._requestWFServiceProxy.getAllHistory(this.request.id).subscribe(res => {
+        this._requestWFServiceProxy.getAllHistory(this.request.id,2).subscribe(res => {
             this.requestHistories = res;
             console.log('History', this.requestHistories);
         });

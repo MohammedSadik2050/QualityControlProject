@@ -3560,17 +3560,22 @@ export class RequestWFServiceProxy {
 
     /**
      * @param requestId (optional) 
+     * @param entitiy (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(requestId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestWFDto[]> {
+    getAll(requestId: number | undefined, entitiy: Entities | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestWFDto[]> {
         let url_ = this.baseUrl + "/api/services/app/RequestWF/GetAll?";
         if (requestId === null)
             throw new Error("The parameter 'requestId' cannot be null.");
         else if (requestId !== undefined)
             url_ += "RequestId=" + encodeURIComponent("" + requestId) + "&";
+        if (entitiy === null)
+            throw new Error("The parameter 'entitiy' cannot be null.");
+        else if (entitiy !== undefined)
+            url_ += "Entitiy=" + encodeURIComponent("" + entitiy) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -3638,14 +3643,19 @@ export class RequestWFServiceProxy {
 
     /**
      * @param requestId (optional) 
+     * @param entity (optional) 
      * @return Success
      */
-    getAllHistory(requestId: number | undefined) : Observable<RequestWFHistoryDto[]> {
+    getAllHistory(requestId: number | undefined, entity: Entities | undefined) : Observable<RequestWFHistoryDto[]> {
         let url_ = this.baseUrl + "/api/services/app/RequestWF/GetAllHistory?";
         if (requestId === null)
             throw new Error("The parameter 'requestId' cannot be null.");
         else if (requestId !== undefined)
             url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
+        if (entity === null)
+            throw new Error("The parameter 'entity' cannot be null.");
+        else if (entity !== undefined)
+            url_ += "entity=" + encodeURIComponent("" + entity) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -6475,6 +6485,11 @@ export interface IDropdownListDto {
     name: string | undefined;
 }
 
+export enum Entities {
+    _1 = 1,
+    _2 = 2,
+}
+
 export class ExternalAuthenticateModel implements IExternalAuthenticateModel {
     authProvider: string;
     providerKey: string;
@@ -7186,9 +7201,11 @@ export class ProjectDto implements IProjectDto {
     supervisingEngineerId: number;
     consultantId: number;
     contractorId: number;
-    labProjectManagerId: number;
     supervisingQualityId: number;
     geometryLocations: string | undefined;
+    statusName: string | undefined;
+    isActive: boolean;
+    status: ProjectStatus;
 
     constructor(data?: IProjectDto) {
         if (data) {
@@ -7214,9 +7231,11 @@ export class ProjectDto implements IProjectDto {
             this.supervisingEngineerId = _data["supervisingEngineerId"];
             this.consultantId = _data["consultantId"];
             this.contractorId = _data["contractorId"];
-            this.labProjectManagerId = _data["labProjectManagerId"];
             this.supervisingQualityId = _data["supervisingQualityId"];
             this.geometryLocations = _data["geometryLocations"];
+            this.statusName = _data["statusName"];
+            this.isActive = _data["isActive"];
+            this.status = _data["status"];
         }
     }
 
@@ -7242,9 +7261,11 @@ export class ProjectDto implements IProjectDto {
         data["supervisingEngineerId"] = this.supervisingEngineerId;
         data["consultantId"] = this.consultantId;
         data["contractorId"] = this.contractorId;
-        data["labProjectManagerId"] = this.labProjectManagerId;
         data["supervisingQualityId"] = this.supervisingQualityId;
         data["geometryLocations"] = this.geometryLocations;
+        data["statusName"] = this.statusName;
+        data["isActive"] = this.isActive;
+        data["status"] = this.status;
         return data; 
     }
 
@@ -7270,9 +7291,11 @@ export interface IProjectDto {
     supervisingEngineerId: number;
     consultantId: number;
     contractorId: number;
-    labProjectManagerId: number;
     supervisingQualityId: number;
     geometryLocations: string | undefined;
+    statusName: string | undefined;
+    isActive: boolean;
+    status: ProjectStatus;
 }
 
 export class ProjectDtoPagedResultDto implements IProjectDtoPagedResultDto {
@@ -7434,6 +7457,14 @@ export class ProjectStatisticsDto implements IProjectStatisticsDto {
 export interface IProjectStatisticsDto {
     totalProjectApproved: number;
     totalProjectUnderReview: number;
+}
+
+export enum ProjectStatus {
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
+    _3 = 3,
+    _4 = 4,
 }
 
 export class QCUserCreateDto implements IQCUserCreateDto {
@@ -8328,6 +8359,7 @@ export class RequestWFDto implements IRequestWFDto {
     currentUserId: number;
     actionName: string | undefined;
     actionNotes: string | undefined;
+    entity: Entities;
 
     constructor(data?: IRequestWFDto) {
         if (data) {
@@ -8345,6 +8377,7 @@ export class RequestWFDto implements IRequestWFDto {
             this.currentUserId = _data["currentUserId"];
             this.actionName = _data["actionName"];
             this.actionNotes = _data["actionNotes"];
+            this.entity = _data["entity"];
         }
     }
 
@@ -8362,6 +8395,7 @@ export class RequestWFDto implements IRequestWFDto {
         data["currentUserId"] = this.currentUserId;
         data["actionName"] = this.actionName;
         data["actionNotes"] = this.actionNotes;
+        data["entity"] = this.entity;
         return data; 
     }
 
@@ -8379,6 +8413,7 @@ export interface IRequestWFDto {
     currentUserId: number;
     actionName: string | undefined;
     actionNotes: string | undefined;
+    entity: Entities;
 }
 
 export class RequestWFHistoryDto implements IRequestWFHistoryDto {

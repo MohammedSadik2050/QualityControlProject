@@ -104,7 +104,7 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
         });
     }
     sampleChange(event) {
-        if (event==true) {
+        if (event == true) {
             this.saveText = 'CONTINUE'
         } else {
             this.saveText = 'SendToConsultant'
@@ -118,7 +118,7 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
         });
     }
 
-    save(status:number): void {
+    save(status: number): void {
         this.saving = true;
         this.request.mainRequestType = 1;
         if (this.hasSample == true) {
@@ -127,7 +127,7 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
             this.request.hasSample = 2;
         }
         this.request.status = status;
-      
+
         this.request.inspectionDate = moment(this.InspectionDatemodel, "YYYY-MM-DD");
         this._requestServiceProxy.createOrUpdate(this.request).subscribe(
             res => {
@@ -138,7 +138,9 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
                 this.loadTestsByTypes();
                 this.saving = false;
                 if (this.request.status == RequestStatus._2) {
-                 //   this.saveWorkFlow();
+                    this.saveWorkFlow();
+                } else {
+                    this.router.navigateByUrl('/app/examinationRequest');
                 }
                 //this.bsModalRef.hide();
                 //this.onSave.emit();
@@ -170,14 +172,17 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
         var currentProject = this.projects.find(x => x.id === parseInt(this.request.projectId.toString()));
         var workFlow = new RequestWFDto();
         workFlow.requestId = this.request.id;
-        workFlow.currentUserId = currentProject.consultantId;
+        workFlow.entity = 1;
+        workFlow.currentUserId = this.appSession.userId;
+        workFlow.actionName = "تم التقديم";
+        workFlow.actionNotes = "تم الإرسال الى الاستشاري";
         this._requestWFServiceProxy.createOrUpdate(workFlow).subscribe(res => {
             this.router.navigateByUrl('/app/examinationRequest');
         });
     }
     saveInspectionTest() {
         //this.requestInspection.
-       
+
         this.requestInspection.inspectionTestType = this.request.testType;
         this.requestInspection.requestId = this.request.id;
         var check = this.requestTests.filter(x => x.inspectionTestId === parseInt(this.requestInspection.inspectionTestId.toString()));
@@ -197,10 +202,10 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
     }
 
     LoadProject(event) {
-        
+
         this._projectServiceProxy.get(event).subscribe(res => {
             this.project = res;
-           
+
             this.projectName = this.project.name;
             this.projectContractNumber = this.project.contractNumber;
             this.projectAgency = this.project.agencyId;
@@ -208,7 +213,7 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
             this.projectContractNumber = this.project.contractNumber;
             this.startDatemodel = moment(this.project.startDate).format("YYYY-MM-DD");
             this.completeDatemodel = moment(this.project.completedDate).format("YYYY-MM-DD");
-          
+
         });
     }
 

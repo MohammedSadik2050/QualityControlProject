@@ -16,6 +16,7 @@ export class HomeComponent extends AppComponentBase implements OnInit {
     ngOnInit(): void {
         this._dashboardService.getSystemStatisticsDashboard().subscribe(res => {
             this.dashBoard = res;
+            this.dashBoard.stackholderDto.totalContractorUsers;
         });
     }
 

@@ -30,7 +30,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     hide = false;
     hasSample = false;
     projectDepartmentId: number = 0;
-    consultantId: number = 0;
+    consultantId: number = 20;
     supervisingQualityId: number = 0;
     projectAgency: number = 0;
     selectedprojectItem: number = 0;
@@ -127,7 +127,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     }
     LoadRequestHistory() {
 
-        this._requestWFServiceProxy.getAllHistory(this.request.id).subscribe(res => {
+        this._requestWFServiceProxy.getAllHistory(this.request.id,1).subscribe(res => {
             this.requestHistories = res;
             console.log('History', this.requestHistories);
         });
@@ -219,7 +219,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
                 class: 'modal-lg',
                 initialState: {
                     id: this.request.id,
-                    consultantId: this.project.consultantId,
+                    consultantId: this.appSession.userId,
                     request: this.request,
                 },
             }
@@ -234,10 +234,11 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
        
         var workFlow = new RequestWFDto();
         workFlow.requestId = this.request.id;
+        workFlow.entity = 1;
         workFlow.currentUserId = this.appSession.userId;
         if (this.request.status == 2) {
-            workFlow.actionName = "تم التقديم";
-            workFlow.actionNotes = "تم الإرسال الى الاستشاري";
+            workFlow.actionName = "تم المراجعه";
+            workFlow.actionNotes = "الإستشاري راجع الطلب";
         }
 
         if (this.request.status == 3) {
