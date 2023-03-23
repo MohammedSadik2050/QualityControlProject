@@ -24,5 +24,7 @@ namespace eConLab.Requests.Dto
         public RequestStatus Status { get; set; }
         public string StatusName { get; set; }
         public string Geometry { get; set; }
+        public int Hours { get; set; } = 0;
+        public int Min { get; set; } = 0;
     }
 }

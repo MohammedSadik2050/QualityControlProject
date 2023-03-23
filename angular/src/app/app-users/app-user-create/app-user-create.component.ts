@@ -90,7 +90,7 @@ export class AppUserCreateComponent extends AppComponentBase implements OnInit {
         userType = new UserTypes();
         userType.id = 5;
         userType.name = "LabProjectManager";
-        userType.arabicName = "مدير المشروع";
+        userType.arabicName = "مدير المختبر";
         this.userTypes.push(userType);
 
         userType = new UserTypes();
@@ -120,7 +120,7 @@ export class AppUserCreateComponent extends AppComponentBase implements OnInit {
         this.qcUser.userId = this._sessionService.userId;
         this.contractorObject.qcUserInput = this.qcUser;
         this.contractorObject.registerInput = this.currentUser;
-        this.contractorObject.registerInput.surname = this.contractorObject.registerInput.name;
+        this.contractorObject.registerInput.surname = this.qcUser.name;
         this.contractorObject.registerInput.name = this.qcUser.name;
         this._qcUserServiceProxy.createOrUpdate(this.contractorObject).subscribe(
             () => {

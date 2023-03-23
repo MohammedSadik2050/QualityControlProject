@@ -47,4 +47,19 @@ namespace eConLab.Enum
         public const string Rejected = "Rejected";
         public const string Pending = "Pending";
     }
+
+    public enum  ProjectStatus
+    {
+        Pending =0,
+        ApprovedByConsultantRevstion = 1,
+        ApprovedBySupervising = 2,
+        ApprovedByLabProjectManager = 3,
+        Rejected = 4
+    }
+
+    public enum Entities
+    {
+        Request = 1,
+        Project = 2,
+    }
 }

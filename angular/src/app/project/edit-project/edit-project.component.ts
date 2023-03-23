@@ -1,10 +1,12 @@
 import { ChangeDetectorRef, Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AbpSessionService } from 'abp-ng2-module';
 import * as moment from 'moment';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AppComponentBase } from '../../../shared/app-component-base';
 import { AppAuthService } from '../../../shared/auth/app-auth.service';
-import { AgencyDto, AgencyServiceProxy, AgencyTypeDto, DepartmentDto, DepartmentServiceProxy, DropdownListDto, LookupServiceProxy, ProjectDto, ProjectItemDto, ProjectServiceProxy } from '../../../shared/service-proxies/service-proxies';
+import { AgencyDto, AgencyServiceProxy, AgencyTypeDto, DepartmentDto, DepartmentServiceProxy, DropdownListDto, LookupServiceProxy, ProjectDto, ProjectItemDto, ProjectServiceProxy, RequestWFDto, RequestWFHistoryDto, RequestWFServiceProxy } from '../../../shared/service-proxies/service-proxies';
+import { ProjectRejectModalComponent } from '../project-reject-modal/project-reject-modal.component';
 
 @Component({
     selector: 'app-edit-project',
@@ -32,9 +34,11 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
     @Output() onSave = new EventEmitter<any>();
     projectId: number = 0;
     minDate = moment(this.project.startDate).format("YYYY-MM-DD");
-
+    consultantId: number = 0;
+    requestHistories: RequestWFHistoryDto[] = [];
     constructor(
         injector: Injector,
+        private router: Router,
         private _departmentServiceProxy: DepartmentServiceProxy,
         public _projectServiceProxy: ProjectServiceProxy,
         public _agencyServiceProxy: AgencyServiceProxy,
@@ -42,7 +46,9 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         public authService: AppAuthService,
         private _sessionService: AbpSessionService,
         private route: ActivatedRoute,
-        private changeDetectorRef: ChangeDetectorRef
+        private changeDetectorRef: ChangeDetectorRef,
+        private _modalService: BsModalService,
+        public _requestWFServiceProxy: RequestWFServiceProxy,
 
     ) {
         super(injector);
@@ -52,6 +58,7 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         this.projectId = this.route.snapshot.params['id'];
         this._projectServiceProxy.get(this.projectId).subscribe(res => {
             this.project = res;
+           
             this.startDatemodel = moment(this.project.startDate).format("YYYY-MM-DD");
             this.completeDatemodel = moment(this.project.completedDate).format("YYYY-MM-DD");
             this.siteDelivedDatemodel = moment(this.project.siteDelivedDate).format("YYYY-MM-DD");
@@ -64,7 +71,11 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
             this.loadProjectManagers();
             this.loadSupervisingQualities();
             this.loadProjectItems();
-          
+            this.LoadRequestHistory();
+            console.log('user', this.appSession.userId);
+            this.consultantId = this.project.consultantId;
+            console.log('conss', this.consultantId)
+            this.changeDetectorRef.detectChanges();
         });
 
     }
@@ -85,7 +96,13 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         }
    
     }
+    LoadRequestHistory() {
 
+        this._requestWFServiceProxy.getAllHistory(this.project.id, 2).subscribe(res => {
+            this.requestHistories = res;
+            console.log('History', this.requestHistories);
+        });
+    }
     loadProjectItems() {
         this._projectServiceProxy.getProjectItemsByProjectId(this.projectId).subscribe(res => {
             this.projectItems = res;
@@ -154,15 +171,17 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         //console.log("value", this.project.agencyId);
     }
 
-    save(): void {
+    save(status:number): void {
         this.saving = true;
         console.log("date", this.project.startDate);
+        this.project.status = status;
         this.project.startDate = moment(this.startDatemodel, "YYYY-MM-DD");
         this.project.completedDate = moment(this.completeDatemodel, "YYYY-MM-DD");
         this.project.siteDelivedDate = moment(this.siteDelivedDatemodel, "YYYY-MM-DD");
         this._projectServiceProxy.createOrUpdate(this.project).subscribe(
             () => {
                 this.notify.info(this.l('SavedSuccessfully'));
+                this.saveWorkFlow();
                 this.onSave.emit();
             },
             () => {
@@ -170,7 +189,32 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
             }
         );
     }
+    saveWorkFlow() {
 
+        var workFlow = new RequestWFDto();
+        workFlow.requestId = this.project.id;
+        workFlow.entity = 2;
+        workFlow.currentUserId = this.appSession.userId;
+        if (this.project.status == 1) {
+            workFlow.actionName = "تم مراجعه الطلب";
+            workFlow.actionNotes = "تم الإرسال الى الجهة المشرفة ";
+        }
+
+        if (this.project.status == 2) {
+            workFlow.actionName = "تمت إعتماد الطلب";
+            workFlow.actionNotes = "الجهه المشرفت وافقت على الطلب";
+        }
+
+        if (this.project.status == 3) {
+            workFlow.actionName = "تم تفعيل الطلب";
+            workFlow.actionNotes = "تم تسجيل المشروع بالنظام";
+        }
+
+
+        this._requestWFServiceProxy.createOrUpdate(workFlow).subscribe(res => {
+            this.router.navigateByUrl('/app/projects');
+        });
+    }
 
 
     saveProductItems() {
@@ -203,6 +247,25 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
 
         this._projectServiceProxy.getProjectItem(id).subscribe(res => {
             this.projectItem = res;
+        });
+    }
+
+    rejectRequest() {
+        let rejectModal: BsModalRef;
+        rejectModal = this._modalService.show(
+            ProjectRejectModalComponent,
+            {
+                class: 'modal-lg',
+                initialState: {
+                    id: this.project.id,
+                    consultantId: this.appSession.userId,
+                    request: this.project,
+                },
+            }
+        );
+
+        rejectModal.content.onSave.subscribe(() => {
+            this.ngOnInit();
         });
     }
 }

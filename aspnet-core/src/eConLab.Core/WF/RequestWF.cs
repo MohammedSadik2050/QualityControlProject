@@ -12,6 +12,8 @@ namespace eConLab.WF
     {
        public long RequestId { get; set; }
        public long CurrentUserId { get; set; }
+        public Entities Entity { get; set; } = Entities.Request;
+
     }
 
     public class RequestWFHistory : AuditedEntity<long>
@@ -20,7 +22,9 @@ namespace eConLab.WF
         public long UserId { get; set; }
         public string ActionNotes { get; set; }
         public string  ActionName { get; set; }
-
+        public Entities Entity { get; set; } = Entities.Request;
 
     }
+
+  
 }

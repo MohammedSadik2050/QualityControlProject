@@ -27,5 +27,7 @@ namespace eConLab.Req
         public HasSamples HasSample { get; set; }
         public string Geometry { get; set; }
         public Project Project { get; set; }
+        public int Hours { get; set; } = 0;
+        public int Min { get; set; } = 0;
     }
 }

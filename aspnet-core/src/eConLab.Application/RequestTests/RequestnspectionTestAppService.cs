@@ -38,7 +38,7 @@ namespace eConLab.Test
             _requestInspectionTestRepository = requestInspectionTestRepository;
         }
 
-      //  [AbpAuthorize(PermissionNames.Pages_Manage_InspectionTest, PermissionNames.ad)]
+        //[AbpAuthorize(PermissionNames.Pages_Manage_InspectionTest)]
         public async Task<RequestInspectionTestDto> CreateOrUpdate(CreateUpdateRequestTestDto input)
         {
 

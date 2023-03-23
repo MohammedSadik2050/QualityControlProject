@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eConLab.EntityFrameworkCore;
 
 namespace eConLab.Migrations
 {
     [DbContext(typeof(eConLabDbContext))]
-    partial class eConLabDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230321162938_Add_Min_Hours")]
+    partial class Add_Min_Hours
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1810,6 +1812,15 @@ namespace eConLab.Migrations
                     b.Property<long?>("AgencyTypeId")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("ApprovedByConsultant")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ApprovedByLabProjectManager")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ApprovedBySupervising")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("CompletedDate")
                         .HasColumnType("datetime2");
 
@@ -1840,6 +1851,9 @@ namespace eConLab.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<long>("LabProjectManagerId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
 
@@ -1854,9 +1868,6 @@ namespace eConLab.Migrations
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
 
                     b.Property<long>("SupervisingEngineerId")
                         .HasColumnType("bigint");
@@ -1976,41 +1987,6 @@ namespace eConLab.Migrations
                     b.ToTable("Requests");
                 });
 
-            modelBuilder.Entity("eConLab.Req.RequestInspectionTest", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("InspectionTestId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("InspectionTestType")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("LastModifierUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("RequestId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InspectionTestId");
-
-                    b.ToTable("RequestInspectionTests");
-                });
-
             modelBuilder.Entity("eConLab.Req.RequestProjectItem", b =>
                 {
                     b.Property<long>("Id")
@@ -2082,6 +2058,41 @@ namespace eConLab.Migrations
                     b.ToTable("InspectionTests");
                 });
 
+            modelBuilder.Entity("eConLab.TestModels.RequestInspectionTest", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("InspectionTestId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("InspectionTestType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RequestId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InspectionTestId");
+
+                    b.ToTable("RequestInspectionTests");
+                });
+
             modelBuilder.Entity("eConLab.WF.RequestWF", b =>
                 {
                     b.Property<long>("Id")
@@ -2097,9 +2108,6 @@ namespace eConLab.Migrations
 
                     b.Property<long>("CurrentUserId")
                         .HasColumnType("bigint");
-
-                    b.Property<int>("Entity")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
@@ -2133,9 +2141,6 @@ namespace eConLab.Migrations
 
                     b.Property<long?>("CreatorUserId")
                         .HasColumnType("bigint");
-
-                    b.Property<int>("Entity")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
@@ -2421,17 +2426,6 @@ namespace eConLab.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("eConLab.Req.RequestInspectionTest", b =>
-                {
-                    b.HasOne("eConLab.TestModels.InspectionTest", "InspectionTest")
-                        .WithMany()
-                        .HasForeignKey("InspectionTestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("InspectionTest");
-                });
-
             modelBuilder.Entity("eConLab.Req.RequestProjectItem", b =>
                 {
                     b.HasOne("eConLab.ProjectModels.ProjectItem", "ProjectItem")
@@ -2441,6 +2435,17 @@ namespace eConLab.Migrations
                         .IsRequired();
 
                     b.Navigation("ProjectItem");
+                });
+
+            modelBuilder.Entity("eConLab.TestModels.RequestInspectionTest", b =>
+                {
+                    b.HasOne("eConLab.TestModels.InspectionTest", "InspectionTest")
+                        .WithMany()
+                        .HasForeignKey("InspectionTestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("InspectionTest");
                 });
 
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>

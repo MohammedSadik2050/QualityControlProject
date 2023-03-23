@@ -195,8 +195,20 @@
 		<text name="ActionNote">Action Note</text>
 		<text name="CreationDate">Creation Date</text>
 		<text name="Approved">Approved</text>
-		<text name="Commetns">Commetns</text>
+		<text name="Commetns">Comments</text>
 		<text name="TypeofTest">Type of Test</text>
+		<text name="SiteReadinessTime">Site Readiness Time</text>
+		<text name="Hours">Hours</text>
+		<text name="Min">Minutes</text>
+		<text name="ApprovedByConsultantRevstion">Revised</text>
+		<text name="ApprovedBySupervising">Approved</text>
+		<text name="ApprovedByLabProjectManager">Confirmed to Regiseter</text>
+		<text name="ProjectRegister">Project Register</text>
+		<text name="TotalContractors">Contractors</text>
+		<text name="ActivatedProjects">Activated Projects</text>
+		<text name="ProjectsUnderReview">Projects Under Review</text>
+		<text name="TotalPendingRequests">Pending Requests</text>
+		<text name="FinishedRequests">Completed Requests</text>
 		
 </texts>
 </localizationDictionary>

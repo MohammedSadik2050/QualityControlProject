@@ -30,6 +30,8 @@ export class HeaderLanguageMenuComponent extends AppComponentBase
             this.localization.languages,
             (l) => !l.isDisabled
         );
+        console.log('Language', this.languages);
+        this.languages = this.languages.filter(x => x.name == 'ar' || x.name == 'en');
         this.currentLanguage = this.localization.currentLanguage;
     }
 

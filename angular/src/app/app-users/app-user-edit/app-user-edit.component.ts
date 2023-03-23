@@ -102,7 +102,7 @@ export class AppUserEditComponent extends AppComponentBase
         userType = new UserTypes();
         userType.id = 5;
         userType.name = "LabProjectManager";
-        userType.arabicName = "مدير المشروع";
+        userType.arabicName = "مدير المختبر";
         this.userTypes.push(userType);
 
         userType = new UserTypes();
@@ -132,7 +132,7 @@ export class AppUserEditComponent extends AppComponentBase
         this.contractorObject.id = this.id;
         this.contractorObject.registerInput = this.currentUser;
         this.contractorObject.qcUserInput = this.qcUser;
-        this.contractorObject.registerInput.surname = this.contractorObject.registerInput.name;
+        this.contractorObject.registerInput.surname = this.qcUser.name;
         this.contractorObject.registerInput.name = this.qcUser.name;
         this._qcUserServiceProxy.createOrUpdate(this.contractorObject).subscribe(
             () => {

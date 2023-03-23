@@ -1,4 +1,5 @@
 ﻿using Abp.Application.Services.Dto;
+using eConLab.Enum;
 using eConLab.WF.Dto;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,6 @@ namespace eConLab.WF
         Task<RequestWFDto> CreateOrUpdate(RequestWFDto input);
         Task<RequestWFDto> Get(long id);
         Task<List<RequestWFDto>> GetAll(RequestWFPaginatedDto input);
-        Task<List<RequestWFHistoryDto>> GetAllHistory(long requestId);
+        Task<List<RequestWFHistoryDto>> GetAllHistory(long requestId, Entities entity);
     }
 }

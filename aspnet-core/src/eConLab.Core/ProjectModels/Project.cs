@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Entities.Auditing;
+using eConLab.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +23,14 @@ namespace eConLab.ProjectModels
         public long SupervisingEngineerId { get; set; } 
         public long ConsultantId { get; set; } 
         public long ContractorId { get; set; } 
-        public long LabProjectManagerId { get; set; } 
+
+        //public long LabProjectManagerId { get; set; } 
         public long SupervisingQualityId { get; set; } 
         public string GeometryLocations { get; set; }
-        public bool ApprovedByConsultant { get; set; } = false;
-        public bool ApprovedBySupervising { get; set; } = false;
-        public bool ApprovedByLabProjectManager { get; set; } = false;
+        //public bool ApprovedByConsultant { get; set; } = false;
+        //public bool ApprovedBySupervising { get; set; } = false;
+        //public bool ApprovedByLabProjectManager { get; set; } = false;
+        public ProjectStatus Status { get; set; } = 0;
         public bool IsActive { get; set; } = false;
 
     }

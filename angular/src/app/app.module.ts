@@ -58,6 +58,7 @@ import { RejectModalComponent } from './requests/reject-modal/reject-modal.compo
 import { DepartmentsComponent } from './departments/departments.component';
 import { DepartmentCreateComponent } from './departments/department-create/department-create.component';
 import { DepartmentEditComponent } from './departments/department-edit/department-edit.component';
+import { ProjectRejectModalComponent } from './project/project-reject-modal/project-reject-modal.component';
 
 @NgModule({
     declarations: [
@@ -107,7 +108,8 @@ import { DepartmentEditComponent } from './departments/department-edit/departmen
         RejectModalComponent,
         DepartmentsComponent,
         DepartmentCreateComponent,
-        DepartmentEditComponent
+        DepartmentEditComponent,
+        ProjectRejectModalComponent
     ],
     imports: [
         CommonModule,

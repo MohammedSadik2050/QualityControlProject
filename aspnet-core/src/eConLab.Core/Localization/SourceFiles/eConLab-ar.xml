@@ -3,7 +3,6 @@
 	<texts>
 		<text name="UserType">نوع المستخدم</text>
 		<text name="Qty">الكميه</text>
-		<text name="LabProjectManager">مدير المشروع</text>
 		<text name="SupervisingQuality">مشرف الجوده</text>
 		<text name="ContractNumber">رقم العقد</text>
 		<text name="StartDate">بدايه المشروع</text>
@@ -188,7 +187,7 @@
 		<text name="Status">حاله الطلب</text>
 		<text name="Approved">إعتماد الطلب</text>
 		<text name="ApprovedByConsultant">الإستشاري وافق على الطلب</text>
-		<text name="ApprovedBySupervisingQuality">مراقب الجوده وافق على الطلب</text>
+		<text name="ApprovedBySupervisingQuality">تم إعتماد الطلب</text>
 		<text name="Rejected">الطلب مرفوض</text>
 		<text name="RequestRejected">رفض الطلب</text>
 		<text name="History">عمليات الطلب</text>
@@ -200,6 +199,20 @@
 		<text name="ActionNote">الملاحظات</text>
 		<text name="CreationDate">تاريخ الإدخال</text>
 		<text name="Commetns">ملاحظات</text>
-		<text name="TypeofTest">نوع الإختبارات</text>
+		<text name="TypeofTest">نوع الإختبار</text>
+		<text name="SiteReadinessTime">وقت جاهزيه الموقع</text>
+		<text name="Hours">ساعات</text>
+		<text name="Min">دقائق</text>
+		<text name="LabProjectManager">مدير المختير</text>
+		<text name="ApprovedByConsultantRevstion">تمت المراجعه</text>
+		<text name="ApprovedBySupervising">تم الإعتماد</text>
+		<text name="ApprovedByLabProjectManager">تم التسجيل</text>
+		<text name="ProjectRegister">تسجيل الطلب</text>
+		<text name="TotalContractors">المقاولون</text>
+		<text name="Consultants">الإستشاريين</text>
+		<text name="ActivatedProjects">المشروعات المفعله</text>
+		<text name="ProjectsUnderReview">مشروعات تحت الفحص</text>
+		<text name="TotalPendingRequests">طلبات معلقه</text>
+		<text name="FinishedRequests">طلبات معتمده</text>
 	</texts>
 </localizationDictionary>

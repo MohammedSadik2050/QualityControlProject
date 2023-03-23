@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using eConLab.WF.Dto;
 using eConLab.Authorization.Users;
 using eConLab.Requests.Dto;
+using eConLab.Enum;
 
 namespace eConLab.WF
 {
@@ -70,6 +71,7 @@ namespace eConLab.WF
                 ActionNotes = input.ActionNotes,
                 ActionName = input.ActionName,
                 RequestWFId = requestWf.RequestId,
+                Entity = input.Entity,
             };
             await _requestWFHistoryRepo.InsertOrUpdateAsync(history);
             await CurrentUnitOfWork.SaveChangesAsync();
@@ -101,17 +103,17 @@ namespace eConLab.WF
         private async Task<List<RequestWF>> GetListAsync( RequestWFPaginatedDto filter = null)
         {
 
-            var lstItems = _requestWFRepo.GetAll().Where(s=>s.RequestId == filter.RequestId).OrderByDescending(s=>s.CreationTime);
+            var lstItems = _requestWFRepo.GetAll().Where(s=>s.RequestId == filter.RequestId && s.Entity == filter.Entitiy).OrderByDescending(s=>s.CreationTime);
             return lstItems.ToList();
         }
 
 
-        public async Task<List<RequestWFHistoryDto>> GetAllHistory(long requestId)
+        public async Task<List<RequestWFHistoryDto>> GetAllHistory(long requestId, Entities entity)
         {
 
 
             var lstItems = _requestWFHistoryRepo.GetAll().OrderByDescending(s=>s.CreationTime)
-                            .Where(s => s.RequestWFId == requestId).ToList();
+                            .Where(s => s.RequestWFId == requestId && s.Entity == entity).ToList();
 
             return ObjectMapper.Map<List<RequestWFHistoryDto>>(lstItems);
         }

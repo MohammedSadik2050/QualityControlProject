@@ -1,4 +1,5 @@
 ﻿using Abp.Application.Services.Dto;
+using eConLab.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace eConLab.WF.Dto
         public long CurrentUserId { get; set; }
         public string ActionName { get; set; }
         public string ActionNotes { get; set; }
+        public Entities Entity { get; set; }
     }
 }

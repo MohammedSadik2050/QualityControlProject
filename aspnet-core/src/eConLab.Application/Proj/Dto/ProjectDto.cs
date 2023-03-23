@@ -1,4 +1,5 @@
 ﻿using Abp.Application.Services.Dto;
+using eConLab.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +22,12 @@ namespace eConLab.Proj.Dto
         public long SupervisingEngineerId { get; set; }
         public long ConsultantId { get; set; }
         public long ContractorId { get; set; }
-        public long LabProjectManagerId { get; set; }
+        //public long LabProjectManagerId { get; set; }
         public long SupervisingQualityId { get; set; }
         public string GeometryLocations { get; set; }
+        public string StatusName { get; set; }
+
+        public bool IsActive { get; set; } = false;
+        public ProjectStatus Status { get; set; } = ProjectStatus.Pending;
     }
 }
