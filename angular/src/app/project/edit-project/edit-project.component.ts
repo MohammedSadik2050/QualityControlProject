@@ -181,7 +181,10 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         this._projectServiceProxy.createOrUpdate(this.project).subscribe(
             () => {
                 this.notify.info(this.l('SavedSuccessfully'));
-                this.saveWorkFlow();
+                if (status >0) {
+                    this.saveWorkFlow();
+                }
+               
                 this.onSave.emit();
             },
             () => {
