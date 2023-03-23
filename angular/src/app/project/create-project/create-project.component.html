@@ -157,7 +157,7 @@
             </div>
         </div>
 
-        <div class="form-group row required">
+        <div class="form-group row">
             <label class="col-md-3 col-form-label" for="ADDRESS">
                 {{ "Departments" | localize }}
             </label>
@@ -166,7 +166,7 @@
                         class="form-control"
                         id="DepartmentId" [(ngModel)]="project.departmentId"
                         #departmentIdModel="ngModel"
-                        #departmentId required>
+                        #departmentId >
                     <option *ngFor="let department of departments" [value]="department.id">{{department.name}}</option>
                 </select>
 
