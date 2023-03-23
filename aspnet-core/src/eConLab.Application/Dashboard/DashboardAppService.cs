@@ -19,10 +19,10 @@ namespace eConLab.Dashboard
 
         public class DashboardAppService : eConLabAppServiceBase, IDashboardAppService
     {
-            private readonly IRepository<QCUser, long> _qcUsersRepo;
+        private readonly IRepository<QCUser, long> _qcUsersRepo;
         private readonly IRepository<Project, long> _projectRepo;
         private readonly IRepository<Request, long> _requestRepo;
-            private readonly IMapper _mapper;
+        private readonly IMapper _mapper;
 
         public DashboardAppService(
             IMapper mapper,
