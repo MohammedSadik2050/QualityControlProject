@@ -17,6 +17,14 @@
                     <div class="" style="padding-right: 384px">
 
 
+                        <button style="background-color: #ffc107" *ngIf="((project.status ==-1 || project.status ==4)&& project.contractorId === appSession.userId) || ((project.status ==-1  || project.status ==4) && isGranted('Pages.Roles')) " type="button"
+                                [disabled]="!createUserModal.form.valid || saving"
+                                (click)="save(0)"
+                                class="btn btn-success"
+                                aria-label="Close">
+                            {{ "CONTINUE" | localize }}
+                        </button>
+
                         <button style="background-color: #ffc107" *ngIf="(project.status ==0 && project.consultantId === appSession.userId) || (project.status ==0 && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createUserModal.form.valid || saving"
                                 (click)="save(1)"
@@ -26,12 +34,12 @@
                         </button>
                         <!--(request.status ==3 && isGranted('Pages.Manage.LabProjectManager')) ||-->
                         <!--<button style="background-color: #ffc107" *ngIf=" (project.status ==1 && project.supervisingQualityId === appSession.userId) || (project.status ==1 && isGranted('Pages.Roles')) " type="button"
-                                [disabled]="!createUserModal.form.valid || saving"
-                                (click)="save(2)"
-                                class="btn btn-success"
-                                aria-label="Close">
-                            {{ "Approved" | localize }}
-                        </button>-->
+            [disabled]="!createUserModal.form.valid || saving"
+            (click)="save(2)"
+            class="btn btn-success"
+            aria-label="Close">
+        {{ "Approved" | localize }}
+    </button>-->
 
                         <button style="background-color: #ffc107" *ngIf="(project.status ==1 && isGranted('Pages.Manage.LabProjectManager')) ||  (project.status ==3 && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createUserModal.form.valid || saving"
@@ -42,7 +50,7 @@
                         </button>
 
                         <button *ngIf="(project.status ==0 && project.consultantId === appSession.userId)
-                             || (project.status ==1 && isGranted('Pages.Manage.LabProjectManager')) 
+                             || (project.status ==1 && isGranted('Pages.Manage.LabProjectManager'))
                                     || ((project.status ==1 ||project.status ==2)  && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createUserModal.form.valid || saving"
                                 (click)="rejectRequest()"
@@ -328,7 +336,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" *ngIf="isGranted('Pages.Manage.Project')&& project.status==0"
+                        <button type="submit" *ngIf="isGranted('Pages.Manage.Project')&& project.status==-1"
                                 [disabled]="!createUserModal.form.valid || saving"
                                 class="btn btn-primary"
                                 aria-label="Close">
@@ -551,7 +559,7 @@
                                                 <button type="button" (click)="downloadMyFile(baseURL+attachment.fileURL)"
                                                         class="btn btn-sm bg-secondary"
                                                        >
-                                                    <i class="fas fa-pencil-alt"></i>
+                                                    <i class="fa fa-download"></i>
                                                     {{ "Download" | localize }}
                                                 </button>
                                                 <button type="button" *ngIf="isGranted('Pages.Manage.Project')"

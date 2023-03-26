@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { AbpSessionService } from 'abp-ng2-module';
 import * as moment from 'moment';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -28,6 +29,7 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
     minDate = moment(this.project.startDate).format("YYYY-MM-DD");
     constructor(
         injector: Injector,
+        private router: Router,
         private _projectServiceProxy: ProjectServiceProxy,
         private _agencyServiceProxy: AgencyServiceProxy,
         private _lookupServiceProxy: LookupServiceProxy,
@@ -111,12 +113,13 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
         this.project.startDate = moment(this.project.startDate, "YYYY-MM-DD");
         this.project.completedDate = moment(this.project.completedDate, "YYYY-MM-DD");
         this.project.siteDelivedDate = moment(this.project.siteDelivedDate, "YYYY-MM-DD");
-        this.project.status = 0;
+        this.project.status = -1;
         this._projectServiceProxy.createOrUpdate(this.project).subscribe(
-            () => {
+            res => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.bsModalRef.hide();
-                this.onSave.emit();
+                //this.onSave.emit();
+                this.router.navigateByUrl('/app/projects/edit/' + res.id);
             },
             () => {
                 this.saving = false;

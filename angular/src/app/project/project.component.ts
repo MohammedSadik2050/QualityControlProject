@@ -4,7 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 import { appModuleAnimation } from '../../shared/animations/routerTransition';
 import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from '../../shared/paged-listing-component-base';
-import { AgencyDto, AgencyServiceProxy, AgencyTypeDto, DepartmentDto, DepartmentServiceProxy, ProjectDto, ProjectServiceProxy } from '../../shared/service-proxies/service-proxies';
+import { AgencyDto, AgencyServiceProxy, AgencyTypeDto, DepartmentDto, DepartmentServiceProxy, DropdownListDto, LookupServiceProxy, ProjectDto, ProjectServiceProxy } from '../../shared/service-proxies/service-proxies';
 import { CreateProjectComponent } from './create-project/create-project.component';
 
 class PagedProjectRequestDto extends PagedRequestDto {
@@ -26,11 +26,14 @@ export class ProjectComponent extends PagedListingComponentBase<ProjectDto> {
     allAgencies: AgencyDto[] = [];
     projectAgencyTypeId = 0;
     projectAgencyId = 0;
+    ProjectStatusId = -2;
     projectDepartmentId = 0;
     departments: DepartmentDto[] = [];
     allDepartments: DepartmentDto[] = [];
+    allProjectStatus: DropdownListDto[] = [];
     constructor(
         private _departmentServiceProxy: DepartmentServiceProxy,
+        private _lookupServiceProxy: LookupServiceProxy,
         private _agencyServiceProxy: AgencyServiceProxy,
         injector: Injector,
         private _projectServiceProxy: ProjectServiceProxy,
@@ -57,6 +60,7 @@ export class ProjectComponent extends PagedListingComponentBase<ProjectDto> {
         this.projectAgencyId = 0;
         this.projectAgencyTypeId = 0;
         this.projectDepartmentId = 0;
+        this.ProjectStatusId = -2;
         this.getDataPage(1);
     }
 
@@ -71,11 +75,12 @@ export class ProjectComponent extends PagedListingComponentBase<ProjectDto> {
             this.loadAgencyTypes();
             this.loadAgencies();
             this.loadAllDepartments();
+            this.loadAllStatus();
         }
       
         this._projectServiceProxy
             .getAll(
-                this.keyword, this.projectAgencyTypeId, this.projectAgencyId, this.projectDepartmentId,
+                this.keyword, this.ProjectStatusId,this.projectAgencyTypeId, this.projectAgencyId, this.projectDepartmentId,
                 '',
                 request.skipCount,
                 request.maxResultCount
@@ -93,6 +98,12 @@ export class ProjectComponent extends PagedListingComponentBase<ProjectDto> {
     loadAllDepartments() {
         this._departmentServiceProxy.getAllDepartmentDropDown().subscribe(res => {
             this.allDepartments = res;
+        });
+    }
+
+    loadAllStatus() {
+        this._lookupServiceProxy.projectStatus().subscribe(res => {
+            this.allProjectStatus = res;
         });
     }
     loadAgencies() {

@@ -57,11 +57,12 @@ namespace eConLab.Proj
             {
                 input.IsActive = true;
             }
-            await _projectRepo.InsertOrUpdateAsync(_mapper.Map<Project>(input));
+            var resId = await _projectRepo.InsertOrUpdateAndGetIdAsync(_mapper.Map<Project>(input));
             await CurrentUnitOfWork.SaveChangesAsync();
 
-
-            return _mapper.Map<ProjectDto>(input);
+            var result = _mapper.Map<ProjectDto>(input);
+            result.Id = resId;
+            return result;
         }
 
 
@@ -86,7 +87,7 @@ namespace eConLab.Proj
             var totalCount = await GetTotalCountAsync(input);
             var result = ObjectMapper.Map<List<ProjectDto>>(lstItems);
             result.ForEach(m => { m.StatusName = m.Status.ToString(); });
-            
+
             return new PagedResultDto<ProjectDto>(totalCount, result);
         }
 
@@ -95,11 +96,10 @@ namespace eConLab.Proj
         {
 
             var lstItems = _projectRepo.GetAll()
-                                          .Skip(skipCount)
-                                          .Take(maxResultCount)
-                                          .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
-                                            .WhereIf(filter.AgencyId > 0, x => x.AgencyId == filter.AgencyId)
-                                             .WhereIf(filter.AgencyTypeId > 0, x => x.AgencyTypeId == filter.AgencyTypeId);
+                              .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
+                             .WhereIf(filter.AgencyId > 0, x => x.AgencyId == filter.AgencyId)
+                             .WhereIf(filter.StatusId >= -1, x => x.Status == (ProjectStatus)filter.StatusId)
+                              .WhereIf(filter.AgencyTypeId > 0, x => x.AgencyTypeId == filter.AgencyTypeId).AsQueryable();
 
 
             //check user Role 
@@ -122,6 +122,8 @@ namespace eConLab.Proj
                     lstItems = lstItems.Where(d => d.SupervisingEngineerId == AbpSession.UserId);
             }
 
+            lstItems = lstItems.Skip(skipCount)
+                               .Take(maxResultCount);
 
             return lstItems.ToList();
         }
@@ -130,7 +132,7 @@ namespace eConLab.Proj
         public async Task<List<ProjectDto>> GetAllDropdown()
         {
 
-            var lstItems = _projectRepo.GetAll().Where(s=>s.IsActive==true);
+            var lstItems = _projectRepo.GetAll().Where(s => s.IsActive == true);
 
             var userRoles = (await UserManager.GetRolesAsync(await GetCurrentUserAsync())).ToList();
             if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin) == false)
@@ -161,6 +163,7 @@ namespace eConLab.Proj
 
             var lstItems = _projectRepo.GetAll()
                              .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
+                              .WhereIf(filter.StatusId >= -1, x => x.Status == (ProjectStatus)filter.StatusId)
                              .WhereIf(filter.AgencyId > 0, x => x.AgencyId == filter.AgencyId)
                               .WhereIf(filter.AgencyTypeId > 0, x => x.AgencyTypeId == filter.AgencyTypeId);
 
@@ -191,7 +194,7 @@ namespace eConLab.Proj
         #region ProjectItems
         public async Task<ProjectItemDto> CreateOrUpdateProjectItem(ProjectItemDto input)
         {
-           
+
             await _projectItemRepo.InsertOrUpdateAsync(_mapper.Map<ProjectItem>(input));
             await CurrentUnitOfWork.SaveChangesAsync();
 

@@ -95,7 +95,7 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
             this.loadProjectItems();
             this.LoadRequestHistory();
             console.log('user', this.appSession.userId);
-            this.consultantId = this.project.consultantId;
+            this.consultantId = this.project.contractorId;
             console.log('conss', this.consultantId)
             this.changeDetectorRef.detectChanges();
         });

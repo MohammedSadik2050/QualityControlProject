@@ -50,7 +50,8 @@ namespace eConLab.Enum
 
     public enum  ProjectStatus
     {
-        Pending =0,
+        NotCompleted =-1,
+        Pending = 0,
         ApprovedByConsultantRevstion = 1,
         ApprovedBySupervising = 2,
         ApprovedByLabProjectManager = 3,

@@ -10,6 +10,7 @@ namespace eConLab.Proj.Dto
     public class ProjectPaginatedDto : PagedAndSortedResultRequestDto
     {
         public string Search { get; set; }
+        public int? StatusId { get; set; }
         public int? AgencyTypeId { get; set; }
         public int? AgencyId { get; set; }
         public long? DepartmentId { get; set; }

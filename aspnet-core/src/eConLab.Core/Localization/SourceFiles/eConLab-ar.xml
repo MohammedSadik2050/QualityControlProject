@@ -173,7 +173,7 @@
 		<text name="PhoneNumberSiteResponsible2">رقم هاتف المسؤول الثاني</text>
 		<text name="MainRequestTypes">نوع الطلب الرئيسي</text>
 		<text name="Inspection">فحص</text>
-		<text name="CONTINUE">استكمال</text>
+		<text name="CONTINUE">إستكمال</text>
 		<text name="CreateExaminationRequest">انشاء طلب فحص</text>
 		<text name="ChooseProject">اختر مشروع</text>
 		<text name="SendToConsultant">ارسال</text>
@@ -216,5 +216,6 @@
 		<text name="FinishedRequests">طلبات معتمده</text>
 		<text name="Attachment">أضف المرفق</text>
 		<text name="Attachments">المرفقات</text>
+		<text name="NotCompleted">غير مكتمل</text>
 	</texts>
 </localizationDictionary>

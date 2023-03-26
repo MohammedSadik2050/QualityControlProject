@@ -211,6 +211,7 @@
 		<text name="FinishedRequests">Completed Requests</text>
 		<text name="Attachment">Attachment</text>
 		<text name="Attachments">Attachments</text>
+		<text name="NotCompleted">NotCompleted</text>
 		
 </texts>
 </localizationDictionary>
