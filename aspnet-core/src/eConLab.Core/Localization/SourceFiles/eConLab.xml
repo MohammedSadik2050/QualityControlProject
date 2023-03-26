@@ -209,6 +209,8 @@
 		<text name="ProjectsUnderReview">Projects Under Review</text>
 		<text name="TotalPendingRequests">Pending Requests</text>
 		<text name="FinishedRequests">Completed Requests</text>
+		<text name="Attachment">Attachment</text>
+		<text name="Attachments">Attachments</text>
 		
 </texts>
 </localizationDictionary>

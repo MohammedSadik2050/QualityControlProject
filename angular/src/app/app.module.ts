@@ -109,7 +109,7 @@ import { ProjectRejectModalComponent } from './project/project-reject-modal/proj
         DepartmentsComponent,
         DepartmentCreateComponent,
         DepartmentEditComponent,
-        ProjectRejectModalComponent
+        ProjectRejectModalComponent,
     ],
     imports: [
         CommonModule,

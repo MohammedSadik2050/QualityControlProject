@@ -20,6 +20,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using System.IO;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Hosting.Server;
 
 namespace eConLab.Web.Host.Startup
 {
@@ -93,10 +95,21 @@ namespace eConLab.Web.Host.Startup
         {
             app.UseAbp(options => { options.UseAbpRequestLocalization = false; }); // Initializes ABP framework.
 
-           // app.UseCors(_defaultCorsPolicyName); // Enable CORS!
+            // app.UseCors(_defaultCorsPolicyName); // Enable CORS!
             app.UseCors("AllowAllPolicy");
-            
             app.UseStaticFiles();
+
+            string staticPath = Path.Combine(Directory.GetCurrentDirectory(), "Attachments");
+            bool exists = System.IO.Directory.Exists(staticPath);
+
+            if (!exists)
+                System.IO.Directory.CreateDirectory(staticPath);
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                                Path.Combine(Directory.GetCurrentDirectory(), "Attachments")),
+                RequestPath = "/Attachments"
+            });
 
             app.UseRouting();
 
@@ -125,7 +138,7 @@ namespace eConLab.Web.Host.Startup
                 options.DisplayRequestDuration(); // Controls the display of the request duration (in milliseconds) for "Try it out" requests.  
             }); // URL: /swagger
         }
-        
+
         private void ConfigureSwagger(IServiceCollection services)
         {
             services.AddCors(options =>

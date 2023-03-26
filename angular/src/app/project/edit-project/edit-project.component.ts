@@ -4,8 +4,9 @@ import { AbpSessionService } from 'abp-ng2-module';
 import * as moment from 'moment';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AppComponentBase } from '../../../shared/app-component-base';
+import { AppConsts } from '../../../shared/AppConsts';
 import { AppAuthService } from '../../../shared/auth/app-auth.service';
-import { AgencyDto, AgencyServiceProxy, AgencyTypeDto, DepartmentDto, DepartmentServiceProxy, DropdownListDto, LookupServiceProxy, ProjectDto, ProjectItemDto, ProjectServiceProxy, RequestWFDto, RequestWFHistoryDto, RequestWFServiceProxy } from '../../../shared/service-proxies/service-proxies';
+import { AgencyDto, AgencyServiceProxy, AgencyTypeDto, AttachmentDto, AttachmentServiceProxy, DepartmentDto, DepartmentServiceProxy, DropdownListDto, FileParameter, LookupServiceProxy, ProjectDto, ProjectItemDto, ProjectServiceProxy, RequestWFDto, RequestWFHistoryDto, RequestWFServiceProxy } from '../../../shared/service-proxies/service-proxies';
 import { ProjectRejectModalComponent } from '../project-reject-modal/project-reject-modal.component';
 
 @Component({
@@ -36,6 +37,12 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
     minDate = moment(this.project.startDate).format("YYYY-MM-DD");
     consultantId: number = 0;
     requestHistories: RequestWFHistoryDto[] = [];
+    file: any = {};
+    baseURL = AppConsts.remoteServiceBaseUrl;
+
+    attachment: any = {};
+    attachments: AttachmentDto[] = [];
+    entityId: number;
     constructor(
         injector: Injector,
         private router: Router,
@@ -49,16 +56,31 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         private changeDetectorRef: ChangeDetectorRef,
         private _modalService: BsModalService,
         public _requestWFServiceProxy: RequestWFServiceProxy,
+        public _attachmentServiceProxy: AttachmentServiceProxy,
 
     ) {
         super(injector);
     }
 
+    downloadMyFile(url) {
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', url);
+        link.setAttribute('download', `products.csv`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    }
+    handleFileInput(files: FileList) {
+        var currentFile = files.item(0);
+        this.file.data = currentFile;
+        this.file.fileName = currentFile.name;
+    }
     ngOnInit(): void {
         this.projectId = this.route.snapshot.params['id'];
         this._projectServiceProxy.get(this.projectId).subscribe(res => {
             this.project = res;
-           
+            this.loadAttachments();
             this.startDatemodel = moment(this.project.startDate).format("YYYY-MM-DD");
             this.completeDatemodel = moment(this.project.completedDate).format("YYYY-MM-DD");
             this.siteDelivedDatemodel = moment(this.project.siteDelivedDate).format("YYYY-MM-DD");
@@ -86,6 +108,11 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         });
     }
 
+    loadAttachments() {
+        this._attachmentServiceProxy.getAllAttachment(2, this.projectId).subscribe(res => {
+            this.attachments = res;
+        });
+    }
     onAgencyChange(event, isFirstLoad = false) {
         console.log(event);
         if (isFirstLoad == true) {
@@ -235,7 +262,7 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
     }
     deleteItem(projectItem: ProjectItemDto) {
 
-        this._projectServiceProxy.deleteProjectItem(this.projectItem.id).subscribe(
+        this._projectServiceProxy.deleteProjectItem(projectItem.id).subscribe(
             () => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.loadProjectItems();
@@ -270,5 +297,40 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         rejectModal.content.onSave.subscribe(() => {
             this.ngOnInit();
         });
+    }
+
+    saveAttachment(): void {
+        console.log('attachments', this.attachment);
+        this.attachment.entity = 2;
+        this.attachment.entityId = this.projectId;
+        //const formData = new FormData();
+        //formData.append('file', this.postForm.get('title').value);
+        //formData.append('description', this.attachment.description);
+        //formData.append('entity', '2');
+        //formData.append('entityId', this.attachment.entityId.toString());
+        this._attachmentServiceProxy.createOrUpdate(this.projectId, '', '', this.file, this.attachment.description,2).subscribe(
+            () => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.loadAttachments();
+                //  this.onSave.emit();
+            },
+            () => {
+                //this.saving = false;
+            }
+        );
+    }
+
+    deleteAttachment(attachment: AttachmentDto) {
+
+        this._attachmentServiceProxy.delete(attachment.id).subscribe(
+            () => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.loadProjectItems();
+                this.attachment = {};
+            },
+            () => {
+                this.saving = false;
+            }
+        );
     }
 }

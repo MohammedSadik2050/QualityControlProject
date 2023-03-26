@@ -214,5 +214,7 @@
 		<text name="ProjectsUnderReview">مشروعات تحت الفحص</text>
 		<text name="TotalPendingRequests">طلبات معلقه</text>
 		<text name="FinishedRequests">طلبات معتمده</text>
+		<text name="Attachment">أضف المرفق</text>
+		<text name="Attachments">المرفقات</text>
 	</texts>
 </localizationDictionary>

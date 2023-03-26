@@ -574,6 +574,226 @@ export class AgencyServiceProxy {
 }
 
 @Injectable()
+export class AttachmentServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param entityId (optional) 
+     * @param filePath (optional) 
+     * @param fileURL (optional) 
+     * @param file (optional) 
+     * @param description (optional) 
+     * @param entity (optional) 
+     * @return Success
+     */
+    createOrUpdate(entityId: number | undefined, filePath: string | undefined, fileURL: string | undefined, file: FileParameter | undefined, description: string | undefined, entity: Entities | undefined) : Observable<AttachmentDto> {
+        let url_ = this.baseUrl + "/api/services/app/Attachment/CreateOrUpdate";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = new FormData();
+        if (entityId === null || entityId === undefined)
+            throw new Error("The parameter 'entityId' cannot be null.");
+        else
+            content_.append("EntityId", entityId.toString());
+        if (filePath === null || filePath === undefined)
+            throw new Error("The parameter 'filePath' cannot be null.");
+        else
+            content_.append("FilePath", filePath.toString());
+        if (fileURL === null || fileURL === undefined)
+            throw new Error("The parameter 'fileURL' cannot be null.");
+        else
+            content_.append("FileURL", fileURL.toString());
+        if (file === null || file === undefined)
+            throw new Error("The parameter 'file' cannot be null.");
+        else
+            content_.append("File", file.data, file.fileName ? file.fileName : "File");
+        if (description === null || description === undefined)
+            throw new Error("The parameter 'description' cannot be null.");
+        else
+            content_.append("Description", description.toString());
+        if (entity === null || entity === undefined)
+            throw new Error("The parameter 'entity' cannot be null.");
+        else
+            content_.append("Entity", entity.toString());
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<AttachmentDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AttachmentDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateOrUpdate(response: HttpResponseBase): Observable<AttachmentDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AttachmentDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AttachmentDto>(<any>null);
+    }
+
+    /**
+     * @param entityType (optional) 
+     * @param entityId (optional) 
+     * @return Success
+     */
+    getAllAttachment(entityType: Entities | undefined, entityId: number | undefined) : Observable<AttachmentDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Attachment/GetAllAttachment?";
+        if (entityType === null)
+            throw new Error("The parameter 'entityType' cannot be null.");
+        else if (entityType !== undefined)
+            url_ += "entityType=" + encodeURIComponent("" + entityType) + "&";
+        if (entityId === null)
+            throw new Error("The parameter 'entityId' cannot be null.");
+        else if (entityId !== undefined)
+            url_ += "entityId=" + encodeURIComponent("" + entityId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllAttachment(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllAttachment(<any>response_);
+                } catch (e) {
+                    return <Observable<AttachmentDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AttachmentDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllAttachment(response: HttpResponseBase): Observable<AttachmentDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(AttachmentDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AttachmentDto[]>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined) : Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Attachment/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
+}
+
+@Injectable()
 export class ConfigurationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -5585,6 +5805,69 @@ export interface IApplicationInfoDto {
     features: { [key: string]: boolean; } | undefined;
 }
 
+export class AttachmentDto implements IAttachmentDto {
+    id: number;
+    entityId: number;
+    filePath: string | undefined;
+    fileURL: string | undefined;
+    description: string | undefined;
+    entity: Entities;
+
+    constructor(data?: IAttachmentDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.entityId = _data["entityId"];
+            this.filePath = _data["filePath"];
+            this.fileURL = _data["fileURL"];
+            this.description = _data["description"];
+            this.entity = _data["entity"];
+        }
+    }
+
+    static fromJS(data: any): AttachmentDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AttachmentDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["entityId"] = this.entityId;
+        data["filePath"] = this.filePath;
+        data["fileURL"] = this.fileURL;
+        data["description"] = this.description;
+        data["entity"] = this.entity;
+        return data; 
+    }
+
+    clone(): AttachmentDto {
+        const json = this.toJSON();
+        let result = new AttachmentDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAttachmentDto {
+    id: number;
+    entityId: number;
+    filePath: string | undefined;
+    fileURL: string | undefined;
+    description: string | undefined;
+    entity: Entities;
+}
+
 export class AuthenticateModel implements IAuthenticateModel {
     userNameOrEmailAddress: string;
     password: string;
@@ -9355,6 +9638,11 @@ export enum UserTypes {
     _6 = 6,
     _7 = 7,
     _8 = 8,
+}
+
+export interface FileParameter {
+    data: any;
+    fileName: string;
 }
 
 export class ApiException extends Error {

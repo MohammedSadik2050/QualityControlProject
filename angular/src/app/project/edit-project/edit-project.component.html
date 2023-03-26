@@ -443,7 +443,7 @@
                                                 </button>
                                                 <button type="button" *ngIf="isGranted('Pages.Manage.Project')"
                                                         class="btn btn-sm bg-danger mx-2"
-                                                        (click)="delete(projectItem)">
+                                                        (click)="deleteItem(projectItem)">
                                                     <i class="fas fa-trash"></i>
                                                     {{ "Delete" | localize }}
                                                 </button>
@@ -471,6 +471,96 @@
                                             <td>{{ requestHistory.actionNotes }}</td>
                                             <td>{{ requestHistory.creationTime  | date: 'dd/MM/yyyy'}}</td>
 
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </tab>
+
+
+                        <tab [heading]="'Attachments' | localize" class="pt-3 px-2">
+                            <form class="form-horizontal" *ngIf="isGranted('Pages.Manage.Project') && project.status ==0"
+                                  autocomplete="off"
+                                  #attachmentForm="ngForm"
+                                  (ngSubmit)="saveAttachment()">
+
+                                <div class="row" style="display: -webkit-box !important">
+                                    <div class="form-group row col-4 required">
+                                        <label class="col-md-3 col-form-label" for="Name">
+                                            {{ "Attachment" | localize }}
+                                        </label>
+                                        <div class="col-md-8">
+                                            <input type="file"
+                                                   class="form-control"
+                                                   name="attachmentFile"
+                                                   id="attachmentFile"
+                                                   required
+                                                   [(ngModel)]="attachment.file"
+                                                   (change)="handleFileInput($event.target.files)"
+                                                   #attachmentFileModel="ngModel"
+                                                   #attachmentFile />
+                                            <abp-validation-summary [control]="attachmentFileModel"
+                                                                    [controlEl]="attachmentFile"></abp-validation-summary>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row col-4 required">
+                                        <label class="col-md-2 col-form-label" for="Name">
+                                            {{ "Description" | localize }}
+                                        </label>
+                                        <div class="col-md-10">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   name="attachmentDescription"
+                                                   id="attachmentDescription"
+                                                   required
+                                                   [(ngModel)]="attachment.description"
+                                                   #attachmentDescriptionModel="ngModel"
+                                                   #attachmentDescription/>
+                                            <abp-validation-summary [control]="attachmentDescriptionModel"
+                                                                    [controlEl]="attachmentDescription"></abp-validation-summary>
+                                        </div>
+                                    </div>
+
+
+                                    <button type="button" *ngIf="isGranted('Pages.Manage.Project')&& project.status ==0"
+                                            [disabled]="!attachmentForm.form.valid || saving"
+                                            class="btn btn-primary" style="margin-right: 14px"
+                                            (click)="saveAttachment()"
+                                            aria-label="Close">
+                                        {{ "Save" | localize }}
+                                    </button>
+                                </div>
+
+
+                            </form>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <!--<th>{{ "Name" | localize }}</th>-->
+                                            <th style="width: 310px;">{{ "Description" | localize }}</th>
+                                            <th style="width: 310px;" *ngIf="isGranted('Pages.Manage.Project')&& project.status ==0"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let attachment of attachments">
+                                            <!--<td><a  href="{{baseURL+attachment.fileURL}}" download> {{ baseURL+attachment.fileURL}}</a></td>-->
+                                            <td>{{ attachment.description }}</td>
+                                            <td *ngIf="isGranted('Pages.Manage.Project') && project.status ==0">
+                                                <button type="button" (click)="downloadMyFile(baseURL+attachment.fileURL)"
+                                                        class="btn btn-sm bg-secondary"
+                                                       >
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                    {{ "Download" | localize }}
+                                                </button>
+                                                <button type="button" *ngIf="isGranted('Pages.Manage.Project')"
+                                                        class="btn btn-sm bg-danger mx-2"
+                                                        (click)="delete(attachment)">
+                                                    <i class="fas fa-trash"></i>
+                                                    {{ "Delete" | localize }}
+                                                </button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

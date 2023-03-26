@@ -11,6 +11,7 @@ using eConLab.TestModels;
 using eConLab.Req;
 using eConLab.WF;
 using eConLab.Departments;
+using eConLab.Attachment;
 
 namespace eConLab.EntityFrameworkCore
 {
@@ -21,6 +22,7 @@ namespace eConLab.EntityFrameworkCore
         public DbSet<AgencyType> AgencyTypes { get; set; }
         public DbSet<Agency> Agencies { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Attachments> Attachments { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<ProjectItem> ProjectItems { get; set; }
         public DbSet<LookupApp> LookupApp { get; set; }
