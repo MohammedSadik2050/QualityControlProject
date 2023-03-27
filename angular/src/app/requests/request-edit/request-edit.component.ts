@@ -192,6 +192,11 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         this.request.status = status;
 
         this.request.inspectionDate = moment(this.InspectionDatemodel, "YYYY-MM-DD");
+        if (!this.request.inspectionDate.isValid()) {
+            this.notify.error(this.l('InspectionDateRequired'));
+            return;
+        }
+
         this._requestServiceProxy.createOrUpdate(this.request).subscribe(
             res => {
                 this.notify.info(this.l('SavedSuccessfully'));
@@ -266,7 +271,9 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             this.notify.error(this.l('DuplicateTest'));
             return null;
         }
+        
         this._requestnspectionTestServiceProxy.createOrUpdate(this.requestInspection).subscribe(res => {
+            this.requestInspection = new CreateUpdateRequestTestDto();
             this.loadRequestTests();
         });
     }

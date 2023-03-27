@@ -214,6 +214,8 @@
 		<text name="Attachments">Attachments</text>
 		<text name="NotCompleted">NotCompleted</text>
 		<text name="InspectionDateRequired">Inspection Date Required</text>
-		
+		<text name="StartDateRequired">Start Date Required</text>
+		<text name="CompletedDateRequired">Completed Date Required</text>
+		<text name="SiteDelivedDateRequired">Site Delived Date Required</text>
 </texts>
 </localizationDictionary>

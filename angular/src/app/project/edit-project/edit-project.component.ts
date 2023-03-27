@@ -205,6 +205,24 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         this.project.startDate = moment(this.startDatemodel, "YYYY-MM-DD");
         this.project.completedDate = moment(this.completeDatemodel, "YYYY-MM-DD");
         this.project.siteDelivedDate = moment(this.siteDelivedDatemodel, "YYYY-MM-DD");
+
+
+        if (!this.project.startDate.isValid()) {
+            this.notify.error(this.l('StartDateRequired'));
+            return;
+        }
+
+        if (!this.project.completedDate.isValid()) {
+            this.notify.error(this.l('CompletedDateRequired'));
+            return;
+        }
+
+        if (!this.project.siteDelivedDate.isValid()) {
+            this.notify.error(this.l('SiteDelivedDateRequired'));
+            return;
+        }
+
+
         this._projectServiceProxy.createOrUpdate(this.project).subscribe(
             () => {
                 this.notify.info(this.l('SavedSuccessfully'));

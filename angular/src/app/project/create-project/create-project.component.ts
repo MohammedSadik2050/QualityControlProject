@@ -113,6 +113,21 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
         this.project.startDate = moment(this.project.startDate, "YYYY-MM-DD");
         this.project.completedDate = moment(this.project.completedDate, "YYYY-MM-DD");
         this.project.siteDelivedDate = moment(this.project.siteDelivedDate, "YYYY-MM-DD");
+
+        if (!this.project.startDate.isValid()) {
+            this.notify.error(this.l('StartDateRequired'));
+            return;
+        }
+
+        if (!this.project.completedDate.isValid()) {
+            this.notify.error(this.l('CompletedDateRequired'));
+            return;
+        }
+
+        if (!this.project.siteDelivedDate.isValid()) {
+            this.notify.error(this.l('SiteDelivedDateRequired'));
+            return;
+        }
         this.project.status = -1;
         this._projectServiceProxy.createOrUpdate(this.project).subscribe(
             res => {

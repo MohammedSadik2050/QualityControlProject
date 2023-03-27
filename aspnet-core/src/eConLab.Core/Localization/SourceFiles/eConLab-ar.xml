@@ -219,5 +219,8 @@
 		<text name="Attachments">المرفقات</text>
 		<text name="NotCompleted">غير مكتمل</text>
 		<text name="InspectionDateRequired">تاريخ الفحص مطلوب</text>
+		<text name="StartDateRequired">تاريخ بدايه المشروع مطلوب</text>
+		<text name="CompletedDateRequired">تاريخ إنتهاء المشروع مطلوب</text>
+		<text name="SiteDelivedDateRequired">تاريخ التسليم مطلوب</text>
 	</texts>
 </localizationDictionary>
