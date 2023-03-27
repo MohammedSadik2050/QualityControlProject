@@ -212,6 +212,7 @@
 		<text name="FinishedRequests">Completed Requests</text>
 		<text name="Attachment">Attachment</text>
 		<text name="Attachments">Attachments</text>
+		<text name="Download">Download</text>
 		<text name="NotCompleted">NotCompleted</text>
 		<text name="InspectionDateRequired">Inspection Date Required</text>
 		<text name="StartDateRequired">Start Date Required</text>

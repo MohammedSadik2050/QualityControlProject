@@ -222,5 +222,6 @@
 		<text name="StartDateRequired">تاريخ بدايه المشروع مطلوب</text>
 		<text name="CompletedDateRequired">تاريخ إنتهاء المشروع مطلوب</text>
 		<text name="SiteDelivedDateRequired">تاريخ التسليم مطلوب</text>
+		<text name="Download">تحميل</text>
 	</texts>
 </localizationDictionary>

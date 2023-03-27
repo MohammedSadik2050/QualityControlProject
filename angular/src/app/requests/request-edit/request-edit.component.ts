@@ -51,6 +51,8 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     allAgencies: AgencyDto[] = [];
     allDepartments: DepartmentDto[] = [];
     minDate = moment(new Date()).format("YYYY-MM-DD");
+    showTabs:boolean = false;
+    showTestTab:boolean = false;
     constructor(
         injector: Injector,
         private _departmentServiceProxy: DepartmentServiceProxy,
@@ -79,6 +81,9 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         this.request.id = this.routeActive.snapshot.params['id'];
         this._requestServiceProxy.get(this.request.id).subscribe(res => {
             this.request = res;
+            if (this.request.hasSample ==1) {
+                this.showTestTab = true;
+            }
             this.LoadProject();
             this.hasSample = res.hasSample == 1 ? true : false;
             this.InspectionDatemodel = moment(this.request.inspectionDate).format("YYYY-MM-DD");
@@ -88,6 +93,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             this.loadRequestProjectItems();
             this.loadAllDepartments();
             this.loadAgencies();
+            this.showTabs = true;
         });
     }
     loadAllDepartments() {

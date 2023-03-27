@@ -226,7 +226,7 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         this._projectServiceProxy.createOrUpdate(this.project).subscribe(
             () => {
                 this.notify.info(this.l('SavedSuccessfully'));
-                if (status >0) {
+                if (status >-1) {
                     this.saveWorkFlow();
                 }
                
@@ -243,6 +243,11 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         workFlow.requestId = this.project.id;
         workFlow.entity = 2;
         workFlow.currentUserId = this.appSession.userId;
+        if (this.project.status == 0) {
+            workFlow.actionName = "المقاول قام بإستكمال الطلب";
+            workFlow.actionNotes = "المقاول قام بإستكمال الطلب";
+        }
+
         if (this.project.status == 1) {
             workFlow.actionName = "تم مراجعه الطلب";
             workFlow.actionNotes = "تم الإرسال الى الجهة المشرفة ";
