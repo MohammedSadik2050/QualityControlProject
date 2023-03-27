@@ -66,7 +66,7 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         const link = document.createElement('a');
         link.setAttribute('target', '_blank');
         link.setAttribute('href', url);
-        link.setAttribute('download', `products.csv`);
+        link.setAttribute('download', url);
         document.body.appendChild(link);
         link.click();
         link.remove();

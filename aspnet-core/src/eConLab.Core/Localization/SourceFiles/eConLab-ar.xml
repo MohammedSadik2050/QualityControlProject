@@ -191,6 +191,7 @@
 		<text name="Rejected">الطلب مرفوض</text>
 		<text name="RequestRejected">رفض الطلب</text>
 		<text name="History">عمليات الطلب</text>
+		<text name="ProjectHistory">عمليات إعتماد بيانات المشروع</text>
 		<text name="DuplicateProjectItem">تمت إضافه البند من قبل</text>
 		<text name="ProjectItems">بنود المشروع</text>
 		<text name="Departments">الإدارات</text>
@@ -217,5 +218,6 @@
 		<text name="Attachment">أضف المرفق</text>
 		<text name="Attachments">المرفقات</text>
 		<text name="NotCompleted">غير مكتمل</text>
+		<text name="InspectionDateRequired">تاريخ الفحص مطلوب</text>
 	</texts>
 </localizationDictionary>

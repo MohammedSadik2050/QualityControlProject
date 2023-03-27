@@ -37,7 +37,7 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
     InspectionDatemodel: string = new Date().toLocaleDateString();
     allAgencies: AgencyDto[] = [];
     allDepartments: DepartmentDto[] = [];
-    minDate = moment(this.project.startDate).format("YYYY-MM-DD");
+    minDate = moment(new Date()).format("YYYY-MM-DD");
     constructor(
         injector: Injector,
         public _requestProjectItemServiceProxy: RequestProjectItemServiceProxy,
@@ -119,6 +119,11 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
     }
 
     save(status: number): void {
+        this.request.inspectionDate = moment(this.InspectionDatemodel, "YYYY-MM-DD");
+        if (!this.request.inspectionDate.isValid()) {
+            this.notify.error(this.l('InspectionDateRequired'));
+            return;
+        }
         this.saving = true;
         this.request.mainRequestType = 1;
         if (this.hasSample == true) {
@@ -128,7 +133,9 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
         }
         this.request.status = status;
 
-        this.request.inspectionDate = moment(this.InspectionDatemodel, "YYYY-MM-DD");
+      
+       
+        console.log('sssss')
         this._requestServiceProxy.createOrUpdate(this.request).subscribe(
             res => {
                 this.notify.info(this.l('SavedSuccessfully'));
@@ -140,7 +147,7 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
                 if (this.request.status == RequestStatus._2) {
                     this.saveWorkFlow();
                 } else {
-                    this.router.navigateByUrl('/app/examinationRequest');
+                    this.router.navigateByUrl('/app/examinationRequest/edit/' + this.request.id);
                 }
                 //this.bsModalRef.hide();
                 //this.onSave.emit();

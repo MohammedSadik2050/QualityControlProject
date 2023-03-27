@@ -187,6 +187,7 @@
 		<text name="Rejected">Rejected</text>
 		<text name="RequestRejected">Request Rejected</text>
 		<text name="History">History</text>
+		<text name="ProjectHistory">Project data approval processes</text>
 		<text name="DuplicateProjectItem">DuplicateProjectItem</text>
 		<text name="ProjectItems">Project Items</text>
 		<text name="Departments">Departments</text>
@@ -212,6 +213,7 @@
 		<text name="Attachment">Attachment</text>
 		<text name="Attachments">Attachments</text>
 		<text name="NotCompleted">NotCompleted</text>
+		<text name="InspectionDateRequired">Inspection Date Required</text>
 		
 </texts>
 </localizationDictionary>

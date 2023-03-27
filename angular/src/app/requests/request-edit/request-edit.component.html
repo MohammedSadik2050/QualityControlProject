@@ -24,7 +24,7 @@
                         </button>
 
                         <button style="background-color: #ffc107" *ngIf="request.id>0 && isGranted('Pages.Manage.Contractor') && (request.status ==1 ||request.status ==5  )" type="button"
-                                [disabled]="requestTests.length==0"
+                                [disabled]="request.hasSample !==2 && requestTests.length==0"
                                 (click)="save(2)"
                                 class="btn btn-success"
                                 aria-label="Close">
@@ -222,32 +222,12 @@
                                                             [controlEl]="inspectionDate"></abp-validation-summary>
                                 </div>
                             </div>
-                           <div class="row col-12">
+                            <div class="row col-12">
                                 <div class="form-group  required col-2">
                                     <label class="col-md-12 col-form-label" for="ADDRESS">
                                         {{ "SiteReadinessTime" | localize }}
                                     </label>
 
-                                </div>
-
-                                <div class="form-group row required col-2">
-                                    <label class="col-md-6 col-form-label" for="ADDRESS">
-                                        {{ "Min" | localize }}
-                                    </label>
-                                    <div class="col-md-5">
-                                        <input type="number"
-                                               min="1" max="60"
-                                               class="form-control"
-                                               name="Min"
-                                               id="Min"
-                                               required
-                                               [(ngModel)]="request.min"
-                                               #MinModel="ngModel"
-                                                  #Min />
-                                    <abp-validation-summary [control]="MinModel"
-                                                            [controlEl]="Min"></abp-validation-summary>
-                                        <!--(change)="hourse < 0 ? hourse = 0 : hourse; hourse > 60 ? hourse = 0 : hourse;"-->
-                                    </div>
                                 </div>
 
                                 <div class="form-group row required col-2">
@@ -269,6 +249,28 @@
                                         <!--(change)="request.hours < 0 ? request.hours = 0 : request.hours; request.hours > 60 ? request.hours = 0 : request.hours;"-->
                                     </div>
                                 </div>
+
+                                <div class="form-group row required col-2">
+                                    <label class="col-md-6 col-form-label" for="ADDRESS">
+                                        {{ "Min" | localize }}
+                                    </label>
+                                    <div class="col-md-5">
+                                        <input type="number"
+                                               min="1" max="60"
+                                               class="form-control"
+                                               name="Min"
+                                               id="Min"
+                                               required
+                                               [(ngModel)]="request.min"
+                                               #MinModel="ngModel"
+                                               #Min />
+                                        <abp-validation-summary [control]="MinModel"
+                                                                [controlEl]="Min"></abp-validation-summary>
+                                        <!--(change)="hourse < 0 ? hourse = 0 : hourse; hourse > 60 ? hourse = 0 : hourse;"-->
+                                    </div>
+                                </div>
+
+
                             </div>
                          
 
@@ -290,7 +292,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row required col-6">
+                            <!--<div class="form-group row required col-6">
                                 <label class="col-md-3 col-form-label" for="ADDRESS">
                                     {{ "ChooseProject" | localize }}
                                 </label>
@@ -305,7 +307,7 @@
                                     <abp-validation-summary [control]="projectModel"
                                                             [controlEl]="project"></abp-validation-summary>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class="form-group row required col-6">
                                 <label class="col-md-3 col-form-label" for="DistrictName">
@@ -330,7 +332,8 @@
                                     {{ "PhoneNumberSiteResponsible1" | localize }}
                                 </label>
                                 <div class="col-md-9">
-                                    <input type="number"
+                                    <input type="text"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                            class="form-control"
                                            name="phomeNumberSiteResponsibleOne"
                                            id="phomeNumberSiteResponsibleOne"
@@ -348,7 +351,8 @@
                                     {{ "PhoneNumberSiteResponsible2" | localize }}
                                 </label>
                                 <div class="col-md-9">
-                                    <input type="number"
+                                    <input type="text"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                                            class="form-control"
                                            name="phomeNumberSiteResponsibleTwo"
                                            id="phomeNumberSiteResponsibleTwo"
