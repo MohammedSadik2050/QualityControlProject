@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eConLab.Account
+namespace eConLab.TownShips
 {
-    public class AgencyType : FullAuditedEntity<long>
+    public class TownShip : FullAuditedEntity<long>
     {
         public string Name { get; set; }
-        public string Description { get; set; }
-
+        public string Address { get; set; }
     }
 }

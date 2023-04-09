@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace eConLab.Account
 {
-    public class Agency : AuditedAggregateRoot<long>
+    public class Agency : FullAuditedEntity<long>
     {
         public string Name { get; set; }
         public string Description { get; set; }

@@ -108,7 +108,7 @@ export class AppUserEditComponent extends AppComponentBase
         userType = new UserTypes();
         userType.id = 6;
         userType.name = "SupervisingQuality";
-        userType.arabicName = "مشرف الجوده";
+        userType.arabicName = "مشرف المواد";
         this.userTypes.push(userType);
 
         userType = new UserTypes();

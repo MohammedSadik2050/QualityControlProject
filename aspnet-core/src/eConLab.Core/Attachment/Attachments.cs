@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace eConLab.Attachment
 {
-    public class Attachments : AuditedEntity<long>
+    public class Attachments : FullAuditedEntity<long>
     {
         public long EntityId  { get; set; }
         public string FilePath { get; set; }

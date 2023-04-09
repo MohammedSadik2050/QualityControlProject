@@ -3,7 +3,7 @@
 	<texts>
 		<text name="UserType">نوع المستخدم</text>
 		<text name="Qty">الكميه</text>
-		<text name="SupervisingQuality">مشرف الجوده</text>
+		<text name="SupervisingQuality">مشرف المواد</text>
 		<text name="ContractNumber">رقم العقد</text>
 		<text name="StartDate">بدايه المشروع</text>
 		<text name="CompletedDate">تاريخ الانتهاء</text>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace eConLab.WF
 {
-    public class RequestWF : AuditedEntity<long>
+    public class RequestWF : FullAuditedEntity<long>
     {
        public long RequestId { get; set; }
        public long CurrentUserId { get; set; }
@@ -16,7 +16,7 @@ namespace eConLab.WF
 
     }
 
-    public class RequestWFHistory : AuditedEntity<long>
+    public class RequestWFHistory : FullAuditedEntity<long>
     {
         public long RequestWFId { get; set; }
         public long UserId { get; set; }

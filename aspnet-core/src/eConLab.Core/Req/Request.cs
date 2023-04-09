@@ -11,7 +11,7 @@ namespace eConLab.Req
 {
     
     public class Request 
-        : AuditedEntity<long>
+        : FullAuditedEntity<long>
     {
         public string Name { get; set; }
         public string Code { get; set; }
