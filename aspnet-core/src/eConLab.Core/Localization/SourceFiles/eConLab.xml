@@ -218,5 +218,6 @@
 		<text name="StartDateRequired">Start Date Required</text>
 		<text name="CompletedDateRequired">Completed Date Required</text>
 		<text name="SiteDelivedDateRequired">Site Delived Date Required</text>
+		<text name="Observer">Observer</text>
 </texts>
 </localizationDictionary>

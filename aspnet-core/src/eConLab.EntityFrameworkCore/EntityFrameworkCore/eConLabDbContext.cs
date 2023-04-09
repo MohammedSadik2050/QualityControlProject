@@ -13,6 +13,7 @@ using eConLab.WF;
 using eConLab.Departments;
 using eConLab.Attachment;
 using eConLab.TownShips;
+using eConLab.Observers;
 
 namespace eConLab.EntityFrameworkCore
 {
@@ -34,6 +35,7 @@ namespace eConLab.EntityFrameworkCore
         public DbSet<RequestWF> RequestWFs { get; set; }
         public DbSet<RequestWFHistory> RequestWFHistories { get; set; }
         public DbSet<RequestInspectionTest> RequestInspectionTests { get; set; }
+        public DbSet<Observer> Observers { get; set; }
         public eConLabDbContext(DbContextOptions<eConLabDbContext> options)
             : base(options)
         {
