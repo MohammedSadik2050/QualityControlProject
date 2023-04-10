@@ -224,5 +224,8 @@
 		<text name="SiteDelivedDateRequired">تاريخ التسليم مطلوب</text>
 		<text name="Download">تحميل</text>
 		<text name="Observer">مراقب</text>
+		<text name="TownShip">البلديه</text>
+		<text name="TownShips">البلديات</text>
+		<text name="Address">العنوان</text>
 	</texts>
 </localizationDictionary>

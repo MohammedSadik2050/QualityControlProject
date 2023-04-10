@@ -219,5 +219,8 @@
 		<text name="CompletedDateRequired">Completed Date Required</text>
 		<text name="SiteDelivedDateRequired">Site Delived Date Required</text>
 		<text name="Observer">Observer</text>
+		<text name="TownShip">TownShip</text>
+		<text name="TownShips">TownShips</text>
+		<text name="Address">Address</text>
 </texts>
 </localizationDictionary>

@@ -9,6 +9,7 @@ using eConLab.Authorization.Accounts.Dto;
 using eConLab.Authorization.Roles;
 using eConLab.Observers.Dto;
 using eConLab.QCUsers.Dto;
+using eConLab.TownShips;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,14 +21,18 @@ namespace eConLab.Observers
     public class ObserverAppService : eConLabAppServiceBase, IObserverAppService
     {
         private readonly IRepository<Observer, long> _observerRepo;
+        private readonly IRepository<TownShip, long> _townShipRepo;
 
         private readonly AccountAppService _accountAppService;
         private readonly IMapper _mapper;
 
-        public ObserverAppService(IMapper mapper, IRepository<Observer, long> observerRepo, AccountAppService accountAppService)
+        public ObserverAppService(IMapper mapper,
+            IRepository<TownShip, long> townShipRepo,
+            IRepository<Observer, long> observerRepo, AccountAppService accountAppService)
         {
             _observerRepo = observerRepo;
             _accountAppService = accountAppService;
+            _townShipRepo = townShipRepo;
             _mapper = mapper;
         }
         public async Task<ObserverDto> CreateOrUpdate(CreateUpdateObserverDto input)
@@ -38,7 +43,7 @@ namespace eConLab.Observers
                     Name = input.EmailAddress,
                     EmailAddress = input.Name,
                     Surname = input.EmailAddress,
-                    UserName = input.EmailAddress,
+                    UserName = input.UserName,
                     Password = input.Password
                 };
                 var resultCreateUser = await _accountAppService.RegisterUserByRole(userInput, StaticRoleNames.Tenants.Observer);
@@ -81,8 +86,9 @@ namespace eConLab.Observers
 
             var lstItems = await GetListAsync(input.SkipCount, input.MaxResultCount, input);
             var totalCount = await GetTotalCountAsync(input);
-
-            return new PagedResultDto<ObserverDto>(totalCount, ObjectMapper.Map<List<ObserverDto>>(lstItems));
+            var result = ObjectMapper.Map<List<ObserverDto>>(lstItems);
+            result.ForEach(s => s.TownShipName = _townShipRepo.FirstOrDefault(z => z.Id == s.TownShipId)?.Name);
+            return new PagedResultDto<ObserverDto>(totalCount, result);
         }
 
 

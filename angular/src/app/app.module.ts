@@ -59,6 +59,12 @@ import { DepartmentsComponent } from './departments/departments.component';
 import { DepartmentCreateComponent } from './departments/department-create/department-create.component';
 import { DepartmentEditComponent } from './departments/department-edit/department-edit.component';
 import { ProjectRejectModalComponent } from './project/project-reject-modal/project-reject-modal.component';
+import { TownshipComponent } from './township/township.component';
+import { TownshipCreateComponent } from './township/township-create/township-create.component';
+import { TownshipEditComponent } from './township/township-edit/township-edit.component';
+import { ObserverComponent } from './observer/observer.component';
+import { ObserverCreateComponent } from './observer/observer-create/observer-create.component';
+import { ObserverEditComponent } from './observer/observer-edit/observer-edit.component';
 
 @NgModule({
     declarations: [
@@ -110,6 +116,12 @@ import { ProjectRejectModalComponent } from './project/project-reject-modal/proj
         DepartmentCreateComponent,
         DepartmentEditComponent,
         ProjectRejectModalComponent,
+        TownshipComponent,
+        TownshipCreateComponent,
+        TownshipEditComponent,
+        ObserverComponent,
+        ObserverCreateComponent,
+        ObserverEditComponent,
     ],
     imports: [
         CommonModule,

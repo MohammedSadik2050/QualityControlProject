@@ -5,6 +5,7 @@
         public const string Pages_Tenants = "Pages.Tenants";
         public const string Pages_Users = "Pages.Users";
         public const string Pages_Manage_Agences = "Pages.Manage.Agences";
+        public const string Pages_Manage_TownShip = "Pages.Manage.TownShip";
         public const string Pages_Manage_Departments = "Pages.Manage.Departments";
         public const string Pages_Manage_Contractor = "Pages.Manage.Contractor";
         public const string Pages_Manage_LabProjectManager = "Pages.Manage.LabProjectManager";

@@ -18,6 +18,7 @@ namespace eConLab.Observers.Dto
         public string NationalityName { get; set; }
         public long TownShipId { get; set; }
         public string PhoneNumber { get; set; }
+        public string TownShipName { get; set; }
         public string Address { get; set; }
         public string EmailAddress { get; set; }
 
