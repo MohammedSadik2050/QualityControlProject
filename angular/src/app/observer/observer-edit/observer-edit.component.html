@@ -19,7 +19,7 @@
                                 id="townShip" [(ngModel)]="observerObject.townShipId"
                                 #townShipModel="ngModel"
                                 #townShip required>
-                            <option *ngFor="let townShip of townShips" [value]="townShips.id">{{townShips.name}}</option>
+                            <option *ngFor="let townShip of townShips" [value]="townShip.id">{{townShip.name}}</option>
                         </select>
                         <abp-validation-summary [control]="townShipModel"
                                                 [controlEl]="townShip"></abp-validation-summary>

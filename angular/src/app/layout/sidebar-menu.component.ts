@@ -70,21 +70,21 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 'Pages.Manage.Agences'
             ),
               new MenuItem(
-                this.l('Departments'),
+                this.l('DepartmentsMenu'),
                 '/app/departments',
                 'fas fa-theater-masks',
                 'Pages.Manage.Departments'
             ),
             new MenuItem(
-                this.l('TownShips'),
+                this.l('TownShipsMenu'),
                 '/app/townShips',
                 'fas fa-building',
                 'Pages.Manage.TownShip'
             ),
             new MenuItem(
-                this.l('Observers'),
+                this.l('ObserversMenu'),
                 '/app/observers',
-                'fas fa-building',
+                'fas fa-users',
                 'Pages.Manage.Observer'
             ),
             new MenuItem(

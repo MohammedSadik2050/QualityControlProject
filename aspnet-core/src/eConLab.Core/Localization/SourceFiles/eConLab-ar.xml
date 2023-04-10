@@ -195,6 +195,7 @@
 		<text name="DuplicateProjectItem">تمت إضافه البند من قبل</text>
 		<text name="ProjectItems">بنود المشروع</text>
 		<text name="Departments">الإدارات</text>
+		<text name="DepartmentsMenu">قائمه الإدارات</text>
 		<text name="RelatedAgency">الجهه التابع لها</text>
 		<text name="ActionName">التغيير</text>
 		<text name="ActionNote">الملاحظات</text>
@@ -227,5 +228,8 @@
 		<text name="TownShip">البلديه</text>
 		<text name="TownShips">البلديات</text>
 		<text name="Address">العنوان</text>
+		<text name="Observers">المراقبين</text>
+		<text name="ObserversMenu">إداره المراقبين</text>
+		<text name="TownShipsMenu">قائمه البلديات</text>
 	</texts>
 </localizationDictionary>

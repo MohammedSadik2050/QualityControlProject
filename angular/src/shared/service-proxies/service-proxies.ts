@@ -8083,6 +8083,7 @@ export class ObserverDto implements IObserverDto {
     nationalityName: string | undefined;
     townShipId: number;
     phoneNumber: string | undefined;
+    townShipName: string | undefined;
     address: string | undefined;
     emailAddress: string | undefined;
 
@@ -8104,6 +8105,7 @@ export class ObserverDto implements IObserverDto {
             this.nationalityName = _data["nationalityName"];
             this.townShipId = _data["townShipId"];
             this.phoneNumber = _data["phoneNumber"];
+            this.townShipName = _data["townShipName"];
             this.address = _data["address"];
             this.emailAddress = _data["emailAddress"];
         }
@@ -8125,6 +8127,7 @@ export class ObserverDto implements IObserverDto {
         data["nationalityName"] = this.nationalityName;
         data["townShipId"] = this.townShipId;
         data["phoneNumber"] = this.phoneNumber;
+        data["townShipName"] = this.townShipName;
         data["address"] = this.address;
         data["emailAddress"] = this.emailAddress;
         return data; 
@@ -8146,6 +8149,7 @@ export interface IObserverDto {
     nationalityName: string | undefined;
     townShipId: number;
     phoneNumber: string | undefined;
+    townShipName: string | undefined;
     address: string | undefined;
     emailAddress: string | undefined;
 }

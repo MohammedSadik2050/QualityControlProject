@@ -40,8 +40,8 @@ namespace eConLab.Observers
             if (input.UserId ==null)
             {
                 var userInput = new RegisterInput {
-                    Name = input.EmailAddress,
-                    EmailAddress = input.Name,
+                    Name = input.Name,
+                    EmailAddress = input.EmailAddress,
                     Surname = input.EmailAddress,
                     UserName = input.UserName,
                     Password = input.Password
