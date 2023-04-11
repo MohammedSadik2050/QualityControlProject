@@ -180,7 +180,7 @@ export class AppUsersComponent extends PagedListingComponentBase<QCUserDto> {
         userType = new UserTypes();
         userType.id = 6;
         userType.name = "SupervisingQuality";
-        userType.arabicName = "مشرف المواد";
+        userType.arabicName = "مهندس المواد";
         this.userTypes.push(userType);
 
         userType = new UserTypes();
