@@ -21,6 +21,9 @@ using Abp.Collections.Extensions;
 using eConLab.Enum;
 using Abp.Extensions;
 using Abp.Runtime.Session;
+using eConLab.WF;
+using eConLab.WF.Dto;
+using eConLab.Observers;
 
 namespace eConLab.Requests
 {
@@ -36,9 +39,13 @@ namespace eConLab.Requests
         private readonly IRepository<Project, long> _projectRepo;
         private readonly IRepository<ProjectItem, long> _projectItemRepo;
         private readonly IRepository<Request, long> _requestRepo;
+        private readonly IRepository<Observer, long> _observerRepo;
         private readonly IMapper _mapper;
+        private readonly IRequestWFAppService _requestWFAppService;
         public RequestAppService(
             IMapper mapper,
+            IRepository<Observer, long> observerRepo,
+             IRequestWFAppService requestWFAppService,
             IRepository<Agency, long> agencyRepository,
             IRepository<AgencyType, long> agencyTypeRepo,
             IRepository<QCUser, long> qcUserRepo,
@@ -54,6 +61,8 @@ namespace eConLab.Requests
             _projectRepo = projectRepo;
             _projectItemRepo = projectItemRepo;
             _requestRepo = requestRepo;
+            _requestWFAppService = requestWFAppService;
+            _observerRepo = observerRepo;
         }
 
 
@@ -101,9 +110,8 @@ namespace eConLab.Requests
         private async Task<List<RequestViewDto>> GetListAsync(int skipCount, int maxResultCount, RequestPaginatedDto filter = null)
         {
 
-            var lstItems = _requestRepo.GetAll().Include(s => s.Project).OrderByDescending(s=>s.CreationTime)
-                                          .Skip(skipCount)
-                                          .Take(maxResultCount)
+            var lstItems = _requestRepo.GetAll().Include(s => s.Project).Include(s => s.Observer).OrderByDescending(s => s.CreationTime)
+
                                            .WhereIf(filter.ProjectId > 0, x => x.ProjectId == filter.ProjectId)
                                          .WhereIf(!filter.ContractNumber.IsNullOrEmpty(), x => x.Project.ContractNumber.Contains(filter.ContractNumber))
                                           .WhereIf(!filter.RequestCode.IsNullOrEmpty(), x => x.Code.Contains(filter.RequestCode))
@@ -114,19 +122,23 @@ namespace eConLab.Requests
             if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin) == false)
             {
                 if (userRoles.Contains(StaticRoleNames.Tenants.Consultant))
-                    lstItems= lstItems.Where(d => d.Project.ConsultantId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.Project.ConsultantId == AbpSession.UserId);
                 if (userRoles.Contains(StaticRoleNames.Tenants.Contractor))
-                    lstItems= lstItems.Where(d => d.Project.ContractorId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.Project.ContractorId == AbpSession.UserId);
 
+                if (userRoles.Contains(StaticRoleNames.Tenants.Observer))
+                    lstItems = lstItems.Where(d => d.Observer.UserId == AbpSession.UserId);
                 //if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
                 //    lstItems= lstItems.Where(d => d.Project.LabProjectManagerId == AbpSession.UserId);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingQuality))
-                    lstItems=lstItems.Where(d => d.Project.SupervisingQualityId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.Project.SupervisingQualityId == AbpSession.UserId);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingEngineer))
-                    lstItems= lstItems.Where(d => d.Project.SupervisingEngineerId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.Project.SupervisingEngineerId == AbpSession.UserId);
             }
+            lstItems = lstItems.Skip(skipCount)
+                                          .Take(maxResultCount);
 
             var result = lstItems.Select(mod => new RequestViewDto
             {
@@ -148,7 +160,10 @@ namespace eConLab.Requests
                     ContractNumber = mod.Project.ContractNumber,
                     StartDate = mod.Project.StartDate,
                     SiteDelivedDate = mod.Project.SiteDelivedDate,
-                }
+                },
+
+                ObserverId = mod.ObserverId,
+                ObserverName = mod.Observer != null ? mod.Observer.Name : "",
 
             }).ToList();
             return result;
@@ -167,18 +182,18 @@ namespace eConLab.Requests
             if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin) == false)
             {
                 if (userRoles.Contains(StaticRoleNames.Tenants.Consultant))
-                    lstItems= lstItems.Where(d => d.Project.ConsultantId == AbpSession.UserId && d.Status == RequestStatus.Submitted);
+                    lstItems = lstItems.Where(d => d.Project.ConsultantId == AbpSession.UserId && d.Status == RequestStatus.Submitted);
                 if (userRoles.Contains(StaticRoleNames.Tenants.Contractor))
-                    lstItems= lstItems.Where(d => d.Project.CreatorUserId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.Project.CreatorUserId == AbpSession.UserId);
 
                 //if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
                 //    lstItems= lstItems.Where(d => d.Project.LabProjectManagerId == AbpSession.UserId);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingQuality))
-                    lstItems=lstItems.Where(d => d.Project.SupervisingQualityId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.Project.SupervisingQualityId == AbpSession.UserId);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingEngineer))
-                    lstItems= lstItems.Where(d => d.Project.SupervisingEngineerId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.Project.SupervisingEngineerId == AbpSession.UserId);
             }
 
             return lstItems.ToList().Count;
@@ -189,6 +204,27 @@ namespace eConLab.Requests
             var obj = await _requestRepo.GetAllIncluding(d => d.Project).FirstOrDefaultAsync(x => x.Id == id);
 
             return _mapper.Map<RequestViewDto>(obj) ?? null;
+        }
+
+        public async Task<bool> AssignRequest(long requestId, long observerId)
+        {
+            var request = await _requestRepo.FirstOrDefaultAsync(s => s.Id == requestId);
+            if (request != null)
+            {
+                request.ObserverId = observerId;
+                request.Status = RequestStatus.AssignedToObserver;
+            }
+            var currentObserver = await _observerRepo.FirstOrDefaultAsync(s=>s.Id==observerId);
+            var history = new RequestWFDto()
+            {
+                ActionName = "تم تعيين مراقب",
+                RequestId = requestId,
+                Entity = Entities.Request,
+                CurrentUserId = AbpSession.UserId.Value,
+                ActionNotes = $@"تم تعيين {currentObserver.Name}"
+            };
+            await _requestWFAppService.CreateOrUpdate(history);
+            return true;
         }
     }
 }

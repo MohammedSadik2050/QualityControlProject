@@ -16,6 +16,6 @@ namespace eConLab.Requests
         Task<PagedResultDto<RequestViewDto>> GetAll(RequestPaginatedDto input);
         Task<RequestViewDto> GetRequestView([Required] long id);
         Task<RequestDto> Get(long id);
-
+        Task<bool> AssignRequest(long requestId, long observerId);
     }
 }

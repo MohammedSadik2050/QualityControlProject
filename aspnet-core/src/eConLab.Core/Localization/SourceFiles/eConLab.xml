@@ -184,6 +184,7 @@
 		<text name="Status">Status</text>
 		<text name="ApprovedByConsultant">Approved By Consultant</text>
 		<text name="ApprovedBySupervisingQuality">Approved BySupervising Quality</text>
+		<!--<text name="ApprovedByLabProjectManager">Approved By Lab Project Manager</text>-->
 		<text name="Rejected">Rejected</text>
 		<text name="RequestRejected">Request Rejected</text>
 		<text name="History">History</text>
@@ -192,6 +193,7 @@
 		<text name="ProjectItems">Project Items</text>
 		<text name="Departments">Departments</text>
 		<text name="DepartmentsMenu">Departments Menu</text>
+		<text name="AssignedToObserver">Assigned to an Observer</text>
 		<text name="RelatedAgency">Related Agency</text>
 		<text name="ActionName">Action Name</text>
 		<text name="ActionNote">Action Note</text>
@@ -226,5 +228,7 @@
 		<text name="TownShips">TownShips</text>
 		<text name="TownShipsMenu">TownShips Menu</text>
 		<text name="Address">Address</text>
+		<text name="Assign">Assign</text>
+		<text name="AssignRequests">Assign Requests</text>
 </texts>
 </localizationDictionary>

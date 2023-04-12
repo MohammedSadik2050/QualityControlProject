@@ -15,6 +15,7 @@ namespace eConLab.Requests.Dto
         public DateTime InspectionDate { get; set; }
         public string Description { get; set; }
         public long ProjectId { get; set; }
+        public long? ObserverId { get; set; }
         public string DistrictName { get; set; }
         public string PhomeNumberSiteResponsibleOne { get; set; }
         public string PhomeNumberSiteResponsibleTwo { get; set; }

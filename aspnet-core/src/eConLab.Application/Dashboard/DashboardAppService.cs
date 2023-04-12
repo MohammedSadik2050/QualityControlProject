@@ -51,8 +51,8 @@ namespace eConLab.Dashboard
 
             var lstRequests = _requestRepo.GetAll().ToList();
             
-            result.RequestStatisticsDto.TotalRequestApproved = lstRequests.Where(d => d.Status == Enum.RequestStatus.ApprovedBySupervisingQuality || d.Status == Enum.RequestStatus.ApprovedByConsultant).Count();
-            result.RequestStatisticsDto.TotalRequestPending = lstRequests.Where(d => d.Status != Enum.RequestStatus.ApprovedBySupervisingQuality && d.Status != Enum.RequestStatus.ApprovedByConsultant).Count();
+            result.RequestStatisticsDto.TotalRequestApproved = lstRequests.Where(d => d.Status == Enum.RequestStatus.ApprovedByLabProjectManager || d.Status == Enum.RequestStatus.ApprovedByConsultant).Count();
+            result.RequestStatisticsDto.TotalRequestPending = lstRequests.Where(d => d.Status != Enum.RequestStatus.ApprovedByLabProjectManager && d.Status != Enum.RequestStatus.ApprovedByConsultant).Count();
             return result;
         }
     }

@@ -3292,6 +3292,7 @@ export class RequestServiceProxy {
 
     /**
      * @param projectId (optional) 
+     * @param observerId (optional) 
      * @param contractNumber (optional) 
      * @param requestCode (optional) 
      * @param status (optional) 
@@ -3300,12 +3301,16 @@ export class RequestServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(projectId: number | undefined, contractNumber: string | undefined, requestCode: string | undefined, status: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestViewDtoPagedResultDto> {
+    getAll(projectId: number | undefined, observerId: number | undefined, contractNumber: string | undefined, requestCode: string | undefined, status: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestViewDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Request/GetAll?";
         if (projectId === null)
             throw new Error("The parameter 'projectId' cannot be null.");
         else if (projectId !== undefined)
             url_ += "ProjectId=" + encodeURIComponent("" + projectId) + "&";
+        if (observerId === null)
+            throw new Error("The parameter 'observerId' cannot be null.");
+        else if (observerId !== undefined)
+            url_ += "ObserverId=" + encodeURIComponent("" + observerId) + "&";
         if (contractNumber === null)
             throw new Error("The parameter 'contractNumber' cannot be null.");
         else if (contractNumber !== undefined)
@@ -3429,6 +3434,67 @@ export class RequestServiceProxy {
             }));
         }
         return _observableOf<RequestViewDto>(<any>null);
+    }
+
+    /**
+     * @param requestId (optional) 
+     * @param observerId (optional) 
+     * @return Success
+     */
+    assignRequest(requestId: number | undefined, observerId: number | undefined) : Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Request/AssignRequest?";
+        if (requestId === null)
+            throw new Error("The parameter 'requestId' cannot be null.");
+        else if (requestId !== undefined)
+            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
+        if (observerId === null)
+            throw new Error("The parameter 'observerId' cannot be null.");
+        else if (observerId !== undefined)
+            url_ += "observerId=" + encodeURIComponent("" + observerId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAssignRequest(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAssignRequest(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAssignRequest(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
     }
 }
 
@@ -8949,6 +9015,7 @@ export class RequestDto implements IRequestDto {
     inspectionDate: moment.Moment;
     description: string | undefined;
     projectId: number;
+    observerId: number | undefined;
     districtName: string | undefined;
     phomeNumberSiteResponsibleOne: string | undefined;
     phomeNumberSiteResponsibleTwo: string | undefined;
@@ -8978,6 +9045,7 @@ export class RequestDto implements IRequestDto {
             this.inspectionDate = _data["inspectionDate"] ? moment(_data["inspectionDate"].toString()) : <any>undefined;
             this.description = _data["description"];
             this.projectId = _data["projectId"];
+            this.observerId = _data["observerId"];
             this.districtName = _data["districtName"];
             this.phomeNumberSiteResponsibleOne = _data["phomeNumberSiteResponsibleOne"];
             this.phomeNumberSiteResponsibleTwo = _data["phomeNumberSiteResponsibleTwo"];
@@ -9007,6 +9075,7 @@ export class RequestDto implements IRequestDto {
         data["inspectionDate"] = this.inspectionDate ? this.inspectionDate.toISOString() : <any>undefined;
         data["description"] = this.description;
         data["projectId"] = this.projectId;
+        data["observerId"] = this.observerId;
         data["districtName"] = this.districtName;
         data["phomeNumberSiteResponsibleOne"] = this.phomeNumberSiteResponsibleOne;
         data["phomeNumberSiteResponsibleTwo"] = this.phomeNumberSiteResponsibleTwo;
@@ -9036,6 +9105,7 @@ export interface IRequestDto {
     inspectionDate: moment.Moment;
     description: string | undefined;
     projectId: number;
+    observerId: number | undefined;
     districtName: string | undefined;
     phomeNumberSiteResponsibleOne: string | undefined;
     phomeNumberSiteResponsibleTwo: string | undefined;
@@ -9330,6 +9400,7 @@ export enum RequestStatus {
     _3 = 3,
     _4 = 4,
     _5 = 5,
+    _6 = 6,
 }
 
 export class RequestViewDto implements IRequestViewDto {
@@ -9340,6 +9411,8 @@ export class RequestViewDto implements IRequestViewDto {
     inspectionDate: moment.Moment;
     description: string | undefined;
     projectId: number;
+    observerId: number | undefined;
+    observerName: string | undefined;
     districtName: string | undefined;
     phomeNumberSiteResponsibleOne: string | undefined;
     phomeNumberSiteResponsibleTwo: string | undefined;
@@ -9366,6 +9439,8 @@ export class RequestViewDto implements IRequestViewDto {
             this.inspectionDate = _data["inspectionDate"] ? moment(_data["inspectionDate"].toString()) : <any>undefined;
             this.description = _data["description"];
             this.projectId = _data["projectId"];
+            this.observerId = _data["observerId"];
+            this.observerName = _data["observerName"];
             this.districtName = _data["districtName"];
             this.phomeNumberSiteResponsibleOne = _data["phomeNumberSiteResponsibleOne"];
             this.phomeNumberSiteResponsibleTwo = _data["phomeNumberSiteResponsibleTwo"];
@@ -9392,6 +9467,8 @@ export class RequestViewDto implements IRequestViewDto {
         data["inspectionDate"] = this.inspectionDate ? this.inspectionDate.toISOString() : <any>undefined;
         data["description"] = this.description;
         data["projectId"] = this.projectId;
+        data["observerId"] = this.observerId;
+        data["observerName"] = this.observerName;
         data["districtName"] = this.districtName;
         data["phomeNumberSiteResponsibleOne"] = this.phomeNumberSiteResponsibleOne;
         data["phomeNumberSiteResponsibleTwo"] = this.phomeNumberSiteResponsibleTwo;
@@ -9418,6 +9495,8 @@ export interface IRequestViewDto {
     inspectionDate: moment.Moment;
     description: string | undefined;
     projectId: number;
+    observerId: number | undefined;
+    observerName: string | undefined;
     districtName: string | undefined;
     phomeNumberSiteResponsibleOne: string | undefined;
     phomeNumberSiteResponsibleTwo: string | undefined;

@@ -27,7 +27,8 @@ namespace eConLab.Enum
         Pending = 1,
         Submitted=2,
         ApprovedByConsultant = 3,
-        ApprovedBySupervisingQuality = 4,
+        ApprovedByLabProjectManager = 4,
+        AssignedToObserver = 6,
         Rejected = 5
     }
     public enum MainRequestTypes

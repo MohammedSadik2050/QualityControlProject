@@ -65,6 +65,8 @@ import { TownshipEditComponent } from './township/township-edit/township-edit.co
 import { ObserverComponent } from './observer/observer.component';
 import { ObserverCreateComponent } from './observer/observer-create/observer-create.component';
 import { ObserverEditComponent } from './observer/observer-edit/observer-edit.component';
+import { RequestAssignComponent } from './request-assign/request-assign.component';
+import { AssignModalComponent } from './request-assign/assign-modal/assign-modal.component';
 
 @NgModule({
     declarations: [
@@ -122,6 +124,8 @@ import { ObserverEditComponent } from './observer/observer-edit/observer-edit.co
         ObserverComponent,
         ObserverCreateComponent,
         ObserverEditComponent,
+        RequestAssignComponent,
+        AssignModalComponent,
     ],
     imports: [
         CommonModule,

@@ -39,7 +39,7 @@
                             {{ "Approved" | localize }}
                         </button>
                         <!--(request.status ==3 && isGranted('Pages.Manage.LabProjectManager')) ||-->
-                        <button style="background-color: #ffc107" *ngIf=" (request.status ==3 && isGranted('Pages.Roles')) " type="button"
+                        <button style="background-color: #ffc107" *ngIf=" (request.status ==3 && isGranted('Pages.Roles')) || (request.status ==3 && isGranted('Pages.Manage.LabProjectManager'))" type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="save(4)"
                                 class="btn btn-success"

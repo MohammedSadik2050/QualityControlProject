@@ -1,20 +1,19 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
-import { appModuleAnimation } from '../../shared/animations/routerTransition';
 import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from '../../shared/paged-listing-component-base';
 import { DropdownListDto, LookupServiceProxy, ProjectDto, ProjectServiceProxy, RequestDto, RequestServiceProxy, RequestViewDto } from '../../shared/service-proxies/service-proxies';
-import { RequestCreateComponent } from './request-create/request-create.component';
-
+import { AssignModalComponent } from './assign-modal/assign-modal.component';
 class PageRequestDto extends PagedRequestDto {
     keyword: string;
 }
 @Component({
-
-    templateUrl: './requests.component.html',
-    animations: [appModuleAnimation()]
+    selector: 'app-request-assign',
+    templateUrl: './request-assign.component.html',
+    styleUrls: ['./request-assign.component.css']
 })
-export class RequestsComponent extends PagedListingComponentBase<RequestViewDto>{
+export class RequestAssignComponent extends PagedListingComponentBase<RequestViewDto>{
     requests: RequestViewDto[] = [];
     projects: ProjectDto[] = [];
     keyword = '';
@@ -30,7 +29,7 @@ export class RequestsComponent extends PagedListingComponentBase<RequestViewDto>
         public _projectServiceProxy: ProjectServiceProxy,
         private _requestServiceProxy: RequestServiceProxy,
         public _lookupServiceProxy: LookupServiceProxy,
-        //private _modalService: BsModalService,
+        private _modalService: BsModalService,
         private router: Router
     ) {
         super(injector);
@@ -59,8 +58,11 @@ export class RequestsComponent extends PagedListingComponentBase<RequestViewDto>
 
     viewRow(row: any) {
 
-        this.router.navigateByUrl('/app/examinationRequest/view/' + row.id);
+        //this.router.navigateByUrl('/app/examinationRequest/view/' + row.id);
+        window.open('/app/examinationRequest/view/' + row.id, "_blank");
     }
+
+
 
     clearFilters(): void {
         this.keyword = '';
@@ -82,10 +84,10 @@ export class RequestsComponent extends PagedListingComponentBase<RequestViewDto>
         this.loadAllStatuses();
         this._requestServiceProxy
             .getAll(
-                this.projectId,0,
+                this.projectId, 0,
                 this.contractNumber,
                 this.requestCode,
-                this.statusId,
+                4,
                 '',
                 request.skipCount,
                 request.maxResultCount
@@ -107,50 +109,30 @@ export class RequestsComponent extends PagedListingComponentBase<RequestViewDto>
             undefined,
             (result: boolean) => {
                 if (result) {
-                    //this._inspectionTestServiceProxy.delete(row.id).subscribe(() => {
-                    //    abp.notify.success(this.l('SuccessfullyDeleted'));
-                    //    this.refresh();
-                    //});
+
                 }
             }
         );
     }
 
-    //private showResetPasswordUserDialog(id?: number): void {
-    //    this._modalService.show(ResetPasswordDialogComponent, {
-    //        class: 'modal-lg',
-    //        initialState: {
-    //            id: id,
-    //        },
-    //    });
-    //}
 
     private showCreateOrEditUserDialog(id?: number): void {
 
-        if (!id) {
-            //createOrEditUserDialog = this._modalService.show(
-            //    RequestCreateComponent,
-            //    {
-            //        class: 'modal-lg',
-            //    }
-            //);
-            this.router.navigateByUrl('/app/examinationRequest/create');
-        } else {
-            this.router.navigateByUrl('/app/examinationRequest/edit/' + id);
-            //let createOrEditUserDialog: BsModalRef;
-            //createOrEditUserDialog = this._modalService.show(
-            //    InspectionTestEditComponent,
-            //    {
-            //        class: 'modal-lg',
-            //        initialState: {
-            //            id: id,
-            //        },
-            //    }
-            //);
-        }
 
-        //createOrEditUserDialog.content.onSave.subscribe(() => {
-        //    this.refresh();
-        //});
+        let createOrEditUserDialog: BsModalRef;
+        createOrEditUserDialog = this._modalService.show(
+            AssignModalComponent,
+            {
+                class: 'modal-lg',
+                initialState: {
+                    id: id,
+                },
+            }
+        );
+
+        createOrEditUserDialog.content.onSave.subscribe(() => {
+            this.refresh();
+        });
+
     }
 }

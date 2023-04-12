@@ -3,14 +3,14 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-6">
-                    <h1>{{ "ExaminationRequest" | localize }}</h1>
+                    <h1>{{ "AssignRequests" | localize }}</h1>
                 </div>
-                <div class="col-6 text-right" *ngIf="isGranted('Pages.Manage.Contractor')">
+                <!--<div class="col-6 text-right" *ngIf="isGranted('Pages.Manage.Contractor')">
                     <a href="javascript:;" class="btn bg-blue" (click)="createAgency()">
                         <i class="fa fa-plus-square"></i>
                         {{ "Create" | localize }}
                     </a>
-                </div>
+                </div>-->
             </div>
         </div>
     </section>
@@ -79,7 +79,6 @@
                                                        class="form-control"
                                                        name="projectContractNumber"
                                                        id="projectContractNumber"
-                                                        
                                                        [(ngModel)]="contractNumber" />
 
 
@@ -97,7 +96,6 @@
                                                        class="form-control"
                                                        name="requestCode"
                                                        id="requestCode"
-                                                        
                                                        [(ngModel)]="requestCode" />
 
 
@@ -148,7 +146,7 @@
                                     <th>{{ "ContractNumber" | localize }}</th>
                                     <th>{{ "RequestCode" | localize }}</th>
                                     <th>{{ "InspectionDate" | localize }}</th>
-                                    <th>{{ "Status" | localize }}</th>
+                                    <th>{{ "Observer" | localize }}</th>
                                     <th>{{ "HasSample" | localize }}</th>
 
                                     <th style="width: 310px;"></th>
@@ -169,7 +167,7 @@
                                     <td>{{ request.project.contractNumber }}</td>
                                     <td>{{ request.code }}</td>
                                     <td>{{ request.inspectionDate | date: 'dd/MM/yyyy'}}</td>
-                                    <td>{{ request.status | localize }}</td>
+                                    <td>{{ request.observerName | localize }}</td>
                                     <td>
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox"
@@ -184,16 +182,16 @@
                                                 class="btn btn-sm bg-secondary"
                                                 (click)="editRow(request)">
                                             <i class="fas fa-pencil-alt"></i>
-                                            {{ "Edit" | localize }}
+                                            {{ "Assign" | localize }}
                                         </button>
-                                        <button type="button"
+                                        <!--<button type="button"
                                                 class="btn btn-sm bg-danger mx-2"
                                                 (click)="delete(request)">
                                             <i class="fas fa-trash"></i>
                                             {{ "Delete" | localize }}
-                                        </button>
+                                        </button>-->
                                         <button type="button"
-                                                class="btn btn-sm bg-primary"
+                                                class="btn btn-sm bg-primary mx-2"
                                                 (click)="viewRow(request)">
                                             <i class="fa fa-eye"></i>
                                             {{ "View" | localize }}

@@ -22,6 +22,7 @@ import { RequestViewComponent } from './requests/request-view/request-view.compo
 import { DepartmentsComponent } from './departments/departments.component';
 import { TownshipComponent } from './township/township.component';
 import { ObserverComponent } from './observer/observer.component';
+import { RequestAssignComponent } from './request-assign/request-assign.component';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import { ObserverComponent } from './observer/observer.component';
                     { path: 'projects', component: ProjectComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
                     { path: 'projects/edit/:id', component: EditProjectComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
                     { path: 'inspectionTest', component: InspectionTestComponent, data: { permission: 'Pages.Manage.InspectionTest' }, canActivate: [AppRouteGuard] },
+                    { path: 'assignRequests', component: RequestAssignComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
                     { path: 'examinationRequest', component: RequestsComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },
                     { path: 'examinationRequest/create', component: RequestCreateComponent, data: { permission: 'Pages.Manage.Contractor' }, canActivate: [AppRouteGuard] },
                     { path: 'examinationRequest/edit/:id', component: RequestEditComponent, data: { permission: '' }, canActivate: [AppRouteGuard] },

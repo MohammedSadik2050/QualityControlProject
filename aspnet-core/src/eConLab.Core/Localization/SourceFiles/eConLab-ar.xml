@@ -188,6 +188,7 @@
 		<text name="Approved">إعتماد الطلب</text>
 		<text name="ApprovedByConsultant">الإستشاري وافق على الطلب</text>
 		<text name="ApprovedBySupervisingQuality">تم إعتماد الطلب</text>
+		<text name="AssignedToObserver">تم تعيين مراقب</text>
 		<text name="Rejected">الطلب مرفوض</text>
 		<text name="RequestRejected">رفض الطلب</text>
 		<text name="History">عمليات الطلب</text>
@@ -231,5 +232,8 @@
 		<text name="Observers">المراقبين</text>
 		<text name="ObserversMenu">إداره المراقبين</text>
 		<text name="TownShipsMenu">قائمه البلديات</text>
+		<text name="Assign">تعيين</text>
+		<text name="AssignRequests">توزيع الطلبات</text>
+		<!--<text name="ApprovedByLabProjectManager">مدير المختبر إعتمد الطلب </text>-->
 	</texts>
 </localizationDictionary>
