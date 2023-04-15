@@ -232,8 +232,10 @@
 		<text name="Observers">المراقبين</text>
 		<text name="ObserversMenu">إداره المراقبين</text>
 		<text name="TownShipsMenu">قائمه البلديات</text>
-		<text name="Assign">تعيين</text>
+		<text name="Assign">إسناد</text>
 		<text name="AssignRequests">توزيع الطلبات</text>
+		<text name="DonotHaveObserver">طلبات غير مسنده</text>
+		<text name="AssignedRequests">الطلبات المسنده</text>
 		<!--<text name="ApprovedByLabProjectManager">مدير المختبر إعتمد الطلب </text>-->
 	</texts>
 </localizationDictionary>

@@ -21,6 +21,7 @@ export class AssignModalComponent extends PagedListingComponentBase<ObserverDto>
     isActive: boolean | null;
     advancedFiltersVisible = false;
     id: number;
+    currentObserver: number;
     @Output() onSave = new EventEmitter<any>();
     saving = false;
     constructor(

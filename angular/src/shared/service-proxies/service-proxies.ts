@@ -3382,6 +3382,97 @@ export class RequestServiceProxy {
     }
 
     /**
+     * @param projectId (optional) 
+     * @param observerId (optional) 
+     * @param contractNumber (optional) 
+     * @param requestCode (optional) 
+     * @param status (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllForAssign(projectId: number | undefined, observerId: number | undefined, contractNumber: string | undefined, requestCode: string | undefined, status: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestViewDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Request/GetAllForAssign?";
+        if (projectId === null)
+            throw new Error("The parameter 'projectId' cannot be null.");
+        else if (projectId !== undefined)
+            url_ += "ProjectId=" + encodeURIComponent("" + projectId) + "&";
+        if (observerId === null)
+            throw new Error("The parameter 'observerId' cannot be null.");
+        else if (observerId !== undefined)
+            url_ += "ObserverId=" + encodeURIComponent("" + observerId) + "&";
+        if (contractNumber === null)
+            throw new Error("The parameter 'contractNumber' cannot be null.");
+        else if (contractNumber !== undefined)
+            url_ += "ContractNumber=" + encodeURIComponent("" + contractNumber) + "&";
+        if (requestCode === null)
+            throw new Error("The parameter 'requestCode' cannot be null.");
+        else if (requestCode !== undefined)
+            url_ += "RequestCode=" + encodeURIComponent("" + requestCode) + "&";
+        if (status === null)
+            throw new Error("The parameter 'status' cannot be null.");
+        else if (status !== undefined)
+            url_ += "Status=" + encodeURIComponent("" + status) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllForAssign(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllForAssign(<any>response_);
+                } catch (e) {
+                    return <Observable<RequestViewDtoPagedResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<RequestViewDtoPagedResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllForAssign(response: HttpResponseBase): Observable<RequestViewDtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = RequestViewDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<RequestViewDtoPagedResultDto>(<any>null);
+    }
+
+    /**
      * @return Success
      */
     getRequestView(id: number) : Observable<RequestViewDto> {

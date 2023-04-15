@@ -61,6 +61,7 @@
                                                         class="form-control"
                                                         id="projectId" [(ngModel)]="projectId"
                                                         #projectModel="ngModel">
+                                                    <option [value]="0"> {{ "All" | localize}}</option>
                                                     <option *ngFor="let project of projects" [value]="project.id">{{project.name}}</option>
                                                 </select>
 
@@ -113,7 +114,9 @@
                                                         class="form-control"
                                                         id="statusId" [(ngModel)]="statusId"
                                                         #statusIdModel="ngModel">
-                                                    <option *ngFor="let requestStatus of requestStatuses" [value]="requestStatus.id">{{requestStatus.name | localize}}</option>
+                                                    <option [value]="0"> {{ "All" | localize}}</option>
+                                                    <option [value]="4"> {{"DonotHaveObserver" | localize}}</option>
+                                                    <option [value]="6"> {{"AssignedRequests" | localize}}</option>
                                                 </select>
 
 

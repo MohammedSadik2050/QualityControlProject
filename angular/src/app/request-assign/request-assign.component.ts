@@ -83,11 +83,11 @@ export class RequestAssignComponent extends PagedListingComponentBase<RequestVie
         this.loadAllProject();
         this.loadAllStatuses();
         this._requestServiceProxy
-            .getAll(
+            .getAllForAssign(
                 this.projectId, 0,
                 this.contractNumber,
                 this.requestCode,
-                4,
+                this.statusId,
                 '',
                 request.skipCount,
                 request.maxResultCount

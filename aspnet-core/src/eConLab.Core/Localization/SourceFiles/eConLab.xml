@@ -230,5 +230,7 @@
 		<text name="Address">Address</text>
 		<text name="Assign">Assign</text>
 		<text name="AssignRequests">Assign Requests</text>
+		<text name="DonotHaveObserver">unassigned Requestes</text>
+		<text name="AssignedRequests">Assigned Requests</text>
 </texts>
 </localizationDictionary>
