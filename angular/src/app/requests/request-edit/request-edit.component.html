@@ -48,7 +48,7 @@
                         </button>
 
                         <button *ngIf="(request.status ==2 && consultantId ==appSession.userId)
-                             || (request.status ==3 && isGranted('Pages.Manage.LabProjectManager')) || (request.status ==3 && appSession.userId == supervisingQualityId)
+                             || (request.status ==3 && (isGranted('Pages.Manage.LabProjectManager')|| isGranted('Pages.Manage.SupervisingQuality') )) || (request.status ==3 && appSession.userId == supervisingQualityId)
                                     || ((request.status ==2 ||request.status ==3)  && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="rejectRequest()"

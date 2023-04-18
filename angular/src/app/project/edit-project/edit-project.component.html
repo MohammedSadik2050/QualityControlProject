@@ -41,7 +41,7 @@
         {{ "Approved" | localize }}
     </button>-->
 
-                        <button style="background-color: #ffc107" *ngIf="(project.status ==1 && isGranted('Pages.Manage.LabProjectManager')) ||  (project.status ==3 && isGranted('Pages.Roles')) " type="button"
+                        <button style="background-color: #ffc107" *ngIf="(project.status ==1 && (isGranted('Pages.Manage.LabProjectManager')|| isGranted('Pages.Manage.SupervisingQuality'))) ||  (project.status ==1 && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createUserModal.form.valid || saving"
                                 (click)="save(3)"
                                 class="btn btn-success"
@@ -50,7 +50,7 @@
                         </button>
 
                         <button *ngIf="(project.status ==0 && project.consultantId === appSession.userId)
-                             || (project.status ==1 && isGranted('Pages.Manage.LabProjectManager'))
+                             || (project.status ==1 && (isGranted('Pages.Manage.LabProjectManager')||  isGranted('Pages.Manage.SupervisingQuality')))
                                     || ((project.status ==1 ||project.status ==2)  && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createUserModal.form.valid || saving"
                                 (click)="rejectRequest()"
