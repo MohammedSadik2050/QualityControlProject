@@ -16,6 +16,7 @@ namespace eConLab.Authorization
             context.CreatePermission(PermissionNames.Pages_Manage_TownShip, L("Township"));
             context.CreatePermission(PermissionNames.Pages_Manage_Contractor, L("Contractor"));
             context.CreatePermission(PermissionNames.Pages_Manage_LabProjectManager, L("LabProjectManager"));
+            context.CreatePermission(PermissionNames.Pages_Manage_SupervisingQuality, L("SupervisingQuality"));
             context.CreatePermission(PermissionNames.Pages_Manage_Observer, L("Observer"));
             context.CreatePermission(PermissionNames.Pages_Manage_Requests, L("Requests"));
             context.CreatePermission(PermissionNames.Pages_Manage_Project, L("Projects"));

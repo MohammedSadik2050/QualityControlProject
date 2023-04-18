@@ -524,14 +524,14 @@
                                         <tr>
                                             <!--<th>{{ "Name" | localize }}</th>-->
                                             <th style="width: 310px;">{{ "Description" | localize }}</th>
-                                            <th style="width: 310px;" *ngIf="isGranted('Pages.Manage.Project')&& project.status ==-1"></th>
+                                            <th style="width: 310px;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let attachment of attachments">
                                             <!--<td><a  href="{{baseURL+attachment.fileURL}}" download> {{ baseURL+attachment.fileURL}}</a></td>-->
                                             <td>{{ attachment.description }}</td>
-                                            <td *ngIf="isGranted('Pages.Manage.Project')">
+                                            <td>
                                                 <button type="button" (click)="downloadMyFile(baseURL+attachment.fileURL)"
                                                         class="btn btn-sm bg-secondary">
                                                     <i class="fa fa-download"></i>

@@ -95,7 +95,7 @@ namespace eConLab.Proj
         private async Task<List<Project>> GetListAsync(int skipCount, int maxResultCount, ProjectPaginatedDto filter = null)
         {
 
-            var lstItems = _projectRepo.GetAll()
+            var lstItems = _projectRepo.GetAll().OrderByDescending(s=>s.CreationTime)
                               .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
                              .WhereIf(filter.AgencyId > 0, x => x.AgencyId == filter.AgencyId)
                              .WhereIf(filter.StatusId >= -1, x => x.Status == (ProjectStatus)filter.StatusId)

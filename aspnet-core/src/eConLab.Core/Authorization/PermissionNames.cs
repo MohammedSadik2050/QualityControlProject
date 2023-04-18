@@ -9,6 +9,7 @@
         public const string Pages_Manage_Departments = "Pages.Manage.Departments";
         public const string Pages_Manage_Contractor = "Pages.Manage.Contractor";
         public const string Pages_Manage_LabProjectManager = "Pages.Manage.LabProjectManager";
+        public const string Pages_Manage_SupervisingQuality = "Pages.Manage.SupervisingQuality";
         public const string Pages_Manage_Observer = "Pages.Manage.Observer";
         public const string Pages_Manage_Requests = "Pages.Manage.Requests";
         public const string Pages_Manage_Project= "Pages.Manage.Project";
