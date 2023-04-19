@@ -1523,6 +1523,9 @@ namespace eConLab.Migrations
                     b.Property<long>("EntityId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FilePath")
                         .HasColumnType("nvarchar(max)");
 
@@ -2139,11 +2142,16 @@ namespace eConLab.Migrations
                     b.Property<int>("TestType")
                         .HasColumnType("int");
 
+                    b.Property<long?>("TownShipId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ObserverId");
 
                     b.HasIndex("ProjectId");
+
+                    b.HasIndex("TownShipId");
 
                     b.ToTable("Requests");
                 });
@@ -2689,9 +2697,15 @@ namespace eConLab.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("eConLab.TownShips.TownShip", "TownShip")
+                        .WithMany()
+                        .HasForeignKey("TownShipId");
+
                     b.Navigation("Observer");
 
                     b.Navigation("Project");
+
+                    b.Navigation("TownShip");
                 });
 
             modelBuilder.Entity("eConLab.Req.RequestInspectionTest", b =>

@@ -4,7 +4,7 @@ import { AbpSessionService } from 'abp-ng2-module';
 import * as moment from 'moment';
 import { AppComponentBase } from '../../../shared/app-component-base';
 import { AppAuthService } from '../../../shared/auth/app-auth.service';
-import { AgencyDto, AgencyServiceProxy, CreateUpdateInspectionTestDto, CreateUpdateRequestTestDto, DepartmentDto, DepartmentServiceProxy, DropdownListDto, InspectionTestDto, InspectionTestServiceProxy, LookupServiceProxy, ProjectDto, ProjectDtoPagedResultDto, ProjectItemDto, ProjectServiceProxy, RequestDto, RequestInspectionTestDto, RequestInspectionTestViewDto, RequestnspectionTestServiceProxy, RequestProjectItemDto, RequestProjectItemServiceProxy, RequestProjectItemViewDto, RequestServiceProxy, RequestStatus, RequestWFDto, RequestWFServiceProxy } from '../../../shared/service-proxies/service-proxies';
+import { AgencyDto, AgencyServiceProxy, CreateUpdateInspectionTestDto, CreateUpdateRequestTestDto, DepartmentDto, DepartmentServiceProxy, DropdownListDto, InspectionTestDto, InspectionTestServiceProxy, LookupServiceProxy, ProjectDto, ProjectDtoPagedResultDto, ProjectItemDto, ProjectServiceProxy, RequestDto, RequestInspectionTestDto, RequestInspectionTestViewDto, RequestnspectionTestServiceProxy, RequestProjectItemDto, RequestProjectItemServiceProxy, RequestProjectItemViewDto, RequestServiceProxy, RequestStatus, RequestWFDto, RequestWFServiceProxy, TowinShipServiceProxy, TownShipDto } from '../../../shared/service-proxies/service-proxies';
 
 @Component({
     selector: 'app-request-create',
@@ -34,13 +34,16 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
     projectItems: ProjectItemDto[] = [];
     requestProjectItems: RequestProjectItemViewDto[] = [];
     selectedprojectItem: number = 0;
-    InspectionDatemodel: string = new Date().toLocaleDateString();
+    InspectionDatemodel: string = new Date(new Date().setDate(new Date().getDate() + 1)).toLocaleDateString();
+    minDateNextDay = moment(new Date(new Date().setDate(new Date().getDate() + 1))).format("YYYY-MM-DD");
     allAgencies: AgencyDto[] = [];
     allDepartments: DepartmentDto[] = [];
+    allTownShips: TownShipDto[] = [];
     minDate = moment(new Date()).format("YYYY-MM-DD");
     constructor(
         injector: Injector,
         public _requestProjectItemServiceProxy: RequestProjectItemServiceProxy,
+        public _towinShipServiceProxy: TowinShipServiceProxy,
         public _requestServiceProxy: RequestServiceProxy,
         public _projectServiceProxy: ProjectServiceProxy,
         public _lookupServiceProxy: LookupServiceProxy,
@@ -64,10 +67,17 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
         this.request.id = 0;
         this.loadAllDepartments();
         this.loadAgencies();
+        this.loadAllTownShips();
     }
     loadAllDepartments() {
         this._departmentServiceProxy.getAllDepartmentDropDown().subscribe(res => {
             this.allDepartments = res;
+        });
+    }
+
+    loadAllTownShips() {
+        this._towinShipServiceProxy.getAllAgenciesList().subscribe(res => {
+            this.allTownShips = res;
         });
     }
     loadAgencies() {

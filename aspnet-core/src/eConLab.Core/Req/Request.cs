@@ -2,6 +2,7 @@
 using eConLab.Enum;
 using eConLab.Observers;
 using eConLab.ProjectModels;
+using eConLab.TownShips;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,5 +33,7 @@ namespace eConLab.Req
         public Observer Observer { get; set; }
         public int Hours { get; set; } = 0;
         public int Min { get; set; } = 0;
+        public long? TownShipId { get; set; }
+        public TownShip TownShip { get; set; }
     }
 }

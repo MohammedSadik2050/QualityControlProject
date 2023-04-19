@@ -87,7 +87,7 @@ export class RequestAssignComponent extends PagedListingComponentBase<RequestVie
                 this.projectId, 0,
                 this.contractNumber,
                 this.requestCode,
-                this.statusId,
+                this.statusId,0,
                 '',
                 request.skipCount,
                 request.maxResultCount

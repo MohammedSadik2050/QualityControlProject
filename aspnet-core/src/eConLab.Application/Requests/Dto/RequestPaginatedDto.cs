@@ -14,6 +14,7 @@ namespace eConLab.Requests.Dto
         public string ContractNumber { get; set; }
         public string RequestCode { get; set; }
         public int Status { get; set; }
+        public long TownShipId { get; set; }
     }
     public class RequestFilter
     {

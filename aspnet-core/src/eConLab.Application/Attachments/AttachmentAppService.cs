@@ -46,7 +46,7 @@ namespace eConLab.Attachments
 
             input.FilePath = filePath;
             input.FileURL = "/Attachments/" + input.Entity.ToString() + "/" + input.EntityId + "/" + uniqueFileName;
-
+            input.FileName = input.File.FileName;
             await _attachmentsRepository.InsertOrUpdateAsync(_mapper.Map<eConLab.Attachment.Attachments>(input));
             await CurrentUnitOfWork.SaveChangesAsync();
 

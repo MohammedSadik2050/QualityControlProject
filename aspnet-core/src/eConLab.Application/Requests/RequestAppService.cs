@@ -110,9 +110,10 @@ namespace eConLab.Requests
         private async Task<List<RequestViewDto>> GetListAsync(int skipCount, int maxResultCount, RequestPaginatedDto filter = null)
         {
 
-            var lstItems = _requestRepo.GetAll().Include(s => s.Project).Include(s => s.Observer).OrderByDescending(s => s.CreationTime)
+            var lstItems = _requestRepo.GetAll().Include(s=>s.TownShip).Include(s => s.Project).Include(s => s.Observer).OrderByDescending(s => s.CreationTime)
 
                                            .WhereIf(filter.ProjectId > 0, x => x.ProjectId == filter.ProjectId)
+                                           .WhereIf(filter.TownShipId > 0, x => x.TownShipId == filter.TownShipId)
                                          .WhereIf(!filter.ContractNumber.IsNullOrEmpty(), x => x.Project.ContractNumber.Contains(filter.ContractNumber))
                                           .WhereIf(!filter.RequestCode.IsNullOrEmpty(), x => x.Code.Contains(filter.RequestCode))
                                           .WhereIf(filter.Status > 0, x => (int)x.Status == filter.Status).AsQueryable();
@@ -146,6 +147,7 @@ namespace eConLab.Requests
                 Code = mod.Code,
                 InspectionDate = mod.InspectionDate,
                 Description = mod.Description,
+                TownShipName = mod.TownShip ==null?"": mod.TownShip.Name,
                 ProjectId = mod.ProjectId,
                 DistrictName = mod.DistrictName,
                 PhomeNumberSiteResponsibleOne = mod.PhomeNumberSiteResponsibleOne,
@@ -173,6 +175,7 @@ namespace eConLab.Requests
         {
 
             var lstItems = _requestRepo.GetAll().Include(s => s.Project).OrderByDescending(s => s.CreationTime)
+                                        .WhereIf(filter.TownShipId > 0, x => x.TownShipId == filter.TownShipId)
                                            .WhereIf(filter.ProjectId > 0, x => x.ProjectId == filter.ProjectId)
                                          .WhereIf(!filter.ContractNumber.IsNullOrEmpty(), x => x.Project.ContractNumber.Contains(filter.ContractNumber))
                                           .WhereIf(!filter.RequestCode.IsNullOrEmpty(), x => x.Code.Contains(filter.RequestCode))
@@ -217,9 +220,11 @@ namespace eConLab.Requests
         private async Task<List<RequestViewDto>> GetListForAssignAsync(int skipCount, int maxResultCount, RequestPaginatedDto filter = null)
         {
 
-            var lstItems = _requestRepo.GetAll().Include(s => s.Project).Include(s => s.Observer).OrderByDescending(s => s.CreationTime)
+            var lstItems = _requestRepo.GetAll().Include(s=>s.TownShip)
+                .Include(s => s.Project).Include(s => s.Observer).OrderByDescending(s => s.CreationTime)
 
                                            .WhereIf(filter.ProjectId > 0, x => x.ProjectId == filter.ProjectId)
+                                           .WhereIf(filter.TownShipId > 0, x => x.TownShipId == filter.TownShipId)
                                          .WhereIf(!filter.ContractNumber.IsNullOrEmpty(), x => x.Project.ContractNumber.Contains(filter.ContractNumber))
                                           .WhereIf(!filter.RequestCode.IsNullOrEmpty(), x => x.Code.Contains(filter.RequestCode))
                                           .WhereIf(filter.Status > 0, x => (int)x.Status == filter.Status)
@@ -255,6 +260,7 @@ namespace eConLab.Requests
                 Code = mod.Code,
                 InspectionDate = mod.InspectionDate,
                 Description = mod.Description,
+                TownShipName = mod.TownShip.Name,
                 ProjectId = mod.ProjectId,
                 DistrictName = mod.DistrictName,
                 PhomeNumberSiteResponsibleOne = mod.PhomeNumberSiteResponsibleOne,
@@ -283,6 +289,7 @@ namespace eConLab.Requests
 
             var lstItems = _requestRepo.GetAll().Include(s => s.Project).OrderByDescending(s => s.CreationTime)
                                            .WhereIf(filter.ProjectId > 0, x => x.ProjectId == filter.ProjectId)
+                                              .WhereIf(filter.TownShipId > 0, x => x.TownShipId == filter.TownShipId)
                                          .WhereIf(!filter.ContractNumber.IsNullOrEmpty(), x => x.Project.ContractNumber.Contains(filter.ContractNumber))
                                           .WhereIf(!filter.RequestCode.IsNullOrEmpty(), x => x.Code.Contains(filter.RequestCode))
                                           .WhereIf(filter.Status > 0, x => (int)x.Status == filter.Status)

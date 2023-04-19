@@ -27,5 +27,6 @@ namespace eConLab.Requests.Dto
         public string Geometry { get; set; }
         public int Hours { get; set; } = 0;
         public int Min { get; set; } = 0;
+        public long? TownShipId { get; set; }
     }
 }

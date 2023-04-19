@@ -62,14 +62,22 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         super(injector);
     }
 
-    downloadMyFile(url) {
-        const link = document.createElement('a');
-        link.setAttribute('target', '_blank');
-        link.setAttribute('href', url);
-        link.setAttribute('download', url);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+    downloadMyFile(url, fileName) {
+        console.log("url", url);
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "blob";
+        xhr.onload = function () {
+            var urlCreator = window.URL || window.webkitURL;
+            var imageUrl = urlCreator.createObjectURL(this.response);
+            var tag = document.createElement('a');
+            tag.href = imageUrl;
+            tag.download = fileName;
+            document.body.appendChild(tag);
+            tag.click();
+            document.body.removeChild(tag);
+        }
+        xhr.send();
     }
     handleFileInput(files: FileList) {
         var currentFile = files.item(0);
@@ -326,12 +334,7 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         console.log('attachments', this.attachment);
         this.attachment.entity = 2;
         this.attachment.entityId = this.projectId;
-        //const formData = new FormData();
-        //formData.append('file', this.postForm.get('title').value);
-        //formData.append('description', this.attachment.description);
-        //formData.append('entity', '2');
-        //formData.append('entityId', this.attachment.entityId.toString());
-        this._attachmentServiceProxy.createOrUpdate(this.projectId, '', '', this.file, this.attachment.description,2).subscribe(
+        this._attachmentServiceProxy.createOrUpdate(this.projectId, '', '', '',this.file, this.attachment.description,2).subscribe(
             () => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.loadAttachments();
@@ -348,7 +351,7 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         this._attachmentServiceProxy.delete(attachment.id).subscribe(
             () => {
                 this.notify.info(this.l('SavedSuccessfully'));
-                this.loadProjectItems();
+                this.loadAttachments();
                 this.attachment = {};
             },
             () => {

@@ -17,6 +17,7 @@ namespace eConLab.Requests.Dto
         public string Code { get; set; }
         public DateTime InspectionDate { get; set; }
         public string Description { get; set; }
+        public string TownShipName { get; set; }
         public long ProjectId { get; set; }       
         public long? ObserverId { get; set; }       
         public string ObserverName { get; set; }       
@@ -28,6 +29,7 @@ namespace eConLab.Requests.Dto
         public string Geometry { get; set; }
 
         public ProjectDto Project { get; set; }
-   
+        public long? TownShipId { get; set; }
+
     }
 }

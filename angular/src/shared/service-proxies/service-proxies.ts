@@ -588,12 +588,13 @@ export class AttachmentServiceProxy {
      * @param entityId (optional) 
      * @param filePath (optional) 
      * @param fileURL (optional) 
+     * @param fileName (optional) 
      * @param file (optional) 
      * @param description (optional) 
      * @param entity (optional) 
      * @return Success
      */
-    createOrUpdate(entityId: number | undefined, filePath: string | undefined, fileURL: string | undefined, file: FileParameter | undefined, description: string | undefined, entity: Entities | undefined) : Observable<AttachmentDto> {
+    createOrUpdate(entityId: number | undefined, filePath: string | undefined, fileURL: string | undefined, fileName: string | undefined, file: FileParameter | undefined, description: string | undefined, entity: Entities | undefined) : Observable<AttachmentDto> {
         let url_ = this.baseUrl + "/api/services/app/Attachment/CreateOrUpdate";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -610,6 +611,10 @@ export class AttachmentServiceProxy {
             throw new Error("The parameter 'fileURL' cannot be null.");
         else
             content_.append("FileURL", fileURL.toString());
+        if (fileName === null || fileName === undefined)
+            throw new Error("The parameter 'fileName' cannot be null.");
+        else
+            content_.append("FileName", fileName.toString());
         if (file === null || file === undefined)
             throw new Error("The parameter 'file' cannot be null.");
         else
@@ -3296,12 +3301,13 @@ export class RequestServiceProxy {
      * @param contractNumber (optional) 
      * @param requestCode (optional) 
      * @param status (optional) 
+     * @param townShipId (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(projectId: number | undefined, observerId: number | undefined, contractNumber: string | undefined, requestCode: string | undefined, status: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestViewDtoPagedResultDto> {
+    getAll(projectId: number | undefined, observerId: number | undefined, contractNumber: string | undefined, requestCode: string | undefined, status: number | undefined, townShipId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestViewDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Request/GetAll?";
         if (projectId === null)
             throw new Error("The parameter 'projectId' cannot be null.");
@@ -3323,6 +3329,10 @@ export class RequestServiceProxy {
             throw new Error("The parameter 'status' cannot be null.");
         else if (status !== undefined)
             url_ += "Status=" + encodeURIComponent("" + status) + "&";
+        if (townShipId === null)
+            throw new Error("The parameter 'townShipId' cannot be null.");
+        else if (townShipId !== undefined)
+            url_ += "TownShipId=" + encodeURIComponent("" + townShipId) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -3387,12 +3397,13 @@ export class RequestServiceProxy {
      * @param contractNumber (optional) 
      * @param requestCode (optional) 
      * @param status (optional) 
+     * @param townShipId (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllForAssign(projectId: number | undefined, observerId: number | undefined, contractNumber: string | undefined, requestCode: string | undefined, status: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestViewDtoPagedResultDto> {
+    getAllForAssign(projectId: number | undefined, observerId: number | undefined, contractNumber: string | undefined, requestCode: string | undefined, status: number | undefined, townShipId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestViewDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Request/GetAllForAssign?";
         if (projectId === null)
             throw new Error("The parameter 'projectId' cannot be null.");
@@ -3414,6 +3425,10 @@ export class RequestServiceProxy {
             throw new Error("The parameter 'status' cannot be null.");
         else if (status !== undefined)
             url_ += "Status=" + encodeURIComponent("" + status) + "&";
+        if (townShipId === null)
+            throw new Error("The parameter 'townShipId' cannot be null.");
+        else if (townShipId !== undefined)
+            url_ += "TownShipId=" + encodeURIComponent("" + townShipId) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -6544,6 +6559,7 @@ export class AttachmentDto implements IAttachmentDto {
     entityId: number;
     filePath: string | undefined;
     fileURL: string | undefined;
+    fileName: string | undefined;
     description: string | undefined;
     entity: Entities;
 
@@ -6562,6 +6578,7 @@ export class AttachmentDto implements IAttachmentDto {
             this.entityId = _data["entityId"];
             this.filePath = _data["filePath"];
             this.fileURL = _data["fileURL"];
+            this.fileName = _data["fileName"];
             this.description = _data["description"];
             this.entity = _data["entity"];
         }
@@ -6580,6 +6597,7 @@ export class AttachmentDto implements IAttachmentDto {
         data["entityId"] = this.entityId;
         data["filePath"] = this.filePath;
         data["fileURL"] = this.fileURL;
+        data["fileName"] = this.fileName;
         data["description"] = this.description;
         data["entity"] = this.entity;
         return data; 
@@ -6598,6 +6616,7 @@ export interface IAttachmentDto {
     entityId: number;
     filePath: string | undefined;
     fileURL: string | undefined;
+    fileName: string | undefined;
     description: string | undefined;
     entity: Entities;
 }
@@ -9118,6 +9137,7 @@ export class RequestDto implements IRequestDto {
     geometry: string | undefined;
     hours: number;
     min: number;
+    townShipId: number | undefined;
 
     constructor(data?: IRequestDto) {
         if (data) {
@@ -9148,6 +9168,7 @@ export class RequestDto implements IRequestDto {
             this.geometry = _data["geometry"];
             this.hours = _data["hours"];
             this.min = _data["min"];
+            this.townShipId = _data["townShipId"];
         }
     }
 
@@ -9178,6 +9199,7 @@ export class RequestDto implements IRequestDto {
         data["geometry"] = this.geometry;
         data["hours"] = this.hours;
         data["min"] = this.min;
+        data["townShipId"] = this.townShipId;
         return data; 
     }
 
@@ -9208,6 +9230,7 @@ export interface IRequestDto {
     geometry: string | undefined;
     hours: number;
     min: number;
+    townShipId: number | undefined;
 }
 
 export class RequestInspectionTestDto implements IRequestInspectionTestDto {
@@ -9501,6 +9524,7 @@ export class RequestViewDto implements IRequestViewDto {
     code: string | undefined;
     inspectionDate: moment.Moment;
     description: string | undefined;
+    townShipName: string | undefined;
     projectId: number;
     observerId: number | undefined;
     observerName: string | undefined;
@@ -9511,6 +9535,7 @@ export class RequestViewDto implements IRequestViewDto {
     hasSample: HasSamples;
     geometry: string | undefined;
     project: ProjectDto;
+    townShipId: number | undefined;
 
     constructor(data?: IRequestViewDto) {
         if (data) {
@@ -9529,6 +9554,7 @@ export class RequestViewDto implements IRequestViewDto {
             this.code = _data["code"];
             this.inspectionDate = _data["inspectionDate"] ? moment(_data["inspectionDate"].toString()) : <any>undefined;
             this.description = _data["description"];
+            this.townShipName = _data["townShipName"];
             this.projectId = _data["projectId"];
             this.observerId = _data["observerId"];
             this.observerName = _data["observerName"];
@@ -9539,6 +9565,7 @@ export class RequestViewDto implements IRequestViewDto {
             this.hasSample = _data["hasSample"];
             this.geometry = _data["geometry"];
             this.project = _data["project"] ? ProjectDto.fromJS(_data["project"]) : <any>undefined;
+            this.townShipId = _data["townShipId"];
         }
     }
 
@@ -9557,6 +9584,7 @@ export class RequestViewDto implements IRequestViewDto {
         data["code"] = this.code;
         data["inspectionDate"] = this.inspectionDate ? this.inspectionDate.toISOString() : <any>undefined;
         data["description"] = this.description;
+        data["townShipName"] = this.townShipName;
         data["projectId"] = this.projectId;
         data["observerId"] = this.observerId;
         data["observerName"] = this.observerName;
@@ -9567,6 +9595,7 @@ export class RequestViewDto implements IRequestViewDto {
         data["hasSample"] = this.hasSample;
         data["geometry"] = this.geometry;
         data["project"] = this.project ? this.project.toJSON() : <any>undefined;
+        data["townShipId"] = this.townShipId;
         return data; 
     }
 
@@ -9585,6 +9614,7 @@ export interface IRequestViewDto {
     code: string | undefined;
     inspectionDate: moment.Moment;
     description: string | undefined;
+    townShipName: string | undefined;
     projectId: number;
     observerId: number | undefined;
     observerName: string | undefined;
@@ -9595,6 +9625,7 @@ export interface IRequestViewDto {
     hasSample: HasSamples;
     geometry: string | undefined;
     project: ProjectDto;
+    townShipId: number | undefined;
 }
 
 export class RequestViewDtoPagedResultDto implements IRequestViewDtoPagedResultDto {

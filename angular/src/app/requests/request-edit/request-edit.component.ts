@@ -5,14 +5,17 @@ import { stat } from 'fs';
 import * as moment from 'moment';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AppComponentBase } from '../../../shared/app-component-base';
+import { AppConsts } from '../../../shared/AppConsts';
 import { AppAuthService } from '../../../shared/auth/app-auth.service';
 import {
     AgencyDto,
     AgencyServiceProxy,
+    AttachmentDto,
+    AttachmentServiceProxy,
     CreateUpdateRequestTestDto, DepartmentDto, DepartmentServiceProxy, DropdownListDto, InspectionTestDto,
     InspectionTestServiceProxy, LookupServiceProxy, ProjectDto, ProjectItemDto, ProjectServiceProxy,
     RequestDto, RequestInspectionTestViewDto, RequestnspectionTestServiceProxy, RequestProjectItemDto, RequestProjectItemServiceProxy, RequestProjectItemViewDto, RequestServiceProxy,
-    RequestStatus, RequestWFDto, RequestWFHistoryDto, RequestWFServiceProxy
+    RequestStatus, RequestWFDto, RequestWFHistoryDto, RequestWFServiceProxy, TowinShipServiceProxy, TownShipDto
 } from '../../../shared/service-proxies/service-proxies';
 import { RejectModalComponent } from '../reject-modal/reject-modal.component';
 
@@ -50,12 +53,19 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     InspectionDatemodel: string = new Date().toLocaleDateString();
     allAgencies: AgencyDto[] = [];
     allDepartments: DepartmentDto[] = [];
+    allTownShips: TownShipDto[] = [];
     minDate = moment(new Date()).format("YYYY-MM-DD");
     showTabs:boolean = false;
-    showTestTab:boolean = false;
+    showTestTab: boolean = false;
+    attachment: any = {};
+    attachments: AttachmentDto[] = [];
+    file: any = {};
+    baseURL = AppConsts.remoteServiceBaseUrl;
     constructor(
         injector: Injector,
+        public _attachmentServiceProxy: AttachmentServiceProxy,
         private _departmentServiceProxy: DepartmentServiceProxy,
+        public _towinShipServiceProxy: TowinShipServiceProxy,
         private _agencyServiceProxy: AgencyServiceProxy,
         public _requestProjectItemServiceProxy: RequestProjectItemServiceProxy,
         public _requestServiceProxy: RequestServiceProxy,
@@ -72,6 +82,59 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
 
     ) {
         super(injector);
+    }
+
+    downloadMyFile(url, fileName) {
+        console.log("url", url);
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "blob";
+        xhr.onload = function () {
+            var urlCreator = window.URL || window.webkitURL;
+            var imageUrl = urlCreator.createObjectURL(this.response);
+            var tag = document.createElement('a');
+            tag.href = imageUrl;
+            tag.download = fileName;
+            document.body.appendChild(tag);
+            tag.click();
+            document.body.removeChild(tag);
+        }
+        xhr.send();
+    }
+    handleFileInput(files: FileList) {
+        var currentFile = files.item(0);
+        this.file.data = currentFile;
+        this.file.fileName = currentFile.name;
+    }
+
+    saveAttachment(): void {
+        console.log('attachments', this.attachment);
+        this.attachment.entity = 1;
+        this.attachment.entityId = this.request.id;
+        this._attachmentServiceProxy.createOrUpdate(this.request.id, '', '', '',this.file, this.attachment.description, 1).subscribe(
+            () => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.loadAttachments();
+                //  this.onSave.emit();
+            },
+            () => {
+                //this.saving = false;
+            }
+        );
+    }
+
+    deleteAttachment(attachment: AttachmentDto) {
+
+        this._attachmentServiceProxy.delete(attachment.id).subscribe(
+            () => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.loadAttachments();
+                this.attachment = {};
+            },
+            () => {
+                this.saving = false;
+            }
+        );
     }
 
     ngOnInit(): void {
@@ -94,6 +157,8 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             this.loadAllDepartments();
             this.loadAgencies();
             this.showTabs = true;
+            this.loadAllTownShips();
+            this.loadAttachments();
         });
     }
     loadAllDepartments() {
@@ -101,6 +166,17 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             this.allDepartments = res;
         });
     }
+    loadAttachments() {
+        this._attachmentServiceProxy.getAllAttachment(1, this.request.id).subscribe(res => {
+            this.attachments = res;
+        });
+    }
+    loadAllTownShips() {
+        this._towinShipServiceProxy.getAllAgenciesList().subscribe(res => {
+            this.allTownShips = res;
+        });
+    }
+
     loadAgencies() {
         this._agencyServiceProxy.getAllAgenciesList().subscribe(res => {
             this.allAgencies = res;

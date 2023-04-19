@@ -132,7 +132,7 @@
                                 </label>
                                 <div class="col-md-9">
                                     <input type="date"
-                                           [min]="minDate"
+                                        
                                            class="form-control"
                                            name="startDate"
                                            id="startDate"
@@ -475,6 +475,7 @@
                                         </label>
                                         <div class="col-md-8">
                                             <input type="file"
+                                                   accept="application/pdf, image/*"
                                                    class="form-control"
                                                    name="attachmentFile"
                                                    id="attachmentFile"
@@ -532,14 +533,14 @@
                                             <!--<td><a  href="{{baseURL+attachment.fileURL}}" download> {{ baseURL+attachment.fileURL}}</a></td>-->
                                             <td>{{ attachment.description }}</td>
                                             <td>
-                                                <button type="button" (click)="downloadMyFile(baseURL+attachment.fileURL)"
+                                                <button type="button" (click)="downloadMyFile(baseURL+attachment.fileURL,attachment.fileName)"
                                                         class="btn btn-sm bg-secondary">
                                                     <i class="fa fa-download"></i>
                                                     {{ "Download" | localize }}
                                                 </button>
                                                 <button type="button" *ngIf="isGranted('Pages.Manage.Project') && project.status ==0"
                                                         class="btn btn-sm bg-danger mx-2"
-                                                        (click)="delete(attachment)">
+                                                        (click)="deleteAttachment(attachment)">
                                                     <i class="fas fa-trash"></i>
                                                     {{ "Delete" | localize }}
                                                 </button>
