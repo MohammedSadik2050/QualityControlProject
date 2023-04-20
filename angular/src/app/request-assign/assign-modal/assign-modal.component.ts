@@ -93,7 +93,7 @@ export class AssignModalComponent extends PagedListingComponentBase<ObserverDto>
             });
     }
     loadTownships() {
-        this._towinShipServiceProxy.getAllAgenciesList().subscribe(res => {
+        this._towinShipServiceProxy.getAllownShipList().subscribe(res => {
             this.townShips = res;
         })
     }

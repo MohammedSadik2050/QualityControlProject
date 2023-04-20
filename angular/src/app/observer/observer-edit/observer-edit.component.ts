@@ -69,7 +69,7 @@ export class ObserverEditComponent extends AppComponentBase
 
 
     LoadTownShips() {
-        this._towinShipServiceProxy.getAllAgenciesList().subscribe(res => {
+        this._towinShipServiceProxy.getAllownShipList().subscribe(res => {
             this.townShips = res;
         });
     }

@@ -81,7 +81,7 @@ namespace eConLab.TownShips
             return lstItems.Count();
         }
 
-        public async Task<List<TownShipDto>> GetAllAgenciesList()
+        public async Task<List<TownShipDto>> GetAllownShipList()
         {
             var allTowinShip = await _towinShipRepository.GetAllListAsync();
             return _mapper.Map<List<TownShipDto>>(allTowinShip);

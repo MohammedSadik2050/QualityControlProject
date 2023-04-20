@@ -111,7 +111,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         console.log('attachments', this.attachment);
         this.attachment.entity = 1;
         this.attachment.entityId = this.request.id;
-        this._attachmentServiceProxy.createOrUpdate(this.request.id, '', '', '',this.file, this.attachment.description, 1).subscribe(
+        this._attachmentServiceProxy.createOrUpdate(this.request.id, '', '', '',this.file, '',this.attachment.description, 1).subscribe(
             () => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.loadAttachments();
@@ -172,7 +172,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         });
     }
     loadAllTownShips() {
-        this._towinShipServiceProxy.getAllAgenciesList().subscribe(res => {
+        this._towinShipServiceProxy.getAllownShipList().subscribe(res => {
             this.allTownShips = res;
         });
     }

@@ -222,7 +222,7 @@ namespace eConLab.Requests
         {
 
             var lstItems = _requestRepo.GetAll()
-                .Include(s => s.Project).Include(s => s.Observer).OrderByDescending(s => s.CreationTime)
+                .Include(s => s.Project).Include(s => s.Observer)
 
                                            .WhereIf(filter.ProjectId > 0, x => x.ProjectId == filter.ProjectId)
                                          // .WhereIf(filter.TownShipId > 0, x => x.TownShipId == filter.TownShipId)
@@ -230,7 +230,7 @@ namespace eConLab.Requests
                                           .WhereIf(!filter.RequestCode.IsNullOrEmpty(), x => x.Code.Contains(filter.RequestCode))
                                           .WhereIf(filter.Status > 0, x => (int)x.Status == filter.Status)
                                           .WhereIf(filter.Status < 1, x => x.Status == RequestStatus.ApprovedByLabProjectManager ||
-                                                  x.Status == RequestStatus.AssignedToObserver).AsQueryable();
+                                                  x.Status == RequestStatus.AssignedToObserver).OrderByDescending(s => s.CreationTime).AsQueryable();
 
 
             var userRoles = (await UserManager.GetRolesAsync(await GetCurrentUserAsync())).ToList();
@@ -302,14 +302,14 @@ namespace eConLab.Requests
         private async Task<int> GetTotalCountForAssignAsync(RequestPaginatedDto filter = null)
         {
 
-            var lstItems = _requestRepo.GetAll().Include(s => s.Project).Include(s => s.Observer).Include(s => s.TownShip).OrderByDescending(s => s.CreationTime)
+            var lstItems = _requestRepo.GetAll().Include(s => s.Project).Include(s => s.Observer).Include(s => s.TownShip)
                                            .WhereIf(filter.ProjectId > 0, x => x.ProjectId == filter.ProjectId)
                                               .WhereIf(filter.TownShipId > 0, x => x.TownShipId == filter.TownShipId)
                                          .WhereIf(!filter.ContractNumber.IsNullOrEmpty(), x => x.Project.ContractNumber.Contains(filter.ContractNumber))
                                           .WhereIf(!filter.RequestCode.IsNullOrEmpty(), x => x.Code.Contains(filter.RequestCode))
                                           .WhereIf(filter.Status > 0, x => (int)x.Status == filter.Status)
                                               .WhereIf(filter.Status < 1, x => x.Status == RequestStatus.ApprovedByLabProjectManager ||
-                                                  x.Status == RequestStatus.AssignedToObserver);
+                                                  x.Status == RequestStatus.AssignedToObserver).OrderByDescending(s => s.CreationTime).AsQueryable();
 
             var userRoles = (await UserManager.GetRolesAsync(await GetCurrentUserAsync())).ToList();
             if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin) == false)
