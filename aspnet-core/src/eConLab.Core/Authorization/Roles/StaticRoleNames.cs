@@ -11,6 +11,7 @@ namespace eConLab.Authorization.Roles
         {
             public const string Admin = "Admin";
             public const string Contractor = "Contractor";
+            public const string Observer = "Observer";
             public const string Consultant = "Consultant";
             public const string ConsultingEngineer = "ConsultingEngineer";
             public const string SupervisingEngineer = "SupervisingEngineer";

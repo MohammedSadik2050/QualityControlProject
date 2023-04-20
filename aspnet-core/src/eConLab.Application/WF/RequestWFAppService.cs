@@ -59,11 +59,11 @@ namespace eConLab.WF
         public async Task<RequestWFDto> CreateOrUpdate(RequestWFDto input)
         {
             var requestWf = await _requestWFRepo.FirstOrDefaultAsync(s=>s.RequestId == input.RequestId);
-            var history = new RequestWFHistory();
-           
            
             requestWf = _mapper.Map<RequestWF>(input);
             await _requestWFRepo.InsertOrUpdateAsync(requestWf);
+
+            var history = new RequestWFHistory();
 
             history = new RequestWFHistory
             {

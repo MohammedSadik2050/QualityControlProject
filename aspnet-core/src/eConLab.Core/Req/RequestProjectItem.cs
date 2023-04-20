@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace eConLab.Req
 {
-    public class RequestProjectItem : AuditedEntity<long>
+    public class RequestProjectItem : FullAuditedEntity<long>
     {
         public long RequestId { get; set; }
         public ProjectItem ProjectItem { get; set; }

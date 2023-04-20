@@ -10,9 +10,11 @@ namespace eConLab.Requests.Dto
     public class RequestPaginatedDto : PagedAndSortedResultRequestDto
     {
         public long ProjectId { get; set; }
+        public long ObserverId { get; set; }
         public string ContractNumber { get; set; }
         public string RequestCode { get; set; }
         public int Status { get; set; }
+        public long TownShipId { get; set; }
     }
     public class RequestFilter
     {

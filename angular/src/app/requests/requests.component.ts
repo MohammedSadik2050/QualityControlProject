@@ -82,10 +82,10 @@ export class RequestsComponent extends PagedListingComponentBase<RequestViewDto>
         this.loadAllStatuses();
         this._requestServiceProxy
             .getAll(
-                this.projectId,
+                this.projectId,0,
                 this.contractNumber,
                 this.requestCode,
-                this.statusId,
+                this.statusId,0,
                 '',
                 request.skipCount,
                 request.maxResultCount

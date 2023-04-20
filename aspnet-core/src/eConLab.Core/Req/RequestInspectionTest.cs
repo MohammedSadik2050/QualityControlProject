@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace eConLab.Req
 {
-    public class RequestInspectionTest : AuditedEntity<long>
+    public class RequestInspectionTest : FullAuditedEntity<long>
     {
         public long RequestId { get; set; }
         public InspectionTestTypes InspectionTestType { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
 using eConLab.Enum;
+using eConLab.Observers.Dto;
 using eConLab.Proj.Dto;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,10 @@ namespace eConLab.Requests.Dto
         public string Code { get; set; }
         public DateTime InspectionDate { get; set; }
         public string Description { get; set; }
+        public string TownShipName { get; set; }
         public long ProjectId { get; set; }       
+        public long? ObserverId { get; set; }       
+        public string ObserverName { get; set; }       
         public string DistrictName { get; set; }
         public string PhomeNumberSiteResponsibleOne { get; set; }
         public string PhomeNumberSiteResponsibleTwo { get; set; }
@@ -25,5 +29,7 @@ namespace eConLab.Requests.Dto
         public string Geometry { get; set; }
 
         public ProjectDto Project { get; set; }
+        public long? TownShipId { get; set; }
+
     }
 }

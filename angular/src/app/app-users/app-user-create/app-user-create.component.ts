@@ -96,7 +96,7 @@ export class AppUserCreateComponent extends AppComponentBase implements OnInit {
         userType = new UserTypes();
         userType.id = 6;
         userType.name = "SupervisingQuality";
-        userType.arabicName = "مشرف الجوده";
+        userType.arabicName = "مهندس المواد";
         this.userTypes.push(userType);
 
         userType = new UserTypes();

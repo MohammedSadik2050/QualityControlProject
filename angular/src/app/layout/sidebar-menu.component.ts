@@ -1,14 +1,14 @@
-import {Component, Injector, OnInit} from '@angular/core';
-import {AppComponentBase} from '@shared/app-component-base';
+import { Component, Injector, OnInit } from '@angular/core';
+import { AppComponentBase } from '@shared/app-component-base';
 import {
     Router,
     RouterEvent,
     NavigationEnd,
     PRIMARY_OUTLET
 } from '@angular/router';
-import {BehaviorSubject} from 'rxjs';
-import {filter} from 'rxjs/operators';
-import {MenuItem} from '@shared/layout/menu-item';
+import { BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { MenuItem } from '@shared/layout/menu-item';
 
 @Component({
     selector: 'sidebar-menu',
@@ -69,11 +69,23 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 'fas fa-theater-masks',
                 'Pages.Manage.Agences'
             ),
-              new MenuItem(
-                this.l('Departments'),
+            new MenuItem(
+                this.l('DepartmentsMenu'),
                 '/app/departments',
                 'fas fa-theater-masks',
                 'Pages.Manage.Departments'
+            ),
+            new MenuItem(
+                this.l('TownShipsMenu'),
+                '/app/townShips',
+                'fas fa-building',
+                'Pages.Manage.TownShip'
+            ),
+            new MenuItem(
+                this.l('ObserversMenu'),
+                '/app/observers',
+                'fas fa-users',
+                'Pages.Manage.Observer'
             ),
             new MenuItem(
                 this.l('QCUsers'),
@@ -100,9 +112,15 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                     this.l('ExaminationRequest'),
                     '/app/examinationRequest'
                     , 'fas fa-dot-circle',
+                    ''),
+                new MenuItem(
+                    this.l('AssignRequests'),
+                    '/app/assignRequests'
+                    , 'fas fa-dot-circle',
                     '')
 
             ]),
+
 
             //new MenuItem(this.l('MultiLevelMenu'), '', 'fas fa-circle', '', [
             //    new MenuItem('ASP.NET Boilerplate', '', 'fas fa-dot-circle', '', [

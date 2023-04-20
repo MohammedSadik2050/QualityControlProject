@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace eConLab.Account
 {
-    public class QCUser: AuditedAggregateRoot<long>
+    public class QCUser: FullAuditedEntity<long>
     {
         public UserTypes UserTypes { get; set; }
         public string Name { get; set; }

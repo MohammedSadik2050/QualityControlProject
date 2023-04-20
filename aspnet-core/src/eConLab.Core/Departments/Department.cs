@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace eConLab.Departments
 {
-    public class Department : AuditedAggregateRoot<long>
+    public class Department : FullAuditedEntity<long>
     {
         public string Name { get; set; }
         public string Description { get; set; }

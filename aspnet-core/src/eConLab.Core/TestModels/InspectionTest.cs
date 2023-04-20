@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace eConLab.TestModels
 {
     
-    public class InspectionTest : AuditedEntity<long>
+    public class InspectionTest : FullAuditedEntity<long>
     {
         public string Name { get; set; }
         public string Code { get; set; }

@@ -3,7 +3,7 @@
 	<texts>
 		<text name="UserType">نوع المستخدم</text>
 		<text name="Qty">الكميه</text>
-		<text name="SupervisingQuality">مشرف الجوده</text>
+		<text name="SupervisingQuality">مهندس المواد</text>
 		<text name="ContractNumber">رقم العقد</text>
 		<text name="StartDate">بدايه المشروع</text>
 		<text name="CompletedDate">تاريخ الانتهاء</text>
@@ -188,6 +188,7 @@
 		<text name="Approved">إعتماد الطلب</text>
 		<text name="ApprovedByConsultant">الإستشاري وافق على الطلب</text>
 		<text name="ApprovedBySupervisingQuality">تم إعتماد الطلب</text>
+		<text name="AssignedToObserver">تم تعيين مراقب</text>
 		<text name="Rejected">الطلب مرفوض</text>
 		<text name="RequestRejected">رفض الطلب</text>
 		<text name="History">عمليات الطلب</text>
@@ -195,6 +196,7 @@
 		<text name="DuplicateProjectItem">تمت إضافه البند من قبل</text>
 		<text name="ProjectItems">بنود المشروع</text>
 		<text name="Departments">الإدارات</text>
+		<text name="DepartmentsMenu">قائمه الإدارات</text>
 		<text name="RelatedAgency">الجهه التابع لها</text>
 		<text name="ActionName">التغيير</text>
 		<text name="ActionNote">الملاحظات</text>
@@ -223,5 +225,17 @@
 		<text name="CompletedDateRequired">تاريخ إنتهاء المشروع مطلوب</text>
 		<text name="SiteDelivedDateRequired">تاريخ التسليم مطلوب</text>
 		<text name="Download">تحميل</text>
+		<text name="Observer">مراقب</text>
+		<text name="TownShip">البلديه</text>
+		<text name="TownShips">البلديات</text>
+		<text name="Address">العنوان</text>
+		<text name="Observers">المراقبين</text>
+		<text name="ObserversMenu">إداره المراقبين</text>
+		<text name="TownShipsMenu">قائمه البلديات</text>
+		<text name="Assign">إسناد</text>
+		<text name="AssignRequests">توزيع الطلبات</text>
+		<text name="DonotHaveObserver">طلبات غير مسنده</text>
+		<text name="AssignedRequests">الطلبات المسنده</text>
+		<!--<text name="ApprovedByLabProjectManager">مدير المختبر إعتمد الطلب </text>-->
 	</texts>
 </localizationDictionary>

@@ -12,6 +12,8 @@ using eConLab.Req;
 using eConLab.WF;
 using eConLab.Departments;
 using eConLab.Attachment;
+using eConLab.TownShips;
+using eConLab.Observers;
 
 namespace eConLab.EntityFrameworkCore
 {
@@ -28,10 +30,12 @@ namespace eConLab.EntityFrameworkCore
         public DbSet<LookupApp> LookupApp { get; set; }
         public DbSet<InspectionTest> InspectionTests { get; set; }
         public DbSet<Request> Requests { get; set; }
+        public DbSet<TownShip> TownShips { get; set; }
         public DbSet<RequestProjectItem> RequestProjectItems { get; set; }
         public DbSet<RequestWF> RequestWFs { get; set; }
         public DbSet<RequestWFHistory> RequestWFHistories { get; set; }
         public DbSet<RequestInspectionTest> RequestInspectionTests { get; set; }
+        public DbSet<Observer> Observers { get; set; }
         public eConLabDbContext(DbContextOptions<eConLabDbContext> options)
             : base(options)
         {

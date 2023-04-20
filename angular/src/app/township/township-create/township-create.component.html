@@ -1,0 +1,49 @@
+<form class="form-horizontal"
+      autocomplete="off"
+      #createUserModal="ngForm"
+      (ngSubmit)="save()">
+    <abp-modal-header [title]="'Create' | localize"
+                      (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="modal-body">
+
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="Name">
+                {{ "Name" | localize }}
+            </label>
+            <div class="col-md-9">
+                <input type="text"
+                       class="form-control"
+                       name="name"
+                       id="name"
+                       required
+                       [(ngModel)]="township.name"
+                       #nameModel="ngModel"
+                       #nameE1 />
+                <abp-validation-summary [control]="nameModel"
+                                        [controlEl]="nameE1"></abp-validation-summary>
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
+                {{ "Address" | localize }}
+            </label>
+            <div class="col-md-9">
+                <input type="text"
+                       class="form-control"
+                       name="address"
+                       id="address"
+                       required
+                       [(ngModel)]="township.address"
+                       #addressModel="ngModel"
+                       #addressE1 />
+                <abp-validation-summary [control]="addressModel"
+                                        [controlEl]="addressE1"></abp-validation-summary>
+            </div>
+        </div>
+       
+
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving"
+                      [saveDisabled]="!createUserModal.form.valid || saving"
+                      (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+</form>

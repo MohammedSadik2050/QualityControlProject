@@ -13,6 +13,7 @@ namespace eConLab.Attachments.Dto
         public long EntityId { get; set; }
         public string FilePath { get; set; }
         public string FileURL { get; set; }
+        public string FileName { get; set; }
         public string Description { get; set; }
         public Entities Entity { get; set; }
     }
