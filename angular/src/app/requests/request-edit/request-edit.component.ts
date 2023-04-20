@@ -337,6 +337,11 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             workFlow.actionName = "تم إعتماد الطلب";
             workFlow.actionNotes = "تم إعتماد الطلب";
         }
+
+        if (this.request.status == 7) {
+            workFlow.actionName = " إلغاء الطلب";
+            workFlow.actionNotes = "تم إلغاء الطلب";
+        }
         
 
         this._requestWFServiceProxy.createOrUpdate(workFlow).subscribe(res => {

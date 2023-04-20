@@ -222,6 +222,7 @@
 		<text name="CompletedDateRequired">Completed Date Required</text>
 		<text name="SiteDelivedDateRequired">Site Delived Date Required</text>
 		<text name="Observer">Observer</text>
+		<text name="ObserverManage">Observer Manage</text>
 		<text name="Observers">Observers</text>
 		<text name="ObserversMenu">Observers Menu</text>
 		<text name="TownShip">TownShip</text>
@@ -232,5 +233,7 @@
 		<text name="AssignRequests">Assign Requests</text>
 		<text name="DonotHaveObserver">unassigned Requestes</text>
 		<text name="AssignedRequests">Assigned Requests</text>
+		<text name="RequestCanceled">Request Canceled</text>
+		<text name="CancelRequest">Cancel Request</text>
 </texts>
 </localizationDictionary>

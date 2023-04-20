@@ -226,6 +226,7 @@
 		<text name="SiteDelivedDateRequired">تاريخ التسليم مطلوب</text>
 		<text name="Download">تحميل</text>
 		<text name="Observer">مراقب</text>
+		<text name="ObserverManage">إداره المراقبين</text>
 		<text name="TownShip">البلديه</text>
 		<text name="TownShips">البلديات</text>
 		<text name="Address">العنوان</text>
@@ -236,6 +237,8 @@
 		<text name="AssignRequests">توزيع الطلبات</text>
 		<text name="DonotHaveObserver">طلبات غير مسنده</text>
 		<text name="AssignedRequests">الطلبات المسنده</text>
+		<text name="RequestCanceled">طلب ملغى</text>
+		<text name="CancelRequest">إلغاء الطلب</text>
 		<!--<text name="ApprovedByLabProjectManager">مدير المختبر إعتمد الطلب </text>-->
 	</texts>
 </localizationDictionary>

@@ -14,7 +14,7 @@
             <div class="col-container">
                 <div class="card-header d-flex justify-content-center">
                     <h3 class="card-title" style="margin-top: 8px; color: white;">{{ request.statusName | localize }}</h3>
-                    <div class="" style="padding-right: 384px">
+                    <div class="" style="padding-right: 384px" *ngIf="request.status !==7">
                         <button style="background-color: #ffc107" *ngIf="request.id<1  &&request.status ==1 && isGranted('Pages.Manage.Contractor')" type="button"
                                 (click)="save(1)"
                                 [disabled]="!createRequestForm.form.valid || saving"
@@ -22,6 +22,8 @@
                                 aria-label="Close">
                             {{ saveText | localize }}
                         </button>
+
+
 
                         <button style="background-color: #ffc107" *ngIf="request.id>0 && isGranted('Pages.Manage.Contractor') && (request.status ==1 ||request.status ==5  )" type="button"
                                 [disabled]="request.hasSample !==2 && requestTests.length==0"
@@ -57,6 +59,13 @@
                             {{ "RequestRejected" | localize }}
                         </button>
 
+                        <button  *ngIf="request.id>0  &&isGranted('Pages.Manage.Contractor')" type="button"
+                                (click)="save(7)"
+                                [disabled]="!createRequestForm.form.valid || saving"
+                                class="btn btn-danger  mr-3"
+                                aria-label="Close">
+                            {{ "CancelRequest" | localize }}
+                        </button>
                     </div>
                    
                 </div>
@@ -578,7 +587,7 @@
                             </div>
                         </tab>
                         <tab *ngIf="showTabs" [heading]="'Attachments' | localize" class="pt-3 px-2">
-                            <form class="form-horizontal" *ngIf="isGranted('Pages.Manage.Contractor')"
+                            <form class="form-horizontal" 
                                   autocomplete="off"
                                   #attachmentForm="ngForm"
                                   (ngSubmit)="saveAttachment()">
@@ -652,7 +661,7 @@
                                                     <i class="fa fa-download"></i>
                                                     {{ "Download" | localize }}
                                                 </button>
-                                                <button type="button" *ngIf="isGranted('Pages.Manage.Contractor')"
+                                                <button type="button"
                                                         class="btn btn-sm bg-danger mx-2"
                                                         (click)="deleteAttachment(attachment)">
                                                     <i class="fas fa-trash"></i>

@@ -85,7 +85,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 this.l('ObserversMenu'),
                 '/app/observers',
                 'fas fa-users',
-                'Pages.Manage.Observer'
+                'Pages.Manage.ObserverManage'
             ),
             new MenuItem(
                 this.l('QCUsers'),
@@ -117,7 +117,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                     this.l('AssignRequests'),
                     '/app/assignRequests'
                     , 'fas fa-dot-circle',
-                    '')
+                    'Pages.Manage.SupervisingQuality')
 
             ]),
 

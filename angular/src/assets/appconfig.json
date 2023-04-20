@@ -1,6 +1,6 @@
 {
-  "remoteServiceBaseUrl": "http://emawadsw-001-site2.gtempurl.com",
-  "appBaseUrl": "http://emawadsw-001-site1.gtempurl.com",
+  "remoteServiceBaseUrl": "https://localhost:44311",
+  "appBaseUrl": "http://localhost:4200",
   "localeMappings": [
     {
       "from": "pt-BR",
