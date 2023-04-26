@@ -79,7 +79,6 @@
                                                        class="form-control"
                                                        name="projectContractNumber"
                                                        id="projectContractNumber"
-                                                        
                                                        [(ngModel)]="contractNumber" />
 
 
@@ -97,7 +96,6 @@
                                                        class="form-control"
                                                        name="requestCode"
                                                        id="requestCode"
-                                                        
                                                        [(ngModel)]="requestCode" />
 
 
@@ -116,6 +114,24 @@
                                                         id="statusId" [(ngModel)]="statusId"
                                                         #statusIdModel="ngModel">
                                                     <option *ngFor="let requestStatus of requestStatuses" [value]="requestStatus.id">{{requestStatus.name | localize}}</option>
+                                                </select>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 mt-3">
+                                        <div class="form-group row mb-0">
+                                            <label class="col-md-3 col-form-label" for="ADDRESS">
+                                                {{ "TownShip" | localize }}
+                                            </label>
+                                            <div class="col-md-8">
+                                                <select name="townShipId"
+                                                        class="form-control"
+                                                        id="townShipId" [(ngModel)]="townShipId"
+                                                        #townShipIdModel="ngModel">
+                                                    <option *ngFor="let townShip of allTownShips" [value]="townShip.id">{{townShip.name}}</option>
                                                 </select>
 
 

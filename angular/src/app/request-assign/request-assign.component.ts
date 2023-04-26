@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from '../../shared/paged-listing-component-base';
-import { DropdownListDto, LookupServiceProxy, ProjectDto, ProjectServiceProxy, RequestDto, RequestServiceProxy, RequestViewDto } from '../../shared/service-proxies/service-proxies';
+import { DropdownListDto, LookupServiceProxy, ProjectDto, ProjectServiceProxy, RequestDto, RequestServiceProxy, RequestViewDto, TowinShipServiceProxy, TownShipDto } from '../../shared/service-proxies/service-proxies';
 import { AssignModalComponent } from './assign-modal/assign-modal.component';
 class PageRequestDto extends PagedRequestDto {
     keyword: string;
@@ -21,6 +21,8 @@ export class RequestAssignComponent extends PagedListingComponentBase<RequestVie
     contractNumber: string = '';
     requestCode: string = '';
     statusId: number = 0;
+    townShipId: number = 0;
+    allTownShips: TownShipDto[] = [];
     isActive: boolean | null;
     advancedFiltersVisible = false;
     requestStatuses: DropdownListDto[] = [];
@@ -30,7 +32,8 @@ export class RequestAssignComponent extends PagedListingComponentBase<RequestVie
         private _requestServiceProxy: RequestServiceProxy,
         public _lookupServiceProxy: LookupServiceProxy,
         private _modalService: BsModalService,
-        private router: Router
+        private router: Router,
+        public _towinShipServiceProxy: TowinShipServiceProxy,
     ) {
         super(injector);
     }
@@ -41,7 +44,11 @@ export class RequestAssignComponent extends PagedListingComponentBase<RequestVie
             this.projects = res;
         });
     }
-
+    loadAllTownShips() {
+        this._towinShipServiceProxy.getAllownShipList().subscribe(res => {
+            this.allTownShips = res;
+        });
+    }
     loadAllStatuses() {
 
         this._lookupServiceProxy.requestsStatus().subscribe(res => {
@@ -71,6 +78,7 @@ export class RequestAssignComponent extends PagedListingComponentBase<RequestVie
         this.contractNumber = undefined;
         this.requestCode = undefined;
         this.statusId = undefined;
+        this.townShipId = undefined;
         this.getDataPage(1);
     }
 
@@ -87,7 +95,7 @@ export class RequestAssignComponent extends PagedListingComponentBase<RequestVie
                 this.projectId, 0,
                 this.contractNumber,
                 this.requestCode,
-                this.statusId,0,
+                this.statusId, this.townShipId,
                 '',
                 request.skipCount,
                 request.maxResultCount

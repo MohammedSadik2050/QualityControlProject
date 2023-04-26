@@ -257,23 +257,24 @@ namespace eConLab.Requests
                 //if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
                 //    lstItems= lstItems.Where(d => d.Project.LabProjectManagerId == AbpSession.UserId);
 
-                if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingQuality))
-                    lstItems = lstItems.Where(d => d.Project.SupervisingQualityId == AbpSession.UserId);
+                //if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingQuality))
+                //    lstItems = lstItems.Where(d => d.Project.SupervisingQualityId == AbpSession.UserId);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingEngineer))
                     lstItems = lstItems.Where(d => d.Project.SupervisingEngineerId == AbpSession.UserId);
             }
+
             lstItems = lstItems.Skip(skipCount)
                                           .Take(maxResultCount);
 
-
+            // var newRes = lstItems.ToList();
             var result = lstItems.Select(mod => new RequestViewDto
             {
                 Id = mod.Id,
                 Code = mod.Code,
                 InspectionDate = mod.InspectionDate,
                 Description = mod.Description,
-                TownShipName = mod.TownShip.Name,
+                TownShipName = mod.TownShip !=null? mod.TownShip.Name:"",
                 ProjectId = mod.ProjectId,
                 DistrictName = mod.DistrictName,
                 PhomeNumberSiteResponsibleOne = mod.PhomeNumberSiteResponsibleOne,
