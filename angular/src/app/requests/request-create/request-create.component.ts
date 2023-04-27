@@ -76,7 +76,7 @@ export class RequestCreateComponent extends AppComponentBase implements OnInit {
     }
 
     loadAllTownShips() {
-        this._towinShipServiceProxy.getAllAgenciesList().subscribe(res => {
+        this._towinShipServiceProxy.getAllownShipList().subscribe(res => {
             this.allTownShips = res;
         });
     }

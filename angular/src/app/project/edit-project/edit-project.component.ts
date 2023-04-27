@@ -334,7 +334,7 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
         console.log('attachments', this.attachment);
         this.attachment.entity = 2;
         this.attachment.entityId = this.projectId;
-        this._attachmentServiceProxy.createOrUpdate(this.projectId, '', '', '',this.file, this.attachment.description,2).subscribe(
+        this._attachmentServiceProxy.createOrUpdate(this.projectId, '', '', '',this.file, '',this.attachment.description,2).subscribe(
             () => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.loadAttachments();

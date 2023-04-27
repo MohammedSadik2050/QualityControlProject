@@ -29,7 +29,8 @@ namespace eConLab.Enum
         ApprovedByConsultant = 3,
         ApprovedByLabProjectManager = 4,
         AssignedToObserver = 6,
-        Rejected = 5
+        Rejected = 5,
+        RequestCanceled = 7
     }
     public enum MainRequestTypes
     {

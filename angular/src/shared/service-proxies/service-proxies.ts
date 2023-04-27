@@ -590,11 +590,12 @@ export class AttachmentServiceProxy {
      * @param fileURL (optional) 
      * @param fileName (optional) 
      * @param file (optional) 
+     * @param fileNames (optional) 
      * @param description (optional) 
      * @param entity (optional) 
      * @return Success
      */
-    createOrUpdate(entityId: number | undefined, filePath: string | undefined, fileURL: string | undefined, fileName: string | undefined, file: FileParameter | undefined, description: string | undefined, entity: Entities | undefined) : Observable<AttachmentDto> {
+    createOrUpdate(entityId: number | undefined, filePath: string | undefined, fileURL: string | undefined, fileName: string | undefined, file: FileParameter | undefined, fileNames: string | undefined, description: string | undefined, entity: Entities | undefined) : Observable<AttachmentDto> {
         let url_ = this.baseUrl + "/api/services/app/Attachment/CreateOrUpdate";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -619,6 +620,10 @@ export class AttachmentServiceProxy {
             throw new Error("The parameter 'file' cannot be null.");
         else
             content_.append("File", file.data, file.fileName ? file.fileName : "File");
+        if (fileNames === null || fileNames === undefined)
+            throw new Error("The parameter 'fileNames' cannot be null.");
+        else
+            content_.append("FileNames", fileNames.toString());
         if (description === null || description === undefined)
             throw new Error("The parameter 'description' cannot be null.");
         else
@@ -5632,8 +5637,8 @@ export class TowinShipServiceProxy {
     /**
      * @return Success
      */
-    getAllAgenciesList() : Observable<TownShipDto[]> {
-        let url_ = this.baseUrl + "/api/services/app/TowinShip/GetAllAgenciesList";
+    getAllownShipList() : Observable<TownShipDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/TowinShip/GetAllownShipList";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -5645,11 +5650,11 @@ export class TowinShipServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllAgenciesList(response_);
+            return this.processGetAllownShipList(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAllAgenciesList(<any>response_);
+                    return this.processGetAllownShipList(<any>response_);
                 } catch (e) {
                     return <Observable<TownShipDto[]>><any>_observableThrow(e);
                 }
@@ -5658,7 +5663,7 @@ export class TowinShipServiceProxy {
         }));
     }
 
-    protected processGetAllAgenciesList(response: HttpResponseBase): Observable<TownShipDto[]> {
+    protected processGetAllownShipList(response: HttpResponseBase): Observable<TownShipDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -9515,6 +9520,7 @@ export enum RequestStatus {
     _4 = 4,
     _5 = 5,
     _6 = 6,
+    _7 = 7,
 }
 
 export class RequestViewDto implements IRequestViewDto {

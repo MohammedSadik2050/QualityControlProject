@@ -17,7 +17,7 @@ namespace eConLab.TownShips
 
         Task<TownShipDto> Get(long id);
 
-        Task<List<TownShipDto>> GetAllAgenciesList();
+        Task<List<TownShipDto>> GetAllownShipList();
 
         Task<bool> Delete(long Id);
     }

@@ -47,7 +47,7 @@ export class ObserverCreateComponent extends AppComponentBase implements OnInit 
         this.loadTownShips();
     }
     loadTownShips() {
-        this._towinShipServiceProxy.getAllAgenciesList().subscribe(res => {
+        this._towinShipServiceProxy.getAllownShipList().subscribe(res => {
             this.townShips = res;
         });
     }

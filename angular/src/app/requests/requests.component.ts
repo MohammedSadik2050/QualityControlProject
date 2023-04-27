@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { appModuleAnimation } from '../../shared/animations/routerTransition';
 import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from '../../shared/paged-listing-component-base';
-import { DropdownListDto, LookupServiceProxy, ProjectDto, ProjectServiceProxy, RequestDto, RequestServiceProxy, RequestViewDto } from '../../shared/service-proxies/service-proxies';
+import { DropdownListDto, LookupServiceProxy, ProjectDto, ProjectServiceProxy, RequestDto, RequestServiceProxy, RequestViewDto, TowinShipServiceProxy, TownShipDto } from '../../shared/service-proxies/service-proxies';
 import { RequestCreateComponent } from './request-create/request-create.component';
 
 class PageRequestDto extends PagedRequestDto {
@@ -19,17 +19,20 @@ export class RequestsComponent extends PagedListingComponentBase<RequestViewDto>
     projects: ProjectDto[] = [];
     keyword = '';
     projectId: number = 0;
+    townShipId: number = 0;
     contractNumber: string = '';
     requestCode: string = '';
     statusId: number = 0;
     isActive: boolean | null;
     advancedFiltersVisible = false;
     requestStatuses: DropdownListDto[] = [];
+    allTownShips: TownShipDto[] = [];
     constructor(
         injector: Injector,
         public _projectServiceProxy: ProjectServiceProxy,
         private _requestServiceProxy: RequestServiceProxy,
         public _lookupServiceProxy: LookupServiceProxy,
+        public _towinShipServiceProxy: TowinShipServiceProxy,
         //private _modalService: BsModalService,
         private router: Router
     ) {
@@ -42,7 +45,11 @@ export class RequestsComponent extends PagedListingComponentBase<RequestViewDto>
             this.projects = res;
         });
     }
-
+    loadAllTownShips() {
+        this._towinShipServiceProxy.getAllownShipList().subscribe(res => {
+            this.allTownShips = res;
+        });
+    }
     loadAllStatuses() {
 
         this._lookupServiceProxy.requestsStatus().subscribe(res => {
@@ -69,6 +76,7 @@ export class RequestsComponent extends PagedListingComponentBase<RequestViewDto>
         this.contractNumber = undefined;
         this.requestCode = undefined;
         this.statusId = undefined;
+        this.townShipId = undefined;
         this.getDataPage(1);
     }
 
@@ -78,14 +86,18 @@ export class RequestsComponent extends PagedListingComponentBase<RequestViewDto>
         finishedCallback: Function
     ): void {
         request.keyword = this.keyword;
-        this.loadAllProject();
-        this.loadAllStatuses();
+        if (this.allTownShips.length < 1) {
+            this.loadAllTownShips();
+            this.loadAllProject();
+            this.loadAllStatuses();
+        }
+
         this._requestServiceProxy
             .getAll(
-                this.projectId,0,
+                this.projectId, 0,
                 this.contractNumber,
                 this.requestCode,
-                this.statusId,0,
+                this.statusId, this.townShipId,
                 '',
                 request.skipCount,
                 request.maxResultCount

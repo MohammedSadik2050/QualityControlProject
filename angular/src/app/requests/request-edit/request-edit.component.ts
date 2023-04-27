@@ -111,10 +111,11 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         console.log('attachments', this.attachment);
         this.attachment.entity = 1;
         this.attachment.entityId = this.request.id;
-        this._attachmentServiceProxy.createOrUpdate(this.request.id, '', '', '',this.file, this.attachment.description, 1).subscribe(
+        this._attachmentServiceProxy.createOrUpdate(this.request.id, '', '', '',this.file, '',this.attachment.description, 1).subscribe(
             () => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.loadAttachments();
+                this.attachment = {};
                 //  this.onSave.emit();
             },
             () => {
@@ -172,7 +173,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         });
     }
     loadAllTownShips() {
-        this._towinShipServiceProxy.getAllAgenciesList().subscribe(res => {
+        this._towinShipServiceProxy.getAllownShipList().subscribe(res => {
             this.allTownShips = res;
         });
     }
@@ -336,6 +337,11 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         if (this.request.status == 4) {
             workFlow.actionName = "تم إعتماد الطلب";
             workFlow.actionNotes = "تم إعتماد الطلب";
+        }
+
+        if (this.request.status == 7) {
+            workFlow.actionName = " إلغاء الطلب";
+            workFlow.actionNotes = "تم إلغاء الطلب";
         }
         
 
