@@ -115,6 +115,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             () => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.loadAttachments();
+                this.attachment = {};
                 //  this.onSave.emit();
             },
             () => {

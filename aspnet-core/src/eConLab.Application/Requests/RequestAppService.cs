@@ -127,8 +127,14 @@ namespace eConLab.Requests
                 if (userRoles.Contains(StaticRoleNames.Tenants.Contractor))
                     lstItems = lstItems.Where(d => d.Project.ContractorId == AbpSession.UserId);
 
-                if (userRoles.Contains(StaticRoleNames.Tenants.Observer))
-                    lstItems = lstItems.Where(d => d.Observer.UserId == AbpSession.UserId);
+                if (userRoles.Contains(StaticRoleNames.Tenants.Observer)) {
+                    var currentObserver = await _observerRepo.FirstOrDefaultAsync(s => s.UserId == AbpSession.UserId);
+                    if (currentObserver !=null)
+                    {
+                        lstItems = lstItems.Where(d => d.ObserverId == currentObserver.Id);
+
+                    }
+                }
                 //if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
                 //    lstItems= lstItems.Where(d => d.Project.LabProjectManagerId == AbpSession.UserId);
 
@@ -140,14 +146,14 @@ namespace eConLab.Requests
             }
             lstItems = lstItems.Skip(skipCount)
                                           .Take(maxResultCount);
-
+           // var res = lstItems.ToList();
             var result = lstItems.Select(mod => new RequestViewDto
             {
                 Id = mod.Id,
                 Code = mod.Code,
                 InspectionDate = mod.InspectionDate,
-                Description = mod.Description,
-                TownShipName = mod.TownShip == null ? "" : mod.TownShip.Name,
+                //Description = mod.Description,
+                //TownShipName = mod.TownShip == null ? "" : mod.TownShip.Name,
                 ProjectId = mod.ProjectId,
                 DistrictName = mod.DistrictName,
                 PhomeNumberSiteResponsibleOne = mod.PhomeNumberSiteResponsibleOne,
@@ -164,8 +170,8 @@ namespace eConLab.Requests
                     SiteDelivedDate = mod.Project.SiteDelivedDate,
                 },
 
-                ObserverId = mod.ObserverId,
-                ObserverName = mod.Observer != null ? mod.Observer.Name : "",
+                //ObserverId = mod.ObserverId,
+                //ObserverName = mod.Observer != null ? mod.Observer.Name : "",
 
             }).ToList();
             return result;
@@ -200,7 +206,14 @@ namespace eConLab.Requests
                     lstItems = lstItems.Where(d => d.Project.SupervisingEngineerId == AbpSession.UserId);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.Observer))
-                    lstItems = lstItems.Where(d => d.Observer.UserId == AbpSession.UserId);
+                {
+                    var currentObserver = await _observerRepo.FirstOrDefaultAsync(s => s.UserId == AbpSession.UserId);
+                    if (currentObserver != null)
+                    {
+                        lstItems = lstItems.Where(d => d.ObserverId == currentObserver.Id);
+
+                    }
+                }
             }
 
             return lstItems.ToList().Count;
@@ -274,7 +287,7 @@ namespace eConLab.Requests
                 Code = mod.Code,
                 InspectionDate = mod.InspectionDate,
                 Description = mod.Description,
-                TownShipName = mod.TownShip !=null? mod.TownShip.Name:"",
+                TownShipName = mod.TownShip != null ? mod.TownShip.Name : "",
                 ProjectId = mod.ProjectId,
                 DistrictName = mod.DistrictName,
                 PhomeNumberSiteResponsibleOne = mod.PhomeNumberSiteResponsibleOne,
