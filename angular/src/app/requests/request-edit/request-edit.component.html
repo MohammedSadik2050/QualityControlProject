@@ -521,7 +521,7 @@
                                                         isGranted('Pages.Manage.LabProjectManager')
                                                         ||isGranted('Pages.Manage.SupervisingQuality'))&& request.status==6"
                                                         class="btn btn-sm bg-success mx-2"
-                                                        (click)="addTest(requestTest.id,requestTest.code,requestTest.isLab)">
+                                                        (click)="addTest(requestTest.id,requestTest.code,requestTest.isLab,requestTest.formCode)">
                                                     <i class="fa fa-microscope"></i>
                                                     {{ "Tests" | localize }}
                                                 </button>
