@@ -242,5 +242,6 @@
 		<text name="samplePreparationEndDate">Sample Preparation End Date</text>
 		<text name="AssignTest">Assign Test</text>
 		<text name="TestForm">Test Form</text>
+		<text name="TestSetting">Test Setting</text>
 </texts>
 </localizationDictionary>

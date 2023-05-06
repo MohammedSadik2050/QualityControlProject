@@ -247,6 +247,7 @@
 		<text name="TestsResult">إدخال نتيجه الإختبار</text>
 		<text name="AssignTest">تحديد نوع شاشة الادخال</text>
 		<text name="TestForm">نوع نوع شاشة الادخال</text>
+		<text name="TestSetting">إعدادات الإختبارات</text>
 		<!--<text name="ApprovedByLabProjectManager">مدير المختبر إعتمد الطلب </text>-->
 	</texts>
 </localizationDictionary>

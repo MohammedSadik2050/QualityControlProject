@@ -351,7 +351,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     Asphalt(testCode: any, testId: any, isLab: boolean, FormCode :string) {
         var haveTest: boolean = false;
         let rejectModal: BsModalRef;
-        if (testCode == "RC2" || testCode == "MC1") {
+        if (FormCode == "RC2" || FormCode == "MC1") {
             haveTest = true;
             rejectModal = this._modalService.show(
                 Rc2testComponent,
@@ -365,7 +365,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             );
 
         }
-        if (testCode === "AsphaltT310") {
+        if (FormCode === "AsphaltT310") {
             haveTest = true;
             rejectModal = this._modalService.show(
                 AsphaltFieldComponent,
