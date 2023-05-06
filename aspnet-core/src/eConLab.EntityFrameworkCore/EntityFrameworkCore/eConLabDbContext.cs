@@ -38,6 +38,7 @@ namespace eConLab.EntityFrameworkCore
         public DbSet<Observer> Observers { get; set; }
         public DbSet<RC2> RC2 { get; set; }
         public DbSet<AsphaltField> AsphaltFields { get; set; }
+        public DbSet<ConcretField> ConcretFields { get; set; }
         public eConLabDbContext(DbContextOptions<eConLabDbContext> options)
             : base(options)
         {

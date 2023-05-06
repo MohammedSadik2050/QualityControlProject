@@ -1001,6 +1001,203 @@ export class AttachmentServiceProxy {
 }
 
 @Injectable()
+export class ConcretFieldServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrUpdate(body: ConcretFieldDto | undefined) : Observable<ConcretFieldDto> {
+        let url_ = this.baseUrl + "/api/services/app/ConcretField/CreateOrUpdate";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<ConcretFieldDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ConcretFieldDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateOrUpdate(response: HttpResponseBase): Observable<ConcretFieldDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ConcretFieldDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ConcretFieldDto>(<any>null);
+    }
+
+    /**
+     * @param testId (optional) 
+     * @param requestId (optional) 
+     * @return Success
+     */
+    getByRequesId(testId: number | undefined, requestId: number | undefined) : Observable<ConcretFieldDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ConcretField/GetByRequesId?";
+        if (testId === null)
+            throw new Error("The parameter 'testId' cannot be null.");
+        else if (testId !== undefined)
+            url_ += "testId=" + encodeURIComponent("" + testId) + "&";
+        if (requestId === null)
+            throw new Error("The parameter 'requestId' cannot be null.");
+        else if (requestId !== undefined)
+            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetByRequesId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetByRequesId(<any>response_);
+                } catch (e) {
+                    return <Observable<ConcretFieldDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ConcretFieldDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetByRequesId(response: HttpResponseBase): Observable<ConcretFieldDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(ConcretFieldDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ConcretFieldDto[]>(<any>null);
+    }
+
+    /**
+     * @param testId (optional) 
+     * @param requestId (optional) 
+     * @return Success
+     */
+    getByRequestandTest(testId: number | undefined, requestId: number | undefined) : Observable<ConcretFieldDto> {
+        let url_ = this.baseUrl + "/api/services/app/ConcretField/GetByRequestandTest?";
+        if (testId === null)
+            throw new Error("The parameter 'testId' cannot be null.");
+        else if (testId !== undefined)
+            url_ += "testId=" + encodeURIComponent("" + testId) + "&";
+        if (requestId === null)
+            throw new Error("The parameter 'requestId' cannot be null.");
+        else if (requestId !== undefined)
+            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetByRequestandTest(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetByRequestandTest(<any>response_);
+                } catch (e) {
+                    return <Observable<ConcretFieldDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ConcretFieldDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetByRequestandTest(response: HttpResponseBase): Observable<ConcretFieldDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ConcretFieldDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ConcretFieldDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class ConfigurationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -2441,6 +2638,64 @@ export class LookupServiceProxy {
     }
 
     protected processProjectStatus(response: HttpResponseBase): Observable<DropdownListDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(DropdownListDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<DropdownListDto[]>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    testForms() : Observable<DropdownListDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Lookup/TestForms";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processTestForms(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processTestForms(<any>response_);
+                } catch (e) {
+                    return <Observable<DropdownListDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<DropdownListDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processTestForms(response: HttpResponseBase): Observable<DropdownListDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -7442,6 +7697,141 @@ export interface IChangeUserLanguageDto {
     languageName: string;
 }
 
+export class ConcretFieldDto implements IConcretFieldDto {
+    id: number;
+    sampleNumber: string | undefined;
+    samplePreparationDate: moment.Moment | undefined;
+    samplePreparationEndDate: moment.Moment;
+    cylindersReceivedNo: string | undefined;
+    landingGear: string | undefined;
+    castCylindersNo: string | undefined;
+    recoveredCylindersNo: string | undefined;
+    labDeliveryDate: moment.Moment | undefined;
+    airTemp: string | undefined;
+    cementQty: string | undefined;
+    concreteTemp: string | undefined;
+    concreteRank: string | undefined;
+    landingMM: string | undefined;
+    concreteUsing: string | undefined;
+    concreteSource: string | undefined;
+    concreteQty: string | undefined;
+    truckNo: string | undefined;
+    truckLeftDate: moment.Moment | undefined;
+    castingStartDate: moment.Moment | undefined;
+    truckSiteArrivingDate: moment.Moment | undefined;
+    comment: string | undefined;
+    requestId: number;
+    requestInspectionTestId: number;
+
+    constructor(data?: IConcretFieldDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.sampleNumber = _data["sampleNumber"];
+            this.samplePreparationDate = _data["samplePreparationDate"] ? moment(_data["samplePreparationDate"].toString()) : <any>undefined;
+            this.samplePreparationEndDate = _data["samplePreparationEndDate"] ? moment(_data["samplePreparationEndDate"].toString()) : <any>undefined;
+            this.cylindersReceivedNo = _data["cylindersReceivedNo"];
+            this.landingGear = _data["landingGear"];
+            this.castCylindersNo = _data["castCylindersNo"];
+            this.recoveredCylindersNo = _data["recoveredCylindersNo"];
+            this.labDeliveryDate = _data["labDeliveryDate"] ? moment(_data["labDeliveryDate"].toString()) : <any>undefined;
+            this.airTemp = _data["airTemp"];
+            this.cementQty = _data["cementQty"];
+            this.concreteTemp = _data["concreteTemp"];
+            this.concreteRank = _data["concreteRank"];
+            this.landingMM = _data["landingMM"];
+            this.concreteUsing = _data["concreteUsing"];
+            this.concreteSource = _data["concreteSource"];
+            this.concreteQty = _data["concreteQty"];
+            this.truckNo = _data["truckNo"];
+            this.truckLeftDate = _data["truckLeftDate"] ? moment(_data["truckLeftDate"].toString()) : <any>undefined;
+            this.castingStartDate = _data["castingStartDate"] ? moment(_data["castingStartDate"].toString()) : <any>undefined;
+            this.truckSiteArrivingDate = _data["truckSiteArrivingDate"] ? moment(_data["truckSiteArrivingDate"].toString()) : <any>undefined;
+            this.comment = _data["comment"];
+            this.requestId = _data["requestId"];
+            this.requestInspectionTestId = _data["requestInspectionTestId"];
+        }
+    }
+
+    static fromJS(data: any): ConcretFieldDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ConcretFieldDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["sampleNumber"] = this.sampleNumber;
+        data["samplePreparationDate"] = this.samplePreparationDate ? this.samplePreparationDate.toISOString() : <any>undefined;
+        data["samplePreparationEndDate"] = this.samplePreparationEndDate ? this.samplePreparationEndDate.toISOString() : <any>undefined;
+        data["cylindersReceivedNo"] = this.cylindersReceivedNo;
+        data["landingGear"] = this.landingGear;
+        data["castCylindersNo"] = this.castCylindersNo;
+        data["recoveredCylindersNo"] = this.recoveredCylindersNo;
+        data["labDeliveryDate"] = this.labDeliveryDate ? this.labDeliveryDate.toISOString() : <any>undefined;
+        data["airTemp"] = this.airTemp;
+        data["cementQty"] = this.cementQty;
+        data["concreteTemp"] = this.concreteTemp;
+        data["concreteRank"] = this.concreteRank;
+        data["landingMM"] = this.landingMM;
+        data["concreteUsing"] = this.concreteUsing;
+        data["concreteSource"] = this.concreteSource;
+        data["concreteQty"] = this.concreteQty;
+        data["truckNo"] = this.truckNo;
+        data["truckLeftDate"] = this.truckLeftDate ? this.truckLeftDate.toISOString() : <any>undefined;
+        data["castingStartDate"] = this.castingStartDate ? this.castingStartDate.toISOString() : <any>undefined;
+        data["truckSiteArrivingDate"] = this.truckSiteArrivingDate ? this.truckSiteArrivingDate.toISOString() : <any>undefined;
+        data["comment"] = this.comment;
+        data["requestId"] = this.requestId;
+        data["requestInspectionTestId"] = this.requestInspectionTestId;
+        return data; 
+    }
+
+    clone(): ConcretFieldDto {
+        const json = this.toJSON();
+        let result = new ConcretFieldDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IConcretFieldDto {
+    id: number;
+    sampleNumber: string | undefined;
+    samplePreparationDate: moment.Moment | undefined;
+    samplePreparationEndDate: moment.Moment;
+    cylindersReceivedNo: string | undefined;
+    landingGear: string | undefined;
+    castCylindersNo: string | undefined;
+    recoveredCylindersNo: string | undefined;
+    labDeliveryDate: moment.Moment | undefined;
+    airTemp: string | undefined;
+    cementQty: string | undefined;
+    concreteTemp: string | undefined;
+    concreteRank: string | undefined;
+    landingMM: string | undefined;
+    concreteUsing: string | undefined;
+    concreteSource: string | undefined;
+    concreteQty: string | undefined;
+    truckNo: string | undefined;
+    truckLeftDate: moment.Moment | undefined;
+    castingStartDate: moment.Moment | undefined;
+    truckSiteArrivingDate: moment.Moment | undefined;
+    comment: string | undefined;
+    requestId: number;
+    requestInspectionTestId: number;
+}
+
 export class CreateOrUpdateRequestProjectItemDto implements ICreateOrUpdateRequestProjectItemDto {
     id: number;
     requestId: number;
@@ -7756,6 +8146,7 @@ export class CreateUpdateInspectionTestDto implements ICreateUpdateInspectionTes
     cost: number;
     isLabTest: boolean;
     testType: InspectionTestTypes;
+    testForm: TestForms;
 
     constructor(data?: ICreateUpdateInspectionTestDto) {
         if (data) {
@@ -7774,6 +8165,7 @@ export class CreateUpdateInspectionTestDto implements ICreateUpdateInspectionTes
             this.cost = _data["cost"];
             this.isLabTest = _data["isLabTest"];
             this.testType = _data["testType"];
+            this.testForm = _data["testForm"];
         }
     }
 
@@ -7792,6 +8184,7 @@ export class CreateUpdateInspectionTestDto implements ICreateUpdateInspectionTes
         data["cost"] = this.cost;
         data["isLabTest"] = this.isLabTest;
         data["testType"] = this.testType;
+        data["testForm"] = this.testForm;
         return data; 
     }
 
@@ -7810,6 +8203,7 @@ export interface ICreateUpdateInspectionTestDto {
     cost: number;
     isLabTest: boolean;
     testType: InspectionTestTypes;
+    testForm: TestForms;
 }
 
 export class CreateUpdateObserverDto implements ICreateUpdateObserverDto {
@@ -8576,6 +8970,7 @@ export class InspectionTestDto implements IInspectionTestDto {
     cost: number;
     isLabTest: boolean;
     testType: InspectionTestTypes;
+    testForm: TestForms;
 
     constructor(data?: IInspectionTestDto) {
         if (data) {
@@ -8594,6 +8989,7 @@ export class InspectionTestDto implements IInspectionTestDto {
             this.cost = _data["cost"];
             this.isLabTest = _data["isLabTest"];
             this.testType = _data["testType"];
+            this.testForm = _data["testForm"];
         }
     }
 
@@ -8612,6 +9008,7 @@ export class InspectionTestDto implements IInspectionTestDto {
         data["cost"] = this.cost;
         data["isLabTest"] = this.isLabTest;
         data["testType"] = this.testType;
+        data["testForm"] = this.testForm;
         return data; 
     }
 
@@ -8630,6 +9027,7 @@ export interface IInspectionTestDto {
     cost: number;
     isLabTest: boolean;
     testType: InspectionTestTypes;
+    testForm: TestForms;
 }
 
 export class InspectionTestDtoPagedResultDto implements IInspectionTestDtoPagedResultDto {
@@ -9981,6 +10379,7 @@ export class RequestInspectionTestViewDto implements IRequestInspectionTestViewD
     cost: number;
     name: string | undefined;
     code: string | undefined;
+    formCode: string | undefined;
     haveResult: boolean;
     isLab: boolean;
 
@@ -10002,6 +10401,7 @@ export class RequestInspectionTestViewDto implements IRequestInspectionTestViewD
             this.cost = _data["cost"];
             this.name = _data["name"];
             this.code = _data["code"];
+            this.formCode = _data["formCode"];
             this.haveResult = _data["haveResult"];
             this.isLab = _data["isLab"];
         }
@@ -10023,6 +10423,7 @@ export class RequestInspectionTestViewDto implements IRequestInspectionTestViewD
         data["cost"] = this.cost;
         data["name"] = this.name;
         data["code"] = this.code;
+        data["formCode"] = this.formCode;
         data["haveResult"] = this.haveResult;
         data["isLab"] = this.isLab;
         return data; 
@@ -10044,6 +10445,7 @@ export interface IRequestInspectionTestViewDto {
     cost: number;
     name: string | undefined;
     code: string | undefined;
+    formCode: string | undefined;
     haveResult: boolean;
     isLab: boolean;
 }
@@ -11168,6 +11570,13 @@ export interface ITenantLoginInfoDto {
     id: number;
     tenancyName: string | undefined;
     name: string | undefined;
+}
+
+export enum TestForms {
+    _1 = 1,
+    _2 = 2,
+    _3 = 3,
+    _4 = 4,
 }
 
 export class TownShipDto implements ITownShipDto {

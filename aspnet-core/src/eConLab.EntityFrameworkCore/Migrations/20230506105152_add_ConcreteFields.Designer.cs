@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eConLab.EntityFrameworkCore;
 
 namespace eConLab.Migrations
 {
     [DbContext(typeof(eConLabDbContext))]
-    partial class eConLabDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230506105152_add_ConcreteFields")]
+    partial class add_ConcreteFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2468,8 +2470,8 @@ namespace eConLab.Migrations
                     b.Property<DateTime?>("SamplePreparationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("SamplePreparationEndDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("SamplePreparationEndDate")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("TruckLeftDate")
                         .HasColumnType("datetime2");
@@ -2528,9 +2530,6 @@ namespace eConLab.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TestForm")
-                        .HasColumnType("int");
 
                     b.Property<int>("TestType")
                         .HasColumnType("int");

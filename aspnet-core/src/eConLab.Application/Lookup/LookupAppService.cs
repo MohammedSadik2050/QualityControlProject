@@ -124,5 +124,16 @@ namespace eConLab.Lookup
                               Id = (long)mod,
                           }).ToList();
         }
+
+        public async Task<List<DropdownListDto>> TestForms()
+        {
+
+            return Enum.ProjectStatus.GetValues(typeof(TestForms))
+                          .Cast<TestForms>().Select(mod => new DropdownListDto
+                          {
+                              Name = mod.ToString(),
+                              Id = (long)mod,
+                          }).ToList();
+        }
     }
 }

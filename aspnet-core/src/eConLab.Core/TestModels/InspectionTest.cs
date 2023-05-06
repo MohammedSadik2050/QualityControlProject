@@ -15,6 +15,8 @@ namespace eConLab.TestModels
         public string Code { get; set; }
         public float Cost { get; set; }
         public bool IsLabTest { get; set; }
-        public InspectionTestTypes TestType { get; set; }  
+        public InspectionTestTypes TestType { get; set; }
+        public TestForms? TestForm { get; set; }
+        
     }
 }

@@ -1,0 +1,328 @@
+
+<form class="form-horizontal"
+      autocomplete="off"
+      #createUserModal="ngForm"
+      (ngSubmit)="save()">
+    <abp-modal-header dir="ltr" [title]="'RC2/MC1' | localize"
+                      (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="modal-body">
+        <section class="content px-2">
+            <div class="container-fluid">
+                <div class="card">
+                    <!--<div class="card-header">
+
+
+                    </div>-->
+                    <!--<div class="card-header d-flex justify-content-center">
+                        <h3 class="card-title" style="margin-top: 8px; color: white;">{{ request.statusName | localize }}</h3>
+                    </div>-->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-group row col-6" dir="rtl">
+                                <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
+                                    {{ "samplePreparationDate" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="date"
+                                           class="form-control"
+                                           name="samplePreparationDate"
+                                           id="samplePreparationDate"
+                                           style="text-align: right;"
+                                           [(ngModel)]="samplePreparationDatemodel" />
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row col-6" dir="rtl">
+                                <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
+                                    {{ "samplePreparationEndDate" | localize }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="date"
+                                           class="form-control"
+                                           name="samplePreparationEndDate"
+                                           id="samplePreparationEndDate"
+                                           style="text-align: right;"
+                                           [(ngModel)]="samplePreparationEndDatemodel" />
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card-header d-flex justify-content-center">
+                            <h3 class="card-title" style="margin-top: 8px; color: white;">{{ "بيانات إستلام المعدات"  }}</h3>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="form-group row col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "عدد السلندرات المستلمه"  }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="cylindersReceivedNo"
+                                           id="cylindersReceivedNo"
+                                           [(ngModel)]="requestTest.cylindersReceivedNo" />
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "معدات الهبوط"  }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="cylindersReceivedNo"
+                                           id="cylindersReceivedNo"
+                                           [(ngModel)]="requestTest.cylindersReceivedNo" />
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row  col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "عدد السلندرات المصبوبه"  }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="castCylindersNo"
+                                           id="castCylindersNo"
+                                           [(ngModel)]="requestTest.castCylindersNo" />
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row  col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "عدد السلندرات المسترجعه" }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="recoveredCylindersNo"
+                                           id="recoveredCylindersNo"
+                                           [(ngModel)]="requestTest.recoveredCylindersNo" />
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-header d-flex justify-content-center">
+                            <h3 class="card-title" style="margin-top: 8px; color: white;">{{ "بيانات العينه" }}</h3>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="form-group row col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "درجة حرارة الجو"  }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="airTemp"
+                                           id="airTemp"
+                                           [(ngModel)]="requestTest.airTemp" />
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "كميه الأسمنت"  }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="cementQty"
+                                           id="cementQty"
+                                           [(ngModel)]="requestTest.cementQty" />
+
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="form-group row col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "درجه حراره الخرسانه"  }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="concreteTemp"
+                                           id="concreteTemp"
+                                           [(ngModel)]="requestTest.concreteTemp" />
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "رتبه الخرسانه"  }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="concreteRank"
+                                           id="concreteRank"
+                                           [(ngModel)]="requestTest.concreteRank" />
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row  col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "الهيوط mm"  }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="landingMM"
+                                           id="landingMM"
+                                           [(ngModel)]="requestTest.landingMM" />
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "إستخدام الخرسانه"  }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="concreteUsing"
+                                           id="concreteUsing"
+                                           [(ngModel)]="requestTest.concreteUsing" />
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "مصدر الخرسانه"  }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="concreteSource"
+                                           id="concreteSource"
+                                           [(ngModel)]="requestTest.concreteSource" />
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "كميه الخرسانه" }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="concreteQty"
+                                           id="concreteQty"
+                                           [(ngModel)]="requestTest.concreteQty" />
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="card-header d-flex justify-content-center">
+                            <h3 class="card-title" style="margin-top: 8px; color: white;">{{ "بيانات شاحنه الخرسانه" }}</h3>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="form-group row col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "رقم الشاحنه"  }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="truckNo"
+                                           id="truckNo"
+                                           [(ngModel)]="requestTest.truckNo" />
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "وقت مغادره الشاحنه"  }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="date"
+                                           style="text-align: right;"
+                                           class="form-control"
+                                           name="truckLeftDate"
+                                           id="truckLeftDate"
+                                           [(ngModel)]="truckLeftDatemodel" />
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "وقت بدايه الصب"  }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="date"
+                                           style="text-align: right;"
+                                           class="form-control"
+                                           name="castingStartDate"
+                                           id="castingStartDate"
+                                           [(ngModel)]="castingStartmodel" />
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row col-6">
+                                <label class="col-md-3 col-form-label" for="Name">
+                                    {{ "وقت وصول الموقع"  }}
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="date"
+                                           style="text-align: right;"
+                                           class="form-control"
+                                           name="truckSiteArrivingDate"
+                                           id="truckSiteArrivingDate"
+                                           [(ngModel)]="truckSiteArrivingDatemodel" />
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row col-12">
+                                <label class="col-md-1 col-form-label" for="Name">
+                                    {{ "ملاحظات" }}
+                                </label>
+                                <div class="col-md-11">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="comment"
+                                           id="comment"
+                                           [(ngModel)]="requestTest.comment" />
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving"
+                      [saveDisabled]="!createUserModal.form.valid || saving"
+                      (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+</form>

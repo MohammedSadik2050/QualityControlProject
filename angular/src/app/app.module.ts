@@ -69,6 +69,9 @@ import { RequestAssignComponent } from './request-assign/request-assign.componen
 import { AssignModalComponent } from './request-assign/assign-modal/assign-modal.component';
 import { Rc2testComponent } from './requests/rc2test/rc2test.component';
 import { AsphaltFieldComponent } from './requests/asphalt-field/asphalt-field.component';
+import { ConcreteFieldComponent } from './requests/concrete-field/concrete-field.component';
+import { InspectionTestAssignComponent } from './inspection-test-assign/inspection-test-assign.component';
+import { AssignTestFormComponent } from './inspection-test-assign/assign-test-form/assign-test-form.component';
 
 @NgModule({
     declarations: [
@@ -130,6 +133,9 @@ import { AsphaltFieldComponent } from './requests/asphalt-field/asphalt-field.co
         AssignModalComponent,
         Rc2testComponent,
         AsphaltFieldComponent,
+        ConcreteFieldComponent,
+        InspectionTestAssignComponent,
+        AssignTestFormComponent,
     ],
     imports: [
         CommonModule,

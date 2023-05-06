@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace eConLab.Tests.Dto
 {
-    public class InspectionTestDto: EntityDto<long>
+    public class InspectionTestDto : EntityDto<long>
     {
         public string Name { get; set; }
         public string Code { get; set; }
         public float Cost { get; set; }
         public bool IsLabTest { get; set; }
         public InspectionTestTypes TestType { get; set; }
+        public TestForms? TestForm { get; set; }
     }
 }

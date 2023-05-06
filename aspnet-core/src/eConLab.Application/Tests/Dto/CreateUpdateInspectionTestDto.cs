@@ -15,5 +15,6 @@ namespace eConLab.Tests.Dto
         public float Cost { get; set; }
         public bool IsLabTest { get; set; }
         public InspectionTestTypes TestType { get; set; }
+        public TestForms? TestForm { get; set; }
     }
 }

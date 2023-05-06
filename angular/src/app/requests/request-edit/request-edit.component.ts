@@ -19,6 +19,7 @@ import {
     RequestStatus, RequestWFDto, RequestWFHistoryDto, RequestWFServiceProxy, TowinShipServiceProxy, TownShipDto
 } from '../../../shared/service-proxies/service-proxies';
 import { AsphaltFieldComponent } from '../asphalt-field/asphalt-field.component';
+import { ConcreteFieldComponent } from '../concrete-field/concrete-field.component';
 import { Rc2testComponent } from '../rc2test/rc2test.component';
 import { RejectModalComponent } from '../reject-modal/reject-modal.component';
 
@@ -321,17 +322,36 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         });
     }
 
-    addTest(testId, testCode, isLab) {
-        if (this.request.testType == 3) {
-            this.Asphalt(testCode, testId, isLab);
+    addTest(testId, testCode, isLab, FormCode) {
+        if (FormCode==null || FormCode=='') {
+            this.notify.warn(this.l('NoTestAvailable'));
+            return;
         }
+        if (FormCode == "Concrete") {
+            let rejectModal: BsModalRef;
+            rejectModal = this._modalService.show(
+                ConcreteFieldComponent,
+                {
+                    class: 'modal-lg',
+                    initialState: {
+                        id: this.request.id,
+                        testId: testId,
+                    },
+                }
+            );
+        }
+        else if (this.request.testType == 3) {
+            this.Asphalt(testCode, testId, isLab, FormCode);
+        }
+
+
 
     }
 
-    Asphalt(testCode: any, testId: any, isLab: boolean) {
+    Asphalt(testCode: any, testId: any, isLab: boolean, FormCode :string) {
         var haveTest: boolean = false;
         let rejectModal: BsModalRef;
-        if (testCode == "Asph-14") {
+        if (testCode == "RC2" || testCode == "MC1") {
             haveTest = true;
             rejectModal = this._modalService.show(
                 Rc2testComponent,
@@ -345,7 +365,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             );
 
         }
-        if (isLab == false && testCode !== "Asph-14") {
+        if (testCode === "AsphaltT310") {
             haveTest = true;
             rejectModal = this._modalService.show(
                 AsphaltFieldComponent,
@@ -358,12 +378,10 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
                 }
             );
         }
-        if(!haveTest) {
-              this.notify.warn(this.l('NoTestAvailable'));
-        }
+       
 
         rejectModal.content.onSave.subscribe(() => {
-          //  this.ngOnInit();
+            //  this.ngOnInit();
             this.loadRequestTests();
         });
     }

@@ -39,7 +39,7 @@ export class Rc2testComponent extends AppComponentBase implements OnInit {
         workFlow.requestId = this.id;
         workFlow.currentUserId = this.appSession.userId;
         workFlow.actionName = "قام المراقب بإضافه نتيجه إختبار";
-        workFlow.actionNotes = "المراقب أضاف اختبار RC2/MV2";
+        workFlow.actionNotes = "المراقب أضاف اختبار RC2/MC1";
 
         this._requestWFServiceProxy.createOrUpdate(workFlow).subscribe(
             () => {

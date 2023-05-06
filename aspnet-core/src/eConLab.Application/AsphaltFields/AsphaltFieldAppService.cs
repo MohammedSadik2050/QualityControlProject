@@ -18,10 +18,10 @@ namespace eConLab.RC2
     public class AsphaltFieldAppService :
         eConLabAppServiceBase, IAsphaltFieldAppService
     {
-        private readonly IRepository<eConLab.TestModels.AsphaltField, long> _asphaltFieldRepository;
+        private readonly IRepository<AsphaltField, long> _asphaltFieldRepository;
         private readonly IMapper _mapper;
         public AsphaltFieldAppService(IMapper mapper,
-          IRepository<eConLab.TestModels.AsphaltField, long> asphaltFieldRepository
+          IRepository<AsphaltField, long> asphaltFieldRepository
           )
 
         {

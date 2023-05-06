@@ -38,7 +38,7 @@ export class AsphaltFieldComponent extends AppComponentBase implements OnInit {
         workFlow.requestId = this.id;
         workFlow.currentUserId = this.appSession.userId;
         workFlow.actionName = "قام المراقب بإضافه نتيجه إختبار";
-        workFlow.actionNotes = "المراقب أضاف اختبار حقلي";
+        workFlow.actionNotes = "المراقب أضافه اختبار حقلي";
 
         this._requestWFServiceProxy.createOrUpdate(workFlow).subscribe(
             () => {

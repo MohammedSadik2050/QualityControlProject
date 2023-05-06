@@ -517,7 +517,9 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <button type="button" *ngIf="isGranted('Pages.Manage.Observer') && request.status==6"
+                                                <button type="button" *ngIf="(isGranted('Pages.Manage.Observer')||
+                                                        isGranted('Pages.Manage.LabProjectManager')
+                                                        ||isGranted('Pages.Manage.SupervisingQuality'))&& request.status==6"
                                                         class="btn btn-sm bg-success mx-2"
                                                         (click)="addTest(requestTest.id,requestTest.code,requestTest.isLab)">
                                                     <i class="fa fa-microscope"></i>

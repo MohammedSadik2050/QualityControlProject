@@ -22,6 +22,14 @@ namespace eConLab.Enum
         MixingWater = 6
     }
 
+    public enum TestForms
+    {
+        RC2 = 1,
+        MC1 = 2,
+        AsphaltT310 = 3,
+        Concrete = 4
+    }
+
     public enum RequestStatus
     {
         Pending = 1,

@@ -79,6 +79,7 @@ namespace eConLab.Test
                         Cost = s.InspectionTest.Cost,
                         Name = s.InspectionTest.Name ?? "",
                         Code = s.InspectionTest.Code ?? "",
+                        FormCode = s.InspectionTest.TestForm.ToString() ?? "",
                     }).ToList();
          
         }
