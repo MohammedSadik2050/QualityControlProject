@@ -1,0 +1,416 @@
+
+<form class="form-horizontal"
+      autocomplete="off"
+      #createUserModal="ngForm"
+      (ngSubmit)="save()">
+    <abp-modal-header [title]="'RC2/MC1' | localize"
+                      (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="modal-body">
+        <section class="content px-2">
+            <div class="container-fluid">
+                <div class="card">
+                    <!--<div class="card-header">
+
+
+                    </div>-->
+                    <div class="card-body">
+                        <div class="form-group row required col-6 float-left" dir="ltr">
+                            <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
+                                {{ "Lab Density" | localize }}
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"
+                                       class="form-control"
+                                       name="labDensity"
+                                       [(ngModel)]="requestTest.labDensity"
+                                       id="labDensity" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row required col-6" dir="ltr">
+                            <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
+                                {{ "Moisture" | localize }}
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"
+                                       class="form-control"
+                                       name="moisture"
+                                       [(ngModel)]="requestTest.moisture"
+                                       id="moisture" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row required col-6 float-left" dir="ltr">
+                            <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
+                                {{ "Layer of Thickness" | localize }}
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"
+                                       class="form-control"
+                                       name="layerThickness"
+                                       [(ngModel)]="requestTest.layerThickness"
+                                       id="layerThickness" />
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" dir="ltr">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th>{{ "Point No" | localize }}</th>
+                                        <th>{{ "Compaction Ration" | localize }}</th>
+                                        <th>{{ "Moisture" | localize }}</th>
+                                        <th>{{ "LayerType" | localize }}</th>
+                                        <th>{{ "Remark" | localize }}</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ "1" | localize }}</td>
+                                        <td>
+
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="compactionRation1"
+                                                           [(ngModel)]="requestTest.compactionRation1"
+                                                           id="compactionRation1" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="moisture1"
+                                                           [(ngModel)]="requestTest.moisture1"
+                                                           id="moisture1" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="layerType1"
+                                                           [(ngModel)]="requestTest.layerType1"
+                                                           id="layerType1" />
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="remark1"
+                                                           [(ngModel)]="requestTest.remark1"
+                                                           id="remark1" />
+
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>{{ "2" | localize }}</td>
+                                        <td>
+
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="compactionRation2"
+                                                           [(ngModel)]="requestTest.compactionRation2"
+                                                           id="compactionRation2" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="moisture2"
+                                                           [(ngModel)]="requestTest.moisture2"
+                                                           id="moisture2" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="layerType2"
+                                                           [(ngModel)]="requestTest.layerType2"
+                                                           id="layerType2" />
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="remark2"
+                                                           [(ngModel)]="requestTest.remark2"
+                                                           id="remark2" />
+
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td>{{ "3" | localize }}</td>
+                                        <td>
+
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="compactionRation3"
+                                                           [(ngModel)]="requestTest.compactionRation3"
+                                                           id="compactionRation3" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="moisture3"
+                                                           [(ngModel)]="requestTest.moisture3"
+                                                           id="moisture3" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="layerType3"
+                                                           [(ngModel)]="requestTest.layerType3"
+                                                           id="layerType3" />
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="remark3"
+                                                           [(ngModel)]="requestTest.remark3"
+                                                           id="remark3" />
+
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td>{{ "4" | localize }}</td>
+                                        <td>
+
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="compactionRation4"
+                                                           [(ngModel)]="requestTest.compactionRation4"
+                                                           id="compactionRation4" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="moisture4"
+                                                           [(ngModel)]="requestTest.moisture4"
+                                                           id="moisture4" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="layerType4"
+                                                           [(ngModel)]="requestTest.layerType4"
+                                                           id="layerType4" />
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="remark4"
+                                                           [(ngModel)]="requestTest.remark4"
+                                                           id="remark4" />
+
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td>{{ "5" | localize }}</td>
+                                        <td>
+
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="compactionRation5"
+                                                           [(ngModel)]="requestTest.compactionRation5"
+                                                           id="compactionRation5" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="moisture5"
+                                                           [(ngModel)]="requestTest.moisture5"
+                                                           id="moisture5" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="layerType5"
+                                                           [(ngModel)]="requestTest.layerType5"
+                                                           id="layerType5" />
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="remark5"
+                                                           [(ngModel)]="requestTest.remark5"
+                                                           id="remark5" />
+
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td>{{ "6" | localize }}</td>
+                                        <td>
+
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="compactionRation6"
+                                                           [(ngModel)]="requestTest.compactionRation6"
+                                                           id="compactionRation6" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="moisture6"
+                                                           [(ngModel)]="requestTest.moisture6"
+                                                           id="moisture6" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="layerType6"
+                                                           [(ngModel)]="requestTest.layerType6"
+                                                           id="layerType6" />
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="remark6"
+                                                           [(ngModel)]="requestTest.remark6"
+                                                           id="remark6" />
+
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving"
+                      [saveDisabled]="!createUserModal.form.valid || saving"
+                      (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+</form>

@@ -36,6 +36,8 @@ namespace eConLab.EntityFrameworkCore
         public DbSet<RequestWFHistory> RequestWFHistories { get; set; }
         public DbSet<RequestInspectionTest> RequestInspectionTests { get; set; }
         public DbSet<Observer> Observers { get; set; }
+        public DbSet<RC2> RC2 { get; set; }
+        public DbSet<AsphaltField> AsphaltFields { get; set; }
         public eConLabDbContext(DbContextOptions<eConLabDbContext> options)
             : base(options)
         {

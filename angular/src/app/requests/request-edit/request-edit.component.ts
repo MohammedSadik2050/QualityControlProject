@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { bootloader } from '@angularclass/hmr';
 import { AbpSessionService } from 'abp-ng2-module';
 import { stat } from 'fs';
 import * as moment from 'moment';
@@ -17,6 +18,8 @@ import {
     RequestDto, RequestInspectionTestViewDto, RequestnspectionTestServiceProxy, RequestProjectItemDto, RequestProjectItemServiceProxy, RequestProjectItemViewDto, RequestServiceProxy,
     RequestStatus, RequestWFDto, RequestWFHistoryDto, RequestWFServiceProxy, TowinShipServiceProxy, TownShipDto
 } from '../../../shared/service-proxies/service-proxies';
+import { AsphaltFieldComponent } from '../asphalt-field/asphalt-field.component';
+import { Rc2testComponent } from '../rc2test/rc2test.component';
 import { RejectModalComponent } from '../reject-modal/reject-modal.component';
 
 @Component({
@@ -55,7 +58,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     allDepartments: DepartmentDto[] = [];
     allTownShips: TownShipDto[] = [];
     minDate = moment(new Date()).format("YYYY-MM-DD");
-    showTabs:boolean = false;
+    showTabs: boolean = false;
     showTestTab: boolean = false;
     attachment: any = {};
     attachments: AttachmentDto[] = [];
@@ -111,7 +114,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         console.log('attachments', this.attachment);
         this.attachment.entity = 1;
         this.attachment.entityId = this.request.id;
-        this._attachmentServiceProxy.createOrUpdate(this.request.id, '', '', '',this.file, '',this.attachment.description, 1).subscribe(
+        this._attachmentServiceProxy.createOrUpdate(this.request.id, '', '', '', this.file, '', this.attachment.description, 1).subscribe(
             () => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.loadAttachments();
@@ -145,7 +148,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         this.request.id = this.routeActive.snapshot.params['id'];
         this._requestServiceProxy.get(this.request.id).subscribe(res => {
             this.request = res;
-            if (this.request.hasSample ==1) {
+            if (this.request.hasSample == 1) {
                 this.showTestTab = true;
             }
             this.LoadProject();
@@ -210,7 +213,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     }
     LoadRequestHistory() {
 
-        this._requestWFServiceProxy.getAllHistory(this.request.id,1).subscribe(res => {
+        this._requestWFServiceProxy.getAllHistory(this.request.id, 1).subscribe(res => {
             this.requestHistories = res;
             console.log('History', this.requestHistories);
         });
@@ -287,9 +290,9 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
                 this.InspectionDatemodel = moment(this.request.inspectionDate).format("YYYY-MM-DD");
                 this.loadTestsByTypes();
                 this.saving = false;
-               /* if (this.request.status == RequestStatus._2) {*/
-                    this.saveWorkFlow();
-              //  }
+                /* if (this.request.status == RequestStatus._2) {*/
+                this.saveWorkFlow();
+                //  }
                 //this.bsModalRef.hide();
                 //this.onSave.emit();
             },
@@ -318,8 +321,55 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
         });
     }
 
+    addTest(testId, testCode, isLab) {
+        if (this.request.testType == 3) {
+            this.Asphalt(testCode, testId, isLab);
+        }
+
+    }
+
+    Asphalt(testCode: any, testId: any, isLab: boolean) {
+        var haveTest: boolean = false;
+        let rejectModal: BsModalRef;
+        if (testCode == "Asph-14") {
+            haveTest = true;
+            rejectModal = this._modalService.show(
+                Rc2testComponent,
+                {
+                    class: 'modal-lg',
+                    initialState: {
+                        id: this.request.id,
+                        testId: testId,
+                    },
+                }
+            );
+
+        }
+        if (isLab == false && testCode !== "Asph-14") {
+            haveTest = true;
+            rejectModal = this._modalService.show(
+                AsphaltFieldComponent,
+                {
+                    class: 'modal-lg',
+                    initialState: {
+                        id: this.request.id,
+                        testId: testId,
+                    },
+                }
+            );
+        }
+        if(!haveTest) {
+              this.notify.warn(this.l('NoTestAvailable'));
+        }
+
+        rejectModal.content.onSave.subscribe(() => {
+          //  this.ngOnInit();
+            this.loadRequestTests();
+        });
+    }
+
     saveWorkFlow() {
-       
+
         var workFlow = new RequestWFDto();
         workFlow.requestId = this.request.id;
         workFlow.entity = 1;
@@ -343,7 +393,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             workFlow.actionName = " إلغاء الطلب";
             workFlow.actionNotes = "تم إلغاء الطلب";
         }
-        
+
 
         this._requestWFServiceProxy.createOrUpdate(workFlow).subscribe(res => {
             this.router.navigateByUrl('/app/examinationRequest');
@@ -359,7 +409,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
             this.notify.error(this.l('DuplicateTest'));
             return null;
         }
-        
+
         this._requestnspectionTestServiceProxy.createOrUpdate(this.requestInspection).subscribe(res => {
             this.requestInspection = new CreateUpdateRequestTestDto();
             this.loadRequestTests();

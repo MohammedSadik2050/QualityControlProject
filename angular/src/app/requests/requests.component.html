@@ -195,15 +195,16 @@
                                             <label class="custom-control-label"></label>
                                         </div>
                                     </td>
+                                    
                                     <td>
-                                        <button type="button" *ngIf="isGranted('Pages.Manage.Observer')==false"
+                                        <button type="button" 
                                                 class="btn btn-sm bg-secondary"
                                                 (click)="editRow(request)">
                                             <i class="fas fa-pencil-alt"></i>
                                             {{ "Edit" | localize }}
                                         </button>
-                                      
-                                        <button type="button" *ngIf="!isGranted('Pages.Manage.Observer')"
+
+                                        <button type="button" *ngIf="!isGranted('Pages.Manage.Observer')||isGranted('Pages.Roles')"
                                                 class="btn btn-sm bg-danger mx-2"
                                                 (click)="delete(request)">
                                             <i class="fas fa-trash"></i>

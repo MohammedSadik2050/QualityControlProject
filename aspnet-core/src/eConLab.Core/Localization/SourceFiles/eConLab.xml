@@ -235,5 +235,8 @@
 		<text name="AssignedRequests">Assigned Requests</text>
 		<text name="RequestCanceled">Request Canceled</text>
 		<text name="CancelRequest">Cancel Request</text>
+		<text name="Tests">Tests</text>
+		<text name="NoTestAvailable">Not Test Available</text>
+		<text name="HaveResult">Have Result</text>
 </texts>
 </localizationDictionary>

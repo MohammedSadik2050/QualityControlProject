@@ -67,6 +67,8 @@ import { ObserverCreateComponent } from './observer/observer-create/observer-cre
 import { ObserverEditComponent } from './observer/observer-edit/observer-edit.component';
 import { RequestAssignComponent } from './request-assign/request-assign.component';
 import { AssignModalComponent } from './request-assign/assign-modal/assign-modal.component';
+import { Rc2testComponent } from './requests/rc2test/rc2test.component';
+import { AsphaltFieldComponent } from './requests/asphalt-field/asphalt-field.component';
 
 @NgModule({
     declarations: [
@@ -126,6 +128,8 @@ import { AssignModalComponent } from './request-assign/assign-modal/assign-modal
         ObserverEditComponent,
         RequestAssignComponent,
         AssignModalComponent,
+        Rc2testComponent,
+        AsphaltFieldComponent,
     ],
     imports: [
         CommonModule,

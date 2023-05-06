@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eConLab.EntityFrameworkCore;
 
 namespace eConLab.Migrations
 {
     [DbContext(typeof(eConLabDbContext))]
-    partial class eConLabDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230504094731_add_RC2")]
+    partial class add_RC2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2241,148 +2243,6 @@ namespace eConLab.Migrations
                     b.ToTable("RequestProjectItems");
                 });
 
-            modelBuilder.Entity("eConLab.TestModels.AsphaltField", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CompactionRation1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompactionRation2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompactionRation3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompactionRation4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompactionRation5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompactionRation6")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DeleterUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LabDensity")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("LastModifierUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("LayerThickness")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LayerType1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LayerType2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LayerType3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LayerType4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LayerType5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LayerType6")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Moisture")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Moisture1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Moisture2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Moisture3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Moisture4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Moisture5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Moisture6")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PointNo1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PointNo2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PointNo3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PointNo4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PointNo5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PointNo6")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Remark1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Remark2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Remark3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Remark4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Remark5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Remark6")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("RequestId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("RequestInspectionTestId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RequestId");
-
-                    b.HasIndex("RequestInspectionTestId");
-
-                    b.ToTable("AsphaltFields");
-                });
-
             modelBuilder.Entity("eConLab.TestModels.InspectionTest", b =>
                 {
                     b.Property<long>("Id")
@@ -2952,25 +2812,6 @@ namespace eConLab.Migrations
                         .IsRequired();
 
                     b.Navigation("ProjectItem");
-                });
-
-            modelBuilder.Entity("eConLab.TestModels.AsphaltField", b =>
-                {
-                    b.HasOne("eConLab.Req.Request", "Request")
-                        .WithMany()
-                        .HasForeignKey("RequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("eConLab.Req.RequestInspectionTest", "RequestInspectionTest")
-                        .WithMany()
-                        .HasForeignKey("RequestInspectionTestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Request");
-
-                    b.Navigation("RequestInspectionTest");
                 });
 
             modelBuilder.Entity("eConLab.TestModels.RC2", b =>

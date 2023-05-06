@@ -27,15 +27,20 @@ namespace eConLab.Test
         eConLabAppServiceBase,
        IRequestInspectionTestAppService
     {
+        private readonly IRepository<eConLab.TestModels.RC2, long> _rcRepository;
+        private readonly IRepository<eConLab.TestModels.AsphaltField, long> _asphaltFieldRepository;
         private readonly IRepository<RequestInspectionTest, long> _requestInspectionTestRepository;
         private readonly IMapper _mapper;
-        public RequestnspectionTestAppService(IMapper mapper,
-            IRepository<RequestInspectionTest, long> requestInspectionTestRepository
+        public RequestnspectionTestAppService(IMapper mapper, IRepository<eConLab.TestModels.RC2, long> rcRepository,
+             IRepository<eConLab.TestModels.AsphaltField, long> asphaltFieldRepository,
+        IRepository<RequestInspectionTest, long> requestInspectionTestRepository
             )
 
         {
             _mapper = mapper;
             _requestInspectionTestRepository = requestInspectionTestRepository;
+            _rcRepository = rcRepository;
+            _asphaltFieldRepository = asphaltFieldRepository;
         }
 
         //[AbpAuthorize(PermissionNames.Pages_Manage_InspectionTest)]
@@ -65,9 +70,12 @@ namespace eConLab.Test
                     .Select(s => new RequestInspectionTestViewDto
                     {
                         Id= s.Id,
+                        HaveResult = _rcRepository.GetAll().Any(x=> x.RequestInspectionTestId == s.Id) ||
+                                     _asphaltFieldRepository.GetAll().Any(x => x.RequestInspectionTestId == s.Id),
                         RequestId = s.RequestId,
                         InspectionTestType = s.InspectionTestType,
                         InspectionTestId = s.InspectionTestId,
+                        IsLab = s.InspectionTest.IsLabTest,
                         Cost = s.InspectionTest.Cost,
                         Name = s.InspectionTest.Name ?? "",
                         Code = s.InspectionTest.Code ?? "",

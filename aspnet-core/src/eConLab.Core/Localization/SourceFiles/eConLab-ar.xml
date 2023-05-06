@@ -239,6 +239,9 @@
 		<text name="AssignedRequests">الطلبات المسنده</text>
 		<text name="RequestCanceled">طلب ملغى</text>
 		<text name="CancelRequest">إلغاء الطلب</text>
+		<text name="Tests">الإختبارات</text>
+		<text name="NoTestAvailable">لا يوجد أختبار متاح</text>
+		<text name="HaveResult">تم إدخال نتائج</text>
 		<!--<text name="ApprovedByLabProjectManager">مدير المختبر إعتمد الطلب </text>-->
 	</texts>
 </localizationDictionary>

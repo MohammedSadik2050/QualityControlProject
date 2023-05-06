@@ -574,6 +574,203 @@ export class AgencyServiceProxy {
 }
 
 @Injectable()
+export class AsphaltFieldServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrUpdate(body: AsphaltFieldDto | undefined) : Observable<AsphaltFieldDto> {
+        let url_ = this.baseUrl + "/api/services/app/AsphaltField/CreateOrUpdate";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<AsphaltFieldDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AsphaltFieldDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateOrUpdate(response: HttpResponseBase): Observable<AsphaltFieldDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AsphaltFieldDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AsphaltFieldDto>(<any>null);
+    }
+
+    /**
+     * @param testId (optional) 
+     * @param requestId (optional) 
+     * @return Success
+     */
+    getByRequesId(testId: number | undefined, requestId: number | undefined) : Observable<AsphaltFieldDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/AsphaltField/GetByRequesId?";
+        if (testId === null)
+            throw new Error("The parameter 'testId' cannot be null.");
+        else if (testId !== undefined)
+            url_ += "testId=" + encodeURIComponent("" + testId) + "&";
+        if (requestId === null)
+            throw new Error("The parameter 'requestId' cannot be null.");
+        else if (requestId !== undefined)
+            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetByRequesId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetByRequesId(<any>response_);
+                } catch (e) {
+                    return <Observable<AsphaltFieldDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AsphaltFieldDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetByRequesId(response: HttpResponseBase): Observable<AsphaltFieldDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(AsphaltFieldDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AsphaltFieldDto[]>(<any>null);
+    }
+
+    /**
+     * @param testId (optional) 
+     * @param requestId (optional) 
+     * @return Success
+     */
+    getByRequestandTest(testId: number | undefined, requestId: number | undefined) : Observable<AsphaltFieldDto> {
+        let url_ = this.baseUrl + "/api/services/app/AsphaltField/GetByRequestandTest?";
+        if (testId === null)
+            throw new Error("The parameter 'testId' cannot be null.");
+        else if (testId !== undefined)
+            url_ += "testId=" + encodeURIComponent("" + testId) + "&";
+        if (requestId === null)
+            throw new Error("The parameter 'requestId' cannot be null.");
+        else if (requestId !== undefined)
+            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetByRequestandTest(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetByRequestandTest(<any>response_);
+                } catch (e) {
+                    return <Observable<AsphaltFieldDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AsphaltFieldDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetByRequestandTest(response: HttpResponseBase): Observable<AsphaltFieldDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AsphaltFieldDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AsphaltFieldDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class AttachmentServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -3174,6 +3371,203 @@ export class QCUserServiceProxy {
             }));
         }
         return _observableOf<QCUserDtoPagedResultDto>(<any>null);
+    }
+}
+
+@Injectable()
+export class RC2ServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrUpdate(body: RC2Dto | undefined) : Observable<RC2Dto> {
+        let url_ = this.baseUrl + "/api/services/app/RC2/CreateOrUpdate";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<RC2Dto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<RC2Dto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateOrUpdate(response: HttpResponseBase): Observable<RC2Dto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = RC2Dto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<RC2Dto>(<any>null);
+    }
+
+    /**
+     * @param testId (optional) 
+     * @param requestId (optional) 
+     * @return Success
+     */
+    getByRequesId(testId: number | undefined, requestId: number | undefined) : Observable<RC2Dto[]> {
+        let url_ = this.baseUrl + "/api/services/app/RC2/GetByRequesId?";
+        if (testId === null)
+            throw new Error("The parameter 'testId' cannot be null.");
+        else if (testId !== undefined)
+            url_ += "testId=" + encodeURIComponent("" + testId) + "&";
+        if (requestId === null)
+            throw new Error("The parameter 'requestId' cannot be null.");
+        else if (requestId !== undefined)
+            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetByRequesId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetByRequesId(<any>response_);
+                } catch (e) {
+                    return <Observable<RC2Dto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<RC2Dto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetByRequesId(response: HttpResponseBase): Observable<RC2Dto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(RC2Dto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<RC2Dto[]>(<any>null);
+    }
+
+    /**
+     * @param testId (optional) 
+     * @param requestId (optional) 
+     * @return Success
+     */
+    getByRequestandTest(testId: number | undefined, requestId: number | undefined) : Observable<RC2Dto> {
+        let url_ = this.baseUrl + "/api/services/app/RC2/GetByRequestandTest?";
+        if (testId === null)
+            throw new Error("The parameter 'testId' cannot be null.");
+        else if (testId !== undefined)
+            url_ += "testId=" + encodeURIComponent("" + testId) + "&";
+        if (requestId === null)
+            throw new Error("The parameter 'requestId' cannot be null.");
+        else if (requestId !== undefined)
+            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetByRequestandTest(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetByRequestandTest(<any>response_);
+                } catch (e) {
+                    return <Observable<RC2Dto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<RC2Dto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetByRequestandTest(response: HttpResponseBase): Observable<RC2Dto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = RC2Dto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<RC2Dto>(<any>null);
     }
 }
 
@@ -6559,6 +6953,189 @@ export interface IApplicationInfoDto {
     features: { [key: string]: boolean; } | undefined;
 }
 
+export class AsphaltFieldDto implements IAsphaltFieldDto {
+    id: number;
+    labDensity: string | undefined;
+    moisture: string | undefined;
+    layerThickness: string | undefined;
+    pointNo1: string | undefined;
+    pointNo2: string | undefined;
+    pointNo3: string | undefined;
+    pointNo4: string | undefined;
+    pointNo5: string | undefined;
+    pointNo6: string | undefined;
+    compactionRation1: string | undefined;
+    compactionRation2: string | undefined;
+    compactionRation3: string | undefined;
+    compactionRation4: string | undefined;
+    compactionRation5: string | undefined;
+    compactionRation6: string | undefined;
+    moisture1: string | undefined;
+    moisture2: string | undefined;
+    moisture3: string | undefined;
+    moisture4: string | undefined;
+    moisture5: string | undefined;
+    moisture6: string | undefined;
+    layerType1: string | undefined;
+    layerType2: string | undefined;
+    layerType3: string | undefined;
+    layerType4: string | undefined;
+    layerType5: string | undefined;
+    layerType6: string | undefined;
+    remark1: string | undefined;
+    remark2: string | undefined;
+    remark3: string | undefined;
+    remark4: string | undefined;
+    remark5: string | undefined;
+    remark6: string | undefined;
+    requestId: number;
+    requestInspectionTestId: number;
+
+    constructor(data?: IAsphaltFieldDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.labDensity = _data["labDensity"];
+            this.moisture = _data["moisture"];
+            this.layerThickness = _data["layerThickness"];
+            this.pointNo1 = _data["pointNo1"];
+            this.pointNo2 = _data["pointNo2"];
+            this.pointNo3 = _data["pointNo3"];
+            this.pointNo4 = _data["pointNo4"];
+            this.pointNo5 = _data["pointNo5"];
+            this.pointNo6 = _data["pointNo6"];
+            this.compactionRation1 = _data["compactionRation1"];
+            this.compactionRation2 = _data["compactionRation2"];
+            this.compactionRation3 = _data["compactionRation3"];
+            this.compactionRation4 = _data["compactionRation4"];
+            this.compactionRation5 = _data["compactionRation5"];
+            this.compactionRation6 = _data["compactionRation6"];
+            this.moisture1 = _data["moisture1"];
+            this.moisture2 = _data["moisture2"];
+            this.moisture3 = _data["moisture3"];
+            this.moisture4 = _data["moisture4"];
+            this.moisture5 = _data["moisture5"];
+            this.moisture6 = _data["moisture6"];
+            this.layerType1 = _data["layerType1"];
+            this.layerType2 = _data["layerType2"];
+            this.layerType3 = _data["layerType3"];
+            this.layerType4 = _data["layerType4"];
+            this.layerType5 = _data["layerType5"];
+            this.layerType6 = _data["layerType6"];
+            this.remark1 = _data["remark1"];
+            this.remark2 = _data["remark2"];
+            this.remark3 = _data["remark3"];
+            this.remark4 = _data["remark4"];
+            this.remark5 = _data["remark5"];
+            this.remark6 = _data["remark6"];
+            this.requestId = _data["requestId"];
+            this.requestInspectionTestId = _data["requestInspectionTestId"];
+        }
+    }
+
+    static fromJS(data: any): AsphaltFieldDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AsphaltFieldDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["labDensity"] = this.labDensity;
+        data["moisture"] = this.moisture;
+        data["layerThickness"] = this.layerThickness;
+        data["pointNo1"] = this.pointNo1;
+        data["pointNo2"] = this.pointNo2;
+        data["pointNo3"] = this.pointNo3;
+        data["pointNo4"] = this.pointNo4;
+        data["pointNo5"] = this.pointNo5;
+        data["pointNo6"] = this.pointNo6;
+        data["compactionRation1"] = this.compactionRation1;
+        data["compactionRation2"] = this.compactionRation2;
+        data["compactionRation3"] = this.compactionRation3;
+        data["compactionRation4"] = this.compactionRation4;
+        data["compactionRation5"] = this.compactionRation5;
+        data["compactionRation6"] = this.compactionRation6;
+        data["moisture1"] = this.moisture1;
+        data["moisture2"] = this.moisture2;
+        data["moisture3"] = this.moisture3;
+        data["moisture4"] = this.moisture4;
+        data["moisture5"] = this.moisture5;
+        data["moisture6"] = this.moisture6;
+        data["layerType1"] = this.layerType1;
+        data["layerType2"] = this.layerType2;
+        data["layerType3"] = this.layerType3;
+        data["layerType4"] = this.layerType4;
+        data["layerType5"] = this.layerType5;
+        data["layerType6"] = this.layerType6;
+        data["remark1"] = this.remark1;
+        data["remark2"] = this.remark2;
+        data["remark3"] = this.remark3;
+        data["remark4"] = this.remark4;
+        data["remark5"] = this.remark5;
+        data["remark6"] = this.remark6;
+        data["requestId"] = this.requestId;
+        data["requestInspectionTestId"] = this.requestInspectionTestId;
+        return data; 
+    }
+
+    clone(): AsphaltFieldDto {
+        const json = this.toJSON();
+        let result = new AsphaltFieldDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAsphaltFieldDto {
+    id: number;
+    labDensity: string | undefined;
+    moisture: string | undefined;
+    layerThickness: string | undefined;
+    pointNo1: string | undefined;
+    pointNo2: string | undefined;
+    pointNo3: string | undefined;
+    pointNo4: string | undefined;
+    pointNo5: string | undefined;
+    pointNo6: string | undefined;
+    compactionRation1: string | undefined;
+    compactionRation2: string | undefined;
+    compactionRation3: string | undefined;
+    compactionRation4: string | undefined;
+    compactionRation5: string | undefined;
+    compactionRation6: string | undefined;
+    moisture1: string | undefined;
+    moisture2: string | undefined;
+    moisture3: string | undefined;
+    moisture4: string | undefined;
+    moisture5: string | undefined;
+    moisture6: string | undefined;
+    layerType1: string | undefined;
+    layerType2: string | undefined;
+    layerType3: string | undefined;
+    layerType4: string | undefined;
+    layerType5: string | undefined;
+    layerType6: string | undefined;
+    remark1: string | undefined;
+    remark2: string | undefined;
+    remark3: string | undefined;
+    remark4: string | undefined;
+    remark5: string | undefined;
+    remark6: string | undefined;
+    requestId: number;
+    requestInspectionTestId: number;
+}
+
 export class AttachmentDto implements IAttachmentDto {
     id: number;
     entityId: number;
@@ -8974,6 +9551,109 @@ export interface IQCUserDtoPagedResultDto {
     totalCount: number;
 }
 
+export class RC2Dto implements IRC2Dto {
+    id: number;
+    testStationA: string | undefined;
+    testStationB: string | undefined;
+    testStationC: string | undefined;
+    trayWeightWhithoutAsphaltA: string | undefined;
+    trayWeightWhithoutAsphaltB: string | undefined;
+    trayWeightWhithoutAsphaltC: string | undefined;
+    trayWeightWhithAsphaltA: string | undefined;
+    trayWeightWhithAsphaltB: string | undefined;
+    trayWeightWhithAsphaltC: string | undefined;
+    areaOfTrayA: string | undefined;
+    areaOfTrayB: string | undefined;
+    areaOfTrayC: string | undefined;
+    requiredRate: string | undefined;
+    requestId: number;
+    requestInspectionTestId: number;
+
+    constructor(data?: IRC2Dto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.testStationA = _data["testStationA"];
+            this.testStationB = _data["testStationB"];
+            this.testStationC = _data["testStationC"];
+            this.trayWeightWhithoutAsphaltA = _data["trayWeightWhithoutAsphaltA"];
+            this.trayWeightWhithoutAsphaltB = _data["trayWeightWhithoutAsphaltB"];
+            this.trayWeightWhithoutAsphaltC = _data["trayWeightWhithoutAsphaltC"];
+            this.trayWeightWhithAsphaltA = _data["trayWeightWhithAsphaltA"];
+            this.trayWeightWhithAsphaltB = _data["trayWeightWhithAsphaltB"];
+            this.trayWeightWhithAsphaltC = _data["trayWeightWhithAsphaltC"];
+            this.areaOfTrayA = _data["areaOfTrayA"];
+            this.areaOfTrayB = _data["areaOfTrayB"];
+            this.areaOfTrayC = _data["areaOfTrayC"];
+            this.requiredRate = _data["requiredRate"];
+            this.requestId = _data["requestId"];
+            this.requestInspectionTestId = _data["requestInspectionTestId"];
+        }
+    }
+
+    static fromJS(data: any): RC2Dto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RC2Dto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["testStationA"] = this.testStationA;
+        data["testStationB"] = this.testStationB;
+        data["testStationC"] = this.testStationC;
+        data["trayWeightWhithoutAsphaltA"] = this.trayWeightWhithoutAsphaltA;
+        data["trayWeightWhithoutAsphaltB"] = this.trayWeightWhithoutAsphaltB;
+        data["trayWeightWhithoutAsphaltC"] = this.trayWeightWhithoutAsphaltC;
+        data["trayWeightWhithAsphaltA"] = this.trayWeightWhithAsphaltA;
+        data["trayWeightWhithAsphaltB"] = this.trayWeightWhithAsphaltB;
+        data["trayWeightWhithAsphaltC"] = this.trayWeightWhithAsphaltC;
+        data["areaOfTrayA"] = this.areaOfTrayA;
+        data["areaOfTrayB"] = this.areaOfTrayB;
+        data["areaOfTrayC"] = this.areaOfTrayC;
+        data["requiredRate"] = this.requiredRate;
+        data["requestId"] = this.requestId;
+        data["requestInspectionTestId"] = this.requestInspectionTestId;
+        return data; 
+    }
+
+    clone(): RC2Dto {
+        const json = this.toJSON();
+        let result = new RC2Dto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IRC2Dto {
+    id: number;
+    testStationA: string | undefined;
+    testStationB: string | undefined;
+    testStationC: string | undefined;
+    trayWeightWhithoutAsphaltA: string | undefined;
+    trayWeightWhithoutAsphaltB: string | undefined;
+    trayWeightWhithoutAsphaltC: string | undefined;
+    trayWeightWhithAsphaltA: string | undefined;
+    trayWeightWhithAsphaltB: string | undefined;
+    trayWeightWhithAsphaltC: string | undefined;
+    areaOfTrayA: string | undefined;
+    areaOfTrayB: string | undefined;
+    areaOfTrayC: string | undefined;
+    requiredRate: string | undefined;
+    requestId: number;
+    requestInspectionTestId: number;
+}
+
 export class RegisterInput implements IRegisterInput {
     name: string;
     surname: string;
@@ -9301,6 +9981,8 @@ export class RequestInspectionTestViewDto implements IRequestInspectionTestViewD
     cost: number;
     name: string | undefined;
     code: string | undefined;
+    haveResult: boolean;
+    isLab: boolean;
 
     constructor(data?: IRequestInspectionTestViewDto) {
         if (data) {
@@ -9320,6 +10002,8 @@ export class RequestInspectionTestViewDto implements IRequestInspectionTestViewD
             this.cost = _data["cost"];
             this.name = _data["name"];
             this.code = _data["code"];
+            this.haveResult = _data["haveResult"];
+            this.isLab = _data["isLab"];
         }
     }
 
@@ -9339,6 +10023,8 @@ export class RequestInspectionTestViewDto implements IRequestInspectionTestViewD
         data["cost"] = this.cost;
         data["name"] = this.name;
         data["code"] = this.code;
+        data["haveResult"] = this.haveResult;
+        data["isLab"] = this.isLab;
         return data; 
     }
 
@@ -9358,6 +10044,8 @@ export interface IRequestInspectionTestViewDto {
     cost: number;
     name: string | undefined;
     code: string | undefined;
+    haveResult: boolean;
+    isLab: boolean;
 }
 
 export class RequestProjectItemDto implements IRequestProjectItemDto {
@@ -9521,6 +10209,7 @@ export enum RequestStatus {
     _5 = 5,
     _6 = 6,
     _7 = 7,
+    _8 = 8,
 }
 
 export class RequestViewDto implements IRequestViewDto {
