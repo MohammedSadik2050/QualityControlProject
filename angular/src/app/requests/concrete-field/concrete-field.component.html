@@ -3,7 +3,7 @@
       autocomplete="off"
       #createUserModal="ngForm"
       (ngSubmit)="save()">
-    <abp-modal-header dir="ltr" [title]="'RC2/MC1' | localize"
+    <abp-modal-header dir="ltr" [title]="'Concrete' | localize"
                       (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body">
         <section class="content px-2">
@@ -40,8 +40,8 @@
                                 <div class="col-md-9">
                                     <input type="date"
                                            class="form-control"
-                                           name="samplePreparationEndDate1"
-                                           id="samplePreparationEndDate1"
+                                           name="samplePreparationenddate"
+                                           id="samplePreparationenddate"
                                            style="text-align: right;"
                                            [(ngModel)]="samplePreparationEndDatemodel" />
 

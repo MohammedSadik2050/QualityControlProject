@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
+import { COMPOSITION_BUFFER_MODE } from '@angular/forms';
 import * as moment from 'moment';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { AppComponentBase } from '../../../shared/app-component-base';
@@ -17,7 +18,7 @@ export class ConcreteFieldComponent extends AppComponentBase implements OnInit {
     requestTest = new ConcretFieldDto();
 
     samplePreparationDatemodel: string = new Date().toLocaleDateString();
-    samplePreparationEndDatemodel: string = new Date().toLocaleDateString();
+    samplePreparationEndDatemodel: string = this.samplePreparationDatemodel;
     truckLeftDatemodel: string = new Date().toLocaleDateString();
     castingStartmodel: string = new Date().toLocaleDateString();
     truckSiteArrivingDatemodel: string = new Date().toLocaleDateString();
@@ -31,6 +32,14 @@ export class ConcreteFieldComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit(): void {
+        this.samplePreparationDatemodel =new Date().toLocaleDateString();
+        this.samplePreparationEndDatemodel = this.samplePreparationDatemodel;
+        this.truckLeftDatemodel=  new Date().toLocaleDateString();
+        this.castingStartmodel = new Date().toLocaleDateString();
+        this.truckSiteArrivingDatemodel = new Date().toLocaleDateString();
+        if (this.samplePreparationEndDatemodel == "0001-01-01") {
+            this.samplePreparationEndDatemodel = new Date().toLocaleDateString();
+        }
         this.loadExistTest();
     }
     loadExistTest() {
@@ -68,6 +77,10 @@ export class ConcreteFieldComponent extends AppComponentBase implements OnInit {
     saveRequestTest() {
 
         //this.request.status = 5;
+        console.log("date", this.samplePreparationEndDatemodel);
+        if (this.samplePreparationEndDatemodel == "0001-01-01") {
+            this.samplePreparationEndDatemodel = new Date().toLocaleDateString();
+        }
         this.requestTest.requestId = this.id;
         this.requestTest.requestInspectionTestId = this.testId;
         this.requestTest.samplePreparationDate = moment(this.samplePreparationDatemodel, "YYYY-MM-DD");
