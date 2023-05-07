@@ -12,7 +12,7 @@ public class XtraReport1 : DevExpress.XtraReports.UI.XtraReport
 	private DevExpress.XtraReports.UI.DetailBand Detail;
 	private DevExpress.XtraReports.UI.PageHeaderBand PageHeader;
 	private DevExpress.XtraReports.UI.PageFooterBand PageFooter;
-    private XRLabel xrLabel1;
+    public XRLabel xrLabel1;
     private XRPageInfo xrPageInfo1;
     private TopMarginBand topMarginBand1;
     private BottomMarginBand bottomMarginBand1;
