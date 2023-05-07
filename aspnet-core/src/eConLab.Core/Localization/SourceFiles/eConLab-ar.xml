@@ -239,6 +239,15 @@
 		<text name="AssignedRequests">الطلبات المسنده</text>
 		<text name="RequestCanceled">طلب ملغى</text>
 		<text name="CancelRequest">إلغاء الطلب</text>
+		<text name="Tests">الإختبارات</text>
+		<text name="NoTestAvailable">لا يوجد أختبار متاح</text>
+		<text name="HaveResult">تم إدخال نتائج</text>
+		<text name="samplePreparationDate">تاريخ إعداد العينه</text>
+		<text name="samplePreparationEndDate">تاريخ نهايه العينه</text>
+		<text name="TestsResult">إدخال نتيجه الإختبار</text>
+		<text name="AssignTest">تحديد نوع شاشة الادخال</text>
+		<text name="TestForm">نوع نوع شاشة الادخال</text>
+		<text name="TestSetting">إعدادات الإختبارات</text>
 		<!--<text name="ApprovedByLabProjectManager">مدير المختبر إعتمد الطلب </text>-->
 	</texts>
 </localizationDictionary>

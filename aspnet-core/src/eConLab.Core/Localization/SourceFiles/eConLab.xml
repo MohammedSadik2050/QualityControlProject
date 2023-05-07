@@ -235,5 +235,13 @@
 		<text name="AssignedRequests">Assigned Requests</text>
 		<text name="RequestCanceled">Request Canceled</text>
 		<text name="CancelRequest">Cancel Request</text>
+		<text name="TestsResult">Add Test Result</text>
+		<text name="NoTestAvailable">Not Test Available</text>
+		<text name="HaveResult">Have Result</text>
+		<text name="samplePreparationDate">Sample Preparation Date</text>
+		<text name="samplePreparationEndDate">Sample Preparation End Date</text>
+		<text name="AssignTest">Assign Test</text>
+		<text name="TestForm">Test Form</text>
+		<text name="TestSetting">Test Setting</text>
 </texts>
 </localizationDictionary>

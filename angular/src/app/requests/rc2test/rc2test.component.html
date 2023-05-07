@@ -1,0 +1,236 @@
+
+<form class="form-horizontal"
+      autocomplete="off"
+      #createUserModal="ngForm"
+      (ngSubmit)="save()">
+    <abp-modal-header dir="ltr" [title]="'RC2/MC1' | localize"
+                      (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="modal-body">
+        <section class="content px-2">
+            <div class="container-fluid">
+                <div class="card">
+                    <!--<div class="card-header">
+
+
+                    </div>-->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" dir="ltr">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th>{{ "Test Number" | localize }}</th>
+                                        <th>{{ "A" | localize }}</th>
+                                        <th>{{ "B" | localize }}</th>
+                                        <th>{{ "C" | localize }}</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ "Test Station" | localize }}</td>
+                                        <td>
+                                            <!--[(ngModel)]="request.description"-->
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="testStationA"
+                                                           [(ngModel)]="requestTest.testStationA"
+                                                           id="testStationA" />
+                                                    <!--<abp-validation-summary [control]="descriptionModel"
+                                                    [controlEl]="descriptionE1"></abp-validation-summary>-->
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="testStationB"
+                                                           [(ngModel)]="requestTest.testStationB"
+                                                           id="testStationB" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="testStationC"
+                                                           [(ngModel)]="requestTest.testStationC"
+                                                           id="testStationC" />
+
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td>{{ "Weight Of Tray Without Asphalt" | localize }}</td>
+                                        <td>
+                                            <!--[(ngModel)]="request.description"-->
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="trayWeightWhithoutAsphaltA"
+                                                           [(ngModel)]="requestTest.trayWeightWhithoutAsphaltA"
+                                                           id="trayWeightWhithoutAsphaltA" />
+                                                    <!--<abp-validation-summary [control]="descriptionModel"
+                                                    [controlEl]="descriptionE1"></abp-validation-summary>-->
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="trayWeightWhithoutAsphaltB"
+                                                           [(ngModel)]="requestTest.trayWeightWhithoutAsphaltB"
+                                                           id="trayWeightWhithoutAsphaltB" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="trayWeightWhithoutAsphaltC"
+                                                           [(ngModel)]="requestTest.trayWeightWhithoutAsphaltC"
+                                                           id="trayWeightWhithoutAsphaltC" />
+
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+
+
+                                    <tr>
+                                        <td>{{ "Weight Of Tray with Asphalt" | localize }}</td>
+                                        <td>
+                                            <!--[(ngModel)]="request.description"-->
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="trayWeightWhithAsphaltA"
+                                                           [(ngModel)]="requestTest.trayWeightWhithAsphaltA"
+                                                           id="trayWeightWhithAsphaltA" />
+                                                    <!--<abp-validation-summary [control]="descriptionModel"
+                                                    [controlEl]="descriptionE1"></abp-validation-summary>-->
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="trayWeightWhithAsphaltB"
+                                                           [(ngModel)]="requestTest.trayWeightWhithAsphaltB"
+                                                           id="trayWeightWhithAsphaltB" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="trayWeightWhithAsphaltC"
+                                                           [(ngModel)]="requestTest.trayWeightWhithAsphaltC"
+                                                           id="trayWeightWhithAsphaltC" />
+
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td>{{ "Area of Tray" | localize }}</td>
+                                        <td>
+                                            <!--[(ngModel)]="request.description"-->
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="areaOfTrayA"
+                                                           [(ngModel)]="requestTest.areaOfTrayA"
+                                                           id="areaOfTrayA" />
+                                                    <!--<abp-validation-summary [control]="descriptionModel"
+                                                    [controlEl]="descriptionE1"></abp-validation-summary>-->
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="areaOfTrayB"
+                                                           [(ngModel)]="requestTest.areaOfTrayB"
+                                                           id="areaOfTrayB" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group row required col-12">
+
+                                                <div class="col-md-9">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           name="areaOfTrayC"
+                                                           [(ngModel)]="requestTest.areaOfTrayC"
+                                                           id="areaOfTrayC" />
+
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-group row required col-12" dir="ltr">
+                            <label class="col-md-3 col-form-label" for="CommericalRegisterationNumber">
+                                {{ "Require Rate" | localize }}
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text"
+                                       class="form-control"
+                                       name="requiredRate"
+                                       [(ngModel)]="requestTest.requiredRate"
+                                       id="requiredRate" />
+                                <!--<abp-validation-summary [control]="descriptionModel"
+                                [controlEl]="descriptionE1"></abp-validation-summary>-->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving"
+                      [saveDisabled]="!createUserModal.form.valid || saving"
+                      (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+</form>

@@ -18,5 +18,6 @@
         public const string Pages_Roles = "Pages.Roles";
 
         public const string Pages_Manage_InspectionTest = "Pages.Manage.InspectionTest";
+        public const string Pages_Manage_AssignInspectionTest = "Pages.Manage.AssignInspectionTest";
     }
 }

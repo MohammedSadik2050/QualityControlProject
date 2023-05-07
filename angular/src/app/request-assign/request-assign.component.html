@@ -169,7 +169,6 @@
                                     <th>{{ "InspectionDate" | localize }}</th>
                                     <th>{{ "Observer" | localize }}</th>
                                     <th>{{ "HasSample" | localize }}</th>
-
                                     <th style="width: 310px;"></th>
                                 </tr>
                             </thead>
@@ -198,6 +197,7 @@
                                             <label class="custom-control-label"></label>
                                         </div>
                                     </td>
+                                 
                                     <td>
                                         <button type="button"
                                                 class="btn btn-sm bg-secondary"
@@ -206,11 +206,11 @@
                                             {{ "Assign" | localize }}
                                         </button>
                                         <!--<button type="button"
-                                                class="btn btn-sm bg-danger mx-2"
-                                                (click)="delete(request)">
-                                            <i class="fas fa-trash"></i>
-                                            {{ "Delete" | localize }}
-                                        </button>-->
+                class="btn btn-sm bg-danger mx-2"
+                (click)="delete(request)">
+            <i class="fas fa-trash"></i>
+            {{ "Delete" | localize }}
+        </button>-->
                                         <button type="button"
                                                 class="btn btn-sm bg-primary mx-2"
                                                 (click)="viewRow(request)">

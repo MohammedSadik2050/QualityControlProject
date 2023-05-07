@@ -17,6 +17,7 @@ using eConLab.WF.Dto;
 using eConLab.Authorization.Users;
 using eConLab.Requests.Dto;
 using eConLab.Enum;
+using Microsoft.EntityFrameworkCore;
 
 namespace eConLab.WF
 {
@@ -58,8 +59,12 @@ namespace eConLab.WF
        
         public async Task<RequestWFDto> CreateOrUpdate(RequestWFDto input)
         {
-            var requestWf = await _requestWFRepo.FirstOrDefaultAsync(s=>s.RequestId == input.RequestId);
-           
+            var queryable = _requestWFRepo.GetAll().AsQueryable();
+            var requestWf = await queryable.AsNoTracking().FirstOrDefaultAsync(s=>s.RequestId == input.RequestId);
+            if (requestWf !=null)
+            {
+                input.Id = requestWf.Id;
+            }
             requestWf = _mapper.Map<RequestWF>(input);
             await _requestWFRepo.InsertOrUpdateAsync(requestWf);
 

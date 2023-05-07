@@ -12,6 +12,7 @@ namespace eConLab.EntityFrameworkCore
 
         public static void Configure(DbContextOptionsBuilder<eConLabDbContext> builder, DbConnection connection)
         {
+
             builder.UseSqlServer(connection);
         }
     }

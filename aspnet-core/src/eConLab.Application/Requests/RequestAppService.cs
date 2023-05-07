@@ -24,6 +24,7 @@ using Abp.Runtime.Session;
 using eConLab.WF;
 using eConLab.WF.Dto;
 using eConLab.Observers;
+using eConLab.TestModels;
 
 namespace eConLab.Requests
 {
@@ -44,6 +45,7 @@ namespace eConLab.Requests
         private readonly IRequestWFAppService _requestWFAppService;
         public RequestAppService(
             IMapper mapper,
+            IRepository<eConLab.TestModels.RC2, long> rcRepository,
             IRepository<Observer, long> observerRepo,
              IRequestWFAppService requestWFAppService,
             IRepository<Agency, long> agencyRepository,
@@ -146,14 +148,16 @@ namespace eConLab.Requests
             }
             lstItems = lstItems.Skip(skipCount)
                                           .Take(maxResultCount);
-           // var res = lstItems.ToList();
+            // var res = lstItems.ToList();
+           
             var result = lstItems.Select(mod => new RequestViewDto
             {
+                
                 Id = mod.Id,
                 Code = mod.Code,
                 InspectionDate = mod.InspectionDate,
-                //Description = mod.Description,
-                //TownShipName = mod.TownShip == null ? "" : mod.TownShip.Name,
+                Description = mod.Description,
+                TownShipName = mod.TownShip == null ? "" : mod.TownShip.Name,
                 ProjectId = mod.ProjectId,
                 DistrictName = mod.DistrictName,
                 PhomeNumberSiteResponsibleOne = mod.PhomeNumberSiteResponsibleOne,
@@ -170,8 +174,8 @@ namespace eConLab.Requests
                     SiteDelivedDate = mod.Project.SiteDelivedDate,
                 },
 
-                //ObserverId = mod.ObserverId,
-                //ObserverName = mod.Observer != null ? mod.Observer.Name : "",
+                ObserverId = mod.ObserverId,
+                ObserverName = mod.Observer != null ? mod.Observer.Name : "",
 
             }).ToList();
             return result;
@@ -283,6 +287,7 @@ namespace eConLab.Requests
             // var newRes = lstItems.ToList();
             var result = lstItems.Select(mod => new RequestViewDto
             {
+                
                 Id = mod.Id,
                 Code = mod.Code,
                 InspectionDate = mod.InspectionDate,

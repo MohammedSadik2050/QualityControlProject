@@ -16,6 +16,10 @@ namespace eConLab.RequestTests.Dto
         public float Cost { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
+        public string FormCode { get; set; }
+        public bool HaveResult { get; set; } = false;
+        public bool IsLab { get; set; } = false;
+       
 
     }
 }

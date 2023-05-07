@@ -23,6 +23,7 @@ namespace eConLab.Authorization
             context.CreatePermission(PermissionNames.Pages_Manage_Project, L("Projects"));
             context.CreatePermission(PermissionNames.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
             context.CreatePermission(PermissionNames.Pages_Manage_InspectionTest, L("InspectionTest"));
+            context.CreatePermission(PermissionNames.Pages_Manage_AssignInspectionTest, L("AssignTest"));
         }
 
         private static ILocalizableString L(string name)

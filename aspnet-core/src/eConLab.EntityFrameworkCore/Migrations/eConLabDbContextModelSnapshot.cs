@@ -2241,6 +2241,254 @@ namespace eConLab.Migrations
                     b.ToTable("RequestProjectItems");
                 });
 
+            modelBuilder.Entity("eConLab.TestModels.AsphaltField", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CompactionRation1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompactionRation2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompactionRation3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompactionRation4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompactionRation5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompactionRation6")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LabDensity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("LayerThickness")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LayerType1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LayerType2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LayerType3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LayerType4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LayerType5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LayerType6")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Moisture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Moisture1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Moisture2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Moisture3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Moisture4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Moisture5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Moisture6")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PointNo1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PointNo2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PointNo3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PointNo4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PointNo5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PointNo6")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark6")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("RequestId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RequestInspectionTestId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequestId");
+
+                    b.HasIndex("RequestInspectionTestId");
+
+                    b.ToTable("AsphaltFields");
+                });
+
+            modelBuilder.Entity("eConLab.TestModels.ConcretField", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AirTemp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CastCylindersNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CastingStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CementQty")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcreteQty")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcreteRank")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcreteSource")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcreteTemp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcreteUsing")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CylindersReceivedNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LabDeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LandingGear")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LandingMM")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("RecoveredCylindersNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("RequestId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RequestInspectionTestId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("SampleNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("SamplePreparationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("SamplePreparationEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("TruckLeftDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TruckNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("TruckSiteArrivingDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequestId");
+
+                    b.HasIndex("RequestInspectionTestId");
+
+                    b.ToTable("ConcretFields");
+                });
+
             modelBuilder.Entity("eConLab.TestModels.InspectionTest", b =>
                 {
                     b.Property<long>("Id")
@@ -2281,12 +2529,97 @@ namespace eConLab.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TestForm")
+                        .HasColumnType("int");
+
                     b.Property<int>("TestType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("InspectionTests");
+                });
+
+            modelBuilder.Entity("eConLab.TestModels.RC2", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AreaOfTrayA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AreaOfTrayB")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AreaOfTrayC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RequestId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RequestInspectionTestId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("RequiredRate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TestStationA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TestStationB")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TestStationC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrayWeightWhithAsphaltA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrayWeightWhithAsphaltB")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrayWeightWhithAsphaltC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrayWeightWhithoutAsphaltA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrayWeightWhithoutAsphaltB")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrayWeightWhithoutAsphaltC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequestId");
+
+                    b.HasIndex("RequestInspectionTestId");
+
+                    b.ToTable("RC2");
                 });
 
             modelBuilder.Entity("eConLab.TownShips.TownShip", b =>
@@ -2728,6 +3061,63 @@ namespace eConLab.Migrations
                         .IsRequired();
 
                     b.Navigation("ProjectItem");
+                });
+
+            modelBuilder.Entity("eConLab.TestModels.AsphaltField", b =>
+                {
+                    b.HasOne("eConLab.Req.Request", "Request")
+                        .WithMany()
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eConLab.Req.RequestInspectionTest", "RequestInspectionTest")
+                        .WithMany()
+                        .HasForeignKey("RequestInspectionTestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Request");
+
+                    b.Navigation("RequestInspectionTest");
+                });
+
+            modelBuilder.Entity("eConLab.TestModels.ConcretField", b =>
+                {
+                    b.HasOne("eConLab.Req.Request", "Request")
+                        .WithMany()
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eConLab.Req.RequestInspectionTest", "RequestInspectionTest")
+                        .WithMany()
+                        .HasForeignKey("RequestInspectionTestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Request");
+
+                    b.Navigation("RequestInspectionTest");
+                });
+
+            modelBuilder.Entity("eConLab.TestModels.RC2", b =>
+                {
+                    b.HasOne("eConLab.Req.Request", "Request")
+                        .WithMany()
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eConLab.Req.RequestInspectionTest", "RequestInspectionTest")
+                        .WithMany()
+                        .HasForeignKey("RequestInspectionTestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Request");
+
+                    b.Navigation("RequestInspectionTest");
                 });
 
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>

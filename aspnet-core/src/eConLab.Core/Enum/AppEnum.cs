@@ -15,22 +15,31 @@ namespace eConLab.Enum
     public enum InspectionTestTypes
     {
         Concret = 1,
-        Soil=2,
-        Asphalt=3,
+        Soil = 2,
+        Asphalt = 3,
         Visual = 4,
         Tile = 5,
-        MixingWater=6
+        MixingWater = 6
+    }
+
+    public enum TestForms
+    {
+        RC2 = 1,
+        MC1 = 2,
+        AsphaltT310 = 3,
+        Concrete = 4
     }
 
     public enum RequestStatus
     {
         Pending = 1,
-        Submitted=2,
+        Submitted = 2,
         ApprovedByConsultant = 3,
         ApprovedByLabProjectManager = 4,
         AssignedToObserver = 6,
         Rejected = 5,
-        RequestCanceled = 7
+        RequestCanceled = 7,
+        AssignedtoMaterialEngineering = 8,
     }
     public enum MainRequestTypes
     {
@@ -50,9 +59,9 @@ namespace eConLab.Enum
         public const string Pending = "Pending";
     }
 
-    public enum  ProjectStatus
+    public enum ProjectStatus
     {
-        NotCompleted =-1,
+        NotCompleted = -1,
         Pending = 0,
         ApprovedByConsultantRevstion = 1,
         ApprovedBySupervising = 2,
