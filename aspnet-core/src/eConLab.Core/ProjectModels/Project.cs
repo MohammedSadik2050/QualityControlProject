@@ -33,5 +33,8 @@ namespace eConLab.ProjectModels
         public ProjectStatus Status { get; set; } = 0;
         public bool IsActive { get; set; } = false;
 
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
+
     }
 }

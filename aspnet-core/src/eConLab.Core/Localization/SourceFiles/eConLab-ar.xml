@@ -248,6 +248,8 @@
 		<text name="AssignTest">تحديد نوع شاشة الادخال</text>
 		<text name="TestForm">نوع نوع شاشة الادخال</text>
 		<text name="TestSetting">إعدادات الإختبارات</text>
+		<text name="Map">الخريطه</text>
+		<text name="PleaseSelectProjectLocation">يجب إختيار موقع المشروع</text>
 		<!--<text name="ApprovedByLabProjectManager">مدير المختبر إعتمد الطلب </text>-->
 	</texts>
 </localizationDictionary>

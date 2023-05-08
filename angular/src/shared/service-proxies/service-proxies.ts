@@ -9490,6 +9490,8 @@ export class ProjectDto implements IProjectDto {
     statusName: string | undefined;
     isActive: boolean;
     status: ProjectStatus;
+    latitude: number | undefined;
+    longitude: number | undefined;
 
     constructor(data?: IProjectDto) {
         if (data) {
@@ -9520,6 +9522,8 @@ export class ProjectDto implements IProjectDto {
             this.statusName = _data["statusName"];
             this.isActive = _data["isActive"];
             this.status = _data["status"];
+            this.latitude = _data["latitude"];
+            this.longitude = _data["longitude"];
         }
     }
 
@@ -9550,6 +9554,8 @@ export class ProjectDto implements IProjectDto {
         data["statusName"] = this.statusName;
         data["isActive"] = this.isActive;
         data["status"] = this.status;
+        data["latitude"] = this.latitude;
+        data["longitude"] = this.longitude;
         return data; 
     }
 
@@ -9580,6 +9586,8 @@ export interface IProjectDto {
     statusName: string | undefined;
     isActive: boolean;
     status: ProjectStatus;
+    latitude: number | undefined;
+    longitude: number | undefined;
 }
 
 export class ProjectDtoPagedResultDto implements IProjectDtoPagedResultDto {

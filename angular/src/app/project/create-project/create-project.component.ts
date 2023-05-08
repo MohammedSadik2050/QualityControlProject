@@ -27,6 +27,17 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
     supervisingQualities: DropdownListDto[] = [];
     @Output() onSave = new EventEmitter<any>();
     minDate = moment(this.project.startDate).format("YYYY-MM-DD");
+    map: google.maps.Map;
+    infoWindow: google.maps.InfoWindow;
+    marker: google.maps.Marker;
+    markerStartPosition = {
+        lat: 24.748750734067904,
+        lng: 46.72269763970338
+    };
+    markerDefaultPosition = {
+        lat: 24.748750734067904,
+        lng: 46.72269763970338
+    };
     constructor(
         injector: Injector,
         private router: Router,
@@ -41,7 +52,99 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
     ) {
         super(injector);
     }
+    setMapLanAndLog
+        (event: ClipboardEvent) {
 
+        let clipboardData = event.clipboardData;
+        let pastedText = clipboardData!.getData('text');
+        var mapUrl = pastedText;
+
+        if (mapUrl.indexOf('www.google.com') > -1) {
+            var url = mapUrl.split('@');
+            var at = url[1].split('z');
+            var zero = at[0].split(',');
+            var lat = zero[0];
+            var lon = zero[1];
+            this.markerStartPosition = {
+                lat: Number(lat),
+                lng: Number(lon)
+            };
+        } else {
+            let lat = mapUrl.split(',')[0].trim();
+            let lng = mapUrl.split(',')[1].trim();
+
+            this.markerStartPosition = {
+                lat: Number(lat),
+                lng: Number(lng)
+            };
+        }
+
+        this.initMap(this.markerStartPosition)
+    }
+    ngAfterViewInit(): void {
+         this.initMap();
+    }
+
+    initMap(_pos?: any): void {
+        var res = new google.maps.Map(document.getElementById("map"));
+        this.map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+            center: this.markerStartPosition,
+            zoom: 6
+        });
+      //  this.infoWindow = new google.maps.InfoWindow();
+
+        //if (this.storeId && this.oldStoreLocation) {
+        //    if (this.oldStoreLocation.longitude && this.oldStoreLocation.latitude) {
+        //        let pos = {
+        //            lat: this.oldStoreLocation.latitude,
+        //            lng: this.oldStoreLocation.longitude
+        //        };
+        //        if (_pos) {
+        //            pos = {
+        //                lat: _pos.lat,
+        //                lng: _pos.lng
+        //            };
+        //        }
+        //        this.marker = new google.maps.Marker({
+        //            position: pos,
+        //            map: this.map,
+        //            draggable: true,
+        //            title: "My Store Location"
+        //        });
+        //        this.infoWindow.setPosition(pos);
+        //        this.infoWindow.open(this.map);
+        //        this.map.setCenter(pos);
+        //        this.map.setZoom(15);
+        //        this.marker.setPosition(pos);
+        //    }
+        //} else {
+            this.marker = new google.maps.Marker({
+                position: this.markerStartPosition,
+                map: this.map,
+                draggable: true,
+              //  title: "My Store Location"
+            });
+           // this.infoWindow.setPosition(this.markerStartPosition);
+           // this.infoWindow.open(this.map);
+            this.map.setCenter(this.markerStartPosition);
+            this.map.setZoom(15);
+            this.marker.setPosition(this.markerStartPosition);
+       // }
+    }
+
+    handleLocationError(
+        browserHasGeolocation: boolean,
+        infoWindow: google.maps.InfoWindow,
+        pos: google.maps.LatLng
+    ) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(
+            browserHasGeolocation
+                ? "Error: The Geolocation service failed."
+                : "Error: Your browser doesn't support geolocation."
+        );
+        infoWindow.open(this.map);
+    }
     ngOnInit(): void {
         this.loadAgencyTypes();
         this.loadAgencies();
@@ -51,6 +154,8 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
         this.loadProjectManagers();
         this.loadSupervisingQualities();
         this.loadAllDepartments();
+
+       
     }
     loadAllDepartments() {
         this._departmentServiceProxy.getAllDepartmentDropDown().subscribe(res => {
@@ -107,8 +212,17 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
         this.project.departmentId = 0;
         this.departments = this.allDepartments.filter(s => s.agencyId == event);
     }
-
+    getLocation() {
+        return this.marker.getPosition();
+    }
     save(): void {
+        let projectLocation = this.getLocation();
+        if (projectLocation!.lat() === this.markerDefaultPosition.lat && projectLocation!.lng() === this.markerDefaultPosition.lng) {
+            this.notify.error(this.l('PleaseSelectProjectLocation'));
+            return;
+        }
+        this.project.latitude = projectLocation!.lat();
+        this.project.longitude = projectLocation!.lng();
         this.saving = true;
         this.project.startDate = moment(this.project.startDate, "YYYY-MM-DD");
         this.project.completedDate = moment(this.project.completedDate, "YYYY-MM-DD");

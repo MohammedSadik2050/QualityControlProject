@@ -17,12 +17,17 @@ import { LayoutStoreService } from './layout/layout-store.service';
 
 import { BusyDirective } from './directives/busy.directive';
 import { EqualValidator } from './directives/equal-validator.directive';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyARYjxnezBeTTArNqLH1wuX_WLVWwOayt8',
+            libraries: ['drawing', 'geometry'],
+        }),
     ],
     declarations: [
         AbpPaginationControlsComponent,

@@ -72,6 +72,7 @@ import { AsphaltFieldComponent } from './requests/asphalt-field/asphalt-field.co
 import { ConcreteFieldComponent } from './requests/concrete-field/concrete-field.component';
 import { InspectionTestAssignComponent } from './inspection-test-assign/inspection-test-assign.component';
 import { AssignTestFormComponent } from './inspection-test-assign/assign-test-form/assign-test-form.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
     declarations: [
@@ -151,6 +152,10 @@ import { AssignTestFormComponent } from './inspection-test-assign/assign-test-fo
         ServiceProxyModule,
         SharedModule,
         NgxPaginationModule,
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyARYjxnezBeTTArNqLH1wuX_WLVWwOayt8',
+            libraries: ['drawing', 'geometry'],
+        }),
     ],
     providers: [],
     entryComponents: [

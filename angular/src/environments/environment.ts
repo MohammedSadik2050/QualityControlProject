@@ -6,5 +6,6 @@
 export const environment = {
     production: false,
     hmr: false,
-    appConfig: 'appconfig.json'
+    appConfig: 'appconfig.json',
+     mapKey: 'AIzaSyARYjxnezBeTTArNqLH1wuX_WLVWwOayt8'
 };

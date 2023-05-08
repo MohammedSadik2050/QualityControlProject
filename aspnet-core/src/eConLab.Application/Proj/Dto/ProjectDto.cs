@@ -29,5 +29,7 @@ namespace eConLab.Proj.Dto
 
         public bool IsActive { get; set; } = false;
         public ProjectStatus Status { get; set; } = ProjectStatus.Pending;
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
     }
 }
