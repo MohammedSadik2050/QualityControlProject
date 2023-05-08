@@ -18,7 +18,8 @@ public partial class _Default : System.Web.UI.Page
     {
         using (MemoryStream ms = new MemoryStream())
         {
-            XtraReport1 r = new XtraReport1();
+            XtraReport2 r = new XtraReport2();
+            r.lblHeader.Text = "Mohammed Report Test";
             r.CreateDocument();
             PdfExportOptions opts = new PdfExportOptions();
             opts.ShowPrintDialogOnOpen = true;
