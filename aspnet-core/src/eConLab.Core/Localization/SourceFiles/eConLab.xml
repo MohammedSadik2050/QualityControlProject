@@ -245,5 +245,6 @@
 		<text name="TestSetting">Test Setting</text>
 		<text name="Map">Map</text>
 		<text name="PleaseSelectProjectLocation">Please Select Project Location</text>
+		<text name="ProjectLocation">Project Location</text>
 </texts>
 </localizationDictionary>

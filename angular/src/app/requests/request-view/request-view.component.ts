@@ -56,6 +56,17 @@ export class RequestViewComponent extends AppComponentBase implements OnInit {
     attachments: AttachmentDto[] = [];
     file: any = {};
     baseURL = AppConsts.remoteServiceBaseUrl;
+    map: google.maps.Map;
+    infoWindow: google.maps.InfoWindow;
+    marker: google.maps.Marker;
+    markerStartPosition = {
+        lat: 24.748750734067904,
+        lng: 46.72269763970338
+    };
+    markerDefaultPosition = {
+        lat: 24.748750734067904,
+        lng: 46.72269763970338
+    };
     constructor(
         injector: Injector,
         public _attachmentServiceProxy: AttachmentServiceProxy,
@@ -79,7 +90,99 @@ export class RequestViewComponent extends AppComponentBase implements OnInit {
         super(injector);
     }
 
+    setMapLanAndLog
+        (event: ClipboardEvent) {
 
+        let clipboardData = event.clipboardData;
+        let pastedText = clipboardData!.getData('text');
+        var mapUrl = pastedText;
+
+        if (mapUrl.indexOf('www.google.com') > -1) {
+            var url = mapUrl.split('@');
+            var at = url[1].split('z');
+            var zero = at[0].split(',');
+            var lat = zero[0];
+            var lon = zero[1];
+            this.markerStartPosition = {
+                lat: Number(lat),
+                lng: Number(lon)
+            };
+        } else {
+            let lat = mapUrl.split(',')[0].trim();
+            let lng = mapUrl.split(',')[1].trim();
+
+            this.markerStartPosition = {
+                lat: Number(lat),
+                lng: Number(lng)
+            };
+        }
+
+        this.initMap(this.markerStartPosition)
+    }
+    ngAfterViewInit(): void {
+        this.initMap();
+    }
+
+    initMap(_pos?: any): void {
+        var res = new google.maps.Map(document.getElementById("map"));
+        this.map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+            center: this.markerStartPosition,
+            zoom: 6
+        });
+        //      this.infoWindow = new google.maps.InfoWindow();
+
+
+        if (this.project.longitude && this.project.latitude) {
+            let pos = {
+                lat: this.project.latitude,
+                lng: this.project.longitude
+            };
+            if (_pos) {
+                pos = {
+                    lat: _pos.lat,
+                    lng: _pos.lng
+                };
+            }
+            this.marker = new google.maps.Marker({
+                position: pos,
+                map: this.map,
+                draggable: false,
+                //  title: "My Store Location"
+            });
+            // this.infoWindow.setPosition(pos);
+            // this.infoWindow.open(this.map);
+            this.map.setCenter(pos);
+            this.map.setZoom(15);
+            this.marker.setPosition(pos);
+        }
+        else {
+            this.marker = new google.maps.Marker({
+                position: this.markerStartPosition,
+                map: this.map,
+                draggable: true,
+                //  title: "My Store Location"
+            });
+            // this.infoWindow.setPosition(this.markerStartPosition);
+            //  this.infoWindow.open(this.map);
+            this.map.setCenter(this.markerStartPosition);
+            this.map.setZoom(15);
+            this.marker.setPosition(this.markerStartPosition);
+        }
+    }
+
+    handleLocationError(
+        browserHasGeolocation: boolean,
+        infoWindow: google.maps.InfoWindow,
+        pos: google.maps.LatLng
+    ) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(
+            browserHasGeolocation
+                ? "Error: The Geolocation service failed."
+                : "Error: Your browser doesn't support geolocation."
+        );
+        infoWindow.open(this.map);
+    }
     downloadMyFile(url, fileName) {
         console.log("url", url);
         var xhr = new XMLHttpRequest();
@@ -187,6 +290,7 @@ export class RequestViewComponent extends AppComponentBase implements OnInit {
             this.completeDatemodel = moment(this.project.completedDate).format("YYYY-MM-DD");
             this.projectName = res.name;
             this.projectContractNumber = res.contractNumber;
+            this.initMap();
             this.loadProjectItems();
         });
     }
