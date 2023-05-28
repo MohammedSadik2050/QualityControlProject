@@ -246,5 +246,6 @@
 		<text name="Map">Map</text>
 		<text name="PleaseSelectProjectLocation">Please Select Project Location</text>
 		<text name="ProjectLocation">Project Location</text>
+		<text name="ContractorName">Contractor Name</text>
 </texts>
 </localizationDictionary>

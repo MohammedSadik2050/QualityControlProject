@@ -15,6 +15,8 @@ import {
     AttachmentServiceProxy,
     CreateUpdateRequestTestDto, DepartmentDto, DepartmentServiceProxy, DropdownListDto, InspectionTestDto,
     InspectionTestServiceProxy, LookupServiceProxy, ProjectDto, ProjectItemDto, ProjectServiceProxy,
+    QCUserDto,
+    QCUserServiceProxy,
     RequestDto, RequestInspectionTestViewDto, RequestnspectionTestServiceProxy, RequestProjectItemDto, RequestProjectItemServiceProxy, RequestProjectItemViewDto, RequestServiceProxy,
     RequestStatus, RequestWFDto, RequestWFHistoryDto, RequestWFServiceProxy, TowinShipServiceProxy, TownShipDto
 } from '../../../shared/service-proxies/service-proxies';
@@ -37,7 +39,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     hide = false;
     hasSample = false;
     projectDepartmentId: number = 0;
-    consultantId: number = 20;
+    consultantId: number = 0;
     supervisingQualityId: number = 0;
     projectAgency: number = 0;
     selectedprojectItem: number = 0;
@@ -64,6 +66,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     attachment: any = {};
     attachments: AttachmentDto[] = [];
     file: any = {};
+    currentUser: QCUserDto = new QCUserDto();
     baseURL = AppConsts.remoteServiceBaseUrl;
     map: google.maps.Map;
     infoWindow: google.maps.InfoWindow;
@@ -79,6 +82,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     constructor(
         injector: Injector,
         public _attachmentServiceProxy: AttachmentServiceProxy,
+        public _qcUserServiceProxy: QCUserServiceProxy,
         private _departmentServiceProxy: DepartmentServiceProxy,
         public _towinShipServiceProxy: TowinShipServiceProxy,
         private _agencyServiceProxy: AgencyServiceProxy,
@@ -97,6 +101,14 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
 
     ) {
         super(injector);
+    }
+
+    getCurrentUser() {
+
+        this._qcUserServiceProxy.getById(this.appSession.userId).subscribe(res => {
+
+            this.currentUser = res;
+        })
     }
     setMapLanAndLog
         (event: ClipboardEvent) {
@@ -246,6 +258,7 @@ export class RequestEditComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit(): void {
+        this.getCurrentUser();
         this.loadAllProject();
         this.loadMainRequestTypes();
         this.loadTestTypes();

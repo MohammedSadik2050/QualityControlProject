@@ -33,7 +33,7 @@
                             {{ "SendToConsultant" | localize }}
                         </button>
 
-                        <button style="background-color: #ffc107" *ngIf="(request.status ==2 && consultantId== appSession.userId) || (request.status ==2 && isGranted('Pages.Roles')) " type="button"
+                        <button style="background-color: #ffc107" *ngIf="(request.status ==2 && consultantId== currentUser.id) || (request.status ==2 && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="save(3)"
                                 class="btn btn-success"
@@ -49,8 +49,8 @@
                             {{ "Approved" | localize }}
                         </button>
 
-                        <button *ngIf="(request.status ==2 && consultantId ==appSession.userId)
-                             || (request.status ==3 && (isGranted('Pages.Manage.LabProjectManager')|| isGranted('Pages.Manage.SupervisingQuality') )) || (request.status ==3 && appSession.userId == supervisingQualityId)
+                        <button *ngIf="(request.status ==2 && consultantId ==currentUser.id)
+                             || (request.status ==3 && (isGranted('Pages.Manage.LabProjectManager')|| isGranted('Pages.Manage.SupervisingQuality') )) || (request.status ==3 && currentUser.id == supervisingQualityId)
                                     || ((request.status ==2 ||request.status ==3)  && isGranted('Pages.Roles')) " type="button"
                                 [disabled]="!createRequestForm.form.valid || saving"
                                 (click)="rejectRequest()"
@@ -245,7 +245,7 @@
                                     </label>
                                     <div class="col-md-5">
                                         <input type="number"
-                                               min="1" max="60"
+                                               min="00" max="60"
                                                class="form-control"
                                                name="Hours"
                                                id="Hours"
@@ -265,7 +265,7 @@
                                     </label>
                                     <div class="col-md-5">
                                         <input type="number"
-                                               min="1" max="60"
+                                               min="00" max="60"
                                                class="form-control"
                                                name="Min"
                                                id="Min"

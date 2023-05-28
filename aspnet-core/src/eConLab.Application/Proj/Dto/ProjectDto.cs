@@ -26,6 +26,7 @@ namespace eConLab.Proj.Dto
         public long SupervisingQualityId { get; set; }
         public string GeometryLocations { get; set; }
         public string StatusName { get; set; }
+        public string ContractorName { get; set; }
 
         public bool IsActive { get; set; } = false;
         public ProjectStatus Status { get; set; } = ProjectStatus.Pending;

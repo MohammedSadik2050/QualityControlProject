@@ -6,7 +6,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AppComponentBase } from '../../../shared/app-component-base';
 import { AppConsts } from '../../../shared/AppConsts';
 import { AppAuthService } from '../../../shared/auth/app-auth.service';
-import { AgencyDto, AgencyServiceProxy, AgencyTypeDto, AttachmentDto, AttachmentServiceProxy, DepartmentDto, DepartmentServiceProxy, DropdownListDto, FileParameter, LookupServiceProxy, ProjectDto, ProjectItemDto, ProjectServiceProxy, RequestWFDto, RequestWFHistoryDto, RequestWFServiceProxy } from '../../../shared/service-proxies/service-proxies';
+import { AgencyDto, AgencyServiceProxy, AgencyTypeDto, AttachmentDto, AttachmentServiceProxy, DepartmentDto, DepartmentServiceProxy, DropdownListDto, FileParameter, LookupServiceProxy, ProjectDto, ProjectItemDto, ProjectServiceProxy, QCUserDto, QCUserServiceProxy, RequestWFDto, RequestWFHistoryDto, RequestWFServiceProxy } from '../../../shared/service-proxies/service-proxies';
 import { ProjectRejectModalComponent } from '../project-reject-modal/project-reject-modal.component';
 
 @Component({
@@ -54,8 +54,10 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
     attachment: any = {};
     attachments: AttachmentDto[] = [];
     entityId: number;
+    currentUser: QCUserDto = new QCUserDto();
     constructor(
         injector: Injector,
+        public _qcUserServiceProxy: QCUserServiceProxy,
         private router: Router,
         private _departmentServiceProxy: DepartmentServiceProxy,
         public _projectServiceProxy: ProjectServiceProxy,
@@ -71,6 +73,14 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
 
     ) {
         super(injector);
+    }
+
+    getCurrentUser() {
+
+        this._qcUserServiceProxy.getById(this.appSession.userId).subscribe(res => {
+
+            this.currentUser = res;
+        })
     }
     setMapLanAndLog
         (event: ClipboardEvent) {
@@ -205,6 +215,7 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
             this.loadSupervisingQualities();
             this.loadProjectItems();
             this.LoadRequestHistory();
+            this.getCurrentUser();
             console.log('user', this.appSession.userId);
             this.consultantId = this.project.contractorId;
             console.log('conss', this.consultantId)
@@ -350,6 +361,8 @@ export class EditProjectComponent extends AppComponentBase implements OnInit {
                 this.notify.info(this.l('SavedSuccessfully'));
                 if (status > -1) {
                     this.saveWorkFlow();
+                } else {
+                    this.router.navigateByUrl('/app/projects');
                 }
 
                 this.onSave.emit();

@@ -9488,6 +9488,7 @@ export class ProjectDto implements IProjectDto {
     supervisingQualityId: number;
     geometryLocations: string | undefined;
     statusName: string | undefined;
+    contractorName: string | undefined;
     isActive: boolean;
     status: ProjectStatus;
     latitude: number | undefined;
@@ -9520,6 +9521,7 @@ export class ProjectDto implements IProjectDto {
             this.supervisingQualityId = _data["supervisingQualityId"];
             this.geometryLocations = _data["geometryLocations"];
             this.statusName = _data["statusName"];
+            this.contractorName = _data["contractorName"];
             this.isActive = _data["isActive"];
             this.status = _data["status"];
             this.latitude = _data["latitude"];
@@ -9552,6 +9554,7 @@ export class ProjectDto implements IProjectDto {
         data["supervisingQualityId"] = this.supervisingQualityId;
         data["geometryLocations"] = this.geometryLocations;
         data["statusName"] = this.statusName;
+        data["contractorName"] = this.contractorName;
         data["isActive"] = this.isActive;
         data["status"] = this.status;
         data["latitude"] = this.latitude;
@@ -9584,6 +9587,7 @@ export interface IProjectDto {
     supervisingQualityId: number;
     geometryLocations: string | undefined;
     statusName: string | undefined;
+    contractorName: string | undefined;
     isActive: boolean;
     status: ProjectStatus;
     latitude: number | undefined;

@@ -86,7 +86,9 @@ namespace eConLab.Proj
 
             var totalCount = await GetTotalCountAsync(input);
             var result = ObjectMapper.Map<List<ProjectDto>>(lstItems);
-            result.ForEach(m => { m.StatusName = m.Status.ToString(); });
+            result.ForEach(m => { m.StatusName = m.Status.ToString();
+                m.ContractorName = _qcUserRepo.FirstOrDefault(s => s.Id == m.ContractorId)?.Name;
+            });
 
             return new PagedResultDto<ProjectDto>(totalCount, result);
         }
@@ -106,20 +108,21 @@ namespace eConLab.Proj
             var userRoles = (await UserManager.GetRolesAsync(await GetCurrentUserAsync())).ToList();
             if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin) == false)
             {
+                var qcUser =await _qcUserRepo.FirstOrDefaultAsync(s=>s.UserId == AbpSession.UserId);
                 if (userRoles.Contains(StaticRoleNames.Tenants.Consultant))
-                    lstItems = lstItems.Where(d => d.ConsultantId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.ConsultantId == qcUser.Id);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.Contractor))
-                    lstItems = lstItems.Where(d => d.ContractorId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.ContractorId == qcUser.Id);
 
                 //if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
                 //    lstItems= lstItems.Where(d => d.LabProjectManagerId == AbpSession.UserId);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingQuality))
-                    lstItems = lstItems.Where(d => d.SupervisingQualityId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.SupervisingQualityId == qcUser.Id);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingEngineer))
-                    lstItems = lstItems.Where(d => d.SupervisingEngineerId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.SupervisingEngineerId == qcUser.Id);
             }
 
             lstItems = lstItems.Skip(skipCount)
@@ -137,20 +140,21 @@ namespace eConLab.Proj
             var userRoles = (await UserManager.GetRolesAsync(await GetCurrentUserAsync())).ToList();
             if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin) == false)
             {
+                var qcUser =await _qcUserRepo.FirstOrDefaultAsync(s => s.UserId == AbpSession.UserId);
                 if (userRoles.Contains(StaticRoleNames.Tenants.Consultant))
-                    lstItems = lstItems.Where(d => d.ConsultantId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.ConsultantId == qcUser.Id);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.Contractor))
-                    lstItems = lstItems.Where(d => d.ContractorId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.ContractorId == qcUser.Id);
 
                 //if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
                 //    lstItems = lstItems.Where(d => d.LabProjectManagerId == AbpSession.UserId);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingQuality))
-                    lstItems = lstItems.Where(d => d.SupervisingQualityId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.SupervisingQualityId == qcUser.Id);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingEngineer))
-                    lstItems = lstItems.Where(d => d.SupervisingEngineerId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.SupervisingEngineerId == qcUser.Id);
             }
 
             var res = lstItems.ToList();
@@ -171,20 +175,22 @@ namespace eConLab.Proj
             var userRoles = (await UserManager.GetRolesAsync(await GetCurrentUserAsync())).ToList();
             if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin) == false)
             {
+                var qcUser =await _qcUserRepo.FirstOrDefaultAsync(s => s.UserId == AbpSession.UserId);
+
                 if (userRoles.Contains(StaticRoleNames.Tenants.Consultant))
-                    lstItems = lstItems.Where(d => d.ConsultantId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.ConsultantId == qcUser.Id);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.Contractor))
-                    lstItems = lstItems.Where(d => d.ContractorId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.ContractorId == qcUser.Id);
 
                 //if (userRoles.Contains(StaticRoleNames.Tenants.LabProjectManager))
                 //    lstItems= lstItems.Where(d => d.LabProjectManagerId == AbpSession.UserId);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingQuality))
-                    lstItems = lstItems.Where(d => d.SupervisingQualityId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.SupervisingQualityId == qcUser.Id);
 
                 if (userRoles.Contains(StaticRoleNames.Tenants.SupervisingEngineer))
-                    lstItems = lstItems.Where(d => d.SupervisingEngineerId == AbpSession.UserId);
+                    lstItems = lstItems.Where(d => d.SupervisingEngineerId == qcUser.Id);
             }
 
             return lstItems.ToList().Count;

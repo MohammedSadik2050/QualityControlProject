@@ -152,6 +152,7 @@
                             <thead class="bg-light">
                                 <tr>
                                     <th>{{ "Name" | localize }}</th>
+                                    <th>{{ "ContractorName" | localize }}</th>
                                     <th>{{ "ContractNumber" | localize }}</th>
                                     <th>{{ "StartDate" | localize }}</th>
                                     <th>{{ "CompletedDate" | localize }}</th>
@@ -173,6 +174,7 @@
                         }
                 ">
                                     <td>{{ project.name }}</td>
+                                    <td>{{ project.contractorName }}</td>
                                     <td>{{ project.contractNumber }}</td>
                                     <td>{{ project.startDate | date: 'dd/MM/yyyy'}}</td>
                                     <td>{{ project.completedDate | date: 'dd/MM/yyyy' }}</td>
@@ -195,11 +197,11 @@
                                             {{ "ProjectDetails" | localize }}
                                         </button>
                                         <!--<button type="button" *ngIf="isGranted('Pages.Manage.Project')"
-                                                class="btn btn-sm bg-danger mx-2"
-                                                (click)="delete(project)">
-                                            <i class="fas fa-trash"></i>
-                                            {{ "Delete" | localize }}
-                                        </button>-->
+                class="btn btn-sm bg-danger mx-2"
+                (click)="delete(project)">
+            <i class="fas fa-trash"></i>
+            {{ "Delete" | localize }}
+        </button>-->
 
                                     </td>
                                 </tr>
