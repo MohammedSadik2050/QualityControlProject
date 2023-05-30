@@ -252,6 +252,8 @@
 		<text name="PleaseSelectProjectLocation">يجب إختيار موقع المشروع</text>
 		<text name="ProjectLocation">موقع المشروع</text>
 		<text name="ContractorName">المقاول</text>
+		<text name="From">التاريخ من</text>
+		<text name="To">التاريخ إلى</text>
 		<!--<text name="ApprovedByLabProjectManager">مدير المختبر إعتمد الطلب </text>-->
 	</texts>
 </localizationDictionary>

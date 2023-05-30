@@ -111,14 +111,22 @@ namespace eConLab.Requests
 
         private async Task<List<RequestViewDto>> GetListAsync(int skipCount, int maxResultCount, RequestPaginatedDto filter = null)
         {
-
+            filter.From = filter.From.HasValue? filter.From.Value.Date : null;   
+            filter.To = filter.To.HasValue? filter.To.Value.Date : null;
+            if (filter.From == filter.To)
+            {
+                filter.To = null;
+            }
             var lstItems = _requestRepo.GetAll().Include(s => s.TownShip).Include(s => s.Project).Include(s => s.Observer).OrderByDescending(s => s.CreationTime)
 
                                            .WhereIf(filter.ProjectId > 0, x => x.ProjectId == filter.ProjectId)
+                                           .WhereIf(filter.ContractorId > 0, x => x.Project.ContractorId == filter.ContractorId)
                                            .WhereIf(filter.TownShipId > 0, x => x.TownShipId == filter.TownShipId)
-                                         .WhereIf(!filter.ContractNumber.IsNullOrEmpty(), x => x.Project.ContractNumber.Contains(filter.ContractNumber))
-                                          .WhereIf(!filter.RequestCode.IsNullOrEmpty(), x => x.Code.Contains(filter.RequestCode))
-                                          .WhereIf(filter.Status > 0, x => (int)x.Status == filter.Status).AsQueryable();
+                                           .WhereIf(!filter.ContractNumber.IsNullOrEmpty(), x => x.Project.ContractNumber.Contains(filter.ContractNumber))
+                                           .WhereIf(!filter.RequestCode.IsNullOrEmpty(), x => x.Code.Contains(filter.RequestCode))
+                                           .WhereIf(filter.From !=null, x => x.InspectionDate >= filter.From)
+                                           .WhereIf(filter.To !=null, x => x.InspectionDate <= filter.To)
+                                           .WhereIf(filter.Status > 0, x => (int)x.Status == filter.Status).AsQueryable();
 
 
             var userRoles = (await UserManager.GetRolesAsync(await GetCurrentUserAsync())).ToList();
@@ -162,6 +170,7 @@ namespace eConLab.Requests
                 TownShipName = mod.TownShip == null ? "" : mod.TownShip.Name,
                 ProjectId = mod.ProjectId,
                 DistrictName = mod.DistrictName,
+
                 PhomeNumberSiteResponsibleOne = mod.PhomeNumberSiteResponsibleOne,
                 PhomeNumberSiteResponsibleTwo = mod.PhomeNumberSiteResponsibleTwo,
                 MainRequestType = mod.MainRequestType,
@@ -173,6 +182,7 @@ namespace eConLab.Requests
                     Name = mod.Project.Name,
                     ContractNumber = mod.Project.ContractNumber,
                     StartDate = mod.Project.StartDate,
+                    ContractorId = mod.Project.ContractorId,
                     SiteDelivedDate = mod.Project.SiteDelivedDate,
                 },
 
@@ -180,19 +190,31 @@ namespace eConLab.Requests
                 ObserverName = mod.Observer != null ? mod.Observer.Name : "",
 
             }).ToList();
+            result.ForEach(m => {
+                m.ContractorName = _qcUserRepo.FirstOrDefault(s => s.Id == m.Project.ContractorId)?.Name;
+            });
             return result;
         }
 
         private async Task<int> GetTotalCountAsync(RequestPaginatedDto filter = null)
         {
+            filter.From = filter.From.HasValue ? filter.From.Value.Date : null;
+            filter.To = filter.To.HasValue ? filter.To.Value.Date : null;
+
+            if (filter.From == filter.To)
+            {
+                filter.To = null;
+            }
 
             var lstItems = _requestRepo.GetAll().Include(s => s.TownShip).Include(s => s.Project).Include(s => s.Observer).OrderByDescending(s => s.CreationTime)
-
+                                         .WhereIf(filter.From != null, x => x.InspectionDate >= filter.From)
+                                         .WhereIf(filter.ContractorId > 0, x => x.Project.ContractorId == filter.ContractorId)
+                                         .WhereIf(filter.To != null, x => x.InspectionDate <= filter.To)
                                          .WhereIf(filter.ProjectId > 0, x => x.ProjectId == filter.ProjectId)
                                          .WhereIf(filter.TownShipId > 0, x => x.TownShipId == filter.TownShipId)
-                                       .WhereIf(!filter.ContractNumber.IsNullOrEmpty(), x => x.Project.ContractNumber.Contains(filter.ContractNumber))
-                                        .WhereIf(!filter.RequestCode.IsNullOrEmpty(), x => x.Code.Contains(filter.RequestCode))
-                                        .WhereIf(filter.Status > 0, x => (int)x.Status == filter.Status).AsQueryable();
+                                         .WhereIf(!filter.ContractNumber.IsNullOrEmpty(), x => x.Project.ContractNumber.Contains(filter.ContractNumber))
+                                         .WhereIf(!filter.RequestCode.IsNullOrEmpty(), x => x.Code.Contains(filter.RequestCode))
+                                         .WhereIf(filter.Status > 0, x => (int)x.Status == filter.Status).AsQueryable();
 
             var userRoles = (await UserManager.GetRolesAsync(await GetCurrentUserAsync())).ToList();
             if (userRoles.Count > 0 && userRoles.Contains(StaticRoleNames.Tenants.Admin) == false)

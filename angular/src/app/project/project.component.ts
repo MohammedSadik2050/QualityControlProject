@@ -28,9 +28,11 @@ export class ProjectComponent extends PagedListingComponentBase<ProjectDto> {
     projectAgencyId = 0;
     ProjectStatusId = -2;
     projectDepartmentId = 0;
+    contractorId: number = 0;
     departments: DepartmentDto[] = [];
     allDepartments: DepartmentDto[] = [];
     allProjectStatus: DropdownListDto[] = [];
+    contractors: DropdownListDto[] = [];
     constructor(
         private _departmentServiceProxy: DepartmentServiceProxy,
         private _lookupServiceProxy: LookupServiceProxy,
@@ -53,13 +55,18 @@ export class ProjectComponent extends PagedListingComponentBase<ProjectDto> {
     }
 
 
-
+    loadContractors() {
+        this._lookupServiceProxy.contractorList().subscribe(res => {
+            this.contractors = res;
+        });
+    }
     clearFilters(): void {
         this.keyword = '';
         this.isActive = undefined;
         this.projectAgencyId = 0;
         this.projectAgencyTypeId = 0;
         this.projectDepartmentId = 0;
+        this.contractorId = 0;
         this.ProjectStatusId = -2;
         this.getDataPage(1);
     }
@@ -76,11 +83,13 @@ export class ProjectComponent extends PagedListingComponentBase<ProjectDto> {
             this.loadAgencies();
             this.loadAllDepartments();
             this.loadAllStatus();
+            this.loadContractors();
         }
       
         this._projectServiceProxy
             .getAll(
-                this.keyword, this.ProjectStatusId,this.projectAgencyTypeId, this.projectAgencyId, this.projectDepartmentId,
+                this.keyword, this.ProjectStatusId, this.projectAgencyTypeId, this.projectAgencyId,
+                this.projectDepartmentId, this.contractorId,
                 '',
                 request.skipCount,
                 request.maxResultCount

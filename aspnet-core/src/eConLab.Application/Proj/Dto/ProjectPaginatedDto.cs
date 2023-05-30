@@ -14,6 +14,7 @@ namespace eConLab.Proj.Dto
         public int? AgencyTypeId { get; set; }
         public int? AgencyId { get; set; }
         public long? DepartmentId { get; set; }
+        public long? ContractorId { get; set; }
     }
     public class ProjectFilter
     {

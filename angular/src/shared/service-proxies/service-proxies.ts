@@ -3054,12 +3054,13 @@ export class ProjectServiceProxy {
      * @param agencyTypeId (optional) 
      * @param agencyId (optional) 
      * @param departmentId (optional) 
+     * @param contractorId (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(search: string | undefined, statusId: number | undefined, agencyTypeId: number | undefined, agencyId: number | undefined, departmentId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<ProjectDtoPagedResultDto> {
+    getAll(search: string | undefined, statusId: number | undefined, agencyTypeId: number | undefined, agencyId: number | undefined, departmentId: number | undefined, contractorId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<ProjectDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Project/GetAll?";
         if (search === null)
             throw new Error("The parameter 'search' cannot be null.");
@@ -3081,6 +3082,10 @@ export class ProjectServiceProxy {
             throw new Error("The parameter 'departmentId' cannot be null.");
         else if (departmentId !== undefined)
             url_ += "DepartmentId=" + encodeURIComponent("" + departmentId) + "&";
+        if (contractorId === null)
+            throw new Error("The parameter 'contractorId' cannot be null.");
+        else if (contractorId !== undefined)
+            url_ += "ContractorId=" + encodeURIComponent("" + contractorId) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -3956,12 +3961,15 @@ export class RequestServiceProxy {
      * @param requestCode (optional) 
      * @param status (optional) 
      * @param townShipId (optional) 
+     * @param from (optional) 
+     * @param to (optional) 
+     * @param contractorId (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(projectId: number | undefined, observerId: number | undefined, contractNumber: string | undefined, requestCode: string | undefined, status: number | undefined, townShipId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestViewDtoPagedResultDto> {
+    getAll(projectId: number | undefined, observerId: number | undefined, contractNumber: string | undefined, requestCode: string | undefined, status: number | undefined, townShipId: number | undefined, from: moment.Moment | undefined, to: moment.Moment | undefined, contractorId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestViewDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Request/GetAll?";
         if (projectId === null)
             throw new Error("The parameter 'projectId' cannot be null.");
@@ -3987,6 +3995,18 @@ export class RequestServiceProxy {
             throw new Error("The parameter 'townShipId' cannot be null.");
         else if (townShipId !== undefined)
             url_ += "TownShipId=" + encodeURIComponent("" + townShipId) + "&";
+        if (from === null)
+            throw new Error("The parameter 'from' cannot be null.");
+        else if (from !== undefined)
+            url_ += "From=" + encodeURIComponent(from ? "" + from.toISOString() : "") + "&";
+        if (to === null)
+            throw new Error("The parameter 'to' cannot be null.");
+        else if (to !== undefined)
+            url_ += "To=" + encodeURIComponent(to ? "" + to.toISOString() : "") + "&";
+        if (contractorId === null)
+            throw new Error("The parameter 'contractorId' cannot be null.");
+        else if (contractorId !== undefined)
+            url_ += "ContractorId=" + encodeURIComponent("" + contractorId) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -4052,12 +4072,15 @@ export class RequestServiceProxy {
      * @param requestCode (optional) 
      * @param status (optional) 
      * @param townShipId (optional) 
+     * @param from (optional) 
+     * @param to (optional) 
+     * @param contractorId (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllForAssign(projectId: number | undefined, observerId: number | undefined, contractNumber: string | undefined, requestCode: string | undefined, status: number | undefined, townShipId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestViewDtoPagedResultDto> {
+    getAllForAssign(projectId: number | undefined, observerId: number | undefined, contractNumber: string | undefined, requestCode: string | undefined, status: number | undefined, townShipId: number | undefined, from: moment.Moment | undefined, to: moment.Moment | undefined, contractorId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined) : Observable<RequestViewDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Request/GetAllForAssign?";
         if (projectId === null)
             throw new Error("The parameter 'projectId' cannot be null.");
@@ -4083,6 +4106,18 @@ export class RequestServiceProxy {
             throw new Error("The parameter 'townShipId' cannot be null.");
         else if (townShipId !== undefined)
             url_ += "TownShipId=" + encodeURIComponent("" + townShipId) + "&";
+        if (from === null)
+            throw new Error("The parameter 'from' cannot be null.");
+        else if (from !== undefined)
+            url_ += "From=" + encodeURIComponent(from ? "" + from.toISOString() : "") + "&";
+        if (to === null)
+            throw new Error("The parameter 'to' cannot be null.");
+        else if (to !== undefined)
+            url_ += "To=" + encodeURIComponent(to ? "" + to.toISOString() : "") + "&";
+        if (contractorId === null)
+            throw new Error("The parameter 'contractorId' cannot be null.");
+        else if (contractorId !== undefined)
+            url_ += "ContractorId=" + encodeURIComponent("" + contractorId) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -10629,6 +10664,7 @@ export enum RequestStatus {
 export class RequestViewDto implements IRequestViewDto {
     id: number;
     name: string | undefined;
+    contractorName: string | undefined;
     status: string | undefined;
     code: string | undefined;
     inspectionDate: moment.Moment;
@@ -10659,6 +10695,7 @@ export class RequestViewDto implements IRequestViewDto {
         if (_data) {
             this.id = _data["id"];
             this.name = _data["name"];
+            this.contractorName = _data["contractorName"];
             this.status = _data["status"];
             this.code = _data["code"];
             this.inspectionDate = _data["inspectionDate"] ? moment(_data["inspectionDate"].toString()) : <any>undefined;
@@ -10689,6 +10726,7 @@ export class RequestViewDto implements IRequestViewDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["name"] = this.name;
+        data["contractorName"] = this.contractorName;
         data["status"] = this.status;
         data["code"] = this.code;
         data["inspectionDate"] = this.inspectionDate ? this.inspectionDate.toISOString() : <any>undefined;
@@ -10719,6 +10757,7 @@ export class RequestViewDto implements IRequestViewDto {
 export interface IRequestViewDto {
     id: number;
     name: string | undefined;
+    contractorName: string | undefined;
     status: string | undefined;
     code: string | undefined;
     inspectionDate: moment.Moment;

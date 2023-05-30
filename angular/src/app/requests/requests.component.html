@@ -54,6 +54,37 @@
                                     <div class="col-md-6">
                                         <div class="form-group row mb-0">
                                             <label class="col-md-3 col-form-label" for="ADDRESS">
+                                                {{ "From" | localize }}
+                                            </label>
+                                            <div class="col-md-8">
+                                                <input type="date" 
+                                                       class="form-control"
+                                                       name="inspectionDateFrom"
+                                                       id="inspectionDateFrom"
+                                                       [(ngModel)]="inspectionDateFrom"
+                                                       #inspectionDateFromModel="ngModel" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group row mb-0">
+                                            <label class="col-md-3 col-form-label" for="ADDRESS">
+                                                {{ "To" | localize }}
+                                            </label>
+                                            <div class="col-md-8">
+                                                <input type="date"
+                                                       class="form-control"
+                                                       name="inspectionDateTo"
+                                                       id="inspectionDateTo"
+                                                       [(ngModel)]="inspectionDateTo"
+                                                       #inspectionDateToModel="ngModel" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mt-3">
+                                        <div class="form-group row mb-0">
+                                            <label class="col-md-3 col-form-label" for="ADDRESS">
                                                 {{ "ChooseProject" | localize }}
                                             </label>
                                             <div class="col-md-8">
@@ -69,7 +100,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 mt-3">
                                         <div class="form-group row mb-0">
                                             <label class="col-md-3 col-form-label" for="ADDRESS">
                                                 {{ "ContractNumber" | localize }}
@@ -138,6 +169,24 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="col-md-6 mt-3">
+                                        <div class="form-group row mb-0">
+                                            <label class="col-md-3 col-form-label" for="ADDRESS">
+                                                {{ "Contractor" | localize }}
+                                            </label>
+                                            <div class="col-md-8">
+                                                <select name="contractorId"
+                                                        class="form-control"
+                                                        id="contractorId" [(ngModel)]="contractorId"
+                                                        #contractorIdModel="ngModel">
+                                                    <option *ngFor="let contractor of contractors" [value]="contractor.id">{{contractor.name}}</option>
+                                                </select>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -161,6 +210,7 @@
                             <thead class="bg-light">
                                 <tr>
                                     <th>{{ "ProjectName" | localize }}</th>
+                                    <th>{{ "ContractorName" | localize }}</th>
                                     <th>{{ "ContractNumber" | localize }}</th>
                                     <th>{{ "RequestCode" | localize }}</th>
                                     <th>{{ "InspectionDate" | localize }}</th>
@@ -182,6 +232,7 @@
                         }
                 ">
                                     <td>{{ request.project.name }}</td>
+                                    <td>{{ request.contractorName }}</td>
                                     <td>{{ request.project.contractNumber }}</td>
                                     <td>{{ request.code }}</td>
                                     <td>{{ request.inspectionDate | date: 'dd/MM/yyyy'}}</td>
@@ -195,9 +246,9 @@
                                             <label class="custom-control-label"></label>
                                         </div>
                                     </td>
-                                    
+
                                     <td>
-                                        <button type="button" 
+                                        <button type="button"
                                                 class="btn btn-sm bg-secondary"
                                                 (click)="editRow(request)">
                                             <i class="fas fa-pencil-alt"></i>

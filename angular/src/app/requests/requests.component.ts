@@ -1,5 +1,6 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { finalize } from 'rxjs/operators';
 import { appModuleAnimation } from '../../shared/animations/routerTransition';
 import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from '../../shared/paged-listing-component-base';
@@ -20,6 +21,7 @@ export class RequestsComponent extends PagedListingComponentBase<RequestViewDto>
     keyword = '';
     projectId: number = 0;
     townShipId: number = 0;
+    contractorId: number = 0;
     contractNumber: string = '';
     requestCode: string = '';
     statusId: number = 0;
@@ -27,6 +29,9 @@ export class RequestsComponent extends PagedListingComponentBase<RequestViewDto>
     advancedFiltersVisible = false;
     requestStatuses: DropdownListDto[] = [];
     allTownShips: TownShipDto[] = [];
+    contractors: DropdownListDto[] = [];
+    inspectionDateFrom = moment(new Date(new Date().setDate(new Date().getDate()))).format("YYYY-MM-DD");
+    inspectionDateTo = moment(new Date(new Date().setDate(new Date().getDate()))).format("YYYY-MM-DD");
     constructor(
         injector: Injector,
         public _projectServiceProxy: ProjectServiceProxy,
@@ -77,9 +82,16 @@ export class RequestsComponent extends PagedListingComponentBase<RequestViewDto>
         this.requestCode = undefined;
         this.statusId = undefined;
         this.townShipId = undefined;
+        this.contractorId = undefined;
+        this.inspectionDateFrom = moment(new Date(new Date().setDate(new Date().getDate() - 2))).format("YYYY-MM-DD");
+        this.inspectionDateTo = moment(new Date(new Date().setDate(new Date().getDate()))).format("YYYY-MM-DD");
         this.getDataPage(1);
     }
-
+    loadContractors() {
+        this._lookupServiceProxy.contractorList().subscribe(res => {
+            this.contractors = res;
+        });
+    }
     protected list(
         request: PageRequestDto,
         pageNumber: number,
@@ -90,6 +102,7 @@ export class RequestsComponent extends PagedListingComponentBase<RequestViewDto>
             this.loadAllTownShips();
             this.loadAllProject();
             this.loadAllStatuses();
+            this.loadContractors();
         }
 
         this._requestServiceProxy
@@ -97,7 +110,8 @@ export class RequestsComponent extends PagedListingComponentBase<RequestViewDto>
                 this.projectId, 0,
                 this.contractNumber,
                 this.requestCode,
-                this.statusId, this.townShipId,
+                this.statusId, this.townShipId, moment(this.inspectionDateFrom, "YYYY-MM-DD"),
+                    moment(this.inspectionDateTo, "YYYY-MM-DD"), this.contractorId,
                 '',
                 request.skipCount,
                 request.maxResultCount

@@ -53,6 +53,9 @@ namespace eConLab.Proj
         //[AbpAuthorize(PermissionNames.Pages_Manage_Project)]
         public async Task<ProjectDto> CreateOrUpdate(ProjectDto input)
         {
+            input.StartDate = input.StartDate.AddDays(1);
+            input.CompletedDate = input.CompletedDate.AddDays(1);
+            input.SiteDelivedDate = input.SiteDelivedDate.AddDays(1);
             if (input.Status == ProjectStatus.ApprovedByLabProjectManager)
             {
                 input.IsActive = true;
@@ -100,6 +103,7 @@ namespace eConLab.Proj
             var lstItems = _projectRepo.GetAll().OrderByDescending(s=>s.CreationTime)
                               .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
                              .WhereIf(filter.AgencyId > 0, x => x.AgencyId == filter.AgencyId)
+                             .WhereIf(filter.ContractorId > 0, x => x.ContractorId == filter.ContractorId)
                              .WhereIf(filter.StatusId >= -1, x => x.Status == (ProjectStatus)filter.StatusId)
                               .WhereIf(filter.AgencyTypeId > 0, x => x.AgencyTypeId == filter.AgencyTypeId).AsQueryable();
 
@@ -169,6 +173,7 @@ namespace eConLab.Proj
                              .WhereIf(!filter.Search.IsNullOrEmpty(), x => x.Name.Contains(filter.Search))
                               .WhereIf(filter.StatusId >= -1, x => x.Status == (ProjectStatus)filter.StatusId)
                              .WhereIf(filter.AgencyId > 0, x => x.AgencyId == filter.AgencyId)
+                              .WhereIf(filter.ContractorId > 0, x => x.ContractorId == filter.ContractorId)
                               .WhereIf(filter.AgencyTypeId > 0, x => x.AgencyTypeId == filter.AgencyTypeId);
 
             //check user Role 

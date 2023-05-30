@@ -247,5 +247,7 @@
 		<text name="PleaseSelectProjectLocation">Please Select Project Location</text>
 		<text name="ProjectLocation">Project Location</text>
 		<text name="ContractorName">Contractor Name</text>
+		<text name="From">Date From</text>
+		<text name="To">Date to</text>
 </texts>
 </localizationDictionary>

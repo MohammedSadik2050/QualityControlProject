@@ -15,6 +15,9 @@ namespace eConLab.Requests.Dto
         public string RequestCode { get; set; }
         public int Status { get; set; }
         public long TownShipId { get; set; }
+        public DateTime? From { get; set; }
+        public DateTime? To { get; set; }
+        public long? ContractorId { get; set; }
     }
     public class RequestFilter
     {
